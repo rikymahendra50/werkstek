@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .label-text {
+    @apply font-medium text-slate-500;
+  }
+  .active {
+    @apply bg-emerald-200;
+  }
+}
