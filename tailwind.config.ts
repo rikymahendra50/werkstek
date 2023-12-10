@@ -29,7 +29,16 @@ export default <Partial<Config>>{
     logs: false, // Shows info about daisyUI version and used config in the console when building your CSS
   },
   theme: {
+    container: {
+      center: true,
+    },
     extend: {
+      screens: {
+        'cs'  : '228px',
+        'sm' : '400px',
+        'kcs' : '50px',
+        'lg' : '1033px'
+    },
       colors: {
         primary: colors.blue,
         gold: colors.amber,
