@@ -31,14 +31,19 @@ export default <Partial<Config>>{
   theme: {
     container: {
       center: true,
+      padding: '0px'
     },
     extend: {
-      screens: {
-        'cs'  : '228px',
-        'sm' : '400px',
-        'kcs' : '50px',
-        'lg' : '1033px'
-    },
+    //   screens: {
+    //     'cs'  : '228px',
+    //     'sm' : '400px',
+    //     'kcs' : '50px',
+    //     'lg' : '1033px'
+    // },
+      backgroundImage: {
+        'hero' : "url('assets/images/bg-dot.svg')",
+        'orange' : "url('assets/images/bg-orange.svg')"
+      },
       colors: {
         primary: colors.blue,
         gold: colors.amber,

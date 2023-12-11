@@ -1,10 +1,16 @@
 <template>
 
-  <!-- <Navbar /> -->
+  <!-- <Navbar />
 
   <Header2 />
 
-  <!-- <Footer /> -->
+  <Footer /> -->
+
+  <div class="flex mr-10">
+    <Perblog />
+    <Perblog />
+    <Perblog />
+  </div>
 
 </template>
 
