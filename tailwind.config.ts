@@ -29,7 +29,21 @@ export default <Partial<Config>>{
     logs: false, // Shows info about daisyUI version and used config in the console when building your CSS
   },
   theme: {
+    container: {
+      center: true,
+      padding: '0px'
+    },
     extend: {
+    //   screens: {
+    //     'cs'  : '228px',
+    //     'sm' : '400px',
+    //     'kcs' : '50px',
+    //     'lg' : '1033px'
+    // },
+      backgroundImage: {
+        'hero' : "url('assets/images/bg-dot.svg')",
+        'orange' : "url('assets/images/bg-orange.svg')"
+      },
       colors: {
         primary: colors.blue,
         gold: colors.amber,
