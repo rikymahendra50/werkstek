@@ -1,6 +1,6 @@
 <template>
 
-    <div class="post relative flex flex-wrap flex-col max-w-[366px] mx-5">
+    <div class="relative flex flex-wrap flex-col max-w-[366px] mx-5">
         <img src="../assets/images/img-big-blog-1.png" alt="img-small-blog" class="max-w-[366px]">
         <h1 class="text-[24px] font-medium">Blox reality startup Lorem ipsum od dillogi bell in the city ...</h1>
         <p class="text-[14px] mb-2">Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska. Jinesade bel när feras redorade i belogi. FAR paratyp i muvåning, och pesask vyfisat. </p>
@@ -12,5 +12,23 @@
 <script>
 export default {
 
+    //   data() {
+    //     return {
+    //         message: 'Hello, Vue!'
+    //         };
+    //     },
+    //     methods: {
+    //         greet() {
+    //         alert(this.message);
+    //         }
+    //     },
+    //     mounted() {
+    //         // Lifecycle hook
+    //         console.log('Component mounted');
+    //     }
+
+  // props: ['images'] // Mendefinisikan properti yang diterima oleh komponen
+
 };
+
 </script>

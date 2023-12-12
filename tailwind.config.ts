@@ -40,9 +40,13 @@ export default <Partial<Config>>{
     //     'kcs' : '50px',
     //     'lg' : '1033px'
     // },
+      boxShadow: {
+        'custom': '0px 18px 34px 0px rgba(218, 154, 59, 0.2)',
+      },
+
       backgroundImage: {
-        'hero' : "url('assets/images/bg-dot.svg')",
-        'orange' : "url('assets/images/bg-orange.svg')"
+        'hero' : "url('/assets/images/bg-dot.svg')",
+        'orange' : "url('/assets/images/bg-orange.svg')"
       },
       colors: {
         primary: colors.blue,

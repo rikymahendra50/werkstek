@@ -1,21 +1,35 @@
 <template>
 
-  <!-- <Navbar />
+  <Navbar />
 
-  <Header2 />
+  <!-- <Map /> -->
 
-  <Footer /> -->
+  <!-- <Header2 /> -->
 
-  <div class="flex mr-10">
-    <Perblog />
-    <Perblog />
-    <Perblog />
-  </div>
+  <!-- <Footer /> -->
+
+  <!-- <Meningen /> -->
+
+  <!-- <ContentLocation /> -->
+
+  <!-- <TitleHeader /> -->
+
+  <!-- <PerBlog /> -->
 
 </template>
 
-<script lang="ts" setup>
+<!-- <script lang="ts" setup> -->
+
+<script>
+
+  // Mengimport CustomComponent
+  // import Perblog from '../components/Perblog.vue';
+
+  // export default {
+  //   components: {
+  //     Perblog
+  //   }
+  // };
 
 </script>
 
-<style></style>
