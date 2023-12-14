@@ -1,10 +1,10 @@
 <template>
 
-    <section id="footer" class="h-[381px]">
+    <section id="footer" class="h-[381px] relative">
         <div class="w-full py-20 flex flex-col lg:flex-row relative px-5 lg:px-16 justify-between">
             <div class="first-footer h-[100%] text-[12px] md:text-[15px] relative">
                 <Werkstek />
-                <p class="text-[15px] pt-3 lg:w-[384px]">Een gezellige werkplek huren in een leuke omgeving?Op deze locaties hebben wij kantoorruimtes</p>
+                <p class="text-[15px] py-5 lg:w-[384px]">Een gezellige werkplek huren in een leuke omgeving?Op deze locaties hebben wij kantoorruimtes</p>
                 <h4 class="text-[16px] font-semibold pt-3">Volg ons op</h4>
                 <div class="social-media flex pt-3">
                     <a href="#"><img src="../assets/images/instagram.svg" alt="icon-instagram" class="  pr-6"></a>

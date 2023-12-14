@@ -2,9 +2,14 @@
 
   <Navbar />
 
-  <!-- <Map /> -->
+  <MapInteractive />
+<!-- <Header2 /> -->
 
-  <!-- <Header2 /> -->
+  <!-- <BgSmallOrange /> -->
+
+  
+  <!-- <Header3 /> -->
+
 
   <!-- <Footer /> -->
 
@@ -16,11 +21,14 @@
 
   <!-- <PerBlog /> -->
 
+  <!-- <ButtonOrangeLG /> -->
+
+  <!-- <TitleHeader/> -->
+
+
 </template>
 
-<!-- <script lang="ts" setup> -->
-
-<script>
+<script lang="ts" setup>
 
   // Mengimport CustomComponent
   // import Perblog from '../components/Perblog.vue';
@@ -31,5 +39,10 @@
   //   }
   // };
 
+  import Navbar from '../components/Navbar.vue';
+  import MapInteractive from '../components/MapInteractive.vue';
+  // Import komponen lainnya yang diperlukan
+
+  // Export komponen yang diperlukan
 </script>
 

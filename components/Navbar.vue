@@ -1,6 +1,6 @@
 <template>
-    <nav class="fixed w-full bg-white z-50 shadow-md">
-      <div class="flex items-center justify-between h-[86px] font-medium relative px-5 lg:px-16 w-full">
+    <nav class="w-full z-50 shadow-md top-0">
+      <div class="flex items-center justify-between h-[86px] font-medium px-5 lg:px-16 w-full relative bg-white">
   
         <!-- Header logo -->
         <div>
@@ -9,7 +9,7 @@
   
         <!-- Mobile toggle -->
         <div class="lg:hidden flex">
-          <button @click="drawer">
+          <button name="toggle" @click="drawer">
             <svg 
               class="h-8 w-8 fill-current text-black"
               fill="none" stroke-linecap="round" 
@@ -56,7 +56,7 @@
         <aside class="p-5 transform top-0 left-0 w-64 bg-white fixed h-full overflow-auto ease-in-out transition-all duration-300 z-30" :class="isOpen ? 'translate-x-0' : '-translate-x-full'">
           
           <div class="close">
-            <button class="absolute top-0 right-0 mt-4 mr-4" @click=" isOpen = false">
+            <button name="drawer-menu" class="absolute top-0 right-0 mt-4 mr-4" @click=" isOpen = false">
               <svg 
                 class="w-6 h-6"
                 fill="none" stroke-linecap="round" 
