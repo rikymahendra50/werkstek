@@ -1,47 +1,190 @@
 <template>
-    <div id="map"></div>
-</template>
-  
-  <script setup>
-  
-  let map;
-  let markers = [];
-  
-  function initMap() {
-      const locations = [
-        { 
-            lat: -8.653840910873269, 
-            lng: 115.21785198506426, 
-            name: 'Title A', 
-            description: 'Deskripsi A', 
-            price: 4, 
-            image: 'image.jpg',
-            popularity: 100 
-        },
-        { 
-            lat: -8.62717144710956, 
-            lng: 115.20910166137442, 
-            name: 'Title B', 
-            description: 'Deskripsi B', 
-            price: 5, 
-            image: 'image.jpg' ,
-            popularity: 20
-        },
-      ];
+  <section class="relative z-20">
+    <div id="map" class="relative w-full h-[420px] lg:h-[490px]"></div>
+    <div
+      class="w-[95%] lg:w-[80%] lg:h-[288px] bg-[#859C81] box-shadow border-radius-map absolute top-[300px]"
+    >
+      <div class="container-custom flex flex-col text-white">
+        <p
+          class="text-[17px] sm:text-[20px] md:text-[25px] py-3 sm:py-5 md:py-10 font-bold"
+        >
+          Waar bent u op zoek naar?
+        </p>
 
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: -8.653840910873269, lng: 115.21785198506426 }, // Koordinat tengah peta
-        zoom: 13 // Tingkat zoom awal
+        <!-- Loop for categories -->
+        <div class="flex justify-between mb-4">
+          <div
+            v-for="(category, index) in categories"
+            :key="index"
+            class="flex flex-col w-[30%]"
+          >
+            <p class="text-[12px] sm:text-[16px] pb-2">
+              {{ category.title }}
+            </p>
+            <div class="relative">
+              <div
+                @click="toggleDropdown(category)"
+                class="search-map-category text-[10px] text-[#676767] sm:text-[14px]"
+              >
+                {{ category.selectedOption }}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="8"
+                  viewBox="0 0 12 11"
+                  fill="none"
+                >
+                  <path
+                    d="M6 10.2579L0.803848 0.724833H11.1962L6 10.2579Z"
+                    fill="#859C81"
+                  />
+                </svg>
+              </div>
+              <ul
+                v-if="category.showDropdown"
+                class="absolute text-[10px] lg:text-[16px] top-[100%] left-0 bg-white border border-gray-300 rounded-[5px] mt-1 w-[97%] text-[#676767] lg:px-8 z-20"
+              >
+                <li
+                  v-for="(option, idx) in category.options"
+                  :key="idx"
+                  @click="selectOption(category, option)"
+                  class="px-2 pt-1 cursor-pointer"
+                >
+                  {{ option }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full flex justify-end">
+          <div
+            class="bg-[#F0912D] flex justify-center rounded-md py-2 px-3 sm:py-3 sm:px-4 lg:w-[172px] lg:h-[52px] items-center lg:rounded-[14px]"
+          >
+            <p class="text-[10px] sm:text-[14px] font-bold">
+              Uitgebreid zoeken
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<style>
+/* style */
+</style>
+
+<script>
+let googleMapsScriptLoaded = false;
+export default {
+  data() {
+    return {
+      map: null,
+      markers: [],
+      currentInfoWindow: null,
+      locations: [
+        {
+          lat: -8.653840910873269,
+          lng: 115.21785198506426,
+          name: "Company 1",
+          description: "Deskripsion A",
+          price: 4,
+          image: "/_nuxt/assets/images/img-home-1.png",
+          popularity: 100,
+        },
+        {
+          lat: -8.62717144710956,
+          lng: 115.20910166137442,
+          name: "Company B",
+          description: "Deskripsi B",
+          price: 5,
+          image: "/_nuxt/assets/images/image.svg",
+          popularity: 20,
+        },
+        {
+          lat: -8.62717144710956,
+          lng: 115.29189271629312,
+          name: "Company C",
+          description: "Deskripsi C",
+          price: 5,
+          image: "/_nuxt/assets/images/image.svg",
+          popularity: 20,
+        },
+        {
+          lat: -8.641220836289818,
+          lng: 115.17259520426518,
+          name: "Company D",
+          description: "Deskripsi D",
+          price: 5,
+          image: "/_nuxt/assets/images/image.svg",
+          popularity: 20,
+        },
+      ],
+      categories: [
+        {
+          title: "Zoek een Locatie",
+          selectedOption: "Utrecht",
+          showDropdown: false,
+          options: ["Utrecht", "Amsterdam", "Rotterdam", "Den Haag"],
+        },
+        {
+          title: "Type",
+          selectedOption: "Kantoorruimte",
+          showDropdown: false,
+          options: ["Kantoorruimte", "Andere Optie 1", "Andere Optie 2"],
+        },
+        {
+          title: "Zoek op een prijs",
+          selectedOption: "Vanaf € 50",
+          showDropdown: false,
+          options: ["Vanaf € 50", "Andere Prijs 1", "Andere Prijs 2"],
+        },
+      ],
+    };
+  },
+  mounted() {
+    if (!googleMapsScriptLoaded) {
+      googleMapsScriptLoaded = true;
+      this.loadGoogleMapsScript();
+    } else {
+      this.setupMap();
+    }
+  },
+  methods: {
+    toggleDropdown(category) {
+      category.showDropdown = !category.showDropdown;
+    },
+    selectOption(category, option) {
+      category.selectedOption = option;
+      category.showDropdown = false;
+      console.log("Selected option in", category.title + ":", option);
+    },
+    loadGoogleMapsScript() {
+      window.initMap = this.setupMap;
+      const googleMapsScript = document.createElement("script");
+      googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap`;
+      googleMapsScript.defer = true;
+      googleMapsScript.async = true;
+      googleMapsScript.onload = () => {
+        this.googleMapsScriptLoaded = true;
+      };
+      document.head.appendChild(googleMapsScript);
+    },
+    setupMap() {
+      this.map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -8.653840910873269, lng: 115.21785198506426 },
+        zoom: 13,
       });
 
-      const iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
+      const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
 
-      locations.forEach(location => {
+      this.locations.forEach((location) => {
         const marker = new google.maps.Marker({
           position: { lat: location.lat, lng: location.lng },
-          map: map,
+          map: this.map,
           title: location.name,
-          icon: iconBase + 'red-dot.png' // Custom marker icon
+          icon: iconBase + "red-dot.png",
         });
 
         const contentString = `
@@ -54,58 +197,42 @@
         `;
 
         const infowindow = new google.maps.InfoWindow({
-          content: contentString
+          content: contentString,
         });
 
-        marker.addListener('click', () => {
-          infowindow.open(map, marker);
-        });
-
-        markers.push({ marker, popularity: location.popularity });
-      });
-
-      google.maps.event.addListener(map, 'zoom_changed', function() {
-        const currentZoom = map.getZoom();
-
-        markers.forEach(location => {
-          if (location.popularity < 50 && currentZoom < 12) {
-            location.marker.setVisible(false);
-          } else {
-            location.marker.setVisible(true);
+        marker.addListener("mouseover", () => {
+          if (this.currentInfoWindow) {
+            this.currentInfoWindow.close();
           }
+
+          infowindow.open(this.map, marker);
+          this.currentInfoWindow = infowindow;
+
+          // Menampilkan kembali semua marker
+          this.markers.forEach((m) => {
+            m.setVisible(true);
+          });
+
+          marker.setVisible(true);
+          // this.map.panTo(marker.getPosition(), 500);
         });
+
+        marker.addListener("mouseout", () => {
+          infowindow.close();
+        });
+
+        this.markers.push(marker);
       });
-    }
 
-
-    function loadGoogleMapsScript() {
-        const googleMapsScript = document.createElement('script');
-        googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap`;
-        googleMapsScript.defer = true;
-        googleMapsScript.async = true;
-        window.initMap = initMap; // Make sure initMap is accessible globally
-        document.head.appendChild(googleMapsScript);
-    }
-
-    loadGoogleMapsScript(); // Panggil fungsi untuk memuat skrip Google Maps
-
-
-  </script>
-  
-  <style>
-  #map {
-    height: 400px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    flex-wrap: wrap;
-  }
-  </style>
-  
-  <script>
-  export default {
-    name: 'MapInteractive'
-  };
-  </script>
-  
+      this.setBoundsForMarkers();
+    },
+    setBoundsForMarkers() {
+      const bounds = new google.maps.LatLngBounds();
+      this.markers.forEach((marker) => {
+        bounds.extend(marker.getPosition());
+      });
+      this.map.fitBounds(bounds);
+    },
+  },
+};
+</script>

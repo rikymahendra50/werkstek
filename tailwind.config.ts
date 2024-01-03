@@ -1,12 +1,39 @@
 // Add module
 module.exports = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './layout/**/*.{js,ts,jsx,tsx,mdx}',
-  ] 
-}
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./layout/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    container: {
+      // center: true,
+    },
+    extend: {
+      boxShadow: {
+        custom: "0px 18px 34px 0px rgba(218, 154, 59, 0.2)",
+      },
+
+      backgroundImage: {
+        hero: "url('/assets/images/bg-dot.svg')",
+        orange: "url('/assets/images/bg-orange.svg')",
+      },
+
+      color: {
+        primary1: "#F0912D",
+        secondary1: "#859C81",
+        tertiary: "#EEF3ED",
+        quaternary: "#000",
+      },
+    },
+    fontFamily: {
+      regular: ["PoppinsRegular"],
+      bold: ["PoppinsBold"],
+      medium: ["PoppinsMedium"],
+    },
+  },
+};
 
 import type { Config } from "tailwindcss";
 const colors = require("tailwindcss/colors");
@@ -37,36 +64,5 @@ export default <Partial<Config>>{
     rtl: false, // rotate style direction from left-to-right to right-to-left. You also need to add dir="rtl" to your html tag and install `tailwindcss-flip` plugin for Tailwind CSS.
     prefix: "", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
     logs: false, // Shows info about daisyUI version and used config in the console when building your CSS
-  },
-  theme: {
-    container: {
-      center: true,
-      padding: '0px'
-    },
-    extend: {
-    //   screens: {
-    //     'cs'  : '228px',
-    //     'sm' : '400px',
-    //     'kcs' : '50px',
-    //     'lg' : '1033px'
-    // },
-      boxShadow: {
-        'custom': '0px 18px 34px 0px rgba(218, 154, 59, 0.2)',
-      },
-
-      backgroundImage: {
-        'hero' : "url('/assets/images/bg-dot.svg')",
-        'orange' : "url('/assets/images/bg-orange.svg')"
-      },
-      colors: {
-        primary: colors.blue,
-        gold: colors.amber,
-      },
-    },
-    fontFamily: {
-      sans: ["ClashGrotesk"],
-      display: ["ClashGrotesk"],
-      body: ["ClashGrotesk"],
-    },
   },
 };

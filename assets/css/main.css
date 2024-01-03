@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: "PlusJakartaSans";
   src: url("../fonts/PlusJakartaSans-ExtraBold.ttf") format("truetype");
   font-weight: 800;
@@ -109,7 +109,7 @@
   font-weight: 200;
   font-display: swap;
   font-style: italic;
-}
+} */
 
 /**
  * @license
@@ -148,7 +148,7 @@
 
 */
 
-@font-face {
+/* @font-face {
   font-family: "GeneralSans";
   src: url("../fonts/GeneralSans-Variable.woff2") format("woff2"),
     url("../fonts/GeneralSans-Variable.woff") format("woff"),
@@ -156,7 +156,7 @@
   font-weight: 200 700;
   font-display: swap;
   font-style: normal;
-}
+} */
 
 /**
 * This is a variable font
@@ -169,7 +169,7 @@
 
 */
 
-@font-face {
+/* @font-face {
   font-family: "GeneralSans";
   src: url("../fonts/GeneralSans-VariableItalic.woff2") format("woff2"),
     url("../fonts/GeneralSans-VariableItalic.woff") format("woff"),
@@ -297,7 +297,7 @@
   font-weight: 700;
   font-display: swap;
   font-style: italic;
-}
+} */
 
 /**
  * @license
@@ -329,7 +329,7 @@
 
 */
 
-@font-face {
+/* @font-face {
   font-family: "ClashGrotesk";
   src: url("../fonts/ClashGrotesk-Variable.woff2") format("woff2"),
     url("../fonts/ClashGrotesk-Variable.woff") format("woff"),
@@ -397,8 +397,32 @@
   font-weight: 700;
   font-display: swap;
   font-style: normal;
-}
+} 
 
 .font-general-sans {
   font-family: "GeneralSans" !important;
+}  */
+
+@font-face {
+  font-family: "PoppinsBold";
+  src: url("../fonts/Poppins/Poppins-Bold.ttf") format("ttf");
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PoppinsRegular";
+  src: url("../fonts/Poppins/Poppins-Regular.ttf") format("ttf");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PoppinsMedium";
+  src: url("../fonts/Poppins/Poppins-Medium.ttf") format("ttf");
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
 }

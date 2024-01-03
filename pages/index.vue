@@ -1,15 +1,13 @@
 <template>
-
-  <Navbar />
+  <!-- <Navbar /> -->
 
   <MapInteractive />
-<!-- <Header2 /> -->
+  <!-- <SearchMap /> -->
+  <!-- <Header2 /> -->
 
   <!-- <BgSmallOrange /> -->
 
-  
   <!-- <Header3 /> -->
-
 
   <!-- <Footer /> -->
 
@@ -24,25 +22,21 @@
   <!-- <ButtonOrangeLG /> -->
 
   <!-- <TitleHeader/> -->
-
-
 </template>
 
-<script lang="ts" setup>
+<script>
+// Mengimport CustomComponent
+// import Perblog from "@/components/Perblog.vue";
+// import Footer from "@/components/Footer.vue";
+// import Navbar from "@/components/Navbar.vue";
+import MapInteractive from "@/components/MapInteractive.vue";
 
-  // Mengimport CustomComponent
-  // import Perblog from '../components/Perblog.vue';
-
-  // export default {
-  //   components: {
-  //     Perblog
-  //   }
-  // };
-
-  import Navbar from '../components/Navbar.vue';
-  import MapInteractive from '../components/MapInteractive.vue';
-  // Import komponen lainnya yang diperlukan
-
-  // Export komponen yang diperlukan
+export default {
+  components: {
+    // Perblog,
+    // Navbar,
+    // Footer,
+    MapInteractive,
+  },
+};
 </script>
-
