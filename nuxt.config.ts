@@ -1,7 +1,7 @@
 /**
  * replace with actual title or name of the project
  */
-const projectName = "nuxt-app";
+const projectName = "WEKSTECK";
 /**
  * replace with actual description for seo
  */

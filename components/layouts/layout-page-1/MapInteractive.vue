@@ -1,12 +1,12 @@
 <template>
   <section class="relative z-20">
-    <div id="map" class="relative w-full h-[420px] lg:h-[490px]"></div>
+    <div id="map" class="relative w-full h-[420px] lg:h-[490px] border-2"></div>
     <div
-      class="w-[95%] lg:w-[80%] lg:h-[288px] bg-[#859C81] box-shadow border-radius-map absolute top-[300px]"
+      class="w-[95%] lg:w-[80%] md:h-[240px] lg:h-[288px] bg-[#859C81] border-radius-map box-shadow absolute top-[300px] py-5 lg:py-0"
     >
-      <div class="container-custom flex flex-col text-white">
+      <div class="container-custom flex flex-col text-white w-[99%]">
         <p
-          class="text-[17px] sm:text-[20px] md:text-[25px] py-3 sm:py-5 md:py-10 font-bold"
+          class="text-[17px] sm:text-[20px] md:text-[25px] font-bold pb-3 py-3 lg:py-8"
         >
           Waar bent u op zoek naar?
         </p>
@@ -16,9 +16,9 @@
           <div
             v-for="(category, index) in categories"
             :key="index"
-            class="flex flex-col w-[30%]"
+            class="flex flex-col w-[40%]"
           >
-            <p class="text-[12px] sm:text-[16px] pb-2">
+            <p class="text-[11px] sm:text-[16px] pb-2">
               {{ category.title }}
             </p>
             <div class="relative">

@@ -1,7 +1,7 @@
 <template>
-  <!-- <Navbar /> -->
-
   <MapInteractive />
+  <Layout2 />
+  <Layout3 />
   <!-- <SearchMap /> -->
   <!-- <Header2 /> -->
 
@@ -29,7 +29,9 @@
 // import Perblog from "@/components/Perblog.vue";
 // import Footer from "@/components/Footer.vue";
 // import Navbar from "@/components/Navbar.vue";
-import MapInteractive from "@/components/MapInteractive.vue";
+import MapInteractive from "@/components/layouts/layout-page-1/MapInteractive.vue";
+import Layout2 from "@/components/layouts/layout-page-1/Layout2.vue";
+import Layout3 from "@/components/layouts/layout-page-1/Layout3.vue";
 
 export default {
   components: {
@@ -37,6 +39,7 @@ export default {
     // Navbar,
     // Footer,
     MapInteractive,
+    Layout2,
   },
 };
 </script>
