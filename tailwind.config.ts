@@ -31,8 +31,10 @@ export default <Partial<Config>>{
   theme: {
     extend: {
       backgroundImage: {
-        bgdot: "url('~/assets/images/bg-dot.svg')",
-        orange: "url('../assets/images/bg-orange.svg')",
+        bgdot: "url('/_nuxt/assets/images/bg-dot.svg')",
+        bgdot2: "url('/_nuxt/assets/images/bg-dot-2.svg')",
+        orange: "url('/_nuxt/assets/images/bg-orange.svg')",
+        bgTitle: "url('/_nuxt/assets/images/bg-title.svg')",
       },
       colors: {
         primary: colors.blue,

@@ -1,8 +1,12 @@
 <template>
-  <section class="relative z-20">
+  <section class="relative z-20" :class="marginCustom">
     <div id="map" class="relative w-full h-[420px] lg:h-[490px] border-2"></div>
     <div
-      class="w-[95%] lg:w-[80%] md:h-[240px] lg:h-[288px] bg-[#859C81] border-radius-map box-shadow absolute top-[300px] py-5 lg:py-0"
+      class="w-[95%] lg:w-[80%] md:h-[240px] lg:h-[288px] bg-[#859C81] border-radius-map box-shadow py-5 lg:py-0"
+      :class="{
+        'absolute bottom-[-80px]': !searchCustom,
+        'absolute bottom-[-80px] md:top-[-60px]': searchCustom,
+      }"
     >
       <div class="container-custom flex flex-col text-white w-[99%]">
         <p
@@ -10,8 +14,7 @@
         >
           Waar bent u op zoek naar?
         </p>
-
-        <!-- Loop for categories -->
+        <!-- Loop category -->
         <div class="flex justify-between mb-4">
           <div
             v-for="(category, index) in categories"
@@ -40,6 +43,7 @@
                   />
                 </svg>
               </div>
+              <!-- Dropdown list -->
               <ul
                 v-if="category.showDropdown"
                 class="absolute text-[10px] lg:text-[16px] top-[100%] left-0 bg-white border border-gray-300 rounded-[5px] mt-1 w-[97%] text-[#676767] lg:px-8 z-20"
@@ -56,10 +60,11 @@
             </div>
           </div>
         </div>
-
+        <!-- Button -->
         <div class="w-full flex justify-end">
           <div
-            class="bg-[#F0912D] flex justify-center rounded-md py-2 px-3 sm:py-3 sm:px-4 lg:w-[172px] lg:h-[52px] items-center lg:rounded-[14px]"
+            @click="performSearch"
+            class="bg-[#F0912D] flex justify-center rounded-md py-2 px-3 sm:py-3 sm:px-4 lg:w-[172px] lg:h-[52px] items-center lg:rounded-[14px] cursor-pointer"
           >
             <p class="text-[10px] sm:text-[14px] font-bold">
               Uitgebreid zoeken
@@ -78,6 +83,17 @@
 <script>
 let googleMapsScriptLoaded = false;
 export default {
+  props: {
+    marginCustom: {
+      type: String,
+      required: false,
+    },
+    searchCustom: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
   data() {
     return {
       map: null,
@@ -89,38 +105,47 @@ export default {
           lng: 115.21785198506426,
           name: "Company 1",
           description: "Deskripsion A",
-          price: 4,
           image: "/_nuxt/assets/images/img-home-1.png",
           popularity: 100,
+          city: "Rotterdam",
+          type: "Kantoorruimte",
+          price: 4,
         },
         {
           lat: -8.62717144710956,
           lng: 115.20910166137442,
           name: "Company B",
           description: "Deskripsi B",
-          price: 5,
           image: "/_nuxt/assets/images/image.svg",
           popularity: 20,
+          city: "Utrecht",
+          type: "Kantoorruimte",
+          price: 4,
         },
         {
           lat: -8.62717144710956,
           lng: 115.29189271629312,
           name: "Company C",
           description: "Deskripsi C",
-          price: 5,
           image: "/_nuxt/assets/images/image.svg",
           popularity: 20,
+          city: "Den Haag",
+          type: "Andere Optie 2",
+          price: 8,
         },
         {
           lat: -8.641220836289818,
           lng: 115.17259520426518,
           name: "Company D",
           description: "Deskripsi D",
-          price: 5,
           image: "/_nuxt/assets/images/image.svg",
           popularity: 20,
+          city: "Amsterdam",
+          type: "Andere Optie 1",
+          price: 4,
         },
       ],
+
       categories: [
         {
           title: "Zoek een Locatie",
@@ -136,13 +161,14 @@ export default {
         },
         {
           title: "Zoek op een prijs",
-          selectedOption: "Vanaf € 50",
+          selectedOption: 4,
           showDropdown: false,
-          options: ["Vanaf € 50", "Andere Prijs 1", "Andere Prijs 2"],
+          options: [4, 8, 4],
         },
       ],
     };
   },
+
   mounted() {
     if (!googleMapsScriptLoaded) {
       googleMapsScriptLoaded = true;
@@ -151,26 +177,91 @@ export default {
       this.setupMap();
     }
   },
+
   methods: {
+    selectOption(category, option) {
+      // let selectedCity;
+      // let selectedType;
+      // let selectedPrice;
+
+      // if (category.title === "Zoek een Locatie") {
+      //   this.selectedOption = option;
+      // } else if (category.title === "Type") {
+      //   this.selectedOption = option;
+      // } else if (category.title === "Zoek op een prijs") {
+      //   this.selectedOption = option;
+      // }
+
+      category.selectedOption = option;
+      category.showDropdown = false;
+    },
+
     toggleDropdown(category) {
       category.showDropdown = !category.showDropdown;
     },
-    selectOption(category, option) {
-      category.selectedOption = option;
-      category.showDropdown = false;
-      console.log("Selected option in", category.title + ":", option);
+
+    performSearch() {
+      const selectedOption = this.categories;
+      // console.log(selectedOption);
+      const allCities = this.locations.map((location) => location.city);
+
+      let selectedCityFix = selectedOption[0].selectedOption;
+      let selectedTypeFix = selectedOption[1].selectedOption;
+      let selectedPriceFix = selectedOption[2].selectedOption;
+
+      // console.log(selectedCityFix);
+      // console.log(selectedTypeFix);
+      // console.log(selectedPriceFix);
+
+      const selectedOptionByUser = [
+        selectedCityFix,
+        selectedTypeFix,
+        selectedPriceFix,
+      ];
+
+      const filteredData = this.locations.filter((location) => {
+        return (
+          location.city === selectedOptionByUser[0] &&
+          location.type === selectedOptionByUser[1] &&
+          location.price === parseInt(selectedOptionByUser[2])
+        );
+      });
+
+      if (filteredData.length > 0) {
+        console.log("Data yang cocok:", filteredData[0]);
+        const foundLocation = filteredData[0];
+        this.moveToLocation(foundLocation.lat, foundLocation.lng);
+      } else {
+        console.log("Tidak ada data yang cocok");
+      }
     },
+
+    // Move To Location when search
+    moveToLocation(lat, lng) {
+      if (this.map) {
+        this.map.setCenter({ lat, lng });
+        this.map.setZoom(20);
+      }
+    },
+
+    // Map Function
     loadGoogleMapsScript() {
-      window.initMap = this.setupMap;
-      const googleMapsScript = document.createElement("script");
-      googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap`;
-      googleMapsScript.defer = true;
-      googleMapsScript.async = true;
-      googleMapsScript.onload = () => {
-        this.googleMapsScriptLoaded = true;
-      };
-      document.head.appendChild(googleMapsScript);
+      if (!window.googleMapsScriptLoaded) {
+        window.googleMapsScriptLoaded = true;
+        window.initMap = this.setupMap;
+        const googleMapsScript = document.createElement("script");
+        googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap`;
+        googleMapsScript.defer = true;
+        googleMapsScript.async = true;
+        googleMapsScript.onload = () => {
+          this.googleMapsScriptLoaded = true;
+        };
+        document.head.appendChild(googleMapsScript);
+      } else {
+        this.setupMap();
+      }
     },
+
     setupMap() {
       this.map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: -8.653840910873269, lng: 115.21785198506426 },
@@ -179,22 +270,27 @@ export default {
 
       const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
 
+      const icon = {
+        url: iconBase + "red-dot.png",
+        scaledSize: new google.maps.Size(40, 40),
+      };
+
       this.locations.forEach((location) => {
         const marker = new google.maps.Marker({
           position: { lat: location.lat, lng: location.lng },
           map: this.map,
           title: location.name,
-          icon: iconBase + "red-dot.png",
+          icon: icon,
         });
 
         const contentString = `
-          <div>
-            <h2>${location.name}</h2>
-            <img src="${location.image}" alt="${location.name}" style="width:200px;height:100px;">
-            <p>${location.description}</p>
-            <p>Price: $${location.price}</p>
-          </div>
-        `;
+      <div>
+        <h2>${location.name}</h2>
+        <img src="${location.image}" alt="${location.name}" style="width:200px;height:100px;">
+        <p>${location.description}</p>
+        <p>Price: $${location.price}</p>
+      </div>
+    `;
 
         const infowindow = new google.maps.InfoWindow({
           content: contentString,
@@ -207,14 +303,6 @@ export default {
 
           infowindow.open(this.map, marker);
           this.currentInfoWindow = infowindow;
-
-          // Menampilkan kembali semua marker
-          this.markers.forEach((m) => {
-            m.setVisible(true);
-          });
-
-          marker.setVisible(true);
-          // this.map.panTo(marker.getPosition(), 500);
         });
 
         marker.addListener("mouseout", () => {
@@ -223,16 +311,14 @@ export default {
 
         this.markers.push(marker);
       });
-
-      this.setBoundsForMarkers();
     },
-    setBoundsForMarkers() {
-      const bounds = new google.maps.LatLngBounds();
-      this.markers.forEach((marker) => {
-        bounds.extend(marker.getPosition());
-      });
-      this.map.fitBounds(bounds);
-    },
+  },
+  setBoundsForMarkers() {
+    const bounds = new google.maps.LatLngBounds();
+    this.markers.forEach((marker) => {
+      bounds.extend(marker.getPosition());
+    });
+    this.map.fitBounds(bounds);
   },
 };
 </script>

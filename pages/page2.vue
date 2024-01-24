@@ -1,5 +1,4 @@
 <template>
-  <MapInteractive />
   <StatistiekLocaties
     :image="StatistiekLocaties.image"
     :title1="StatistiekLocaties.title1"
@@ -12,16 +11,15 @@
     :count2="StatistiekLocaties.titleBg2.count"
     :count3="StatistiekLocaties.titleBg3.count"
   />
-  <SliderLocaties />
-  <SliderTestimony />
-  <FourImages />
-  <Blog :show-title-header="true" />
+  <OnzeLocaties />
   <BgBigGreen
     :title1="BgBigGreen.title1"
     :title2="BgBigGreen.title2"
     :title3="BgBigGreen.title3"
-    :showButtonSection="BgBigGreen.showButtonSection"
+    :phoneNumber="BgBigGreen.phoneNumber"
+    :mail="BgBigGreen.mail"
     :showEmailSection="BgBigGreen.showEmailSection"
+    :showButtonSection="BgBigGreen.showButtonSection"
   />
 </template>
 
@@ -30,7 +28,7 @@ export default {
   data() {
     return {
       StatistiekLocaties: {
-        image: "/_nuxt/assets/images/img-home-1.png",
+        image: "/_nuxt/assets/images/img-page2-1.png",
         title1: "De Werkstek locaties",
         title2: "De leukste kantoorruimtes",
         title3:
@@ -40,10 +38,10 @@ export default {
         titleBg3: { title: "Statistiek 3", count: 49 },
       },
       BgBigGreen: {
-        title1: "Blijf op de hoogte",
-        title2: "Schrijf je in voor de nieuwsbrief",
+        title1: "Aanvragen",
+        title2: "Niks kunnen vinden?",
         title3:
-          "Op de hoogte blijven van beschikbare werkplekken? Schrijf je dan nu vrijblijvend in!",
+          "Neem dan contact met ons op. Samen zoeken we jouw perfecte werkplek.",
         showButtonSection: true,
         showEmailSection: false,
       },

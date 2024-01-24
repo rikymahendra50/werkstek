@@ -25,6 +25,14 @@ body {
   box-shadow: 0px 5px 28px 0px rgba(51, 51, 51, 0.25);
 }
 
+.box-shadow2 {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.box-shadow-testimony-img {
+  box-shadow: 0px 18px 34px 0px rgba(218, 154, 59, 0.2);
+}
+
 .border-radius-map {
   border-radius: 0px 20px 50px 0px;
 }
