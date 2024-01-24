@@ -1,0 +1,136 @@
+<template>
+  <section class="py-16">
+    <div class="w-[95%] lg:w-[80%] bg-[#859C81] border-radius-map box-shadow">
+      <div
+        class="container-custom flex flex-col text-white pb-3 py-3 lg:py-8 justify-between"
+      >
+        <div class="w-[60%]">
+          <p
+            class="text-[12px] md:text-[18px] font-bold text-[#404040] tracking-widest"
+          >
+            {{ title1 }}
+          </p>
+          <p class="text-2xl md:text-3xl leading-normal lg:w-[60%] pt-2">
+            {{ title2 }}
+          </p>
+          <p class="text-sm md:text-base font-normal lg:w-[80%] pt-2">
+            {{ title3 }}
+          </p>
+        </div>
+        <!-- showEmailSection -->
+        <div v-if="showEmailSection" class="flex mt-3 w-[90%] lg:w-[50%]">
+          <label class="form-control w-full">
+            <div class="label">
+              <span class="label-text text-white">Vul je Email in</span>
+            </div>
+            <div class="flex">
+              <input
+                type="text"
+                placeholder="Mail@mail.com"
+                class="input input-bordered w-[80%] rounded-r-sm text-black box-shadow max-w-[240px]"
+              />
+              <a
+                class="bg-[#F0912D] flex justify-center py-2 px-3 sm:py-3 sm:px-4 w-[170px] h-[48px] items-center cursor-pointer rounded-r-[10px] box-shadow font-bold text-[12px] md:text-[18px]"
+              >
+                Schrijf je in
+              </a>
+            </div>
+          </label>
+        </div>
+        <!-- showButtonSection -->
+        <div
+          v-if="showButtonSection"
+          class="flex mt-3 w-[90%] lg:w-[50%] items-center gap-5"
+        >
+          <a
+            :href="linkButton1"
+            class="bg-primary1 py-2 px-4 rounded-[14px] drop-shadow-md"
+          >
+            {{ linkTitle1 }}
+          </a>
+          <a
+            v-if="ShowSmallerButton"
+            :href="linkButton2"
+            class="rounded-[14px] drop-shadow-md text-[#404040]"
+          >
+            {{ linkTitle2 }}
+          </a>
+        </div>
+
+        <div v-if="showPhoneEmail" class="flex mt-6 items-center">
+          <div class="flex phone items-center">
+            <img src="@/assets/images/white-phone.svg" alt="white-phone" />
+            <p class="ml-2 lg:ml-3 text-sm">{{ phoneNumber }}</p>
+          </div>
+          <div class="flex pl-5 lg:pl-10 items-center">
+            <img src="@/assets/images/white-mail.svg" alt="white-phone" />
+            <p class="ml-2 lg:ml-3 text-sm">{{ mail }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+export default {
+  props: {
+    title1: {
+      type: String,
+      required: true,
+    },
+    title2: {
+      type: String,
+      required: true,
+    },
+    title3: {
+      type: String,
+      required: true,
+    },
+    phoneNumber: {
+      type: String,
+      required: false,
+      default: "085-0290598",
+    },
+    mail: {
+      type: String,
+      required: false,
+      default: "info@werkstek.nl",
+    },
+    showEmailSection: {
+      type: Boolean,
+      default: true,
+    },
+    showButtonSection: {
+      type: Boolean,
+      default: false,
+    },
+    ShowSmallerButton: {
+      type: Boolean,
+      default: false,
+    },
+    linkTitle1: {
+      type: String,
+      default: "Contact opnemen",
+    },
+    linkButton1: {
+      type: String,
+      required: false,
+    },
+    linkTitle2: {
+      type: String,
+      default: "Contact opnemen",
+      required: false,
+    },
+    linkButton2: {
+      type: String,
+      required: false,
+    },
+    showPhoneEmail: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+  },
+};
+</script>

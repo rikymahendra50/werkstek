@@ -29,30 +29,26 @@ export default <Partial<Config>>{
     logs: false, // Shows info about daisyUI version and used config in the console when building your CSS
   },
   theme: {
-    container: {
-      center: true,
-      padding: '0px'
-    },
     extend: {
-    //   screens: {
-    //     'cs'  : '228px',
-    //     'sm' : '400px',
-    //     'kcs' : '50px',
-    //     'lg' : '1033px'
-    // },
       backgroundImage: {
-        'hero' : "url('assets/images/bg-dot.svg')",
-        'orange' : "url('assets/images/bg-orange.svg')"
+        bgdot: "url('/_nuxt/assets/images/bg-dot.svg')",
+        bgdot2: "url('/_nuxt/assets/images/bg-dot-2.svg')",
+        orange: "url('/_nuxt/assets/images/bg-orange.svg')",
+        bgTitle: "url('/_nuxt/assets/images/bg-title.svg')",
       },
       colors: {
         primary: colors.blue,
         gold: colors.amber,
+        primary1: "#F0912D",
+        secondary1: "#859C81",
+        tertiary: "#EEF3ED",
+        quaternary: "#000",
       },
     },
     fontFamily: {
-      sans: ["ClashGrotesk"],
-      display: ["ClashGrotesk"],
-      body: ["ClashGrotesk"],
+      regular: ["PoppinsRegular"],
+      bold: ["PoppinsBold"],
+      medium: ["PoppinsMedium"],
     },
   },
 };
