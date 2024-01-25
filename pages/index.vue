@@ -15,13 +15,14 @@
   <SliderLocaties />
   <SliderTestimony />
   <FourImages />
-  <Blog :show-title-header="true" />
+  <Blog :showTitleHeader="true" />
   <BgBigGreen
     :title1="BgBigGreen.title1"
     :title2="BgBigGreen.title2"
     :title3="BgBigGreen.title3"
     :showButtonSection="BgBigGreen.showButtonSection"
-    :showEmailSection="BgBigGreen.showEmailSection"
+    :buttonTitle="BgBigGreen.titleButton"
+    :buttonLink="BgBigGreen.linkButton"
   />
 </template>
 
@@ -30,7 +31,7 @@ export default {
   data() {
     return {
       StatistiekLocaties: {
-        image: "/_nuxt/assets/images/img-home-1.png",
+        image: "/images/img-home-1.png",
         title1: "De Werkstek locaties",
         title2: "De leukste kantoorruimtes",
         title3:
@@ -45,7 +46,8 @@ export default {
         title3:
           "Op de hoogte blijven van beschikbare werkplekken? Schrijf je dan nu vrijblijvend in!",
         showButtonSection: true,
-        showEmailSection: false,
+        titleButton: "Contact opnemen",
+        linkbutton: "/contact",
       },
     };
   },

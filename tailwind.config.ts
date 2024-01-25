@@ -8,7 +8,7 @@ export default <Partial<Config>>{
     themes: [
       {
         mytheme: {
-          primary: "#2563eb",
+          primary: "#F0912D",
           secondary: "#4b5563",
           accent: "#33e8c9",
           neutral: "#000000",
@@ -31,10 +31,10 @@ export default <Partial<Config>>{
   theme: {
     extend: {
       backgroundImage: {
-        bgdot: "url('/_nuxt/assets/images/bg-dot.svg')",
-        bgdot2: "url('/_nuxt/assets/images/bg-dot-2.svg')",
-        orange: "url('/_nuxt/assets/images/bg-orange.svg')",
-        bgTitle: "url('/_nuxt/assets/images/bg-title.svg')",
+        bgdot: "url('/images/bg-dot.svg')",
+        bgdot2: "url('/images/bg-dot-2.svg')",
+        orange: "url('/images/bg-orange.svg')",
+        bgTitle: "url('/images/bg-title.svg')",
       },
       colors: {
         primary: colors.blue,

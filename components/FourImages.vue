@@ -16,23 +16,20 @@
             class="flex flex-wrap max-w-[613px] w-[100%] max-h-[391px] justify-end"
           >
             <img
-              src="/_nuxt/assets/images/Bekijk alle locaties van Werkstek.png"
+              src="/images/Bekijk alle locaties van Werkstek.png"
               alt="image-3"
             />
           </div>
         </div>
         <div class="flex flex-col">
           <div class="flex flex-wrap max-w-[512px] w-[100%] max-h-[428px]">
-            <img
-              src="/_nuxt/assets/images/Bekijk onze Vacatures.png"
-              alt="image-2"
-            />
+            <img src="/images/Bekijk onze Vacatures.png" alt="image-2" />
           </div>
           <div
             class="flex flex-wrap max-w-[512px] w-[100%] max-h-[428px] mt-[-0.68rem]"
           >
             <img
-              src="/_nuxt/assets/images/Bekijk alle over de Werkstek communitie.png"
+              src="/images/Bekijk alle over de Werkstek communitie.png"
               alt="image-4"
             />
           </div>
@@ -58,7 +55,7 @@ export default {
       Layout5Data: [
         {
           title: "Lees alles over Werkstek",
-          imageSrc: "/_nuxt/assets/images/Lees alles over Werkstek.png",
+          imageSrc: "/images/Lees alles over Werkstek.png",
           imageAlt: "image1",
         },
       ],

@@ -38,19 +38,16 @@
         </p>
         <div class="flex gap-1 mt-2">
           <img
-            src="/_nuxt/assets/images/icon-facebook-black.svg"
+            src="/images/icon-facebook-black.svg"
             alt="icon-facebook-black"
           />
           <img
-            src="/_nuxt/assets/images/icon-instagram-black.svg"
+            src="/images/icon-instagram-black.svg"
             alt="icon-instagram-black"
           />
+          <img src="/images/icon-youtube-black.svg" alt="icon-youtube-black" />
           <img
-            src="/_nuxt/assets/images/icon-youtube-black.svg"
-            alt="icon-youtube-black"
-          />
-          <img
-            src="/_nuxt/assets/images/icon-linkedin-black.svg"
+            src="/images/icon-linkedin-black.svg"
             alt="icon-linkedin-black"
           />
         </div>

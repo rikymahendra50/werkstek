@@ -41,7 +41,7 @@ export default {
     imageSrc: {
       type: String,
       required: true,
-      default: "/_nuxt/assets/images/bg-title.svg",
+      default: "/images/bg-title.svg",
     },
   },
 };

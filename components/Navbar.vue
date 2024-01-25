@@ -26,14 +26,18 @@
       </div>
 
       <!-- Navbar -->
-      <div class="hidden lg:block">
+      <div class="hidden lg:block z-[99999]">
         <ul class="flex space-x-5 font-medium items-center">
           <li>
-            <a href="#" class="border-b-2 border-[#F0912D] pr-1">Verhuur</a>
+            <NuxtLink to="/" class="border-b-2 border-[#F0912D] pr-1"
+              >Verhuur</NuxtLink
+            >
           </li>
-          <li><a href="#" class="">Onze locaties</a></li>
+          <li>
+            <NuxtLink to="/onze-locaties" class="">Onze locaties</NuxtLink>
+          </li>
           <li class="relative group flex z-10 pr-1">
-            <NuxtLink to="#">Over wekstek</NuxtLink>
+            <NuxtLink to="/over-werkstek">Over werkstek</NuxtLink>
             <ul
               class="absolute top-5 hidden group-hover:block bg-[#F0912D] shadow-lg py-1 mt-2 rounded-md w-full text-white"
             >
@@ -41,12 +45,12 @@
               <li><NuxtLink to="#" class="px-3">Submenu 2</NuxtLink></li>
             </ul>
             <img
-              src="../assets/images/icon-dropdown.svg"
+              src="/images/icon-dropdown.svg"
               alt="icon-dropdown"
               class="pl-2"
             />
           </li>
-          <li><a href="#" class="pr-1">Werkstek updates</a></li>
+          <li><NuxtLink to="#" class="pr-1">Werkstek updates</NuxtLink></li>
           <li
             class="max-w-[172px] 2xl:h-[56px] bg-[#F0912D] hover:bg-white px-3 py-2 text-white border border-[#F0912D] hover:text-[#F0912D] hover:border-[#F0912D] hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
           >

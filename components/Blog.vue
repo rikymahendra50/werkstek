@@ -118,13 +118,14 @@ export default {
     },
     dontShowTitle: {
       type: Boolean,
+      default: true,
     },
   },
   data() {
     return {
       perBlog: [
         {
-          image: "/_nuxt/assets/images/img-big-blog-1.png",
+          image: "/images/img-big-blog-1.png",
           title:
             "Blox reality startup Lorem ipsum od dillogi bell in the city ...",
           description:
@@ -132,26 +133,26 @@ export default {
           link: "#",
         },
         {
-          image: "/_nuxt/assets/images/img-big-blog-2.png",
+          image: "/images/img-big-blog-2.png",
           title:
             "Blox reality startup Lorem ipsum od dillogi bell in the city ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska. Jinesade bel när feras redorade i belogi. FAR paratyp imuvåning, och pesask vyfisat.",
         },
         {
-          image: "/_nuxt/assets/images/img-small-blog-1.png",
+          image: "/images/img-small-blog-1.png",
           title: "BASAL METABOLIC RATE: WHAT IS IT ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
         },
         {
-          image: "/_nuxt/assets/images/img-small-blog-2.png",
+          image: "/images/img-small-blog-2.png",
           title: "BASAL METABOLIC RATE: WHAT IS IT ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
         },
         {
-          image: "/_nuxt/assets/images/img-small-blog-3.png",
+          image: "/images/img-small-blog-3.png",
           title: "BASAL METABOLIC RATE: WHAT IS IT ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",

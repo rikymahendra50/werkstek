@@ -36,6 +36,10 @@ export default {
       type: String,
       required: false,
     },
+    imageClasses: {
+      type: String,
+      required: false,
+    },
     image: {
       type: String,
       required: true,

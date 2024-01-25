@@ -1,6 +1,5 @@
 <template>
-  <LocatiesCategory />
-
+  <OnzeLocatiesSingle />
   <SliderLocaties class="my-10 py-10" />
   <SliderTestimony />
 </template>

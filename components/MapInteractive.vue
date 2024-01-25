@@ -1,6 +1,6 @@
 <template>
   <section class="relative z-20" :class="marginCustom">
-    <div id="map" class="relative w-full h-[420px] lg:h-[490px] border-2"></div>
+    <div id="map" class="relative w-full h-[420px] lg:h-[619px] border-2"></div>
     <div
       class="w-[95%] lg:w-[80%] md:h-[240px] lg:h-[288px] bg-[#859C81] border-radius-map box-shadow py-5 lg:py-0"
       :class="{
@@ -12,7 +12,7 @@
         <p
           class="text-[17px] sm:text-[20px] md:text-[25px] font-bold pb-3 py-3 lg:py-8"
         >
-          Waar bent u op zoek naar?
+          {{ titleMap }}
         </p>
         <!-- Loop category -->
         <div class="flex justify-between mb-4">
@@ -62,14 +62,7 @@
         </div>
         <!-- Button -->
         <div class="w-full flex justify-end">
-          <div
-            @click="performSearch"
-            class="bg-[#F0912D] flex justify-center rounded-md py-2 px-3 sm:py-3 sm:px-4 lg:w-[172px] lg:h-[52px] items-center lg:rounded-[14px] cursor-pointer"
-          >
-            <p class="text-[10px] sm:text-[14px] font-bold">
-              Uitgebreid zoeken
-            </p>
-          </div>
+          <ButtonSM @click="performSearch" />
         </div>
       </div>
     </div>
@@ -96,6 +89,7 @@ export default {
   },
   data() {
     return {
+      titleMap: "Waar bent u op zoek naar?",
       map: null,
       markers: [],
       currentInfoWindow: null,
@@ -105,7 +99,7 @@ export default {
           lng: 115.21785198506426,
           name: "Company 1",
           description: "Deskripsion A",
-          image: "/_nuxt/assets/images/img-home-1.png",
+          image: "/images/img-home-1.png",
           popularity: 100,
           city: "Rotterdam",
           type: "Kantoorruimte",
@@ -116,7 +110,7 @@ export default {
           lng: 115.20910166137442,
           name: "Company B",
           description: "Deskripsi B",
-          image: "/_nuxt/assets/images/image.svg",
+          image: "/images/image.svg",
           popularity: 20,
           city: "Utrecht",
           type: "Kantoorruimte",
@@ -127,7 +121,7 @@ export default {
           lng: 115.29189271629312,
           name: "Company C",
           description: "Deskripsi C",
-          image: "/_nuxt/assets/images/image.svg",
+          image: "/images/image.svg",
           popularity: 20,
           city: "Den Haag",
           type: "Andere Optie 2",
@@ -138,7 +132,7 @@ export default {
           lng: 115.17259520426518,
           name: "Company D",
           description: "Deskripsi D",
-          image: "/_nuxt/assets/images/image.svg",
+          image: "/images/image.svg",
           popularity: 20,
           city: "Amsterdam",
           type: "Andere Optie 1",

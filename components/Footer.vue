@@ -12,28 +12,16 @@
         <h4 class="text-[16px] font-semibold pt-3">Volg ons op</h4>
         <div class="social-media flex pt-3">
           <a href="#"
-            ><img
-              src="~/assets/images/instagram.svg"
-              alt="icon-instagram"
-              class="pr-6"
+            ><img src="/images/instagram.svg" alt="icon-instagram" class="pr-6"
           /></a>
           <a href="#"
-            ><img
-              src="~/assets/images/facebook.svg"
-              alt="icon-facebook"
-              class="pr-6"
+            ><img src="/images/facebook.svg" alt="icon-facebook" class="pr-6"
           /></a>
           <a href="#"
-            ><img
-              src="~/assets/images/linkedin.svg"
-              alt="icon-linkedin"
-              class="pr-6"
+            ><img src="/images/linkedin.svg" alt="icon-linkedin" class="pr-6"
           /></a>
           <a href="#"
-            ><img
-              src="~/assets/images/twitter.svg"
-              alt="icon-twitter"
-              class="pr-6"
+            ><img src="/images/twitter.svg" alt="icon-twitter" class="pr-6"
           /></a>
         </div>
       </div>
@@ -50,10 +38,16 @@
             class="border-b-2 border-[#F0912D] lg:border-[#1FAB71] w-[50px]"
           />
           <ul class="text-[12px] md:text-[15px]">
-            <li class="pt-3">Over ons</li>
-            <li class="pt-3">Locaties</li>
-            <li class="pt-3">Contact opnemen</li>
-            <li class="pt-3">Veel gestelde vragen</li>
+            <li class="pt-3"><NuxtLink to="">Over ons</NuxtLink></li>
+            <li class="pt-3">
+              <NuxtLink to="/onze-locaties">Locaties</NuxtLink>
+            </li>
+            <li class="pt-3">
+              <NuxtLink to="/contact">Contact opnemen</NuxtLink>
+            </li>
+            <li class="pt-3">
+              <NuxtLink to="">Veel gestelde vragen</NuxtLink>
+            </li>
           </ul>
         </div>
         <div class="">
@@ -80,14 +74,14 @@
           <ul class="text-[12px] md:text-[15px]">
             <li class="flex pt-3">
               <img
-                src="../assets/images/telp.svg"
+                src="/images/telp.svg"
                 alt="icon-phone-yellow"
                 class="pr-2 w-[20px] lg:w-[24px]"
               />085-0290598
             </li>
             <li class="flex pt-3">
               <img
-                src="../assets/images/email.svg"
+                src="/images/email.svg"
                 alt="icon-email.svg"
                 class="pr-2 w-[20px] lg:w-[24px]"
               />Werkplekken

@@ -22,13 +22,10 @@
               locaties hebben wij kantoorruimtes
             </p>
           </div>
-          <div class="flex bg-primary1 rounded-[14px] box-shadow">
-            <a
-              href=""
-              class="flex justify-center items-center text-[10px] md:text-[16px] lg:text-[18px] text-white lg:w-[235px] px-4 py-2"
-              >Bekijk alle locaties</a
-            >
-          </div>
+          <ButtonSM
+            buttonTitle="Bekijk alle locaties"
+            buttonLink="/onze-locaties"
+          />
         </div>
       </div>
       <div
@@ -43,35 +40,35 @@
         >
           <swiper-slide>
             <img
-              src="@/assets/images/img-slider-home-1.png"
+              src="/images/img-slider-home-1.png"
               alt="imgslider1"
               class="mr-2 max-w-[350px]"
             />
           </swiper-slide>
           <swiper-slide>
             <img
-              src="@/assets/images/img-slider-home-2.png"
+              src="/images/img-slider-home-2.png"
               alt="imgslider1"
               class="mr-2 max-w-[350px]"
             />
           </swiper-slide>
           <swiper-slide>
             <img
-              src="@/assets/images/img-slider-home-3.png"
+              src="/images/img-slider-home-3.png"
               alt="imgslider1"
               class="mr-2 max-w-[350px]"
             />
           </swiper-slide>
           <swiper-slide>
             <img
-              src="@/assets/images/img-slider-home-1.png"
+              src="/images/img-slider-home-1.png"
               alt="imgslider1"
               class="mr-2 max-w-[350px]"
             />
           </swiper-slide>
           <swiper-slide>
             <img
-              src="@/assets/images/img-slider-home-1.png"
+              src="/images/img-slider-home-1.png"
               alt="imgslider1"
               class="mr-2 max-w-[350px]"
             />

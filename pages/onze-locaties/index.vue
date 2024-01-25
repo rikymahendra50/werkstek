@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       StatistiekLocaties: {
-        image: "/_nuxt/assets/images/img-page2-1.png",
+        image: "/images/img-page2-1.png",
         title1: "De Werkstek locaties",
         title2: "De leukste kantoorruimtes",
         title3:
