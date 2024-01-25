@@ -5,22 +5,7 @@ export default <Partial<Config>>{
   content: ["docs/content/**/*.md"],
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {
-    themes: [
-      {
-        mytheme: {
-          primary: "#F0912D",
-          secondary: "#4b5563",
-          accent: "#33e8c9",
-          neutral: "#000000",
-          "base-100": "#ffffff",
-          info: "#0ea5e9",
-          success: "#10b981",
-          warning: "#facc15",
-          error: "#dc2626",
-        },
-      },
-    ], // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
-    darkTheme: "mytheme", // name of one of the included themes for dark mode
+    themes: false, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
     base: true, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components
     utils: true, // adds responsive and modifier utility classes

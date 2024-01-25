@@ -1,31 +1,21 @@
 <template>
   <div class="border-r bg-white">
     <div class="flex h-full max-h-screen flex-col gap-4">
-      <div class="flex h-[60px] items-center border-b px-6">
+      <div class="flex h-[60px] items-center border-b px-6 justify-between">
         <a class="flex items-center gap-2 font-semibold" href="#"
-          ><Werkstek /></a
-        ><button
-          type="button"
-          @click="showDrawer = false"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground ml-auto h-8 w-8"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-4 w-4"
+          ><Werkstek
+        /></a>
+        <div class="block lg:hidden">
+          <button
+            type="button"
+            @click="showDrawer = false"
+            class="btn btn-square btn-sm"
           >
-            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-          </svg>
-          <span class="sr-only">Toggle notifications</span>
-        </button>
+            <icon name="i-heroicons-x-mark" />
+
+            <span class="sr-only">Toggle notifications</span>
+          </button>
+        </div>
       </div>
       <div class="flex-1 overflow-auto py-2">
         <nav class="grid items-start px-4 text-sm font-medium">
