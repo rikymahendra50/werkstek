@@ -54,11 +54,18 @@
         <div v-if="showPhoneEmail" class="flex mt-6 items-center">
           <div class="flex phone items-center">
             <img src="/images/white-phone.svg" alt="white-phone" />
-            <p class="ml-2 lg:ml-3 text-sm">{{ phoneNumber }}</p>
+            <NuxtLink
+              :to="'telp:' + `${phoneNumber}`"
+              class="ml-2 lg:ml-3 text-sm"
+            >
+              {{ phoneNumber }}
+            </NuxtLink>
           </div>
           <div class="flex pl-5 lg:pl-10 items-center">
             <img src="/images/white-mail.svg" alt="white-phone" />
-            <p class="ml-2 lg:ml-3 text-sm">{{ mail }}</p>
+            <NuxtLink :to="'mailto:' + `${mail}`" class="ml-2 lg:ml-3 text-sm">
+              {{ mail }}
+            </NuxtLink>
           </div>
         </div>
       </div>

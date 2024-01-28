@@ -5,20 +5,20 @@
       secondTitle="Wat vinden onze klanten"
       class="my-8"
     />
-    <div class="my-8 overflow-hidden">
+    <div class="my-8 overflow-hidden relative mx-10">
       <swiper
-        :slidesPerView="slidesPerView"
+        :slidesPerView="slidesPerViewTestimony"
         :spaceBetween="30"
         :pagination="{
           clickable: true,
-          dynamicBullets: true,
+          el: '.swiper-pagination-custom',
         }"
         :autoplay="{
-          delay: 2500,
+          delay: 5000,
           disableOnInteraction: false,
         }"
         :modules="modules"
-        class="mySwiper"
+        class="swiper-testimony"
       >
         <swiper-slide
           v-for="(itemTestimony, index) in Testimony"
@@ -30,10 +30,10 @@
             <img
               :src="itemTestimony.imageSrc"
               alt="testimonial1"
-              class="aspect-square w-[40%] max-w-[100px] object-cover absolute rounded-full mt-[-50px] box-shadow-testimony-img"
+              class="aspect-square max-w-[100px] object-cover absolute rounded-full mt-[-50px] box-shadow-testimony-img"
             />
             <p
-              class="text-[14px] md:text-[16px] lg:text-[18px] leading-8 text-[#3D3D3D] pt-16 md:pt-20"
+              class="text-[14px] md:text-[16px] lg:text-[18px] leading-6 md:leading-8 text-[#3D3D3D] pt-16 md:pt-20"
             >
               {{ itemTestimony.description }}
             </p>
@@ -61,11 +61,39 @@
             </div>
           </div>
         </swiper-slide>
+        <div class="swiper-pagination-custom"></div>
       </swiper>
     </div>
   </section>
 </template>
 
+<style>
+.swiper-pagination-custom {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-20%);
+  display: flex;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: theme("colors.primary1");
+  opacity: 0.5;
+  transition: all 0.3s ease;
+  margin-right: 5px;
+}
+
+.swiper-pagination-bullet-active {
+  width: 30px;
+  background-color: theme("colors.primary1");
+  opacity: 1;
+  height: 9px;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+</style>
 <script>
 import { onMounted, onBeforeUnmount, ref } from "vue";
 
@@ -126,41 +154,25 @@ export default {
     SwiperSlide,
   },
   setup() {
-    const slidesPerView = ref(1);
+    const slidesPerViewTestimony = ref(1);
 
-    const handleResize = () => {
-      slidesPerView.value = window.innerWidth > 768 ? 2 : 1;
+    const handleResizeTestimony = () => {
+      slidesPerViewTestimony.value = window.innerWidth > 768 ? 2 : 1;
     };
 
     onMounted(() => {
-      handleResize();
-      window.addEventListener("resize", handleResize);
+      handleResizeTestimony();
+      window.addEventListener("resize", handleResizeTestimony);
     });
 
     onBeforeUnmount(() => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", handleResizeTestimony);
     });
 
     return {
-      slidesPerView,
+      slidesPerViewTestimony,
       modules: [Autoplay, Pagination],
     };
   },
 };
 </script>
-<style>
-.swiper {
-  width: 100%;
-  height: 100%;
-}
-
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-</style>

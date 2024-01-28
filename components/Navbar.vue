@@ -29,15 +29,28 @@
       <div class="hidden lg:block z-[99999]">
         <ul class="flex space-x-5 font-medium items-center">
           <li>
-            <NuxtLink to="/" class="border-b-2 border-[#F0912D] pr-1"
+            <NuxtLink
+              to="/"
+              class="navlink"
+              :class="{ active: isRouteActive('/') }"
               >Verhuur</NuxtLink
             >
           </li>
           <li>
-            <NuxtLink to="/onze-locaties" class="">Onze locaties</NuxtLink>
+            <NuxtLink
+              to="/onze-locaties"
+              class="navlink"
+              :class="{ active: isRouteActive('/onze-locaties') }"
+              >Onze locaties</NuxtLink
+            >
           </li>
           <li class="relative group flex z-10 pr-1">
-            <NuxtLink to="/over-werkstek">Over werkstek</NuxtLink>
+            <NuxtLink
+              to="/over-werkstek"
+              class="navlink"
+              :class="{ active: isRouteActive('/over-werkstek') }"
+              >Over werkstek</NuxtLink
+            >
             <ul
               class="absolute top-5 hidden group-hover:block bg-[#F0912D] shadow-lg py-1 mt-2 rounded-md w-full text-white"
             >
@@ -50,11 +63,15 @@
               class="pl-2"
             />
           </li>
-          <li><NuxtLink to="#" class="pr-1">Werkstek updates</NuxtLink></li>
+          <li>
+            <NuxtLink to="#" class="pr-1 navlink">Werkstek updates</NuxtLink>
+          </li>
           <li
             class="max-w-[172px] 2xl:h-[56px] bg-[#F0912D] hover:bg-white px-3 py-2 text-white border border-[#F0912D] hover:text-[#F0912D] hover:border-[#F0912D] hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
           >
-            <a href="#" aria-label="contact">Contact opnemen</a>
+            <NuxtLink href="#" aria-label="contact" to="/contact"
+              >Contact opnemen</NuxtLink
+            >
           </li>
         </ul>
       </div>
@@ -157,6 +174,9 @@ export default {
     };
   },
   methods: {
+    isRouteActive(route) {
+      return this.$route.path === route;
+    },
     drawer() {
       this.isOpen = !this.isOpen;
     },

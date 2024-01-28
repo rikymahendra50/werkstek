@@ -74,11 +74,7 @@
             />
             <label>Je bericht</label>
           </div>
-          <a href="#" class="flex w-[90%] lg:w-[50%] text-white">
-            <div class="bg-primary1 py-2 px-4 rounded-[14px] drop-shadow-md">
-              Contact opnemen
-            </div>
-          </a>
+          <ButtonSM buttonTitle="Contact opnemen" />
         </form>
       </div>
     </div>
