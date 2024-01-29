@@ -139,7 +139,6 @@ export default {
           price: 4,
         },
       ],
-
       categories: [
         {
           title: "Zoek een Locatie",
@@ -162,7 +161,6 @@ export default {
       ],
     };
   },
-
   mounted() {
     if (!googleMapsScriptLoaded) {
       googleMapsScriptLoaded = true;
@@ -171,7 +169,6 @@ export default {
       this.setupMap();
     }
   },
-
   methods: {
     selectOption(category, option) {
       // let selectedCity;
@@ -226,6 +223,7 @@ export default {
         this.moveToLocation(foundLocation.lat, foundLocation.lng);
       } else {
         console.log("Sorry not found, Please Adjust your filter");
+        alert("Sorry not found, Please Adjust your filter");
       }
     },
 
@@ -254,7 +252,6 @@ export default {
         this.setupMap();
       }
     },
-
     setupMap() {
       this.map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: -8.653840910873269, lng: 115.21785198506426 },

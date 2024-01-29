@@ -13,8 +13,8 @@
     :showButton="true"
     buttonTitle1="Over Werkstek"
     buttonTitle2="Voor verhuurders"
-    buttonLink1="#"
-    buttonLink2="#"
+    buttonLink1="/over-werkstek"
+    buttonLink2="/voor-verhuurders"
   />
 
   <ContactUs />

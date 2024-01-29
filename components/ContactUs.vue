@@ -52,7 +52,7 @@
           />
         </div>
       </div>
-      <div class="login-box md:order-2 md:w-[400px]">
+      <div class="login-box md:order-2 md:w-[400px] md:mt-2">
         <form class="text-[12px] md:text-[16px]">
           <div class="user-box">
             <input type="text" name="#495057" />
@@ -74,7 +74,7 @@
             />
             <label>Je bericht</label>
           </div>
-          <ButtonSM buttonTitle="Contact opnemen" />
+          <ButtonSM buttonTitle="Versturen" />
         </form>
       </div>
     </div>

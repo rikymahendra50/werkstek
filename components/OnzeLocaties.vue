@@ -35,34 +35,7 @@
             <Checkbox titleCheckBox="Anders" :checkedOrNo="checked" />
           </div>
           <!-- slider -->
-          <div class="card">
-            <div class="w-[100%] my-4">
-              <p class="text-base mt-3 opacity-50">De prijs per maand</p>
-              <div class="range-slider">
-                <div class="range-fill"></div>
-                <input
-                  type="range"
-                  class="min-price"
-                  value="100"
-                  min="10"
-                  max="500"
-                  step="10"
-                />
-                <input
-                  type="range"
-                  class="max-price"
-                  value="400"
-                  min="10"
-                  max="500"
-                  step="10"
-                />
-              </div>
-              <div class="price-content w-[80%]">
-                <p id="min-value text-[14px] opacity-50">€100</p>
-                <p id="max-value text-[14px] opacity-50">€1000</p>
-              </div>
-            </div>
-          </div>
+          <SliderRange titleSliderRange="De prijs per maand" />
           <!-- end slider -->
           <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
           <div class="flex my-2">
@@ -187,71 +160,35 @@
           <p class="text-base mt-3 opacity-50">Soort locatie</p>
           <div class="form-control w-[90%]">
             <label class="cursor-pointer label flex justify-start">
-              <input
-                type="checkbox"
-                checked="checked"
-                class="checkbox checkbox-secondary mr-4 checkbox-sm"
-              />
-              <p class="text-sm">Alles</p>
+              <Checkbox titleCheckBox="Alles" />
             </label>
             <label class="cursor-pointer label flex justify-start">
-              <input
-                type="checkbox"
-                class="checkbox checkbox-secondary mr-4 checkbox-sm"
-              />
-              <p class="text-sm">Stage plaats</p>
+              <Checkbox titleCheckBox="Stage plaats" />
             </label>
             <label class="cursor-pointer label flex justify-start">
-              <input
-                type="checkbox"
-                class="checkbox checkbox-secondary mr-4 checkbox-sm"
-              />
-              <p class="text-sm">Functie 1</p>
+              <Checkbox titleCheckBox="Functie 1" />
             </label>
             <label class="cursor-pointer label flex justify-start">
-              <input
-                type="checkbox"
-                class="checkbox checkbox-secondary mr-4 checkbox-sm"
-              />
-              <p class="text-sm">Functie 2</p>
+              <Checkbox titleCheckBox="Functie 2" />
             </label>
           </div>
 
-          <p class="text-base mt-3 opacity-50">Aantal uur per week</p>
           <!-- slider -->
-          <p class="text-base mt-3 opacity-50">De prijs per maand</p>
-          <p class="text-red-600 text-2xl">this place is the slider</p>
+          <SliderRange titleSliderRange="Aantal uur per week" />
           <!-- end slider -->
           <p class="text-base mt-3 opacity-50">Opleidings niveau</p>
           <div class="form-control w-[90%]">
             <label class="cursor-pointer label flex justify-start">
-              <input
-                type="checkbox"
-                checked="checked"
-                class="checkbox checkbox-secondary mr-4 checkbox-sm"
-              />
-              <p class="text-sm">Alles</p>
+              <Checkbox titleCheckBox="Alles" />
             </label>
             <label class="cursor-pointer label flex justify-start">
-              <input
-                type="checkbox"
-                class="checkbox checkbox-secondary mr-4 checkbox-sm"
-              />
-              <p class="text-sm">MBO</p>
+              <Checkbox titleCheckBox="MBO" />
             </label>
             <label class="cursor-pointer label flex justify-start">
-              <input
-                type="checkbox"
-                class="checkbox checkbox-secondary mr-4 checkbox-sm"
-              />
-              <p class="text-sm">HBO</p>
+              <Checkbox titleCheckBox="HBO" />
             </label>
             <label class="cursor-pointer label flex justify-start">
-              <input
-                type="checkbox"
-                class="checkbox checkbox-secondary mr-4 checkbox-sm"
-              />
-              <p class="text-sm">Universiteit</p>
+              <Checkbox titleCheckBox="Universiteit" />
             </label>
           </div>
           <img src="/images/filter icon.svg" class="w-5 h-5 my-4" />
@@ -262,55 +199,6 @@
     </div>
   </section>
 </template>
-
-<style>
-.price-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.range-slider {
-  width: 80%;
-  position: relative;
-  margin: 15px 0 30px 0;
-}
-
-.range-fill {
-  height: 6px;
-  background-color: orange;
-  position: absolute;
-  z-index: 1;
-}
-
-input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  background: transparent;
-  position: absolute;
-  left: 0;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 15px;
-  width: 15px;
-  border-radius: 50%;
-  background: orange;
-  cursor: pointer;
-  margin-top: -5px;
-  position: relative;
-  z-index: 1;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 5px;
-  background: #e8e8e8;
-  border-radius: 3px;
-  border: none;
-}
-</style>
 
 <script>
 export default {

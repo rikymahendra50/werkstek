@@ -69,7 +69,7 @@
           <li
             class="max-w-[172px] 2xl:h-[56px] bg-[#F0912D] hover:bg-white px-3 py-2 text-white border border-[#F0912D] hover:text-[#F0912D] hover:border-[#F0912D] hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
           >
-            <NuxtLink aria-label="contact" to="/contact"
+            <NuxtLink to="/contact" aria-label="contact"
               >Contact opnemen</NuxtLink
             >
           </li>
@@ -133,31 +133,37 @@
 
         <ul class="divide-y font-sans">
           <li class="cursor-pointer">
-            <a href="#" @click="isOpen = false" class="my-4 inline-block"
-              >Verhuur</a
+            <Nuxtlink to="/" @click="isOpen = false" class="my-4 inline-block"
+              >Verhuur</Nuxtlink
             >
           </li>
           <li class="cursor-pointer">
-            <a href="#" @click="isOpen = false" class="my-4 inline-block"
-              >Onze locaties</a
+            <NuxtLink
+              to="/onze-locaties"
+              @click="isOpen = false"
+              class="my-4 inline-block"
+              >Onze locaties</NuxtLink
             >
           </li>
           <li class="cursor-pointer">
-            <a href="#" @click="isOpen = false" class="my-4 inline-block"
-              >Over werkstek</a
+            <NuxtLink
+              to="/over-werkstek"
+              @click="isOpen = false"
+              class="my-4 inline-block"
+              >Over werkstek</NuxtLink
             >
           </li>
           <li class="cursor-pointer">
-            <a href="#" @click="isOpen = false" class="my-4 inline-block"
-              >Werkstek updates</a
+            <NuxtLink to="#" @click="isOpen = false" class="my-4 inline-block"
+              >Werkstek updates</NuxtLink
             >
           </li>
           <li class="cursor-pointer">
-            <a
-              href="#"
+            <NuxtLink
+              to="/contact"
               @click="isOpen = false"
               class="my-8 w-full text-center font-semibold cta inline-block bg-[#F0912D] hover:bg-white border border-[#F0912D] px-3 py-2 rounded text-white hover:text-[#F0912D]"
-              >Contact opnemen</a
+              >Contact opnemen</NuxtLink
             >
           </li>
         </ul>
