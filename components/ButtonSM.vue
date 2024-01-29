@@ -3,9 +3,11 @@
     :to="buttonLink"
     class="bg-[#F0912D] w-[25%] md:w-[40%] max-w-[172px] h-[30px] lg:h-[52px] rounded-[14px] flex items-center justify-center cursor-pointer"
   >
-    <p class="text-[12px] md:text-[14px] sm:font-bold text-center text-white">
+    <span
+      class="text-[12px] md:text-[14px] sm:font-bold text-center text-white"
+    >
       {{ buttonTitle }}
-    </p>
+    </span>
   </NuxtLink>
 </template>
 

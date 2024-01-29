@@ -185,7 +185,6 @@ export default {
       // } else if (category.title === "Zoek op een prijs") {
       //   this.selectedOption = option;
       // }
-
       category.selectedOption = option;
       category.showDropdown = false;
     },
@@ -222,11 +221,11 @@ export default {
       });
 
       if (filteredData.length > 0) {
-        console.log("Data yang cocok:", filteredData[0]);
+        console.log("Matching Data:", filteredData[0]);
         const foundLocation = filteredData[0];
         this.moveToLocation(foundLocation.lat, foundLocation.lng);
       } else {
-        console.log("Tidak ada data yang cocok");
+        console.log("Sorry not found, Please Adjust your filter");
       }
     },
 
@@ -266,7 +265,7 @@ export default {
 
       const icon = {
         url: iconBase + "red-dot.png",
-        scaledSize: new google.maps.Size(40, 40),
+        scaledSize: new google.maps.Size(30, 30),
       };
 
       this.locations.forEach((location) => {
@@ -278,13 +277,13 @@ export default {
         });
 
         const contentString = `
-      <div>
-        <h2>${location.name}</h2>
-        <img src="${location.image}" alt="${location.name}" style="width:200px;height:100px;">
-        <p>${location.description}</p>
-        <p>Price: $${location.price}</p>
-      </div>
-    `;
+          <div>
+            <h2>${location.name}</h2>
+            <img src="${location.image}" alt="${location.name}" style="width:200px;height:100px;">
+            <p>${location.description}</p>
+            <p>Price: $${location.price}</p>
+          </div>
+        `;
 
         const infowindow = new google.maps.InfoWindow({
           content: contentString,

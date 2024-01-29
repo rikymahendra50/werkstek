@@ -36,30 +36,31 @@
           </div>
           <!-- slider -->
           <div class="card">
-            <p class="text-base mt-3 opacity-50">De prijs per maand</p>
-            <div class="range-slider">
-              <div class="range-fill"></div>
-
-              <input
-                type="range"
-                class="min-price"
-                value="100"
-                min="10"
-                max="500"
-                step="10"
-              />
-              <input
-                type="range"
-                class="max-price"
-                value="400"
-                min="10"
-                max="500"
-                step="10"
-              />
-            </div>
-            <div class="price-content">
-              <p id="min-value text-[14px] opacity-50">€100</p>
-              <p id="max-value text-[14px] opacity-50">€1000</p>
+            <div class="w-[100%] my-4">
+              <p class="text-base mt-3 opacity-50">De prijs per maand</p>
+              <div class="range-slider">
+                <div class="range-fill"></div>
+                <input
+                  type="range"
+                  class="min-price"
+                  value="100"
+                  min="10"
+                  max="500"
+                  step="10"
+                />
+                <input
+                  type="range"
+                  class="max-price"
+                  value="400"
+                  min="10"
+                  max="500"
+                  step="10"
+                />
+              </div>
+              <div class="price-content w-[80%]">
+                <p id="min-value text-[14px] opacity-50">€100</p>
+                <p id="max-value text-[14px] opacity-50">€1000</p>
+              </div>
             </div>
           </div>
           <!-- end slider -->
@@ -81,11 +82,8 @@
           <div class="flex justify-between">
             <div class="flex flex-col w-[33%] gap-2">
               <Checkbox titleCheckBox="Wifi" />
-
               <Checkbox titleCheckBox="Parkeerplaats" />
-
               <Checkbox titleCheckBox="Receptie" />
-
               <Checkbox titleCheckBox="Koffiebar" />
             </div>
             <div class="flex flex-col w-[67%] gap-2">
@@ -104,36 +102,45 @@
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58334447.393653534!2d54.64843750000003!3d26.82556878670093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3663f18a24cbe857%3A0xa9416bfcd3a0f459!2sAsia!5e0!3m2!1sid!2sid!4v1705553884962!5m2!1sid!2sid"
             loading="lazy"
-            class="w-full"
+            class="w-[90%] my-5"
           ></iframe>
         </div>
       </div>
-      <div class="py-5 lg:w-[65%]">
+      <div class="py-5 lg:w-[65%] overflow-auto max-h-[400px] md:max-h-[800px]">
         <!-- elemen each locatie -->
-        <NuxtLink to="/onze-locaties/onze-locaties-single">
+        <NuxtLink
+          to="/onze-locaties/onze-locaties-single"
+          v-for="items in eachLocaties"
+        >
           <div
-            class="bg-[#859C8142] bg-opacity-20 rounded-md shadow-xl w-full max-w-[786.406px] flex"
+            class="bg-[#859C8142] bg-opacity-20 rounded-md shadow-xl w-full max-w-[786.406px] flex mb-3"
           >
             <img
-              src="/images/img-page2-2.png"
+              :src="items.image"
               alt="page2"
               class="max-w-[256px] w-[50%] lg:w-full"
             />
-            <div class="flex flex-col sm:flex-row ml-4 w-full">
+            <div class="flex flex-col min-[400px]:flex-row ml-4 w-full">
               <div class="flex flex-col justify-center w-[90%]">
-                <p class="text-[#404040] text-sm lg:text-base mt-1">Locatie</p>
-                <p class="text-[#777] lg:text-sm mt-1">Adres</p>
-                <p class="text-xs lg:text-sm font-semibold mt-1 text-[#777]">
-                  Opervlakte
+                <p class="text-[#404040] text-sm lg:text-base mt-1">
+                  {{ items.locatie }}
                 </p>
-                <p class="text-xs lg:text-sm mt-1">€ 495 p/maand</p>
+                <p class="text-[#777] lg:text-sm mt-1">{{ items.adres }}</p>
+                <p class="text-xs lg:text-sm font-semibold mt-1 text-[#777]">
+                  {{ items.opervlakte }}
+                </p>
+                <p class="text-xs lg:text-sm mt-1">{{ items.pricePerMonth }}</p>
                 <p class="text-xs lg:text-[13px] text-[#859C81] mt-1">
-                  +31302393838
+                  {{ items.phoneNumber }}
                 </p>
                 <p class="text-[10px] lg:text-[13px] text-[#859C81] mt-1">
-                  Mail adres
+                  {{ items.mailAdres }}
                 </p>
-                <p class="text-[10px] lg:text-[12px] mt-1">Neem een kijkje ></p>
+                <NuxtLink
+                  :to="eachLocaties.detailLink"
+                  class="text-[10px] lg:text-[12px]"
+                  >{{ items.detailLinkTitle }}></NuxtLink
+                >
               </div>
               <div class="items-end flex mr-3 mb-2">
                 <div
@@ -144,7 +151,7 @@
                     alt="page2"
                     class="w-[14px]"
                   />
-                  <p>9.4</p>
+                  <p class="text-sm">{{ items.rating }}</p>
                 </div>
               </div>
             </div>
@@ -256,11 +263,11 @@
   </section>
 </template>
 
-<style scoped>
+<style>
 .price-content {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  width: 80%;
 }
 
 .range-slider {
@@ -277,8 +284,11 @@
 }
 
 input[type="range"] {
+  -webkit-appearance: none;
   width: 100%;
+  background: transparent;
   position: absolute;
+  left: 0;
 }
 
 input[type="range"]::-webkit-slider-thumb {
@@ -304,6 +314,48 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 <script>
 export default {
+  data() {
+    return {
+      eachLocaties: [
+        {
+          image: "/images/img-each-locatie-1.png",
+          locatie: "Locatie",
+          adres: "Adres",
+          opervlakte: "opervlakte",
+          pricePerMonth: "€ 495 p/maand",
+          phoneNumber: "+31302393838",
+          mailAdres: "Mail adres",
+          detailLinkTitle: "Neem een kijkje",
+          detailLink: "/onze-locaties/onze-locaties-single",
+          rating: 9.4,
+        },
+        {
+          image: "/images/img-each-locatie-2.jpg",
+          locatie: "Locatie",
+          adres: "Adres",
+          opervlakte: "opervlakte",
+          pricePerMonth: "€ 495 p/maand",
+          phoneNumber: "+31302393838",
+          mailAdres: "Mail adres",
+          detailLinkTitle: "Neem een kijkje",
+          detailLink: "/onze-locaties/onze-locaties-single",
+          rating: 9.4,
+        },
+        {
+          image: "/images/img-each-locatie-3.jpg",
+          locatie: "Locatie",
+          adres: "Adres",
+          opervlakte: "opervlakte",
+          pricePerMonth: "€ 495 p/maand",
+          phoneNumber: "+31302393838",
+          mailAdres: "Mail adres",
+          detailLinkTitle: "Neem een kijkje",
+          detailLink: "/onze-locaties/onze-locaties-single",
+          rating: 9.4,
+        },
+      ],
+    };
+  },
   props: {
     showLocaties: {
       type: Boolean,
