@@ -18,18 +18,18 @@
             class="flex mt-10 w-[90%] lg:w-[80%] justify-between"
             v-if="showButton"
           >
-            <a
-              :href="buttonLink1"
+            <NuxtLink
+              :to="buttonLink1"
               class="bg-primary1 py-3 px-6 rounded-[14px] drop-shadow-md text-white"
             >
               {{ buttonTitle1 }}
-            </a>
-            <a
-              :href="buttonLink2"
+            </NuxtLink>
+            <NuxtLink
+              :to="buttonLink2"
               class="py-3 px-6 rounded-[14px] drop-shadow-md text-[16px] font-bold text-[#404040]"
             >
               {{ buttonTitle2 }}
-            </a>
+            </NuxtLink>
           </div>
         </div>
       </div>

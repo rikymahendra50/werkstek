@@ -39,69 +39,21 @@
           class="mySwiper h-[458px]"
           loop
         >
-          <swiper-slide class="mr-2">
+          <swiper-slide
+            class="mr-2"
+            v-for="(itemSlider, index) in SliderLocaties"
+            :key="itemSlider.id"
+            :style="{
+              backgroundImage: `url('${itemSlider.backgroundImage}')`,
+              background: `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${itemSlider.backgroundImage}')`,      
+              backgroundPosition: 'center center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+            }"
+          >
             <NuxtLink
-              to="/"
+              :to="itemSlider.link"
               class="h-full flex flex-col justify-center items-center text-white"
-              style="
-                background-image: url('images/img-slider-home-1.png'),
-                  linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-                background-blend-mode: darken;
-                background-size: cover;
-                background-position: center center;
-                background-repeat: no-repeat;
-              "
-            >
-              <h2 class="text-3xl pt-20">Hoofddorp</h2>
-              <p class="text-sm py-1">Simon Stevinweg 27</p>
-              <h4 class="text-lg font-semibold">Opervlakte</h4>
-              <p class="text-sm py-1">€ 495 p/maand</p>
-              <p class="text-sm">Neem een kijkje ></p>
-            </NuxtLink>
-          </swiper-slide>
-          <swiper-slide class="mr-2">
-            <NuxtLink
-              to="/"
-              class="h-full flex flex-col justify-center items-center text-white"
-              style="
-                background-image: url('images/img-slider-home-2.png'),
-                  linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-                background-blend-mode: darken;
-              "
-            >
-              <h2 class="text-3xl pt-20">Hoofddorp</h2>
-              <p class="text-sm py-1">Simon Stevinweg 27</p>
-              <h4 class="text-lg font-semibold">Opervlakte</h4>
-              <p class="text-sm py-1">€ 495 p/maand</p>
-              <p class="text-sm">Neem een kijkje ></p>
-            </NuxtLink>
-          </swiper-slide>
-          <swiper-slide class="mr-2">
-            <NuxtLink
-              to="/"
-              class="h-full flex flex-col justify-center items-center text-white"
-              style="
-                background-image: url('images/img-slider-home-3.png'),
-                  linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-                background-blend-mode: darken;
-              "
-            >
-              <h2 class="text-3xl pt-20">Hoofddorp</h2>
-              <p class="text-sm py-1">Simon Stevinweg 27</p>
-              <h4 class="text-lg font-semibold">Opervlakte</h4>
-              <p class="text-sm py-1">€ 495 p/maand</p>
-              <p class="text-sm">Neem een kijkje ></p>
-            </NuxtLink>
-          </swiper-slide>
-          <swiper-slide class="mr-2">
-            <NuxtLink
-              to="/"
-              class="h-full flex flex-col justify-center items-center text-white"
-              style="
-                background-image: url('images/img-slider-home-3.png'),
-                  linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-                background-blend-mode: darken;
-              "
             >
               <h2 class="text-3xl pt-20">Hoofddorp</h2>
               <p class="text-sm py-1">Simon Stevinweg 27</p>
@@ -169,6 +121,32 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
+  },
+  data() {
+    return {
+      SliderLocaties: [
+        {
+          id: 1,
+          link: "/",
+          backgroundImage: "/images/img-slider-home-1.png",
+        },
+        {
+          id: 2,
+          link: "/",
+          backgroundImage: "/images/img-slider-home-2.png",
+        },
+        {
+          id: 3,
+          link: "/",
+          backgroundImage: "/images/img-slider-home-3.png",
+        },
+        {
+          id: 4,
+          link: "/",
+          backgroundImage: "/images/img-slider-home-2.png",
+        },
+      ],
+    };
   },
   setup() {
     const slidesPerView = ref(3);

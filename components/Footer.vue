@@ -11,18 +11,18 @@
         </p>
         <h4 class="text-[16px] font-semibold pt-3">Volg ons op</h4>
         <div class="social-media flex pt-3">
-          <a href="#"
+          <NuxtLink to="#"
             ><img src="/images/instagram.svg" alt="icon-instagram" class="pr-6"
-          /></a>
-          <a href="#"
+          /></NuxtLink>
+          <NuxtLink to="#"
             ><img src="/images/facebook.svg" alt="icon-facebook" class="pr-6"
-          /></a>
-          <a href="#"
+          /></NuxtLink>
+          <NuxtLink to="#"
             ><img src="/images/linkedin.svg" alt="icon-linkedin" class="pr-6"
-          /></a>
-          <a href="#"
+          /></NuxtLink>
+          <NuxtLink to="#"
             ><img src="/images/twitter.svg" alt="icon-twitter" class="pr-6"
-          /></a>
+          /></NuxtLink>
         </div>
       </div>
       <div

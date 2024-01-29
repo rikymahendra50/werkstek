@@ -69,7 +69,7 @@
           <li
             class="max-w-[172px] 2xl:h-[56px] bg-[#F0912D] hover:bg-white px-3 py-2 text-white border border-[#F0912D] hover:text-[#F0912D] hover:border-[#F0912D] hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
           >
-            <NuxtLink href="#" aria-label="contact" to="/contact"
+            <NuxtLink aria-label="contact" to="/contact"
               >Contact opnemen</NuxtLink
             >
           </li>

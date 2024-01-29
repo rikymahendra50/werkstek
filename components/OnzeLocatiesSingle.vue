@@ -49,15 +49,18 @@
                   :key="itemCheckBox.id"
                 >
                   <td class="text-[13px] w-[50%]">{{ itemCheckBox.name }}</td>
-                  <td class="w-[50%] flex items-start">
-                    <div class="form-control">
+                  <td class="w-[50%] flex items-start text-black">
+                    <!-- <div class="form-control">
                       <label class="cursor-pointer label">
                         <input type="checkbox" class="checkbox" />
-                        <p class="label-text pl-2 text-[13px] text-sm">
+                        <p
+                          class="label-text pl-2 text-[13px] text-sm text-black"
+                        >
                           {{ itemCheckBox.checkBoxTitle }}
                         </p>
                       </label>
-                    </div>
+                    </div> -->
+                    <Checkbox :titleCheckBox="itemCheckBox.checkBoxTitle" />
                   </td>
                 </tr>
               </tbody>

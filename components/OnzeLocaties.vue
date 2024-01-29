@@ -28,131 +28,71 @@
         </details>
         <div class="flex flex-col">
           <p class="text-base mt-3 opacity-50">Soort locatie</p>
-          <div class="grid grid-cols-2 grid-rows-2">
-            <div class="flex items-center">
-              <div class="form-control">
-                <label class="cursor-pointer label">
-                  <input
-                    type="checkbox"
-                    checked="checked"
-                    class="checkbox mr-2 checkbox-sm"
-                  />
-                  <p class="text-sm">Alles</p>
-                </label>
-              </div>
-            </div>
-            <div class="flex items-center">
-              <div class="form-control">
-                <label class="cursor-pointer label">
-                  <input type="checkbox" class="checkbox mr-2 checkbox-sm" />
-                  <p class="text-sm">Flex plek</p>
-                </label>
-              </div>
-            </div>
-            <div class="flex items-center">
-              <div class="form-control">
-                <label class="cursor-pointer label">
-                  <input type="checkbox" class="checkbox mr-2 checkbox-sm" />
-                  <p class="text-sm">Kantoorruimte</p>
-                </label>
-              </div>
-            </div>
-            <div class="flex items-center">
-              <div class="form-control">
-                <label class="cursor-pointer label">
-                  <input type="checkbox" class="checkbox mr-2 checkbox-sm" />
-                  <p class="text-sm">Anders</p>
-                </label>
-              </div>
-            </div>
+          <div class="grid grid-cols-2 grid-rows-2 gap-2">
+            <Checkbox titleCheckBox="Alles" :checkedOrNo="checked" />
+            <Checkbox titleCheckBox="Flex plek" :checkedOrNo="checked" />
+            <Checkbox titleCheckBox="Kantoorruimte" :checkedOrNo="checked" />
+            <Checkbox titleCheckBox="Anders" :checkedOrNo="checked" />
           </div>
           <!-- slider -->
-          <p class="text-base mt-3 opacity-50">De prijs per maand</p>
-          <p class="text-red-600 text-2xl">this place is the slider</p>
+          <div class="card">
+            <p class="text-base mt-3 opacity-50">De prijs per maand</p>
+            <div class="range-slider">
+              <div class="range-fill"></div>
+
+              <input
+                type="range"
+                class="min-price"
+                value="100"
+                min="10"
+                max="500"
+                step="10"
+              />
+              <input
+                type="range"
+                class="max-price"
+                value="400"
+                min="10"
+                max="500"
+                step="10"
+              />
+            </div>
+            <div class="price-content">
+              <p id="min-value text-[14px] opacity-50">€100</p>
+              <p id="max-value text-[14px] opacity-50">€1000</p>
+            </div>
+          </div>
           <!-- end slider -->
           <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
-          <div class="flex">
+          <div class="flex my-2">
             <input
               type="text"
               placeholder="Min"
-              class="input input-bordered w-[30%] p-[10px] mr-2 input-sm"
+              class="input input-bordered w-[35%] p-[10px] mr-2 input-md"
             />
             <input
               type="text"
               placeholder="Max"
-              class="input input-bordered w-[30%] p-[10px] input-sm"
+              class="input input-bordered w-[35%] p-[10px] input-md"
             />
           </div>
           <!-- checkbox -->
           <p class="my-3">-</p>
-          <div class="grid grid-cols-2">
-            <div class="flex items-center">
-              <div class="form-control">
-                <label class="cursor-pointer label">
-                  <input
-                    type="checkbox"
-                    checked="checked"
-                    class="checkbox mr-2 checkbox-sm"
-                  />
-                  <p class="text-sm">Wifi</p>
-                </label>
-              </div>
+          <div class="flex justify-between">
+            <div class="flex flex-col w-[33%] gap-2">
+              <Checkbox titleCheckBox="Wifi" />
+
+              <Checkbox titleCheckBox="Parkeerplaats" />
+
+              <Checkbox titleCheckBox="Receptie" />
+
+              <Checkbox titleCheckBox="Koffiebar" />
             </div>
-            <div class="flex items-center">
-              <div class="form-control">
-                <label class="cursor-pointer label">
-                  <input type="checkbox" class="checkbox mr-2 checkbox-sm" />
-                  <p class="text-sm">Keuken</p>
-                </label>
-              </div>
-            </div>
-            <div class="flex items-center">
-              <div class="form-control">
-                <label class="cursor-pointer label">
-                  <input type="checkbox" class="checkbox mr-2 checkbox-sm" />
-                  <p class="text-sm">Parkeerplaats</p>
-                </label>
-              </div>
-            </div>
-            <div class="flex items-center">
-              <div class="form-control">
-                <label class="cursor-pointer label">
-                  <input type="checkbox" class="checkbox mr-2 checkbox-sm" />
-                  <p class="text-sm">Vlakbij het treinstation</p>
-                </label>
-              </div>
-            </div>
-            <div class="flex items-center">
-              <div class="form-control">
-                <label class="cursor-pointer label">
-                  <input type="checkbox" class="checkbox mr-2 checkbox-sm" />
-                  <p class="text-sm">Receptie</p>
-                </label>
-              </div>
-            </div>
-            <div class="flex items-center">
-              <div class="form-control">
-                <label class="cursor-pointer label">
-                  <input type="checkbox" class="checkbox mr-2 checkbox-sm" />
-                  <p class="text-sm">Loungeplekken</p>
-                </label>
-              </div>
-            </div>
-            <div class="flex items-center">
-              <div class="form-control">
-                <label class="cursor-pointer label">
-                  <input type="checkbox" class="checkbox mr-2 checkbox-sm" />
-                  <p class="text-sm">Koffiebar</p>
-                </label>
-              </div>
-            </div>
-            <div class="flex items-center">
-              <div class="form-control">
-                <label class="cursor-pointer label">
-                  <input type="checkbox" class="checkbox mr-2 checkbox-sm" />
-                  <p class="text-sm">Vergaderruimtes met videoschermen</p>
-                </label>
-              </div>
+            <div class="flex flex-col w-[67%] gap-2">
+              <Checkbox titleCheckBox="Keuken" />
+              <Checkbox titleCheckBox="Vlakbij het treinstation" />
+              <Checkbox titleCheckBox="Loungeplekken" />
+              <Checkbox titleCheckBox="Vergaderruimtes met videoschermen" />
             </div>
           </div>
           <img
@@ -316,8 +256,50 @@
   </section>
 </template>
 
-<style>
-/* style */
+<style scoped>
+.price-content {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.range-slider {
+  width: 80%;
+  position: relative;
+  margin: 15px 0 30px 0;
+}
+
+.range-fill {
+  height: 6px;
+  background-color: orange;
+  position: absolute;
+  z-index: 1;
+}
+
+input[type="range"] {
+  width: 100%;
+  position: absolute;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: orange;
+  cursor: pointer;
+  margin-top: -5px;
+  position: relative;
+  z-index: 1;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  background: #e8e8e8;
+  border-radius: 3px;
+  border: none;
+}
 </style>
 
 <script>
