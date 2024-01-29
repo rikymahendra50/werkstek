@@ -53,33 +53,100 @@
         </div>
       </div>
       <div class="login-box md:order-2 md:w-[400px]">
-        <form class="text-[12px] md:text-[16px]">
+        <VeeForm
+          @submit="onSubmit"
+          :validation-schema="contactSchema"
+          class="text-[12px] md:text-[16px]"
+          v-slot="{ errors }"
+        >
           <div class="user-box">
-            <input type="text" name="#495057" />
+            <VeeField name="name" v-model="dataForm.name" />
+            <VeeErrorMessage name="name" class="text-sm text-error" />
             <label>Je naam (verplicht)</label>
           </div>
           <div class="user-box">
-            <input type="text" name="#" />
+            <VeeField name="email" v-model="dataForm.email" />
+            <VeeErrorMessage name="email" class="text-sm text-error" />
             <label>Je e-mailadres (verplicht)</label>
           </div>
           <div class="user-box">
-            <input type="text" name="#" />
+            <VeeField name="subject" v-model="dataForm.subject" />
+            <VeeErrorMessage name="subject" class="text-sm text-error" />
             <label>Onderwerp</label>
           </div>
           <div class="user-box">
-            <textarea
-              type="text"
-              name="#"
-              class="h-[100px] min-h-[50px] max-h-[150px]"
-            />
+            <VeeField
+              name="message"
+              v-model="dataForm.message"
+              v-slot="{ field }"
+            >
+              <textarea
+                v-bind="field"
+                class="h-[100px] min-h-[50px] max-h-[150px]"
+              />
+            </VeeField>
+            <VeeErrorMessage name="message" class="text-sm text-error" />
+
             <label>Je bericht</label>
           </div>
-          <ButtonSM buttonTitle="Contact opnemen" />
-        </form>
+
+          <button
+            type="submit"
+            :disabled="loading"
+            class="bg-[#F0912D] w-[25%] md:w-[40%] max-w-[172px] h-[30px] lg:h-[52px] rounded-[14px] flex items-center justify-center cursor-pointer"
+          >
+            <span
+              class="text-[12px] md:text-[14px] sm:font-bold text-center text-white"
+            >
+              Contact opnemen
+            </span>
+          </button>
+        </VeeForm>
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+const { contactSchema } = useSchema();
+const { loading, transformErrors } = useRequestHelper();
+const { requestOptions } = useRequestOptions();
+const snackbar = useSnackbar();
+
+const dataForm = ref({
+  name: undefined,
+  email: undefined,
+  subject: undefined,
+  message: undefined,
+});
+
+async function onSubmit(values, ctx) {
+  loading.value = true;
+
+  const { data, error } = await useFetch("/contacts", {
+    method: "POST",
+    body: dataForm.value,
+    ...requestOptions,
+  });
+
+  if (error.value) {
+    ctx.setErrors(transformErrors(error.value?.data));
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
+    });
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Thank you for your message. We will get back to you as soon as possible.",
+    });
+
+    ctx.resetForm();
+  }
+
+  loading.value = false;
+}
+</script>
 
 <style>
 .login-box {

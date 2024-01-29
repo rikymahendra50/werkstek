@@ -26,6 +26,7 @@ export default defineNuxtConfig({
     "@vee-validate/nuxt",
     "floating-vue/nuxt",
     "@pinia/nuxt",
+    "nuxt-snackbar",
   ],
 
   css: ["~/assets/css/main.css"],
@@ -34,6 +35,11 @@ export default defineNuxtConfig({
   },
   image: {
     format: ["webp", "jpg", "png"],
+  },
+  snackbar: {
+    top: true,
+    right: true,
+    duration: 5000,
   },
   devServer: {
     /**
