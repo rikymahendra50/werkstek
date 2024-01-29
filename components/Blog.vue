@@ -29,7 +29,7 @@
           <p class="font-normal text-[12px] sm:text-[14px] md:text-[18px] py-3">
             {{ perBlog[0].description }}
           </p>
-          <ButtonBlog :perBlogLink="perBlog[0].description" v-if="showButton" />
+          <ButtonBlog v-if="showButton" />
         </div>
         <div class="card max-w-[366px] w-[50%]">
           <img :src="perBlog[1].image" alt="image-person2" class="w-full" />
@@ -118,40 +118,41 @@ export default {
     },
     dontShowTitle: {
       type: Boolean,
+      default: true,
     },
   },
   data() {
     return {
       perBlog: [
         {
-          image: "/_nuxt/assets/images/img-big-blog-1.png",
+          image: "/images/img-big-blog-1.png",
           title:
             "Blox reality startup Lorem ipsum od dillogi bell in the city ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska. Jinesade bel när feras redorade i belogi. FAR paratyp imuvåning, och pesask vyfisat.",
-          link: "#",
+          link: "/",
         },
         {
-          image: "/_nuxt/assets/images/img-big-blog-2.png",
+          image: "/images/img-big-blog-2.png",
           title:
             "Blox reality startup Lorem ipsum od dillogi bell in the city ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska. Jinesade bel när feras redorade i belogi. FAR paratyp imuvåning, och pesask vyfisat.",
         },
         {
-          image: "/_nuxt/assets/images/img-small-blog-1.png",
+          image: "/images/img-small-blog-1.png",
           title: "BASAL METABOLIC RATE: WHAT IS IT ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
         },
         {
-          image: "/_nuxt/assets/images/img-small-blog-2.png",
+          image: "/images/img-small-blog-2.png",
           title: "BASAL METABOLIC RATE: WHAT IS IT ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
         },
         {
-          image: "/_nuxt/assets/images/img-small-blog-3.png",
+          image: "/images/img-small-blog-3.png",
           title: "BASAL METABOLIC RATE: WHAT IS IT ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",

@@ -13,15 +13,15 @@
         {{ description }}
       </p>
       <div class="flex items-center my-5 w-[90%] gap-5">
-        <a
-          :href="buttonLink1"
+        <NuxtLink
+          :to="buttonLink1"
           class="text-[14px] bg-primary1 px-4 rounded-[14px] drop-shadow-md text-white lg:w-[100%] py-2 max-w-[172px] max-h-[52px] flex justify-center items-center"
         >
           {{ buttonTitle1 }}
-        </a>
-        <a :href="buttonLink2" class="rounded-[14px] drop-shadow-md">
+        </NuxtLink>
+        <NuxtLink :to="buttonLink2" class="rounded-[14px] drop-shadow-md">
           {{ buttonTitle2 }}
-        </a>
+        </NuxtLink>
       </div>
     </div>
   </div>

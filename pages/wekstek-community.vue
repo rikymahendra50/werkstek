@@ -10,7 +10,7 @@
   <Blog2 />
 
   <LeegstandNoButton
-    image="/_nuxt/assets/images/img-page10-1.png"
+    image="/images/img-page10-1.png"
     imgAlt="image-page4-2"
     title="Leegstand vullen"
     description="Wil je je kennis en ervaring delen met onze ambitieuze ondernemers? Vind je het leuk om plannen en ideeën uit te wisselen met anderen? Wil je jouw visie op werken en ondernemen onder de aandacht brengen?"

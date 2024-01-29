@@ -38,19 +38,16 @@
         </p>
         <div class="flex gap-1 mt-2">
           <img
-            src="/_nuxt/assets/images/icon-facebook-black.svg"
+            src="/images/icon-facebook-black.svg"
             alt="icon-facebook-black"
           />
           <img
-            src="/_nuxt/assets/images/icon-instagram-black.svg"
+            src="/images/icon-instagram-black.svg"
             alt="icon-instagram-black"
           />
+          <img src="/images/icon-youtube-black.svg" alt="icon-youtube-black" />
           <img
-            src="/_nuxt/assets/images/icon-youtube-black.svg"
-            alt="icon-youtube-black"
-          />
-          <img
-            src="/_nuxt/assets/images/icon-linkedin-black.svg"
+            src="/images/icon-linkedin-black.svg"
             alt="icon-linkedin-black"
           />
         </div>
@@ -77,11 +74,7 @@
             />
             <label>Je bericht</label>
           </div>
-          <a href="#" class="flex w-[90%] lg:w-[50%] text-white">
-            <div class="bg-primary1 py-2 px-4 rounded-[14px] drop-shadow-md">
-              Contact opnemen
-            </div>
-          </a>
+          <ButtonSM buttonTitle="Contact opnemen" />
         </form>
       </div>
     </div>

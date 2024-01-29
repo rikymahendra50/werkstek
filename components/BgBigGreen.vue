@@ -21,7 +21,7 @@
         <div v-if="showEmailSection" class="flex mt-3 w-[90%] lg:w-[50%]">
           <label class="form-control w-full">
             <div class="label">
-              <span class="label-text text-white">Vul je Email in</span>
+              <span class="label-text text-white"> {{ EmailForm.title }}</span>
             </div>
             <div class="flex">
               <input
@@ -29,11 +29,12 @@
                 placeholder="Mail@mail.com"
                 class="input input-bordered w-[80%] rounded-r-sm text-black box-shadow max-w-[240px]"
               />
-              <a
-                class="bg-[#F0912D] flex justify-center py-2 px-3 sm:py-3 sm:px-4 w-[170px] h-[48px] items-center cursor-pointer rounded-r-[10px] box-shadow font-bold text-[12px] md:text-[18px]"
+              <NuxtLink
+                :to="EmailForm.buttonEmailLink"
+                class="bg-primary1 flex justify-center py-2 px-3 sm:py-3 sm:px-4 w-[170px] h-[48px] items-center cursor-pointer rounded-r-[10px] box-shadow font-bold text-[12px] md:text-[18px]"
               >
-                Schrijf je in
-              </a>
+                {{ EmailForm.buttonEmailTitle }}
+              </NuxtLink>
             </div>
           </label>
         </div>
@@ -42,29 +43,29 @@
           v-if="showButtonSection"
           class="flex mt-3 w-[90%] lg:w-[50%] items-center gap-5"
         >
-          <a
-            :href="linkButton1"
-            class="bg-primary1 py-2 px-4 rounded-[14px] drop-shadow-md"
-          >
-            {{ linkTitle1 }}
-          </a>
-          <a
-            v-if="ShowSmallerButton"
-            :href="linkButton2"
-            class="rounded-[14px] drop-shadow-md text-[#404040]"
-          >
-            {{ linkTitle2 }}
-          </a>
+          <ButtonSM :buttonTitle="linkTitle" :buttonLink="linkButton" />
+          <ButtonSmaller
+            v-if="showSmallerButton"
+            :buttonTitle="linkTitleSmaller"
+            :buttonLink="linkButtonSmaller"
+          />
         </div>
 
         <div v-if="showPhoneEmail" class="flex mt-6 items-center">
           <div class="flex phone items-center">
-            <img src="@/assets/images/white-phone.svg" alt="white-phone" />
-            <p class="ml-2 lg:ml-3 text-sm">{{ phoneNumber }}</p>
+            <img src="/images/white-phone.svg" alt="white-phone" />
+            <NuxtLink
+              :to="'telp:' + `${phoneNumber}`"
+              class="ml-2 lg:ml-3 text-sm"
+            >
+              {{ phoneNumber }}
+            </NuxtLink>
           </div>
           <div class="flex pl-5 lg:pl-10 items-center">
-            <img src="@/assets/images/white-mail.svg" alt="white-phone" />
-            <p class="ml-2 lg:ml-3 text-sm">{{ mail }}</p>
+            <img src="/images/white-mail.svg" alt="white-phone" />
+            <NuxtLink :to="'mailto:' + `${mail}`" class="ml-2 lg:ml-3 text-sm">
+              {{ mail }}
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -74,6 +75,15 @@
 
 <script>
 export default {
+  data() {
+    return {
+      EmailForm: {
+        title: "Vul je Email in",
+        buttonEmailTitle: "Schrijf je in",
+        buttonEmailLink: "/",
+      },
+    };
+  },
   props: {
     title1: {
       type: String,
@@ -99,30 +109,30 @@ export default {
     },
     showEmailSection: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     showButtonSection: {
       type: Boolean,
       default: false,
     },
-    ShowSmallerButton: {
+    showSmallerButton: {
       type: Boolean,
       default: false,
     },
-    linkTitle1: {
+    linkTitle: {
       type: String,
       default: "Contact opnemen",
     },
-    linkButton1: {
+    linkButton: {
+      type: String,
+      required: false,
+      default: "/contact",
+    },
+    linkTitleSmaller: {
       type: String,
       required: false,
     },
-    linkTitle2: {
-      type: String,
-      default: "Contact opnemen",
-      required: false,
-    },
-    linkButton2: {
+    linkButtonSmaller: {
       type: String,
       required: false,
     },

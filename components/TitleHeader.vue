@@ -2,7 +2,7 @@
   <div class="w-full flex items-center justify-center">
     <div class="flex flex-col justify-center items-center text-center my-5">
       <img
-        src="/_nuxt/assets/images/bg-title.svg"
+        src="/images/bg-title.svg"
         alt="background-title"
         class="absolute w-[50%] lg:w-[30%]"
       />

@@ -2,10 +2,7 @@
   <div
     class="mx-auto lg:mx-0 md:w-[786.41px] h-[210px] shadow-lg bg-[#859C8142] bg-opacity-26 relative flex"
   >
-    <img
-      src="../assets/images/content-location-img-1.svg"
-      alt="content-location"
-    />
+    <img src="/images/content-location-img-1.svg" alt="content-location" />
     <div class="flex flex-col justify-between pl-4 py-3">
       <h1 class="text-[18px]">Locatie</h1>
       <p class="text-[14px]">Adres</p>
@@ -19,7 +16,7 @@
       class="bg-[#F0912E] rounded-[100px] w-[61px] h-[24px] text-white absolute right-10 bottom-3 flex items-center justify-center"
     >
       <img
-        src="../assets/images/white-star.svg"
+        src="/images/white-star.svg"
         alt="white-star"
         class="w-[14px] h-[12px]"
       />

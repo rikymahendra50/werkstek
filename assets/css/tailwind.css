@@ -4,7 +4,7 @@
 
 @layer components {
   .label-text {
-    @apply font-medium text-slate-500;
+    @apply font-medium text-slate-50;
   }
   .active {
     @apply bg-emerald-200;
@@ -14,6 +14,27 @@
   }
   .search-map-category {
     @apply w-[97%] flex items-center justify-between bg-white rounded-[5px] px-2 lg:px-8 h-[30px] sm:h-[39px] lg:h-[47px] lg:rounded-[10px] text-[#676767] border border-gray-300 cursor-pointer;
+  }
+
+  /* .checkbox {
+    @apply bg-white text-white border-2 border-primary1;
+
+    &:checked {
+      @apply bg-primary1 text-white border-2;
+    }
+  } */
+  .navlink,
+  .navlink:visited {
+    @apply no-underline relative pb-[5px] bg-transparent;
+  }
+  .navlink::after {
+    @apply content-[""] absolute w-3/5 h-0.5 bg-primary1 transition-[0.2s] duration-[all] ease-[ease-out] scale-0 left-0 bottom-0;
+  }
+  .navlink:hover::after {
+    @apply scale-100;
+  }
+  .navlink.active::after {
+    @apply scale-100;
   }
 }
 

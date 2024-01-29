@@ -1,47 +1,21 @@
 <template>
   <div class="border-r bg-white">
     <div class="flex h-full max-h-screen flex-col gap-4">
-      <div class="flex h-[60px] items-center border-b px-6">
+      <div class="flex h-[60px] items-center border-b px-6 justify-between">
         <a class="flex items-center gap-2 font-semibold" href="#"
-          ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-6 w-6"
+          ><Werkstek
+        /></a>
+        <div class="block lg:hidden">
+          <button
+            type="button"
+            @click="showDrawer = false"
+            class="btn btn-square btn-sm"
           >
-            <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"></path>
-            <path
-              d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"
-            ></path>
-            <path d="M12 3v6"></path></svg
-          ><span class="">Acme Inc</span></a
-        ><button
-          type="button"
-          @click="showDrawer = false"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground ml-auto h-8 w-8"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-4 w-4"
-          >
-            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg
-          ><span class="sr-only">Toggle notifications</span>
-        </button>
+            <icon name="i-heroicons-x-mark" />
+
+            <span class="sr-only">Toggle notifications</span>
+          </button>
+        </div>
       </div>
       <div class="flex-1 overflow-auto py-2">
         <nav class="grid items-start px-4 text-sm font-medium">
@@ -94,26 +68,8 @@
           ><a
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-4 w-4"
-            >
-              <path d="m7.5 4.27 9 5.15"></path>
-              <path
-                d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"
-              ></path>
-              <path d="m3.3 7 8.7 5 8.7-5"></path>
-              <path d="M12 22V12"></path>
-            </svg>
-            Products </a
+          >
+            <icon name="i-heroicons-folder" /> Folder </a
           ><a
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
@@ -178,7 +134,7 @@
           </a>
         </nav>
       </div>
-      <div class="mt-auto p-4">
+      <!-- <div class="mt-auto p-4">
         <div
           class="rounded-lg border bg-card text-card-foreground shadow-sm"
           data-v0-t="card"
@@ -201,7 +157,7 @@
             </button>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
