@@ -52,14 +52,14 @@
           />
         </div>
       </div>
-      <div class="login-box md:order-2 md:w-[400px]">
+      <!-- <div class="login-box md:order-2 md:w-[400px]">
         <VeeForm
           @submit="onSubmit"
           :validation-schema="contactSchema"
           class="text-[12px] md:text-[16px]"
           v-slot="{ errors }"
         >
-          <div class="user-box">
+          <div class="user-box"> 
             <VeeField name="name" v-model="dataForm.name" />
             <VeeErrorMessage name="name" class="text-sm text-error" />
             <label>Je naam (verplicht)</label>
@@ -86,7 +86,6 @@
               />
             </VeeField>
             <VeeErrorMessage name="message" class="text-sm text-error" />
-
             <label>Je bericht</label>
           </div>
 
@@ -99,6 +98,82 @@
               class="text-[12px] md:text-[14px] sm:font-bold text-center text-white"
             >
               Contact opnemen
+            </span>
+          </button>
+        </VeeForm>
+      </div> -->
+      <div class="md:order-2 md:w-[400px] text-[#777]">
+        <VeeForm
+          @submit="onSubmit"
+          :validation-schema="contactSchema"
+          class="text-[12px] md:text-[16px]"
+          v-slot="{ errors }"
+        >
+          <div class="flex flex-col">
+            <div class="flex items-center">
+              <label>Je naam (verplicht)</label>
+              <VeeErrorMessage name="name" class="text-sm text-error pl-10" />
+            </div>
+            <VeeField
+              name="name"
+              v-model="dataForm.name"
+              type="text"
+              class="input w-full input-sm"
+            />
+            <hr />
+            <div class="flex items-center mt-3">
+              <label>Je e-mailadres (verplicht)</label>
+              <VeeErrorMessage name="email" class="text-sm text-error pl-10" />
+            </div>
+            <VeeField
+              name="email"
+              v-model="dataForm.email"
+              type="text"
+              class="input w-full input-sm"
+            />
+            <hr />
+            <div class="flex items-center mt-3">
+              <label>Onderwerp</label>
+              <VeeErrorMessage
+                name="subject"
+                class="text-sm text-error pl-10"
+              />
+            </div>
+            <VeeField
+              name="subject"
+              v-model="dataForm.subject"
+              type="text"
+              class="input w-full input-sm"
+            />
+            <hr />
+            <div class="flex items-center mt-3">
+              <label>Je bericht</label>
+              <VeeErrorMessage
+                name="message"
+                class="text-sm text-error pl-10"
+              />
+            </div>
+            <VeeField
+              name="message"
+              v-model="dataForm.message"
+              v-slot="{ field }"
+            >
+              <textarea
+                v-bind="field"
+                class="textarea textarea-sm textarea-ghost h-[100px] min-h-[50px] max-h-[150px]"
+              ></textarea>
+              <hr />
+            </VeeField>
+          </div>
+          <button
+            type="submit"
+            :disabled="loading"
+            class="mt-4 bg-[#F0912D] w-[25%] md:w-[40%] max-w-[172px] h-[30px] lg:h-[52px] rounded-[14px] flex items-center justify-center cursor-pointer"
+          >
+            <span
+              class="text-[12px] md:text-[14px] sm:font-bold text-center text-white"
+            >
+              Versturen
             </span>
           </button>
         </VeeForm>
@@ -149,7 +224,7 @@ async function onSubmit(values, ctx) {
 </script>
 
 <style>
-.login-box {
+/* .login-box {
   box-sizing: border-box;
 }
 
@@ -187,5 +262,5 @@ async function onSubmit(values, ctx) {
   left: 0;
   color: #777;
   font-size: 12px;
-}
+} */
 </style>

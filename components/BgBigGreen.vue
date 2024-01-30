@@ -4,7 +4,7 @@
       <div
         class="container-custom flex flex-col text-white pb-3 py-3 lg:py-8 justify-between"
       >
-        <div class="w-[60%]">
+        <div class="w-[90%] lg:w-[60%]">
           <p
             class="text-[12px] md:text-[18px] font-bold text-[#404040] tracking-widest"
           >
@@ -44,18 +44,19 @@
           class="flex mt-3 w-[90%] lg:w-[50%] items-center gap-5"
         >
           <ButtonSM :buttonTitle="linkTitle" :buttonLink="linkButton" />
-          <ButtonSmaller
-            v-if="showSmallerButton"
-            :buttonTitle="linkTitleSmaller"
-            :buttonLink="linkButtonSmaller"
-          />
+          <div v-if="showSmallerButton">
+            <ButtonSmaller
+              :buttonTitle="linkTitleSmaller"
+              :buttonLink="linkButtonSmaller"
+            />
+          </div>
         </div>
 
         <div v-if="showPhoneEmail" class="flex mt-6 items-center">
           <div class="flex phone items-center">
             <img src="/images/white-phone.svg" alt="white-phone" />
             <NuxtLink
-              :to="'telp:' + `${phoneNumber}`"
+              :to="'tel:' + `${phoneNumber}`"
               class="ml-2 lg:ml-3 text-sm"
             >
               {{ phoneNumber }}
@@ -117,7 +118,6 @@ export default {
     },
     showSmallerButton: {
       type: Boolean,
-      default: false,
     },
     linkTitle: {
       type: String,

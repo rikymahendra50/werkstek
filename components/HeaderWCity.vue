@@ -40,7 +40,7 @@ export default {
     },
     imageSrc: {
       type: String,
-      required: true,
+      required: false,
       default: "/images/bg-title.svg",
     },
   },

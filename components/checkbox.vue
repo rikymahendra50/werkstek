@@ -13,7 +13,7 @@ input[type="checkbox"] {
   width: 24px;
   height: 24px;
   display: flex;
-  border: 1px solid orange;
+  border: 1px solid theme("colors.primary1");
   border-radius: 0.5em;
   cursor: pointer;
   outline: none;
@@ -29,7 +29,7 @@ input[type="checkbox"]:after {
 }
 
 input[type="checkbox"]:checked {
-  background-color: orange;
+  background-color: theme("colors.primary1");
 }
 input[type="checkbox"]:checked:after {
   display: block;

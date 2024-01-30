@@ -117,12 +117,16 @@
             <li class="text-[12px] md:text-[15px] text-[#4A4A4A]">Utrecht</li>
             <li class="text-[13px] md:text-[15px] text-[#4A4A4A]">Nederland</li>
           </ul>
-          <p class="text-[#404040] text-[13px] md:text-[15px] mt-2">
-            Tel : <span>085-0290598</span>
-          </p>
-          <p class="text-[#404040] text-[13px] md:text-[16px]">
-            E-mail: <span>info@werkstek.nl</span>
-          </p>
+          <NuxtLink :to="'tel:085-0290598'">
+            <p class="text-[#404040] text-[13px] md:text-[15px] mt-2">
+              Tel : <span>085-0290598</span>
+            </p>
+          </NuxtLink>
+          <NuxtLink :to="'mailto:' + 'info@werkstek.nl'">
+            <p class="text-[#404040] text-[13px] md:text-[16px]">
+              E-mail: <span>info@werkstek.nl</span>
+            </p>
+          </NuxtLink>
           <div
             class="bg-[#E9EBEC] mt-5 outline-[#E9EBEC] text-[#777777] max-w-[243px] w-full md:w-[50%] p-3 flex justify-end rounded-[8px]"
             style="

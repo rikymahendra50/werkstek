@@ -13,9 +13,11 @@
         <p>Categorie naam</p>
       </div>
       <div class="flex flex-wrap justify-between mt-10">
-        <div class="w-[48%] lg:w-[32%] mb-3">
+        <NuxtLink to="/" class="w-[48%] lg:w-[32%] max-w-[347px] mb-3">
           <img src="/images/image-page8-1.png" alt="image-page8-1" />
-          <h4 class="text-[#404040] text-[14px] md:text-[16px] py-2 md:py-5">
+          <h4
+            class="text-[#404040] text-[14px] md:text-[16px] py-2 md:py-5 font-semibold"
+          >
             De kracht van samenwerking
           </h4>
           <p class="text-[#777] text-[14px] md:text-[16px] md:leading-9">
@@ -23,7 +25,7 @@
             innovatie en samenwerking centraal staan, zijn gedeelde
             kantoorruimtes uitgegroeid tot een [...]
           </p>
-        </div>
+        </NuxtLink>
         <div class="w-[48%] lg:w-[32%] mb-3">
           <img src="/images/image-page8-2.png" alt="image-page8-1" />
           <h4 class="text-[#404040] text-[14px] md:text-[16px] py-2 md:py-5">

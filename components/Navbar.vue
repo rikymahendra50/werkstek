@@ -44,7 +44,7 @@
               >Onze locaties</NuxtLink
             >
           </li>
-          <li class="relative group flex z-10 pr-1">
+          <li class="relative group flex z-10 pr-1 pt-1">
             <NuxtLink
               to="/over-werkstek"
               class="navlink"
@@ -52,22 +52,27 @@
               >Over werkstek</NuxtLink
             >
             <ul
-              class="absolute top-5 hidden group-hover:block bg-[#F0912D] shadow-lg py-1 mt-2 rounded-md w-full text-white"
+              class="absolute top-5 hidden group-hover:block bg-primary1 shadow-lg py-1 mt-2 rounded-md w-full text-white"
             >
-              <li><NuxtLink to="#" class="px-3">Submenu 1</NuxtLink></li>
-              <li><NuxtLink to="#" class="px-3">Submenu 2</NuxtLink></li>
+              <li><NuxtLink to="/" class="px-3">Submenu 1</NuxtLink></li>
+              <li><NuxtLink to="/" class="px-3">Submenu 2</NuxtLink></li>
             </ul>
             <img
               src="/images/icon-dropdown.svg"
               alt="icon-dropdown"
-              class="pl-2"
+              class="pl-2 pb-1"
             />
           </li>
           <li>
-            <NuxtLink to="#" class="pr-1 navlink">Werkstek updates</NuxtLink>
+            <NuxtLink
+              to="/wekstek-community"
+              class="pr-1 navlink"
+              :class="{ active: isRouteActive('/wekstek-community') }"
+              >Werkstek updates</NuxtLink
+            >
           </li>
           <li
-            class="max-w-[172px] 2xl:h-[56px] bg-[#F0912D] hover:bg-white px-3 py-2 text-white border border-[#F0912D] hover:text-[#F0912D] hover:border-[#F0912D] hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
+            class="max-w-[172px] 2xl:h-[56px] bg-primary1 hover:bg-white px-3 py-2 text-white border border-primary1 hover:text-primary1 hover:border-primary1 hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
           >
             <NuxtLink to="/contact" aria-label="contact"
               >Contact opnemen</NuxtLink
@@ -133,8 +138,8 @@
 
         <ul class="divide-y font-sans">
           <li class="cursor-pointer">
-            <Nuxtlink to="/" @click="isOpen = false" class="my-4 inline-block"
-              >Verhuur</Nuxtlink
+            <NuxtLink to="/" @click="isOpen = false" class="my-4 inline-block"
+              >Verhuur</NuxtLink
             >
           </li>
           <li class="cursor-pointer">
@@ -154,7 +159,10 @@
             >
           </li>
           <li class="cursor-pointer">
-            <NuxtLink to="#" @click="isOpen = false" class="my-4 inline-block"
+            <NuxtLink
+              to="/wekstek-community"
+              @click="isOpen = false"
+              class="my-4 inline-block"
               >Werkstek updates</NuxtLink
             >
           </li>
@@ -162,7 +170,7 @@
             <NuxtLink
               to="/contact"
               @click="isOpen = false"
-              class="my-8 w-full text-center font-semibold cta inline-block bg-[#F0912D] hover:bg-white border border-[#F0912D] px-3 py-2 rounded text-white hover:text-[#F0912D]"
+              class="my-8 w-full text-center font-semibold cta inline-block bg-primary1 hover:bg-white border border-primary1 px-3 py-2 rounded text-white hover:text-primary1"
               >Contact opnemen</NuxtLink
             >
           </li>

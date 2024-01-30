@@ -44,13 +44,14 @@
 
 .range-fill {
   height: 6px;
-  background-color: orange;
+  background-color: theme("colors.primary1");
   position: absolute;
   z-index: 1;
 }
 
 input[type="range"] {
   -webkit-appearance: none;
+  appearance: none;
   width: 100%;
   background: transparent;
   position: absolute;
