@@ -6,13 +6,17 @@
       class="max-w-[176px] max-h-[154px] mx-2 w-full"
     />
     <div class="flex-col flex">
-      <h1 class="text-[14px] lg:text-[18px] font-bold">
+      <h1 class="text-[14px] xl:text-[18px] font-bold">
         {{ title }}
       </h1>
-      <p class="text-[12px] lg:text-[14px]">
+      <p class="text-[12px] xl:text-[14px]">
         {{ description }}
       </p>
-      <ButtonBlog :perBlogLink="link" v-if="showButton" class="mt-4" />
+      <ButtonBlogSmall
+        :perBlogLink="link"
+        v-if="showButton"
+        class="md:mt-4 xl:mt-7"
+      />
     </div>
   </div>
 </template>

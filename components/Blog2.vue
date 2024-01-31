@@ -3,7 +3,7 @@
     <div class="flex flex-col">
       <div
         v-if="ShowTitleCategory"
-        class="flex gap-4 lg:gap-6 text-[12px] sm:text-[14px] md:text-[18px] text-[#121416] border-b-2 w-full lg:w-[97%] border-primary1 mt-8 justify-between overflow-auto"
+        class="flex gap-4 lg:gap-6 text-[12px] sm:text-[14px] md:text-[18px] text-[#121416] border-b-2 w-full lg:w-[97%] mt-6 justify-between overflow-auto"
       >
         <p>Categorie naam</p>
         <p>Categorie naam</p>
@@ -14,7 +14,11 @@
       </div>
       <div class="flex flex-wrap justify-between mt-10">
         <NuxtLink to="/" class="w-[48%] lg:w-[32%] max-w-[347px] mb-3">
-          <img src="/images/image-page8-1.png" alt="image-page8-1" />
+          <img
+            src="/images/image-page8-1.png"
+            alt="image-page8-1"
+            class="max-h-[196px]"
+          />
           <h4
             class="text-[#404040] text-[14px] md:text-[16px] py-2 md:py-5 font-semibold"
           >
@@ -91,7 +95,7 @@ export default {
   props: {
     ShowTitleCategory: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
 };
