@@ -12,7 +12,7 @@
 </template>
 
 <style scoped>
-a {
+NuxtLink {
   box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.25);
 }
 </style>

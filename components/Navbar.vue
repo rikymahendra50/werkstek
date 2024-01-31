@@ -7,7 +7,6 @@
       <div>
         <Werkstek />
       </div>
-
       <!-- Mobile toggle -->
       <div class="lg:hidden flex">
         <button name="toggle" @click="drawer" label="toggle">
@@ -24,7 +23,6 @@
           </svg>
         </button>
       </div>
-
       <!-- Navbar -->
       <div class="hidden lg:block z-[99999]">
         <ul class="flex space-x-5 font-medium items-center">
@@ -44,18 +42,30 @@
               >Onze locaties</NuxtLink
             >
           </li>
-          <li class="relative group flex z-10 pr-1 pt-1">
+          <li
+            class="relative group flex z-10 pr-1 pt-1 dropdown dropdown-hover"
+          >
             <NuxtLink
               to="/over-werkstek"
               class="navlink"
+              tabindex="0"
               :class="{ active: isRouteActive('/over-werkstek') }"
               >Over werkstek</NuxtLink
             >
             <ul
-              class="absolute top-5 hidden group-hover:block bg-primary1 shadow-lg py-1 mt-2 rounded-md w-full text-white"
+              tabindex="0"
+              class="absolute top-6 py-1 mt-2 w-full dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-md"
             >
-              <li><NuxtLink to="/" class="px-3">Submenu 1</NuxtLink></li>
-              <li><NuxtLink to="/" class="px-3">Submenu 2</NuxtLink></li>
+              <li>
+                <NuxtLink to="/" class="px-3 hover:text-primary1"
+                  >Submenu 1</NuxtLink
+                >
+              </li>
+              <li>
+                <NuxtLink to="/" class="px-3 hover:text-primary1"
+                  >Submenu 2</NuxtLink
+                >
+              </li>
             </ul>
             <img
               src="/images/icon-dropdown.svg"
@@ -80,7 +90,6 @@
           </li>
         </ul>
       </div>
-
       <!-- Dark Background Transition -->
       <transition
         enter-class="opacity-0"
@@ -102,7 +111,6 @@
           ></div>
         </div>
       </transition>
-
       <!-- Drawer Menu -->
       <aside
         class="p-5 transform top-0 left-0 w-64 bg-white fixed h-full overflow-auto ease-in-out transition-all duration-300 z-30"
@@ -128,14 +136,12 @@
             </svg>
           </button>
         </div>
-
         <span
           @click="isOpen = false"
           class="flex w-full items-center p-4 border-b"
         >
           <Werkstek />
         </span>
-
         <ul class="divide-y font-sans">
           <li class="cursor-pointer">
             <NuxtLink to="/" @click="isOpen = false" class="my-4 inline-block"

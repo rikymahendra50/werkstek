@@ -1,5 +1,5 @@
 <template>
-  <section id="footer" class="relative border-2">
+  <section id="footer" class="relative border-t-2 border-black">
     <div
       class="pb-20 pt-10 flex flex-col lg:flex-row relative container-custom"
     >

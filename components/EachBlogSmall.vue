@@ -12,7 +12,7 @@
       <p class="text-[12px] lg:text-[14px]">
         {{ description }}
       </p>
-      <ButtonBlog :perBlogLink="link" v-if="showButton" />
+      <ButtonBlog :perBlogLink="link" v-if="showButton" class="mt-4" />
     </div>
   </div>
 </template>

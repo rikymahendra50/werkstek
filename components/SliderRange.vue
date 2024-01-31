@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[100%] my-4">
+  <div class="max-w-[400px] my-4">
     <span class="text-base mt-3 opacity-50">{{ titleSliderRange }}</span>
     <div class="range-slider">
       <div class="range-fill"></div>

@@ -136,8 +136,11 @@
       </div>
     </div>
     <!-- other version -->
-    <div class="flex container-custom" v-if="!showLocaties">
-      <div class="w-full lg:w-[35%]">
+    <div
+      class="flex flex-col md:flex-row container-custom"
+      v-if="!showLocaties"
+    >
+      <div class="w-full md:w-[35%]">
         <p class="text-base opacity-50">Kies een locatie</p>
         <details class="dropdown">
           <summary
@@ -151,10 +154,10 @@
             <img src="/images/arrow-down.svg" class="p-1" />
           </summary>
           <ul
-            class="p-2 shadow menu dropdown-content z-[1] bg-white rounded-[8px]"
+            class="p-2 shadow menu dropdown-content z-[1] bg-white rounded-[8px] w-[90%]"
           >
-            <li>Utrecht</li>
-            <li>Item 2</li>
+            <li class="py-1"><button>Utrecht</button></li>
+            <li class="py-1"><button>Item 2</button></li>
           </ul>
         </details>
         <div class="flex flex-col">
@@ -197,7 +200,7 @@
         </div>
       </div>
       <div
-        class="py-5 lg:w-[65%] overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col"
+        class="py-5 md:w-[65%] overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col"
       >
         <div v-for="items in eachLocaties">
           <NuxtLink to="/onze-locaties/onze-locaties-single">

@@ -28,7 +28,7 @@
             </div>
           </NuxtLink>
           <NuxtLink
-            to="/"
+            to="/onze-vacaturies"
             class="flex flex-wrap w-[100%] max-h-[391px] h-[46%]"
             :class="{ active: isRouteActive('/') }"
             :style="{
