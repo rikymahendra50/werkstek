@@ -18,7 +18,7 @@ export default defineNuxtPlugin({
 
     addRouteMiddleware("auth", async () => {
       if (!credential.value?.token) {
-        return await navigateTo("/sign-in");
+        return await navigateTo("/admin/sign-in");
       }
     });
 
@@ -29,7 +29,7 @@ export default defineNuxtPlugin({
     const clearCredential = async () => {
       if (process.client) {
         useCookie("auth-token").value = null;
-        window.location.replace("/sign-in");
+        window.location.replace("/admin/sign-in");
       }
     };
 

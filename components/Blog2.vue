@@ -75,13 +75,18 @@
           <h4 class="text-[#404040] text-[14px] md:text-[16px] py-2 md:py-5">
             De kracht van samenwerking
           </h4>
-          <p class="text-[#777] text-[14px] md:text-[16px] md:leading-9">
+          <p
+            class="text-[#777] text-[14px] md:text-[16px] md:leading-9 line-clamp-3"
+          >
             In de snel evoluerende wereld van vandaag, waar flexibiliteit,
             innovatie en samenwerking centraal staan, zijn gedeelde
-            kantoorruimtes uitgegroeid tot een [...]
+            kantoorruimtes uitgegroeid tot een
           </p>
         </div>
       </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <BlogItem v-for="i in 6" :key="i" />
     </div>
   </section>
 </template>
