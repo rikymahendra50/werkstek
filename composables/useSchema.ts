@@ -33,7 +33,23 @@ export default function () {
     })
   );
 
+  const loginSchema = toTypedSchema(
+    object({
+      email: string({
+        required_error: "Email is required",
+      })
+        .trim()
+        .email("Invalid email address"),
+      password: string({
+        required_error: "Password is required",
+      })
+        .trim()
+        .min(1, "Password is required"),
+    })
+  );
+
   return {
     contactSchema,
+    loginSchema,
   };
 }

@@ -18,7 +18,7 @@ export default defineNuxtPlugin({
 
     addRouteMiddleware("auth", async () => {
       if (!credential.value?.token) {
-        return await navigateTo("/sign-in");
+        return await navigateTo("/admin/sign-in");
       }
     });
 
