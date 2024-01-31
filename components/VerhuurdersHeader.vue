@@ -3,13 +3,13 @@
     class="bg-tertiary h-[850px] sm:h-[900px] lg:h-[1109px] relative flex items-center"
   >
     <span
-      class="bg-bgdot bg-no-repeat w-[30%] lg:top-[-90px] h-full absolute lg:rotate-180 lg:right-0"
+      class="bg-bgdotSmall md:bg-bgdot bg-no-repeat bg-cover md:bg-auto w-[30%] lg:top-[-90px] h-full absolute lg:rotate-180 lg:right-0"
     ></span>
-    <div class="grid md:grid-rows-1 md:grid-cols-2 z-10">
+    <div class="grid md:grid-rows-1 md:grid-cols-2 z-10 px-5 md:px-0">
       <div class="container-custom flex items-center">
         <div class="grid">
           <p class="text-[19px] lg:text-[24px] text-[#1c1c1c]">{{ title1 }}</p>
-          <p class="text-[35px] lg:text-[55px] text-[#231E1F]">
+          <p class="text-[35px] lg:text-[55px] text-[#231E1F] font-bold">
             {{ title2 }}
           </p>
           <p class="text-[12px] lg:text-[20px] text-[#1C1C1C]">

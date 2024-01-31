@@ -6,13 +6,13 @@
         alt="background-title"
         class="absolute w-[50%] lg:w-[30%]"
       />
-      <p class="text-primary1 text-[14px] md:text-[18px]">{{ title }}</p>
-      <p class="font-semibold text-[25px] sm:text-[40px] md:text-[50px]">
+      <span class="text-primary1 text-[14px] md:text-[18px]">{{ title }}</span>
+      <span class="font-semibold text-[25px] sm:text-[40px] md:text-[50px]">
         {{ secondTitle }}
-      </p>
-      <p class="text-[12px] md:text-[15px] md:w-[50%]">
+      </span>
+      <span class="text-[12px] md:text-[15px] md:w-[50%]">
         {{ description }}
-      </p>
+      </span>
     </div>
   </div>
 </template>

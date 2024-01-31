@@ -47,7 +47,7 @@ export default {
           "Op de hoogte blijven van beschikbare werkplekken? Schrijf je dan nu vrijblijvend in!",
         showButtonSection: true,
         titleButton: "Contact opnemen",
-        linkbutton: "/contact",
+        linkButton: "/contact",
       },
     };
   },

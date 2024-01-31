@@ -7,7 +7,6 @@
       <div>
         <Werkstek />
       </div>
-
       <!-- Mobile toggle -->
       <div class="lg:hidden flex">
         <button name="toggle" @click="drawer" label="toggle">
@@ -24,7 +23,6 @@
           </svg>
         </button>
       </div>
-
       <!-- Navbar -->
       <div class="hidden lg:block z-[99999]">
         <ul class="flex space-x-5 font-medium items-center">
@@ -44,38 +42,54 @@
               >Onze locaties</NuxtLink
             >
           </li>
-          <li class="relative group flex z-10 pr-1">
+          <li
+            class="relative group flex z-10 pr-1 pt-1 dropdown dropdown-hover"
+          >
             <NuxtLink
               to="/over-werkstek"
               class="navlink"
+              tabindex="0"
               :class="{ active: isRouteActive('/over-werkstek') }"
               >Over werkstek</NuxtLink
             >
             <ul
-              class="absolute top-5 hidden group-hover:block bg-[#F0912D] shadow-lg py-1 mt-2 rounded-md w-full text-white"
+              tabindex="0"
+              class="absolute top-6 py-1 mt-2 w-full dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-md"
             >
-              <li><NuxtLink to="#" class="px-3">Submenu 1</NuxtLink></li>
-              <li><NuxtLink to="#" class="px-3">Submenu 2</NuxtLink></li>
+              <li>
+                <NuxtLink to="/" class="px-3 hover:text-primary1"
+                  >Submenu 1</NuxtLink
+                >
+              </li>
+              <li>
+                <NuxtLink to="/" class="px-3 hover:text-primary1"
+                  >Submenu 2</NuxtLink
+                >
+              </li>
             </ul>
             <img
               src="/images/icon-dropdown.svg"
               alt="icon-dropdown"
-              class="pl-2"
+              class="pl-2 pb-1"
             />
           </li>
           <li>
-            <NuxtLink to="#" class="pr-1 navlink">Werkstek updates</NuxtLink>
+            <NuxtLink
+              to="/wekstek-community"
+              class="pr-1 navlink"
+              :class="{ active: isRouteActive('/wekstek-community') }"
+              >Werkstek updates</NuxtLink
+            >
           </li>
           <li
-            class="max-w-[172px] 2xl:h-[56px] bg-[#F0912D] hover:bg-white px-3 py-2 text-white border border-[#F0912D] hover:text-[#F0912D] hover:border-[#F0912D] hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
+            class="max-w-[172px] 2xl:h-[56px] bg-primary1 hover:bg-white px-3 py-2 text-white border border-primary1 hover:text-primary1 hover:border-primary1 hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
           >
-            <NuxtLink aria-label="contact" to="/contact"
+            <NuxtLink to="/contact" aria-label="contact"
               >Contact opnemen</NuxtLink
             >
           </li>
         </ul>
       </div>
-
       <!-- Dark Background Transition -->
       <transition
         enter-class="opacity-0"
@@ -97,7 +111,6 @@
           ></div>
         </div>
       </transition>
-
       <!-- Drawer Menu -->
       <aside
         class="p-5 transform top-0 left-0 w-64 bg-white fixed h-full overflow-auto ease-in-out transition-all duration-300 z-30"
@@ -123,41 +136,48 @@
             </svg>
           </button>
         </div>
-
         <span
           @click="isOpen = false"
           class="flex w-full items-center p-4 border-b"
         >
           <Werkstek />
         </span>
-
         <ul class="divide-y font-sans">
           <li class="cursor-pointer">
-            <a href="#" @click="isOpen = false" class="my-4 inline-block"
-              >Verhuur</a
+            <NuxtLink to="/" @click="isOpen = false" class="my-4 inline-block"
+              >Verhuur</NuxtLink
             >
           </li>
           <li class="cursor-pointer">
-            <a href="#" @click="isOpen = false" class="my-4 inline-block"
-              >Onze locaties</a
-            >
-          </li>
-          <li class="cursor-pointer">
-            <a href="#" @click="isOpen = false" class="my-4 inline-block"
-              >Over werkstek</a
-            >
-          </li>
-          <li class="cursor-pointer">
-            <a href="#" @click="isOpen = false" class="my-4 inline-block"
-              >Werkstek updates</a
-            >
-          </li>
-          <li class="cursor-pointer">
-            <a
-              href="#"
+            <NuxtLink
+              to="/onze-locaties"
               @click="isOpen = false"
-              class="my-8 w-full text-center font-semibold cta inline-block bg-[#F0912D] hover:bg-white border border-[#F0912D] px-3 py-2 rounded text-white hover:text-[#F0912D]"
-              >Contact opnemen</a
+              class="my-4 inline-block"
+              >Onze locaties</NuxtLink
+            >
+          </li>
+          <li class="cursor-pointer">
+            <NuxtLink
+              to="/over-werkstek"
+              @click="isOpen = false"
+              class="my-4 inline-block"
+              >Over werkstek</NuxtLink
+            >
+          </li>
+          <li class="cursor-pointer">
+            <NuxtLink
+              to="/wekstek-community"
+              @click="isOpen = false"
+              class="my-4 inline-block"
+              >Werkstek updates</NuxtLink
+            >
+          </li>
+          <li class="cursor-pointer">
+            <NuxtLink
+              to="/contact"
+              @click="isOpen = false"
+              class="my-8 w-full text-center font-semibold cta inline-block bg-primary1 hover:bg-white border border-primary1 px-3 py-2 rounded text-white hover:text-primary1"
+              >Contact opnemen</NuxtLink
             >
           </li>
         </ul>

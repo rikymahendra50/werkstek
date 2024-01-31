@@ -1,5 +1,5 @@
 <template>
-  <section id="footer" class="relative border-2">
+  <section id="footer" class="relative border-t-2 border-black">
     <div
       class="pb-20 pt-10 flex flex-col lg:flex-row relative container-custom"
     >
@@ -11,16 +11,16 @@
         </p>
         <h4 class="text-[16px] font-semibold pt-3">Volg ons op</h4>
         <div class="social-media flex pt-3">
-          <NuxtLink to="#"
+          <NuxtLink to="/"
             ><img src="/images/instagram.svg" alt="icon-instagram" class="pr-6"
           /></NuxtLink>
-          <NuxtLink to="#"
+          <NuxtLink to="/"
             ><img src="/images/facebook.svg" alt="icon-facebook" class="pr-6"
           /></NuxtLink>
-          <NuxtLink to="#"
+          <NuxtLink to="/"
             ><img src="/images/linkedin.svg" alt="icon-linkedin" class="pr-6"
           /></NuxtLink>
-          <NuxtLink to="#"
+          <NuxtLink to="/"
             ><img src="/images/twitter.svg" alt="icon-twitter" class="pr-6"
           /></NuxtLink>
         </div>
@@ -34,11 +34,11 @@
           >
             Over ons
           </h1>
-          <hr
-            class="border-b-2 border-[#F0912D] lg:border-[#1FAB71] w-[50px]"
-          />
+          <hr class="border-b-2 border-primary1 lg:border-[#1FAB71] w-[50px]" />
           <ul class="text-[12px] md:text-[15px]">
-            <li class="pt-3"><NuxtLink to="">Over ons</NuxtLink></li>
+            <li class="pt-3">
+              <NuxtLink to="/voor-verhuurders">Over ons</NuxtLink>
+            </li>
             <li class="pt-3">
               <NuxtLink to="/onze-locaties">Locaties</NuxtLink>
             </li>
@@ -46,7 +46,7 @@
               <NuxtLink to="/contact">Contact opnemen</NuxtLink>
             </li>
             <li class="pt-3">
-              <NuxtLink to="">Veel gestelde vragen</NuxtLink>
+              <NuxtLink to="/faq">Veel gestelde vragen</NuxtLink>
             </li>
           </ul>
         </div>
@@ -56,12 +56,10 @@
           >
             Wat wij doen
           </h1>
-          <hr
-            class="border-b-2 border-[#F0912D] lg:border-[#1FAB71] w-[50px]"
-          />
+          <hr class="border-b-2 border-primary1 lg:border-[#1FAB71] w-[50px]" />
           <ul class="text-[12px] md:text-[15px]">
-            <li class="pt-3">Flex plekkenn</li>
-            <li class="pt-3">Werkplekken</li>
+            <NuxtLink to="/"><li class="pt-3">Flex plekkenn</li></NuxtLink>
+            <NuxtLink to="/"><li class="pt-3">Werkplekken</li></NuxtLink>
           </ul>
         </div>
         <div class="">
@@ -70,22 +68,26 @@
           >
             Contact
           </h1>
-          <hr class="border-b-2 border-primary lg:border-[#1FAB71] w-[50px]" />
+          <hr class="border-b-2 border-primary1 lg:border-[#1FAB71] w-[50px]" />
           <ul class="text-[12px] md:text-[15px]">
-            <li class="flex pt-3">
-              <img
-                src="/images/telp.svg"
-                alt="icon-phone-yellow"
-                class="pr-2 w-[20px] lg:w-[24px]"
-              />085-0290598
-            </li>
-            <li class="flex pt-3">
-              <img
-                src="/images/email.svg"
-                alt="icon-email.svg"
-                class="pr-2 w-[20px] lg:w-[24px]"
-              />Werkplekken
-            </li>
+            <NuxtLink :to="'tel:085-0290598'">
+              <li class="flex pt-3">
+                <img
+                  src="/images/telp.svg"
+                  alt="icon-phone-yellow"
+                  class="pr-2 w-[20px] lg:w-[24px]"
+                />085-0290598
+              </li>
+            </NuxtLink>
+            <NuxtLink :to="'mailto:info@werkstek.nl'">
+              <li class="flex pt-3">
+                <img
+                  src="/images/email.svg"
+                  alt="icon-email.svg"
+                  class="pr-2 w-[20px] lg:w-[24px]"
+                />Werkplekken
+              </li>
+            </NuxtLink>
           </ul>
         </div>
       </div>
@@ -105,6 +107,10 @@
 
 <script>
 export default {
-  // Components navbar
+  methods: {
+    isRouteActive(route) {
+      return this.$route.path === route;
+    },
+  },
 };
 </script>

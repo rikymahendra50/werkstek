@@ -73,7 +73,7 @@
 /* style */
 </style>
 
-<script>
+<script scoped>
 let googleMapsScriptLoaded = false;
 export default {
   props: {
@@ -99,6 +99,18 @@ export default {
           lng: 115.21785198506426,
           name: "Company 1",
           description: "Deskripsion A",
+          image: "/images/img-home-1.png",
+          popularity: 100,
+          city: "Rotterdam",
+          type: "Kantoorruimte",
+          price: 4,
+        },
+        // test
+        {
+          lat: -8.607897,
+          lng: 115.243932,
+          name: "Company e",
+          description: "Deskripsion e",
           image: "/images/img-home-1.png",
           popularity: 100,
           city: "Rotterdam",
@@ -139,7 +151,6 @@ export default {
           price: 4,
         },
       ],
-
       categories: [
         {
           title: "Zoek een Locatie",
@@ -162,7 +173,6 @@ export default {
       ],
     };
   },
-
   mounted() {
     if (!googleMapsScriptLoaded) {
       googleMapsScriptLoaded = true;
@@ -171,7 +181,6 @@ export default {
       this.setupMap();
     }
   },
-
   methods: {
     selectOption(category, option) {
       // let selectedCity;
@@ -185,6 +194,7 @@ export default {
       // } else if (category.title === "Zoek op een prijs") {
       //   this.selectedOption = option;
       // }
+
       category.selectedOption = option;
       category.showDropdown = false;
     },
@@ -221,11 +231,12 @@ export default {
       });
 
       if (filteredData.length > 0) {
-        console.log("Matching Data:", filteredData[0]);
+        // console.log("Matching Data:", filteredData[0]);
         const foundLocation = filteredData[0];
         this.moveToLocation(foundLocation.lat, foundLocation.lng);
       } else {
         console.log("Sorry not found, Please Adjust your filter");
+        alert("Sorry not found, Please Adjust your filter");
       }
     },
 
@@ -233,7 +244,7 @@ export default {
     moveToLocation(lat, lng) {
       if (this.map) {
         this.map.setCenter({ lat, lng });
-        this.map.setZoom(20);
+        this.map.setZoom(30);
       }
     },
 
@@ -254,7 +265,6 @@ export default {
         this.setupMap();
       }
     },
-
     setupMap() {
       this.map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: -8.653840910873269, lng: 115.21785198506426 },

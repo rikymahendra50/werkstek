@@ -9,13 +9,6 @@
   </NuxtLink>
 </template>
 
-<style scoped>
-/* button {
-  box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.25);
-  padding: 20px, 40px, 20px, 40px;
-} */
-</style>
-
 <script>
 export default {
   props: {

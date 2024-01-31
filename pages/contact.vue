@@ -7,14 +7,14 @@
     titleBg1="Locaties"
     titleBg2="Statistiek 2"
     titleBg3="Statistiek 3"
-    count1="280"
-    count2="15"
-    count3="49"
+    :count1="280"
+    :count2="15"
+    :count3="49"
     :showButton="true"
     buttonTitle1="Over Werkstek"
     buttonTitle2="Voor verhuurders"
-    buttonLink1="#"
-    buttonLink2="#"
+    buttonLink1="/over-werkstek"
+    buttonLink2="/voor-verhuurders"
   />
 
   <ContactUs />

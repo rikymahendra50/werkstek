@@ -13,17 +13,17 @@
         >
           {{ title }}
         </h1>
-        <p
+        <span
           class="text-[12px] md:text-[14px] lg:text-[18px] leading-6 lg:leading-9 text-justify py-4"
         >
           {{ description }}
           <br />
           <div class="mt-7">
-            <span class="text-[14px] text-[#777]">{{ titledescription2 }}</span> 
+            <span class="text-[14px] text-[#777]">{{ titledescription2 }}</span>
             <br />
             {{ description2 }}
           </div>
-        </p>
+        </span>
       </div>
     </div>
   </div>
@@ -33,10 +33,6 @@
 export default {
   props: {
     background: {
-      type: String,
-      required: false,
-    },
-    imageClasses: {
       type: String,
       required: false,
     },

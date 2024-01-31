@@ -3,13 +3,79 @@
     <span
       class="bg-tertiary absolute top-0 z-[-99] h-[50%] w-full max-h-[415px] border-red-500"
     ></span>
-    <div class="container-custom mx-10 flex flex-col py-10 lg:py-20">
-      <h1 class="text-primary1 text-[20px] md:text-[30px]">Blog</h1>
-      <p class="text-[#404040] text-[26px] md:text-[36px]">
+    <div class="lg:container-custom mx-10 flex flex-col py-10 lg:py-20">
+      <h1 class="text-primary1 text-[18px] sm:text-[20px] md:text-[30px]">
+        Blog
+      </h1>
+      <p
+        class="text-[#404040] text-xl sm:text-[26px] md:text-[36px] mb-3 lg:mb-10"
+      >
         De kracht van samenwerking
       </p>
-      <img src="/images/image-eachblog-1.png" alt="eachblog" />
-      <div class="flex mt-5 sm:mt-10 lg:mt-20 gap-3">
+      <img
+        src="/images/image-eachblog-1.png"
+        alt="eachblog"
+        class="max-w-[1140px]"
+      />
+      <!-- author small screen -->
+      <div class="block lg:hidden my-3 min-[400px]:my-5 sm:my-7">
+        <div class="flex items-center max-h-[150px] overflow-hidden">
+          <img
+            src="/images/author.png"
+            alt="author"
+            class="max-w-[15%] sm:max-w-[4rem]"
+          />
+          <div class="flex flex-col pl-4 max-w-[70%]">
+            <p
+              class="text-[0.9rem] min-[400px]:text-base overflow-ellipsis overflow-hidden sm:text-lg font-bold"
+            >
+              Luci Avetisyan
+            </p>
+            <p
+              class="text-[0.5rem] min-[400px]:text-[14px] sm:text-lg overflow-ellipsis overflow-hidden"
+            >
+              Luci vitae dapibus rhoncus. Eget etiam aenean nisi montes felis
+              pretium donec veni. Pede…
+            </p>
+            <div class="flex gap-2 mt-2">
+              <NuxtLink to="/"
+                ><img
+                  src="/images/behance.svg"
+                  alt="behance"
+                  class="max-w-[20px] sm:max-w-[30px]"
+                />
+              </NuxtLink>
+              <NuxtLink to="/"
+                ><img
+                  src="/images/myspace.svg"
+                  alt="myspace"
+                  class="max-w-[20px] sm:max-w-[30px]"
+              /></NuxtLink>
+              <NuxtLink to="/">
+                <img
+                  src="/images/medium.svg"
+                  alt="medium"
+                  class="max-w-[20px] sm:max-w-[30px]"
+                />
+              </NuxtLink>
+              <NuxtLink to="/">
+                <img
+                  src="/images/github.svg"
+                  alt="github"
+                  class="max-w-[20px] sm:max-w-[30px]"
+                />
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+        <NuxtLink to="/" class="w-full mt-2 md:mt-4 flex justify-end">
+          <div class="flex flex-col">
+            <img src="/images/share.svg" class="max-w-[20px] h-[20px]" />
+            <p class="text-[14px] md:text-[16px]">share</p>
+          </div>
+        </NuxtLink>
+      </div>
+      <div class="flex lg:mt-20">
         <div class="flex flex-col lg:w-[70%]">
           <p class="leading-9 text-[16px]">
             In de snel evoluerende wereld van vandaag, waar flexibiliteit,
@@ -100,7 +166,8 @@
             kennis en ervaring kan helpen bij het oplossen van problemen, het
             ontwikkelen van nieuwe ideeën en het versnellen van groei.
           </p>
-          <div class="flex mt-10 gap-5">
+          <!-- comment -->
+          <div class="flex mt-10 gap-5 items-center sm:items-start">
             <img
               src="/images/person-comment-1.png"
               alt="person-comment-1"
@@ -135,7 +202,8 @@
             <ButtonSM buttonTitle="Schrijf een reactie" class="mt-10" />
           </div>
         </div>
-        <div class="hidden md:block lg:w-[30%]">
+        <!-- author -->
+        <div class="hidden lg:block lg:w-[30%]">
           <div class="lg:flex flex-col items-center">
             <h1 class="text-[#121416] text-[18px]">AUTHOR</h1>
             <h3 class="text-[20px]">Luci Avetisyan</h3>
@@ -145,7 +213,7 @@
               pretium donec veni. Pede…
             </p>
             <div class="flex gap-2 mt-2">
-              <NuxtLink to=""
+              <NuxtLink to="/"
                 ><img src="/images/behance.svg" alt="behance" />
               </NuxtLink>
               <NuxtLink to="/"
@@ -172,3 +240,13 @@
     </div>
   </section>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      maxWord: 20,
+    };
+  },
+};
+</script>

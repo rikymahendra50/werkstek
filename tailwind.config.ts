@@ -17,6 +17,7 @@ export default <Partial<Config>>{
     extend: {
       backgroundImage: {
         bgdot: "url('/images/bg-dot.svg')",
+        bgdotSmall: "url('/images/bg-dot-small.svg')",
         bgdot2: "url('/images/bg-dot2.svg')",
         orange: "url('/images/bg-orange.svg')",
         bgTitle: "url('/images/bg-title.svg')",

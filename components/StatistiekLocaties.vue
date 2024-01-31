@@ -4,23 +4,23 @@
     :class="classcustom"
   >
     <span
-      class="bg-bgdot bg-no-repeat w-[30%] lg:top-16 h-full absolute"
+      class="bg-bgdot bg-no-repeat w-[20%] md:w-[30%] lg:top-16 h-full absolute"
     ></span>
-    <div class="grid md:grid-rows-1 md:grid-cols-2 z-10">
+    <div class="grid sm:grid-rows-1 sm:grid-cols-2 z-10">
       <div class="container-custom flex items-center">
         <div class="grid">
-          <p class="text-[19px] lg:text-[24px]">{{ title1 }}</p>
-          <p class="text-[35px] lg:text-[55px]">{{ title2 }}</p>
-          <p class="text-[12px] lg:text-[20px]">
+          <span class="text-[19px] lg:text-[24px]">{{ title1 }}</span>
+          <span class="text-[35px] lg:text-[55px]">{{ title2 }}</span>
+          <span class="text-[12px] lg:text-[20px]">
             {{ title3 }}
-          </p>
+          </span>
           <div
-            class="flex mt-10 w-[90%] lg:w-[80%] justify-between"
+            class="flex mt-10 w-[100%] md:justify-between lg:w-[80%]"
             v-if="showButton"
           >
             <NuxtLink
               :to="buttonLink1"
-              class="bg-primary1 py-3 px-6 rounded-[14px] drop-shadow-md text-white"
+              class="bg-primary1 py-3 px-2 lg:px-6 rounded-[14px] text-center drop-shadow-md text-white md:mr-5"
             >
               {{ buttonTitle1 }}
             </NuxtLink>
