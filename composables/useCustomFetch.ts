@@ -10,7 +10,7 @@ export function useCustomFetch<T>(
   const clearCredential = async () => {
     if (process.client) {
       useCookie("auth-token").value = null;
-      window.location.replace("/sign-in");
+      window.location.replace("/admin/sign-in");
     }
   };
 

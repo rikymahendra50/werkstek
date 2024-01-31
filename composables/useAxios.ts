@@ -21,7 +21,7 @@ export default function () {
   const clearCredential = async () => {
     if (process.client) {
       useCookie("auth-token").value = null;
-      window.location.replace("/sign-in");
+      window.location.replace("/admin/sign-in");
     }
   };
 
