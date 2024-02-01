@@ -1,5 +1,5 @@
 <template>
-  <section id="footer" class="relative border-t-2 border-black">
+  <section id="footer" class="relative border-t-2 border-quaternary">
     <div
       class="pb-20 pt-10 flex flex-col lg:flex-row relative container-custom"
     >
@@ -34,19 +34,39 @@
           >
             Over ons
           </h1>
-          <hr class="border-b-2 border-primary1 lg:border-[#1FAB71] w-[50px]" />
+          <!-- <hr class="border-b-2 border-primary lg:border-[#1FAB71] w-[50px]" /> -->
           <ul class="text-[12px] md:text-[15px]">
             <li class="pt-3">
-              <NuxtLink to="/voor-verhuurders">Over ons</NuxtLink>
+              <NuxtLink
+                to="/voor-verhuurders"
+                class="navlink"
+                :class="{ active: isRouteActive('/voor-verhuurders') }"
+                >Over ons</NuxtLink
+              >
             </li>
             <li class="pt-3">
-              <NuxtLink to="/onze-locaties">Locaties</NuxtLink>
+              <NuxtLink
+                to="/onze-locaties"
+                class="navlink"
+                :class="{ active: isRouteActive('/onze-locaties') }"
+                >Locaties</NuxtLink
+              >
             </li>
             <li class="pt-3">
-              <NuxtLink to="/contact">Contact opnemen</NuxtLink>
+              <NuxtLink
+                to="/contact"
+                class="navlink"
+                :class="{ active: isRouteActive('/contact') }"
+                >Contact opnemen</NuxtLink
+              >
             </li>
             <li class="pt-3">
-              <NuxtLink to="/faq">Veel gestelde vragen</NuxtLink>
+              <NuxtLink
+                to="/faq"
+                class="navlink"
+                :class="{ active: isRouteActive('/faq') }"
+                >Veel gestelde vragen</NuxtLink
+              >
             </li>
           </ul>
         </div>
@@ -56,7 +76,7 @@
           >
             Wat wij doen
           </h1>
-          <hr class="border-b-2 border-primary1 lg:border-[#1FAB71] w-[50px]" />
+          <!-- <hr class="border-b-2 border-primary lg:border-[#1FAB71] w-[50px]" /> -->
           <ul class="text-[12px] md:text-[15px]">
             <NuxtLink to="/"><li class="pt-3">Flex plekkenn</li></NuxtLink>
             <NuxtLink to="/"><li class="pt-3">Werkplekken</li></NuxtLink>
@@ -68,7 +88,7 @@
           >
             Contact
           </h1>
-          <hr class="border-b-2 border-primary1 lg:border-[#1FAB71] w-[50px]" />
+          <!-- <hr class="border-b-2 border-primary lg:border-[#1FAB71] w-[50px]" /> -->
           <ul class="text-[12px] md:text-[15px]">
             <NuxtLink :to="'tel:085-0290598'">
               <li class="flex pt-3">
@@ -93,14 +113,14 @@
       </div>
     </div>
     <div
-      class="bg-[#EEF3ED] h-[61px] flex items-center lg:text-[16px] text-[10px]"
+      class="bg-tertiary h-[61px] flex items-center lg:text-[16px] text-[10px]"
     >
       <p class="md:pl-8 px-4 text-[#8C8E91]">
         Copyright All Rights Reserved © 2023 Werkstek
       </p>
-      <p class="md:pl-4">Cookkie beleid</p>
+      <NuxtLink to="" class="md:pl-4">Cookkie beleid</NuxtLink>
       <p class="px-2">|</p>
-      <p class="md:pr-4">Privacy verklaring</p>
+      <NuxtLink class="md:pr-4">Privacy verklaring</NuxtLink>
     </div>
   </section>
 </template>

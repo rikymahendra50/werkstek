@@ -45,7 +45,7 @@
             :key="itemSlider.id"
             :style="{
               backgroundImage: `url('${itemSlider.backgroundImage}')`,
-              background: `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${itemSlider.backgroundImage}')`,      
+              background: `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${itemSlider.backgroundImage}')`,
               backgroundPosition: 'center center',
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
@@ -74,7 +74,7 @@
   background-position: center;
   background-size: 40px;
   background-repeat: no-repeat;
-  background-color: theme("colors.primary1");
+  background-color: theme("colors.primary");
   width: 40px;
 }
 

@@ -3,10 +3,10 @@
     <div class="flex flex-col items-center justify-center h-full py-10">
       <span class="bg-bgdot bg-no-repeat w-[30%] h-full absolute left-0"></span>
       <span
-        class="bg-primary1 w-[60%] max-w-[710px] h-[20%] sm:h-[100%] max-h-[376px] absolute top-24 left-28 sm:top-14 sm:left-24 bg-shape-orange"
+        class="bg-primary w-[60%] max-w-[710px] h-[20%] sm:h-[100%] max-h-[376px] absolute top-24 left-28 sm:top-14 sm:left-14 bg-shape-orange"
       ></span>
       <div
-        class="flex z-10 w-[88%] h-[250px] sm:h-[400px] md:h-[600px] lg:h-[853px] text-white"
+        class="flex z-10 w-[88%] h-[250px] sm:h-[400px] md:h-[600px] lg:h-[853px] text-white justify-center"
       >
         <div class="flex-col max-w-[613px] w-full">
           <NuxtLink
@@ -88,7 +88,7 @@
         </div>
       </div>
       <span
-        class="bg-primary1 w-[60%] max-w-[710px] h-[20%] sm:h-[100%] max-h-[376px] absolute bottom-24 right-28 sm:bottom-14 sm:right-24 bg-shape-orange"
+        class="bg-primary w-[60%] max-w-[710px] h-[20%] sm:h-[100%] max-h-[376px] absolute bottom-24 right-28 sm:bottom-14 sm:right-16 bg-shape-orange"
       ></span>
     </div>
   </section>

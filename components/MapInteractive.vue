@@ -2,7 +2,7 @@
   <section class="relative z-20" :class="marginCustom">
     <div id="map" class="relative w-full h-[420px] lg:h-[619px] border-2"></div>
     <div
-      class="w-[95%] lg:w-[80%] md:h-[240px] lg:h-[288px] bg-[#859C81] border-radius-map box-shadow py-5 lg:py-0"
+      class="w-[95%] lg:w-[80%] md:h-[240px] lg:h-[288px] bg-secondary border-radius-map box-shadow py-5 lg:py-0"
       :class="{
         'absolute bottom-[-80px]': !searchCustom,
         'absolute bottom-[-80px] md:top-[-60px]': searchCustom,

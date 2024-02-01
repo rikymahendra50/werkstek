@@ -20,7 +20,7 @@
           >
             <NuxtLink
               :to="buttonLink1"
-              class="bg-primary1 py-3 px-2 lg:px-6 rounded-[14px] text-center drop-shadow-md text-white md:mr-5"
+              class="bg-primary py-3 px-2 lg:px-6 rounded-[14px] text-center drop-shadow-md text-white md:mr-5"
             >
               {{ buttonTitle1 }}
             </NuxtLink>
@@ -41,7 +41,7 @@
         />
         <!-- locaties and Statics -->
         <div
-          class="bg-primary1 h-[70%] grid grid-rows-1 grid-cols-3 lg:grid-cols-5 absolute bottom-[-80px] md:bottom-[-100px] lg:bottom-[-120px] right-10 md:right-[50px] w-[80%] sm:w-[90%] md:w-[98%] items-end pb-5 pl-4 lg:pl-10"
+          class="bg-primary h-[70%] grid grid-rows-1 grid-cols-3 lg:grid-cols-5 absolute bottom-[-80px] md:bottom-[-100px] lg:bottom-[-120px] right-10 md:right-[50px] w-[80%] sm:w-[90%] md:w-[98%] items-end pb-5 pl-4 lg:pl-10"
           style="border-radius: 50px 10px"
         >
           <div class="text-white">

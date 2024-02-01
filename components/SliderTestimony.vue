@@ -38,7 +38,7 @@
               {{ itemTestimony.description }}
             </p>
             <hr
-              class="border-t-[0.25pxs] border-black my-[16px] md:my-[36px] w-[90%]"
+              class="border-t-[0.25pxs] border-quaternary my-[16px] md:my-[36px] w-[90%]"
             />
             <div class="flex items-center">
               <div>
@@ -79,7 +79,7 @@
 .swiper-pagination-bullet {
   width: 10px;
   height: 10px;
-  background-color: theme("colors.primary1");
+  background-color: theme("colors.primary");
   opacity: 0.5;
   transition: all 0.3s ease;
   margin-right: 5px;
@@ -87,7 +87,7 @@
 
 .swiper-pagination-bullet-active {
   width: 30px;
-  background-color: theme("colors.primary1");
+  background-color: theme("colors.primary");
   opacity: 1;
   height: 9px;
   border-radius: 10px;

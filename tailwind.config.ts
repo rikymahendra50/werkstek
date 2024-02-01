@@ -24,8 +24,8 @@ export default <Partial<Config>>{
         bgTitle: "url('/images/bg-title.svg')",
       },
       colors: {
-        primary1: "#F0912D",
-        secondary1: "#859C81",
+        primary: "#F0912D",
+        secondary: "#859C81",
         tertiary: "#EEF3ED",
         quaternary: "#000",
       },

@@ -44,7 +44,7 @@
 
 .range-fill {
   height: 6px;
-  background-color: theme("colors.primary1");
+  background-color: theme("colors.primary");
   position: absolute;
   z-index: 1;
 }

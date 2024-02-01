@@ -9,7 +9,7 @@
       <h1 class="text-[14px] xl:text-[18px] font-bold">
         {{ title }}
       </h1>
-      <p class="text-[12px] xl:text-[14px]">
+      <p class="text-[12px] xl:text-[14px] line-clamp-3">
         {{ description }}
       </p>
       <ButtonBlogSmall

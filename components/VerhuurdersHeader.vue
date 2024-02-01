@@ -20,7 +20,7 @@
           <div class="flex mt-5 w-[90%] lg:w-[80%] justify-between">
             <NuxtLink
               :to="buttonLink1"
-              class="bg-primary1 py-3 px-6 rounded-[14px] drop-shadow-md text-white"
+              class="bg-primary py-3 px-6 rounded-[14px] drop-shadow-md text-white"
             >
               {{ buttonTitle }}
             </NuxtLink>

@@ -17,10 +17,10 @@
   }
 
   /* .checkbox {
-    @apply bg-white text-white border-2 border-primary1;
+    @apply bg-white text-white border-2 border-primary;
 
     &:checked {
-      @apply bg-primary1 text-white border-2;
+      @apply bg-primary text-white border-2;
     }
   } */
   .navlink,
@@ -28,7 +28,7 @@
     @apply no-underline relative pb-[5px] bg-transparent;
   }
   .navlink::after {
-    @apply content-[""] absolute w-3/5 max-w-[50px] h-0.5 bg-primary1 transition-[0.2s] duration-[all] ease-[ease-out] scale-0 left-0 bottom-0;
+    @apply content-[""] absolute w-3/5 max-w-[50px] h-0.5 bg-primary transition-[0.2s] duration-[all] ease-[ease-out] scale-0 left-0 bottom-0;
   }
   .navlink:hover::after {
     @apply scale-100;

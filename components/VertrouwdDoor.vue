@@ -2,7 +2,7 @@
   <div class="container-custom justify-around flex items-center md:py-10 py-20">
     <div class="flex gap-2">
       <div
-        class="border-l-[7px] rounded-full border-primary1 h-[100px] sm:h-[140px] lg:h-[160px] max-h-[160px]"
+        class="border-l-[7px] rounded-full border-primary h-[100px] sm:h-[140px] lg:h-[160px] max-h-[160px]"
       ></div>
       <div class="flex flex-col ml-4 lg:w-[72%]">
         <p class="text-[#181817] font-semibold text-[20px] sm:text-[30px]">

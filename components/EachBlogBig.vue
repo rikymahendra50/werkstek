@@ -4,7 +4,9 @@
     <span class="text-[14px] sm:text-[18px] md:text-[24px] font-semibold">
       {{ title }}
     </span>
-    <span class="font-normal text-[12px] sm:text-[14px] md:text-[18px] py-3">
+    <span
+      class="font-normal text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] py-3"
+    >
       {{ description }}
     </span>
     <ButtonBlog :perBlogLink="link" />

@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     to="/blog/riky-mahendra"
-    class="text-primary1 text-[14px] sm:text-[16px] md:text-[20px] border border-primary1 py-[3px] px-4 w-[60%] sm:w-[40%] md:w-[66%] lg:w-[85%] text-center rounded-[14px]"
+    class="text-primary text-[14px] sm:text-[16px] md:text-[20px] border border-primary py-[3px] px-4 w-[60%] sm:w-[40%] md:w-[66%] lg:w-[65%] text-center rounded-[14px]"
     >{{ titleButton }}</NuxtLink
   >
 </template>

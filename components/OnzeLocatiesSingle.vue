@@ -49,7 +49,7 @@
                   :key="itemCheckBox.id"
                 >
                   <td class="text-[13px] w-[50%]">{{ itemCheckBox.name }}</td>
-                  <td class="w-[50%] flex items-start text-black">
+                  <td class="w-[50%] flex items-start text-quaternary">
                     <Checkbox :titleCheckBox="itemCheckBox.checkBoxTitle" />
                   </td>
                 </tr>

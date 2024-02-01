@@ -1,6 +1,6 @@
 <template>
   <section class="py-16">
-    <div class="w-[95%] lg:w-[80%] bg-[#859C81] border-radius-map box-shadow">
+    <div class="w-[95%] lg:w-[80%] bg-secondary border-radius-map box-shadow">
       <div
         class="container-custom flex flex-col text-white pb-3 py-3 lg:py-8 justify-between"
       >
@@ -27,11 +27,11 @@
               <input
                 type="text"
                 placeholder="Mail@mail.com"
-                class="input input-bordered w-[80%] rounded-r-sm text-black box-shadow max-w-[240px]"
+                class="input input-bordered w-[80%] rounded-r-sm text-quaternary box-shadow max-w-[240px]"
               />
               <NuxtLink
                 :to="EmailForm.buttonEmailLink"
-                class="bg-primary1 flex justify-center py-2 px-3 sm:py-3 sm:px-4 w-[170px] h-[48px] items-center cursor-pointer rounded-r-[10px] box-shadow font-bold text-[12px] md:text-[18px]"
+                class="bg-primary flex justify-center py-2 px-3 sm:py-3 sm:px-4 w-[170px] h-[48px] items-center cursor-pointer rounded-r-[10px] box-shadow font-bold text-[12px] md:text-[18px]"
               >
                 {{ EmailForm.buttonEmailTitle }}
               </NuxtLink>

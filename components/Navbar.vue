@@ -11,7 +11,7 @@
       <div class="lg:hidden flex">
         <button name="toggle" @click="drawer" label="toggle">
           <svg
-            class="h-8 w-8 fill-current text-black"
+            class="h-8 w-8 fill-current text-quaternary"
             fill="none"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -57,12 +57,12 @@
               class="absolute top-6 py-1 mt-2 w-full dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-md"
             >
               <li>
-                <NuxtLink to="/" class="px-3 hover:text-primary1"
+                <NuxtLink to="/" class="px-3 hover:text-primary"
                   >Submenu 1</NuxtLink
                 >
               </li>
               <li>
-                <NuxtLink to="/" class="px-3 hover:text-primary1"
+                <NuxtLink to="/" class="px-3 hover:text-primary"
                   >Submenu 2</NuxtLink
                 >
               </li>
@@ -82,7 +82,7 @@
             >
           </li>
           <li
-            class="max-w-[172px] 2xl:h-[56px] bg-primary1 hover:bg-white px-3 py-2 text-white border border-primary1 hover:text-primary1 hover:border-primary1 hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
+            class="max-w-[172px] 2xl:h-[56px] bg-primary hover:bg-white px-3 py-2 text-white border border-primary hover:text-primary hover:border-primary hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
           >
             <NuxtLink to="/contact" aria-label="contact"
               >Contact opnemen</NuxtLink
@@ -106,7 +106,7 @@
         >
           <div
             @click="isOpen = false"
-            class="absolute inset-0 bg-black opacity-50"
+            class="absolute inset-0 bg-quaternary opacity-50"
             tabindex="0"
           ></div>
         </div>
@@ -176,7 +176,7 @@
             <NuxtLink
               to="/contact"
               @click="isOpen = false"
-              class="my-8 w-full text-center font-semibold cta inline-block bg-primary1 hover:bg-white border border-primary1 px-3 py-2 rounded text-white hover:text-primary1"
+              class="my-8 w-full text-center font-semibold cta inline-block bg-primary hover:bg-white border border-primary px-3 py-2 rounded text-white hover:text-primary"
               >Contact opnemen</NuxtLink
             >
           </li>
