@@ -28,14 +28,14 @@
     @apply no-underline relative pb-[5px] bg-transparent;
   }
   .navlink::after {
-    @apply content-[""] absolute w-3/5 max-w-[50px] h-0.5 bg-primary transition-[0.2s] duration-[all] ease-[ease-out] scale-0 left-0 bottom-0;
+    @apply content-[""] absolute w-3/5 max-w-[50px] h-0.5 bg-white transition-[0.2s] duration-[all] ease-[ease-out] scale-0 left-0 bottom-0;
   }
   .navlink:hover::after {
-    @apply scale-100;
+    @apply text-primary;
   }
-  .navlink.active::after {
+  /* .navlink.active::after {
     @apply scale-100;
-  }
+  } */
 }
 
 body {

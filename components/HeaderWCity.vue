@@ -1,6 +1,8 @@
 <template>
-  <section class="bg-tertiary relative flex items-center">
-    <div class="grid md:grid-rows-1 md:grid-cols-2 z-10">
+  <section class="relative flex items-center">
+    <div
+      class="grid md:grid-rows-1 md:grid-cols-2 z-10 bg-[url('/images/bg-header-w-city.jpg')] bg-no-repeat bg-cover"
+    >
       <div class="container-custom flex items-center py-24">
         <div class="grid lg:ml-10">
           <p class="text-[19px] lg:text-[24px]">{{ title1 }}</p>

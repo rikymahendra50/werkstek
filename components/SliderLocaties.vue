@@ -1,13 +1,15 @@
 <template>
   <section class="bg-tertiary relative flex flex-col py-10">
-    <span
+    <!-- <span
       class="bg-bgdot bg-no-repeat w-[20%] lg:w-[15%] top-0 h-full right-0 absolute bg-cover z-1 rotate-180"
-    ></span>
+    ></span> -->
     <div class="grid grid-cols-1 grid-rows-1">
       <div class="grid w-full container-custom">
         <div class="flex justify-between items-center mb-5">
           <div class="flex flex-col w-[60%] lg:w-[40%]">
-            <p class="text-[12px] md:text-lg lg:text-[18px] font-bold">
+            <p
+              class="text-[12px] md:text-lg lg:text-2xl font-bold text-secondary tracking-widest"
+            >
               Locaties
             </p>
             <p
@@ -22,11 +24,28 @@
               locaties hebben wij kantoorruimtes
             </p>
           </div>
-          <ButtonSM
+          <NuxtLink
+            to="/"
+            class="border border-quaternary rounded-full flex items-center z-10 justify-between p-2 lg:p-3 gap-2"
+          >
+            <p class="text-[12px] sm:text-[14px] lg:text-lg ml-2 lg:ml-3">
+              Bekijk alle locaties
+            </p>
+            <div
+              class="rounded-full bg-quaternary text-white flex items-center justify-center max-w-[55px] max-h-[55px]"
+            >
+              <img
+                src="/images/arrow-small-right.svg"
+                alt="arrow"
+                class="mr-[2px]"
+              />
+            </div>
+          </NuxtLink>
+          <!-- <ButtonSM
             buttonTitle="Bekijk alle locaties"
             buttonLink="/onze-locaties"
             class="z-10"
-          />
+          /> -->
         </div>
       </div>
       <div

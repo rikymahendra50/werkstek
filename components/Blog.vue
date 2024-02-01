@@ -1,5 +1,5 @@
 <template>
-  <section class="mx-5 lg:container-custom">
+  <section class="mx-5 lg:container-custom py-10">
     <div v-if="dontShowTitle">
       <div v-if="!showTitleHeader">
         <div class="py-5 sm:w-[70%]">

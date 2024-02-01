@@ -1,12 +1,10 @@
 <template>
   <nav class="w-full z-50 shadow-md top-0">
     <div
-      class="flex items-center justify-between h-[86px] font-medium w-full relative bg-white container-custom text-[18px]"
+      class="flex items-center justify-between w-full relative bg-white container-custom py-5"
     >
       <!-- Header logo -->
-      <div>
-        <Werkstek />
-      </div>
+
       <!-- Mobile toggle -->
       <div class="lg:hidden flex">
         <button name="toggle" @click="drawer" label="toggle">
@@ -24,8 +22,15 @@
         </button>
       </div>
       <!-- Navbar -->
-      <div class="hidden lg:block z-[99999]">
-        <ul class="flex space-x-5 font-medium items-center">
+      <div class="hidden lg:flex z-[99999] items-center justify-between w-full">
+        <ul
+          class="flex space-x-5 items-center justify-between xl:text-xl gap-3 pr-10 bg-primary p-1 rounded-full text-white w-[80%]"
+        >
+          <li class="bg-white rounded-full px-4">
+            <p class="text-quaternary py-2 leading-10 tracking-widest">
+              Werkstek
+            </p>
+          </li>
           <li>
             <NuxtLink
               to="/"
@@ -52,7 +57,7 @@
               :class="{ active: isRouteActive('/over-werkstek') }"
               >Over werkstek</NuxtLink
             >
-            <ul
+            <!-- <ul
               tabindex="0"
               class="absolute top-6 py-1 mt-2 w-full dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-md"
             >
@@ -66,29 +71,48 @@
                   >Submenu 2</NuxtLink
                 >
               </li>
-            </ul>
-            <img
+            </ul> -->
+            <!-- <img
               src="/images/icon-dropdown.svg"
               alt="icon-dropdown"
               class="pl-2 pb-1"
-            />
+            /> -->
           </li>
           <li>
             <NuxtLink
               to="/wekstek-community"
               class="pr-1 navlink"
               :class="{ active: isRouteActive('/wekstek-community') }"
-              >Werkstek updates</NuxtLink
+              >Werkstek Blog</NuxtLink
             >
           </li>
-          <li
+          <li>
+            <NuxtLink
+              to="/wekstek-community"
+              class="pr-1 navlink"
+              :class="{ active: isRouteActive('/faq') }"
+              >FAQ</NuxtLink
+            >
+          </li>
+          <!-- <li
             class="max-w-[172px] 2xl:h-[56px] bg-primary hover:bg-white px-3 py-2 text-white border border-primary hover:text-primary hover:border-primary hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
           >
             <NuxtLink to="/contact" aria-label="contact"
               >Contact opnemen</NuxtLink
             >
-          </li>
+          </li> -->
         </ul>
+        <NuxtLink
+          to="/"
+          class="border border-quaternary rounded-full flex items-center gap-2 p-1 px-1 lg:px-2"
+        >
+          <p class="p-3 text-sm lg:text-base">Contact opnemen</p>
+          <div
+            class="rounded-full bg-quaternary text-white flex items-center justify-center aspect-square"
+          >
+            <img src="/images/arrow-small-right.svg" alt="arrow" class="mr-1" />
+          </div>
+        </NuxtLink>
       </div>
       <!-- Dark Background Transition -->
       <transition
@@ -170,6 +194,14 @@
               @click="isOpen = false"
               class="my-4 inline-block"
               >Werkstek updates</NuxtLink
+            >
+          </li>
+          <li class="cursor-pointer">
+            <NuxtLink
+              to="/faq"
+              @click="isOpen = false"
+              class="my-4 inline-block"
+              >FAQ</NuxtLink
             >
           </li>
           <li class="cursor-pointer">

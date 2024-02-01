@@ -26,7 +26,7 @@
   />
 
   <LeegstandNoButton
-    background="bg-[#EEF3ED]"
+    background="bg-tertiary"
     image="/images/image-page4-3.png"
     imageAlt="image-page4-3"
     title="Ruimtes inrichten"
@@ -58,6 +58,7 @@
     :showSmallerButton="true"
     linkTitleSmaller="Lees de FAQ"
     linkButtonSmaller="/Faq"
+    backgroundColor="secondary"
   />
 </template>
 

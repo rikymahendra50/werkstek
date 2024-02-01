@@ -91,21 +91,19 @@
           <!-- <hr class="border-b-2 border-primary lg:border-[#1FAB71] w-[50px]" /> -->
           <ul class="text-[12px] md:text-[15px]">
             <NuxtLink :to="'tel:085-0290598'">
-              <li class="flex pt-3">
+              <li class="flex pt-3 items-center gap-2">
                 <img
-                  src="/images/telp.svg"
+                  src="/images/telp-bg-primary.svg"
                   alt="icon-phone-yellow"
-                  class="pr-2 w-[20px] lg:w-[24px]"
-                />085-0290598
+                  class=""
+                />
+                <p>085-0290598</p>
               </li>
             </NuxtLink>
             <NuxtLink :to="'mailto:info@werkstek.nl'">
-              <li class="flex pt-3">
-                <img
-                  src="/images/email.svg"
-                  alt="icon-email.svg"
-                  class="pr-2 w-[20px] lg:w-[24px]"
-                />Werkplekken
+              <li class="flex pt-3 items-center gap-2">
+                <img src="/images/email-bg-primary.svg" alt="icon-email.svg" />
+                <p>Werkplekken</p>
               </li>
             </NuxtLink>
           </ul>

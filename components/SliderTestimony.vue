@@ -1,5 +1,5 @@
 <template>
-  <section class="md:container-custom">
+  <section class="md:container-custom py-10">
     <TitleHeader
       title="Meningen"
       secondTitle="Wat vinden onze klanten"
