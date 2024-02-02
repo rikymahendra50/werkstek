@@ -1,11 +1,14 @@
 <template>
   <NuxtLink to="/blog/riky-mahendra" class="flex">
-    <NuxtLink
-      to="/blog/riky-mahendra"
-      class="text-primary text-[14px] sm:text-[16px] md:text-[20px] border border-primary py-[3px] px-4 w-[55%] sm:w-[35%] md:w-[60%] lg:w-[50%] text-center rounded-[14px] items-center flex justify-center"
-      >{{ titleButton }}</NuxtLink
+    <div
+      class="text-primary hover:text-secondary text-[14px] sm:text-[16px] md:text-[20px] border border-primary hover:border-secondary py-[3px] px-4 w-[55%] sm:w-[35%] md:w-[60%] lg:w-[50%] text-center rounded-[14px] items-center flex justify-center"
     >
-    <img src="images/rounded-arrow.svg" alt="rounded-arrow" />
+      {{ titleButton }}
+    </div>
+    <!-- <img src="images/rounded-arrow.svg" alt="rounded-arrow" /> -->
+    <div class="bg-primary max-w-[41px] min-h-[41px] rounded-full">
+      <img src="/images/arrow-right.svg" alt="arrow" />
+    </div>
   </NuxtLink>
 </template>
 

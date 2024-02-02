@@ -24,7 +24,8 @@
     :buttonTitle="BgBigGreen.titleButton"
     :buttonLink="BgBigGreen.linkButton"
     :showEmailSection="true"
-    :backgroundColor="'primary'"
+    :show-button-section="false"
+    :backgroundColor="'secondary'"
   />
 </template>
 

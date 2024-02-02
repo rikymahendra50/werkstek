@@ -12,11 +12,7 @@
       <p class="text-[12px] xl:text-[14px] line-clamp-3">
         {{ description }}
       </p>
-      <ButtonBlogSmall
-        :perBlogLink="link"
-        v-if="showButton"
-        class="md:mt-4 xl:mt-7"
-      />
+      <ButtonBlogSmall :perBlogLink="link" v-if="showButton" class="md:mt-4" />
     </div>
   </div>
 </template>

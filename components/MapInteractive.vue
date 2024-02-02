@@ -1,69 +1,122 @@
 <template>
-  <section class="relative z-20" :class="marginCustom">
-    <div id="map" class="relative w-full h-[420px] lg:h-[619px] border-2"></div>
+  <section class="container-custom relative z-20 py-10" :class="marginCustom">
     <div
-      class="w-[95%] lg:w-[80%] md:h-[240px] lg:h-[288px] bg-secondary border-radius-map box-shadow py-5 lg:py-0"
-      :class="{
-        'absolute bottom-[-80px]': !searchCustom,
-        'absolute bottom-[-80px] md:top-[-60px]': searchCustom,
-      }"
-    >
-      <div class="container-custom flex flex-col text-white w-[99%]">
-        <p
-          class="text-[17px] sm:text-[20px] md:text-[25px] font-bold pb-3 py-3 lg:py-8"
+      id="map"
+      class="relative w-full h-[420px] lg:h-[619px] border-2 z-[-999]"
+    ></div>
+    <div class="mx-10">
+      <div class="bg-tertiary box-shadow mt-[-200px] z-10 rounded-[40px]">
+        <div
+          class="min-h-[278px] md:grid md:grid-cols-3 items-center h-full px-10 font-semibold gap-1 md:gap-3 py-9"
         >
-          {{ titleMap }}
-        </p>
-        <!-- Loop category -->
-        <div class="flex justify-between mb-4">
+          <p
+            class="text-[20px] md:text-[25px] font-bold lg:leading-10 lg:text-4xl text-secondary"
+          >
+            {{ titleMap }}
+          </p>
           <div
             v-for="(category, index) in categories"
             :key="index"
-            class="flex flex-col w-[40%]"
+            class="flex flex-col"
           >
-            <p class="text-[11px] sm:text-[16px] pb-2">
+            <p class="text-lg sm:text-[16px] lg:pl-3 lg:pb-2 pt-2">
               {{ category.title }}
             </p>
             <div class="relative">
               <div
                 @click="toggleDropdown(category)"
-                class="search-map-category text-[10px] text-[#676767] sm:text-[14px]"
+                class="w-full flex items-center justify-between bg-[#F7F7F7] rounded-full px-5 min-h-[50px] cursor-pointer text-quaternary sm:text-[14px] mb-2 md:mb-0"
               >
                 {{ category.selectedOption }}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="10"
-                  height="8"
-                  viewBox="0 0 12 11"
-                  fill="none"
+
+                <div
+                  class="max-w-[30px] min-h-[30px] bg-quaternary rounded-full flex items-center justify-center"
                 >
-                  <path
-                    d="M6 10.2579L0.803848 0.724833H11.1962L6 10.2579Z"
-                    fill="#859C81"
+                  <img
+                    src="/images/arrow-right.svg"
+                    alt="arrow"
+                    class="rotate-90"
                   />
-                </svg>
+                </div>
               </div>
-              <!-- Dropdown list -->
               <ul
                 v-if="category.showDropdown"
-                class="absolute text-[10px] lg:text-[16px] top-[100%] left-0 bg-white border border-gray-300 rounded-[5px] mt-1 w-[97%] text-[#676767] lg:px-8 z-20"
+                class="absolute text-[10px] lg:text-[16px] top-[100%] left-0 bg-white rounded-[5px] mt-1 w-full text-black z-20"
               >
                 <li
                   v-for="(option, idx) in category.options"
                   :key="idx"
                   @click="selectOption(category, option)"
-                  class="px-2 pt-1 cursor-pointer"
+                  class="pt-1 cursor-pointer hover:bg-secondary px-5"
                 >
                   {{ option }}
                 </li>
               </ul>
             </div>
           </div>
+          <div class="text-tertiary grid justify-end md:col-span-3 mt-4">
+            <Button
+              to="/"
+              class="bg-primary rounded-full min-h-[48px] flex items-center gap-4 pl-3 pr-1"
+            >
+              <p class="font-semibold text-sm">Uitgebreid zoeken</p>
+              <div
+                class="bg-tertiary text-primary flex items-center justify-center rounded-full min-w-[40px] min-h-[40px]"
+              >
+                >
+              </div>
+            </Button>
+          </div>
         </div>
+
+        <!-- <div class="flex justify-between mb-4">
+            <div
+              v-for="(category, index) in categories"
+              :key="index"
+              class="flex flex-col w-[40%]"
+            >
+              <p class="text-[11px] sm:text-[16px] pb-2">
+                {{ category.title }}
+              </p>
+              <div class="relative">
+                <div
+                  @click="toggleDropdown(category)"
+                  class="search-map-category text-[10px] text-[#676767] sm:text-[14px]"
+                >
+                  {{ category.selectedOption }}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="8"
+                    viewBox="0 0 12 11"
+                    fill="none"
+                  >
+                    <path
+                      d="M6 10.2579L0.803848 0.724833H11.1962L6 10.2579Z"
+                      fill="#859C81"
+                    />
+                  </svg>
+                </div>
+                <ul
+                  v-if="category.showDropdown"
+                  class="absolute text-[10px] lg:text-[16px] top-[100%] left-0 bg-white border border-gray-300 rounded-[5px] mt-1 w-[97%] text-[#676767] lg:px-8 z-20"
+                >
+                  <li
+                    v-for="(option, idx) in category.options"
+                    :key="idx"
+                    @click="selectOption(category, option)"
+                    class="px-2 pt-1 cursor-pointer"
+                  >
+                    {{ option }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div> -->
         <!-- Button -->
-        <div class="w-full flex justify-end">
+        <!-- <div class="w-full flex justify-end">
           <ButtonSM @click="performSearch" />
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
@@ -158,12 +211,12 @@ export default {
           showDropdown: false,
           options: ["Utrecht", "Amsterdam", "Rotterdam", "Den Haag"],
         },
-        {
-          title: "Type",
-          selectedOption: "Kantoorruimte",
-          showDropdown: false,
-          options: ["Kantoorruimte", "Andere Optie 1", "Andere Optie 2"],
-        },
+        // {
+        //   title: "Type",
+        //   selectedOption: "Kantoorruimte",
+        //   showDropdown: false,
+        //   options: ["Kantoorruimte", "Andere Optie 1", "Andere Optie 2"],
+        // },
         {
           title: "Zoek op een prijs",
           selectedOption: 4,
