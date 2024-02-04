@@ -5,14 +5,23 @@
       title2="werf5, Utrecht"
       title3="Categorie"
     />
-    <div class="flex">
-      <div class="flex flex-col w-[60%] md:w-[70%]">
-        <div class="flex">
-          <img src="/images/img-page3-1.jpg" class="md:w-[75%] rounded-[8px]" />
-          <div class="md:flex-col md:flex mx-1 md:mx-2 hidden">
-            <img src="/images/img-page3-2.jpeg" />
-            <img src="/images/img-page3-3.jpeg" class="mt-3" />
-            <img src="/images/img-page3-2.jpeg" class="mt-3" />
+    <div class="flex gap-2 sm:gap-5">
+      <div class="flex flex-col w-[60%] max-w-[727px]">
+        <div class="flex flex-col">
+          <img
+            src="/images/img-page3-1.jpg"
+            class="rounded-[8px] max-h-[364px]"
+          />
+          <div class="grid grid-cols-3 items-center gap-2 mt-3">
+            <div class="max-w-[245px]">
+              <img src="/images/img-page3-2.png" class="w-full" />
+            </div>
+            <div class="max-w-[245px]">
+              <img src="/images/img-page3-3.png" class="w-full" />
+            </div>
+            <div class="max-w-[245px]">
+              <img src="/images/img-page3-4.jpg" class="w-full" />
+            </div>
           </div>
         </div>
         <div class="mt-10 md:mt-16 w-[95%] text-justify">
@@ -39,7 +48,8 @@
         <p class="text-[#495057] text-base mt-10 mb-3 ml-5">
           De faciliteiten op de locatie
         </p>
-        <div class="border w-[95%]">
+        <div class="border w-[95%] min-w-[70px] relative">
+          <span class="absolute top-[-39px] text-primary text-4xl">____</span>
           <div class="overflow-x-auto sm:px-3">
             <table class="table">
               <tbody>
@@ -48,8 +58,12 @@
                   v-for="(itemCheckBox, index) in checkBoxData"
                   :key="itemCheckBox.id"
                 >
-                  <td class="text-[13px] w-[50%]">{{ itemCheckBox.name }}</td>
-                  <td class="w-[50%] flex items-start text-quaternary">
+                  <td class="text-[13px] w-[40%] sm:w-[50%]">
+                    {{ itemCheckBox.name }}
+                  </td>
+                  <td
+                    class="w-[60%] sm:w-[50%] flex items-start text-quaternary"
+                  >
                     <Checkbox :titleCheckBox="itemCheckBox.checkBoxTitle" />
                   </td>
                 </tr>
@@ -58,50 +72,175 @@
           </div>
         </div>
       </div>
-      <div class="w-[40%] md:w-[30%]">
+      <div class="w-[40%] block">
         <ul class="rounded-[8px] bg-[#859C811A] py-4 px-2 md:px-5">
           <li class="py-1 lg:py-2 flex">
-            <img
-              src="/images/icon-orange-page3.svg"
-              alt="icon-orange-page3"
-              class="w-5 md:w-7"
-            />
+            <svg
+              width="24"
+              height="23"
+              viewBox="0 0 24 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_0_3781)">
+                <path
+                  d="M12.2786 23C4.34698 22.4668 0.575981 14.2711 0.0558555 10.4064C-0.186019 9.40702 -0.139144 -0.387909 11.1086 0.0119072C22.356 0.411724 23.9014 8.14509 23.9816 9.00721C24.2415 11.8059 21.8359 21.7339 12.2786 23Z"
+                  class="fill-current text-primary"
+                />
+                <path
+                  d="M7.53746 11.021L10.8247 14.3813L16.4621 8.61868"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-miterlimit="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_0_3781">
+                  <path
+                    d="M0 10C0 4.47715 4.47715 0 10 0H14C19.5228 0 24 4.47715 24 10V13C24 18.5228 19.5228 23 14 23H10C4.47715 23 0 18.5228 0 13V10Z"
+                    fill="white"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
             <span class="pl-2 text-[12px] md:text-[15px]">Kleinschalig</span>
           </li>
           <li class="py-1 lg:py-2 flex">
-            <img
-              src="/images/icon-orange-page3.svg"
-              alt="icon-orange-page3"
-              class="w-5 md:w-7"
-            />
+            <svg
+              width="24"
+              height="23"
+              viewBox="0 0 24 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_0_3781)">
+                <path
+                  d="M12.2786 23C4.34698 22.4668 0.575981 14.2711 0.0558555 10.4064C-0.186019 9.40702 -0.139144 -0.387909 11.1086 0.0119072C22.356 0.411724 23.9014 8.14509 23.9816 9.00721C24.2415 11.8059 21.8359 21.7339 12.2786 23Z"
+                  class="fill-current text-primary"
+                />
+                <path
+                  d="M7.53746 11.021L10.8247 14.3813L16.4621 8.61868"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-miterlimit="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_0_3781">
+                  <path
+                    d="M0 10C0 4.47715 4.47715 0 10 0H14C19.5228 0 24 4.47715 24 10V13C24 18.5228 19.5228 23 14 23H10C4.47715 23 0 18.5228 0 13V10Z"
+                    fill="white"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
             <span class="pl-2 text-[12px] md:text-[15px]">Informeel</span>
           </li>
           <li class="py-1 lg:py-2 flex">
-            <img
-              src="/images/icon-orange-page3.svg"
-              alt="icon-orange-page3"
-              class="w-5 md:w-7"
-            />
+            <svg
+              width="24"
+              height="23"
+              viewBox="0 0 24 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_0_3781)">
+                <path
+                  d="M12.2786 23C4.34698 22.4668 0.575981 14.2711 0.0558555 10.4064C-0.186019 9.40702 -0.139144 -0.387909 11.1086 0.0119072C22.356 0.411724 23.9014 8.14509 23.9816 9.00721C24.2415 11.8059 21.8359 21.7339 12.2786 23Z"
+                  class="fill-current text-primary"
+                />
+                <path
+                  d="M7.53746 11.021L10.8247 14.3813L16.4621 8.61868"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-miterlimit="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_0_3781">
+                  <path
+                    d="M0 10C0 4.47715 4.47715 0 10 0H14C19.5228 0 24 4.47715 24 10V13C24 18.5228 19.5228 23 14 23H10C4.47715 23 0 18.5228 0 13V10Z"
+                    fill="white"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
             <span class="pl-2 text-[12px] md:text-[15px]"
               >Flexwerken mogelijk</span
             >
           </li>
           <li class="py-1 lg:py-2 flex">
-            <img
-              src="/images/icon-orange-page3.svg"
-              alt="icon-orange-page3"
-              class="w-5 md:w-7"
-            />
+            <svg
+              width="24"
+              height="23"
+              viewBox="0 0 24 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_0_3781)">
+                <path
+                  d="M12.2786 23C4.34698 22.4668 0.575981 14.2711 0.0558555 10.4064C-0.186019 9.40702 -0.139144 -0.387909 11.1086 0.0119072C22.356 0.411724 23.9014 8.14509 23.9816 9.00721C24.2415 11.8059 21.8359 21.7339 12.2786 23Z"
+                  class="fill-current text-primary"
+                />
+                <path
+                  d="M7.53746 11.021L10.8247 14.3813L16.4621 8.61868"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-miterlimit="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_0_3781">
+                  <path
+                    d="M0 10C0 4.47715 4.47715 0 10 0H14C19.5228 0 24 4.47715 24 10V13C24 18.5228 19.5228 23 14 23H10C4.47715 23 0 18.5228 0 13V10Z"
+                    fill="white"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
             <span class="pl-2 text-[12px] md:text-[15px]"
               >Prachtige locatie aan de gracht</span
             >
           </li>
           <li class="py-1 lg:py-2 flex">
-            <img
-              src="/images/icon-orange-page3.svg"
-              alt="icon-orange-page3"
-              class="w-5 md:w-7"
-            />
+            <svg
+              width="24"
+              height="23"
+              viewBox="0 0 24 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_0_3781)">
+                <path
+                  d="M12.2786 23C4.34698 22.4668 0.575981 14.2711 0.0558555 10.4064C-0.186019 9.40702 -0.139144 -0.387909 11.1086 0.0119072C22.356 0.411724 23.9014 8.14509 23.9816 9.00721C24.2415 11.8059 21.8359 21.7339 12.2786 23Z"
+                  class="fill-current text-primary"
+                />
+                <path
+                  d="M7.53746 11.021L10.8247 14.3813L16.4621 8.61868"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-miterlimit="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_0_3781">
+                  <path
+                    d="M0 10C0 4.47715 4.47715 0 10 0H14C19.5228 0 24 4.47715 24 10V13C24 18.5228 19.5228 23 14 23H10C4.47715 23 0 18.5228 0 13V10Z"
+                    fill="white"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
             <span class="pl-2 text-[12px] md:text-[15px]"
               >Internationale groep mensen lore</span
             >
@@ -111,46 +250,44 @@
           <p class="text-[18px] lg:text-[24px] text-[#363636] my-4">
             Adresgegevens
           </p>
-          <ul>
-            <li class="text-[14px] md:text-[16px]">Oudegracht aan de Werf 5</li>
+          <ul class="flex flex-col gap-1">
+            <li class="text-[14px] md:text-[16px] text-[#4A4A4A]">
+              Oudegracht aan de Werf 5
+            </li>
             <li class="text-[12px] md:text-[14px] text-[#4A4A4A]">Postcode</li>
             <li class="text-[12px] md:text-[15px] text-[#4A4A4A]">Utrecht</li>
             <li class="text-[13px] md:text-[15px] text-[#4A4A4A]">Nederland</li>
           </ul>
-          <NuxtLink :to="'tel:085-0290598'">
-            <p class="text-[#404040] text-[13px] md:text-[15px] mt-2">
-              Tel : <span>085-0290598</span>
-            </p>
-          </NuxtLink>
-          <NuxtLink :to="'mailto:' + 'info@werkstek.nl'">
-            <p class="text-[#404040] text-[13px] md:text-[16px]">
-              E-mail: <span>info@werkstek.nl</span>
-            </p>
-          </NuxtLink>
-          <div
-            class="bg-[#E9EBEC] mt-5 outline-[#E9EBEC] text-[#777777] max-w-[243px] w-full md:w-[50%] p-3 flex justify-end rounded-[8px]"
-            style="
-              border: 1px dashed #e9ebec;
-              background: rgba(133, 156, 129, 0.1);
-            "
-          >
-            <div class="flex flex-col text-[#777]">
-              <p class="text-[10px] md:text-[13px]">Prijs :</p>
-              <p class="text-[12px] md:text-[16px]">€ 450 per/maand</p>
-            </div>
+          <div class="my-4 flex flex-col gap-3">
+            <NuxtLink :to="'tel:085-0290598'" class="flex gap-3">
+              <img src="/images/telp-bg-primary.svg" alt="phone-icon" />
+              <p class="text-[#404040] text-[13px] md:text-[15px] mt-2">
+                Tel : <span>085-0290598</span>
+              </p>
+            </NuxtLink>
+            <NuxtLink :to="'mailto:' + 'info@werkstek.nl'" class="flex gap-3">
+              <img src="/images/email-bg-primary.svg" alt="phone-icon" />
+              <p class="text-[#404040] text-[13px] md:text-[16px]">
+                E-mail: <span>info@werkstek.nl</span>
+              </p>
+            </NuxtLink>
           </div>
         </div>
 
         <div
           class="flex flex-col sm:flex-row text-white justify-between mt-5 items-center"
         >
-          <ButtonLarge buttonTitle="Aanvragen" buttonLink="/" />
+          <ButtonLarge
+            buttonTitle="Aanvragen"
+            buttonLink="/voor-verhuurders"
+            class="my-2 rounded-full"
+          />
           <ButtonLarge buttonTitle="Contact opnemen" buttonLink="/contact" />
         </div>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58334447.393653534!2d54.64843750000003!3d26.82556878670093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3663f18a24cbe857%3A0xa9416bfcd3a0f459!2sAsia!5e0!3m2!1sid!2sid!4v1705553884962!5m2!1sid!2sid"
           loading="lazy"
-          class="w-full mt-5 h-[300px]"
+          class="w-full mt-5 max-h-[300px]"
         ></iframe>
       </div>
     </div>

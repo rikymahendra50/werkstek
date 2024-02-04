@@ -1,7 +1,6 @@
 <template>
   <div class="main w-[80%]">
     <div class="custom-wrapper pt-3">
-      <span class="text-sm font-medium opacity-50">{{ title }}</span>
       <div class="price-input-container">
         <div class="slider-container my-5">
           <div
@@ -12,7 +11,7 @@
             }"
           ></div>
         </div>
-        <div class="price-input flex justify-between text-sm opacity-50">
+        <div class="price-input flex justify-between text-sm">
           <div class="price-field">
             <span class="min-price">€ {{ localMinPrice }} min</span>
           </div>
@@ -48,9 +47,6 @@
 <script>
 export default {
   props: {
-    title: {
-      type: String,
-    },
     minPrice: {
       type: Number,
     },

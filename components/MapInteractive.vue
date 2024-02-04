@@ -28,10 +28,10 @@
             <p class="text-lg sm:text-[16px] lg:pl-3 lg:pb-2 pt-2">
               {{ category.title }}
             </p>
-            <div class="relative">
+            <div class="relative" v-if="category.title === 'Zoek een Locatie'">
               <div
                 @click="toggleDropdown(category)"
-                class="italic w-full flex items-center justify-between bg-[#F7F7F7] rounded-full px-5 min-h-[50px] cursor-pointer text-quaternary sm:text-[14px] mb-2 md:mb-0"
+                class="italic w-full flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-5 min-h-[50px] cursor-pointer text-quaternary sm:text-[14px] mb-2 md:mb-0"
               >
                 {{ category.selectedOption }}
 
@@ -58,6 +58,16 @@
                   {{ option }}
                 </li>
               </ul>
+            </div>
+            <div v-else-if="category.title === 'Zoek op een prijs'">
+              <SliderRangeSM
+                :minPrice="250"
+                :maxPrice="850"
+                :minRange="250"
+                :maxRange="850"
+                :priceGap="500"
+                @price-change="updateLastSelectedPrices"
+              />
             </div>
           </div>
           <div class="text-tertiary grid justify-end md:col-span-3 mt-4">
@@ -127,19 +137,21 @@ export default {
           popularity: 100,
           city: "Rotterdam",
           type: "Kantoorruimte",
-          price: 4,
+          price: 230,
+          filtered: false,
         },
         // test
         {
-          lat: -8.62717144710956,
-          lng: 115.20910166137442,
-          name: "Company B",
-          area: "Deskripsi B",
+          lat: -8.653840910873269,
+          lng: 115.21785198506426,
+          name: "Tolstraat 186-188 H, Amsterdam De Pijp",
+          area: "1104 m2",
           image: "/images/img-home-1.png",
-          popularity: 20,
-          city: "Utrecht",
+          popularity: 100,
+          city: "Rotterdam",
           type: "Kantoorruimte",
-          price: 4,
+          price: 750,
+          filtered: false,
         },
         {
           lat: -8.62717144710956,
@@ -151,6 +163,7 @@ export default {
           city: "Den Haag",
           type: "Andere Optie 2",
           price: 8,
+          filtered: false,
         },
         {
           lat: -8.641220836289818,
@@ -162,8 +175,13 @@ export default {
           city: "Amsterdam",
           type: "Andere Optie 1",
           price: 4,
+          filtered: false,
         },
       ],
+      lastSelectedPrices: {
+        minPrice: 250,
+        maxPrice: 850,
+      },
       categories: [
         {
           title: "Zoek een Locatie",
@@ -179,9 +197,6 @@ export default {
         // },
         {
           title: "Zoek op een prijs",
-          selectedOption: 4,
-          showDropdown: false,
-          options: [4, 8, 4],
         },
       ],
     };
@@ -195,19 +210,12 @@ export default {
     }
   },
   methods: {
+    updateLastSelectedPrices(prices) {
+      this.lastSelectedPrices = prices;
+      console.log("Last Selected Prices:", this.lastSelectedPrices);
+    },
+
     selectOption(category, option) {
-      // let selectedCity;
-      // let selectedType;
-      // let selectedPrice;
-
-      // if (category.title === "Zoek een Locatie") {
-      //   this.selectedOption = option;
-      // } else if (category.title === "Type") {
-      //   this.selectedOption = option;
-      // } else if (category.title === "Zoek op een prijs") {
-      //   this.selectedOption = option;
-      // }
-
       category.selectedOption = option;
       category.showDropdown = false;
     },
@@ -218,35 +226,40 @@ export default {
 
     performSearch() {
       const selectedOption = this.categories;
-      // console.log(selectedOption);
-      const allCities = this.locations.map((location) => location.city);
-
       let selectedCityFix = selectedOption[0].selectedOption;
-      // let selectedTypeFix = selectedOption[1].selectedOption;
-      let selectedPriceFix = selectedOption[1].selectedOption;
+      let selectedPriceFix = this.lastSelectedPrices;
 
-      // console.log(selectedCityFix);
-      // console.log(selectedTypeFix);
-      // console.log(selectedPriceFix);
+      const minPrice = selectedPriceFix.minPrice;
+      const maxPrice = selectedPriceFix.maxPrice;
 
-      const selectedOptionByUser = [
-        selectedCityFix,
-        // selectedTypeFix,
-        selectedPriceFix,
-      ];
+      this.locations.forEach((location) => {
+        const isLocationInFilter =
+          location.city === selectedCityFix &&
+          location.price >= minPrice &&
+          location.price <= maxPrice;
+
+        location.filtered = isLocationInFilter;
+
+        if (isLocationInFilter) {
+          this.moveToLocation(location.lat, location.lng);
+        }
+      });
+
+      this.updateMarkerIcons();
 
       const filteredData = this.locations.filter((location) => {
         return (
-          location.city === selectedOptionByUser[0] &&
-          // location.type === selectedOptionByUser[1] &&
-          location.price === parseInt(selectedOptionByUser[1])
+          location.city === selectedCityFix &&
+          location.price >= minPrice &&
+          location.price <= maxPrice
         );
       });
 
       if (filteredData.length > 0) {
-        // console.log("Matching Data:", filteredData[0]);
-        const foundLocation = filteredData[0];
-        this.moveToLocation(foundLocation.lat, foundLocation.lng);
+        console.log("Matching Data:", filteredData);
+        filteredData.forEach((location) => {
+          this.moveToLocation(location.lat, location.lng);
+        });
       } else {
         console.log("Sorry not found, Please Adjust your filter");
         alert("Sorry not found, Please Adjust your filter");
@@ -288,7 +301,7 @@ export default {
 
       const icon = {
         url: iconBase + "red-dot.png",
-        scaledSize: new google.maps.Size(30, 30),
+        scaledSize: new google.maps.Size(40, 40),
       };
 
       this.locations.forEach((location) => {
@@ -300,7 +313,7 @@ export default {
         });
 
         const contentString = `
-          <div class="max-w-[200px] w-full h-full flex flex-col text-end">
+          <div class="max-w-[190px] w-full h-full flex flex-col text-end">
             <img src="${location.image}" alt="${location.name}" class="w-[200px] min-h-[100px]">
             <h2 class="text-primary mt-2">${location.name}</h2>
             <p class="text-black text-[10px] my-2">${location.area}</p>

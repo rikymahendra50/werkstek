@@ -27,7 +27,7 @@
 </template>
 
 <style>
-.swiper {
+/* .swiper {
   width: 100%;
   height: 100%;
   background: #eee;
@@ -44,19 +44,18 @@
   font-size: 18px;
   background: #fff;
 
-  /* Center slide text vertically */
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid red;
 }
 
-/* .swiper-slide img {
+.swiper-slide img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-} */
+}
 
 .swiper-pagination-bullet {
   width: 20px;
@@ -73,7 +72,7 @@
 .swiper-pagination-bullet-active {
   color: #fff;
   background: #007aff;
-}
+} */
 </style>
 
 <script>

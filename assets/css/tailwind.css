@@ -68,3 +68,82 @@ body {
 .border-radius-map {
   border-radius: 0px 20px 50px 0px;
 }
+
+/* Slider Range */
+.custom-wrapper {
+  margin: 0;
+  position: relative;
+}
+
+.price-input-container {
+  width: 100%;
+}
+
+.price-input .price-field {
+  display: flex;
+}
+
+.price-field span {
+  margin-top: 6px;
+}
+
+.price-field input {
+  flex: 1;
+  height: 35px;
+  border-radius: 9px;
+  text-align: center;
+  border: 0px;
+  background: #e4e4e4;
+}
+
+.price-input {
+  width: 100%;
+  color: #555;
+}
+
+.slider-container {
+  width: 100%;
+}
+
+.slider-container {
+  height: 6px;
+  position: relative;
+  background: #e4e4e4;
+  border-radius: 5px;
+}
+
+.slider-container .price-slider {
+  height: 100%;
+  left: 0%;
+  right: 0%;
+  position: absolute;
+  border-radius: 5px;
+  background: theme("colors.primary");
+}
+
+.range-input {
+  position: relative;
+}
+
+.range-input input {
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  background: none;
+  top: -51px;
+  pointer-events: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 70%;
+  background: theme("colors.primary");
+  pointer-events: auto;
+  -webkit-appearance: none;
+  border: 3px solid white;
+}
+/* End Slider Range */

@@ -1,11 +1,11 @@
 <template>
-  <section class="md:container-custom py-10">
+  <section class="md:container-custom">
     <TitleHeader
       title="Meningen"
       secondTitle="Wat vinden onze klanten"
       class="my-8"
     />
-    <div class="my-8 overflow-hidden relative mx-10 swipper-container">
+    <div class="my-8 overflow-hidden relative mx-10">
       <swiper
         :slidesPerView="slidesPerViewTestimony"
         :spaceBetween="30"
@@ -94,7 +94,6 @@
   margin-right: 5px;
 }
 </style>
-
 <script>
 import { onMounted, onBeforeUnmount, ref } from "vue";
 
@@ -158,7 +157,7 @@ export default {
     const slidesPerViewTestimony = ref(1);
 
     const handleResizeTestimony = () => {
-      slidesPerViewTestimony.value = window.innerWidth > 520 ? 2 : 1;
+      slidesPerViewTestimony.value = window.innerWidth > 768 ? 2 : 1;
     };
 
     onMounted(() => {

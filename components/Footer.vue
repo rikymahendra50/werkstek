@@ -4,7 +4,11 @@
       class="pb-20 pt-10 flex flex-col lg:flex-row relative container-custom gap-3 sm:gap-0"
     >
       <div class="text-[12px] md:text-[15px] relative sm:w-[70%] lg:w-[40%]">
-        <Werkstek class="ml-[-10px] sm:ml-[-30px]" />
+        <img
+          src="/images/logo-werstek-primary.svg"
+          alt="logo"
+          class="ml-[-10px] sm:ml-[-30px]"
+        />
         <p class="text-[15px] pt-5 md:w-[90%]">
           Een gezellige werkplek huren in een leuke omgeving?Op deze locaties
           hebben wij kantoorruimtes

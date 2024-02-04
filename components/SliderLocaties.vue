@@ -1,15 +1,13 @@
 <template>
   <section class="bg-tertiary relative flex flex-col py-10">
-    <!-- <span
+    <span
       class="bg-bgdot bg-no-repeat w-[20%] lg:w-[15%] top-0 h-full right-0 absolute bg-cover z-1 rotate-180"
-    ></span> -->
+    ></span>
     <div class="grid grid-cols-1 grid-rows-1">
       <div class="grid w-full container-custom">
         <div class="flex justify-between items-center mb-5">
           <div class="flex flex-col w-[60%] lg:w-[40%]">
-            <p
-              class="text-[12px] md:text-lg lg:text-2xl font-bold text-secondary tracking-widest"
-            >
+            <p class="text-[12px] md:text-lg lg:text-[18px] font-bold">
               Locaties
             </p>
             <p
@@ -24,34 +22,15 @@
               locaties hebben wij kantoorruimtes
             </p>
           </div>
-          <NuxtLink
-            to="/"
-            class="border border-quaternary rounded-full flex items-center z-10 justify-between gap-2"
-          >
-            <p
-              class="text-[12px] sm:text-[14px] lg:text-lg ml-1 sm:ml-2 lg:ml-3 w-full"
-            >
-              Bekijk alle locaties
-            </p>
-            <div
-              class="rounded-full bg-quaternary text-white flex items-center justify-center max-w-[55px] max-h-[55px] m-1 sm:p-2 lg:p-3"
-            >
-              <img
-                src="/images/arrow-small-right.svg"
-                alt="arrow"
-                class="mr-[1px] sm:mr-[2px]"
-              />
-            </div>
-          </NuxtLink>
-          <!-- <ButtonSM
+          <ButtonSM
             buttonTitle="Bekijk alle locaties"
             buttonLink="/onze-locaties"
             class="z-10"
-          /> -->
+          />
         </div>
       </div>
       <div
-        class="flex pl-3 sm:pl-6 md:pl-[70px] lg:pl-[80px] xl:pl-[106px] min-w-[100px] min-h-[300px]"
+        class="flex pl-3 sm:pl-6 md:pl-[70px] lg:pl-[80px] xl:pl-[106px] overflow-hidden"
       >
         <swiper
           :slidesPerView="slidesPerView"
@@ -76,11 +55,11 @@
               :to="itemSlider.link"
               class="h-full flex flex-col justify-center items-center text-white"
             >
-              <h2 class="text-xl sm:text-3xl pt-20 font-semibold">Hoofddorp</h2>
-              <p class="text-[14px] sm:text-sm py-1">Simon Stevinweg 27</p>
-              <h4 class="text-[14px] sm:text-lg font-semibold">Opervlakte</h4>
-              <p class="text-[12px] sm:text-sm py-1">€ 495 p/maand</p>
-              <p class="text-[12px] sm:text-sm">Neem een kijkje ></p>
+              <h2 class="text-3xl pt-20">Hoofddorp</h2>
+              <p class="text-sm py-1">Simon Stevinweg 27</p>
+              <h4 class="text-lg font-semibold">Opervlakte</h4>
+              <p class="text-sm py-1">€ 495 p/maand</p>
+              <p class="text-sm">Neem een kijkje ></p>
             </NuxtLink>
           </swiper-slide>
         </swiper>
@@ -97,7 +76,7 @@
   background-repeat: no-repeat;
   background-color: theme("colors.primary");
   width: 40px;
-  border-radius: 12px;
+  border-radius: 10px;
 }
 
 .swiper-button-next:hover,
@@ -107,7 +86,7 @@
 
 .swiper-button-prev {
   background-image: url("/images/arrow-left.svg");
-  left: 0;
+  left: 5px;
 }
 
 .swiper-button-next {
@@ -117,14 +96,6 @@
 .swiper-button-next::after,
 .swiper-button-prev::after {
   content: "";
-}
-
-@media (max-width: 420px) {
-  .swiper-button-next,
-  .swiper-button-prev {
-    opacity: 0.6;
-    width: 30px;
-  }
 }
 
 @media (max-width: 1028px) {
@@ -142,6 +113,7 @@
 </style>
 
 <script>
+import { ref } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 
 import "swiper/css";
@@ -163,7 +135,6 @@ export default {
           id: 1,
           link: "/",
           backgroundImage: "/images/img-slider-home-1.png",
-          link: "/onze-locaties",
         },
         {
           id: 2,
@@ -187,9 +158,7 @@ export default {
     const slidesPerView = ref(3);
 
     const handleResize = () => {
-      if (window.innerWidth <= 520) {
-        slidesPerView.value = 1;
-      } else if (window.innerWidth <= 720) {
+      if (window.innerWidth <= 768) {
         slidesPerView.value = 2;
       } else if (window.innerWidth <= 1028) {
         slidesPerView.value = 3;
