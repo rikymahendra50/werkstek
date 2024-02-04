@@ -17,13 +17,15 @@
     buttonLink2="/voor-verhuurders"
   />
 
-  <ContactUs />
+  <ContactUs class="mb-10" />
 
-  <MapInteractive marginCustom="my-20" :search-custom="true" />
+  <MapInteractive :ShowContainerCustom="false" />
 
   <BgBigGreen
     title1="Blijf op de hoogte"
     title2="Schrijf je in voor de nieuwsbrief"
     title3="Op de hoogte blijven van beschikbare werkplekken? Schrijf je dan nu vrijblijvend in!"
+    :backgroundColor="'secondary'"
+    :showEmailSection="true"
   />
 </template>

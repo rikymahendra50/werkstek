@@ -18,8 +18,10 @@
       </div>
       <div class="flex-1 overflow-auto py-2">
         <nav class="grid items-start px-4 text-sm font-medium">
-          <a
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+          <!-- Home -->
+          <NuxtLink
+            to="/"
+            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
             href="#"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
@@ -36,17 +38,22 @@
               <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
-            Home </a
-          ><a
-            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
+            Home
+          </NuxtLink>
+          <!-- Locations -->
+          <a
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
-            ><svg
+          >
+            <svg
               xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              stroke-width="2"
               stroke="currentColor"
-              class="w-6 h-6"
+              class="w-4 h-4"
             >
               <path
                 stroke-linecap="round"
@@ -60,12 +67,15 @@
               />
             </svg>
             Location
+            <!-- notification -->
             <div
               class="whitespace-nowrap border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
             >
               6
             </div></a
-          ><a
+          >
+          <!-- Folder -->
+          <a
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
           >
@@ -91,7 +101,9 @@
               <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
             </svg>
             Contact</a
-          ><a
+          >
+          <!-- Category -->
+          <a
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
             ><svg
@@ -109,8 +121,10 @@
               <path d="M3 3v18h18"></path>
               <path d="m19 9-5 5-4-4-3 3"></path>
             </svg>
-            Category </a
-          ><a
+            Category
+          </a>
+          <!-- Facility -->
+          <a
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
           >
@@ -130,6 +144,7 @@
             </svg>
             Facility
           </a>
+          <button @click="$logout()" class="btn btn-error mt-20">Logout</button>
         </nav>
       </div>
     </div>
@@ -138,6 +153,12 @@
 
 <script setup lang="ts">
 const showDrawer = inject("showTableOrMobileSidebar");
+const { $user, $logout } = useAuth();
+definePageMeta({
+  layout: "admin",
+  // @ts-ignore
+  middleware: ["auth", "admin"],
+});
 </script>
 
 <style scoped></style>

@@ -26,18 +26,20 @@
           </div>
           <NuxtLink
             to="/"
-            class="border border-quaternary rounded-full flex items-center z-10 justify-between p-2 lg:p-3 gap-2"
+            class="border border-quaternary rounded-full flex items-center z-10 justify-between gap-2"
           >
-            <p class="text-[12px] sm:text-[14px] lg:text-lg ml-2 lg:ml-3">
+            <p
+              class="text-[12px] sm:text-[14px] lg:text-lg ml-1 sm:ml-2 lg:ml-3 w-full"
+            >
               Bekijk alle locaties
             </p>
             <div
-              class="rounded-full bg-quaternary text-white flex items-center justify-center max-w-[55px] max-h-[55px]"
+              class="rounded-full bg-quaternary text-white flex items-center justify-center max-w-[55px] max-h-[55px] m-1 sm:p-2 lg:p-3"
             >
               <img
                 src="/images/arrow-small-right.svg"
                 alt="arrow"
-                class="mr-[2px]"
+                class="mr-[1px] sm:mr-[2px]"
               />
             </div>
           </NuxtLink>
@@ -49,7 +51,7 @@
         </div>
       </div>
       <div
-        class="flex pl-3 sm:pl-6 md:pl-[70px] lg:pl-[80px] xl:pl-[106px] overflow-hidden"
+        class="flex pl-3 sm:pl-6 md:pl-[70px] lg:pl-[80px] xl:pl-[106px] min-w-[100px] min-h-[300px]"
       >
         <swiper
           :slidesPerView="slidesPerView"
@@ -74,11 +76,11 @@
               :to="itemSlider.link"
               class="h-full flex flex-col justify-center items-center text-white"
             >
-              <h2 class="text-3xl pt-20">Hoofddorp</h2>
-              <p class="text-sm py-1">Simon Stevinweg 27</p>
-              <h4 class="text-lg font-semibold">Opervlakte</h4>
-              <p class="text-sm py-1">€ 495 p/maand</p>
-              <p class="text-sm">Neem een kijkje ></p>
+              <h2 class="text-xl sm:text-3xl pt-20 font-semibold">Hoofddorp</h2>
+              <p class="text-[14px] sm:text-sm py-1">Simon Stevinweg 27</p>
+              <h4 class="text-[14px] sm:text-lg font-semibold">Opervlakte</h4>
+              <p class="text-[12px] sm:text-sm py-1">€ 495 p/maand</p>
+              <p class="text-[12px] sm:text-sm">Neem een kijkje ></p>
             </NuxtLink>
           </swiper-slide>
         </swiper>
@@ -95,6 +97,12 @@
   background-repeat: no-repeat;
   background-color: theme("colors.primary");
   width: 40px;
+  border-radius: 12px;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: theme("colors.secondary");
 }
 
 .swiper-button-prev {
@@ -109,6 +117,14 @@
 .swiper-button-next::after,
 .swiper-button-prev::after {
   content: "";
+}
+
+@media (max-width: 420px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    opacity: 0.6;
+    width: 30px;
+  }
 }
 
 @media (max-width: 1028px) {
@@ -126,7 +142,6 @@
 </style>
 
 <script>
-import { ref } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 
 import "swiper/css";
@@ -148,6 +163,7 @@ export default {
           id: 1,
           link: "/",
           backgroundImage: "/images/img-slider-home-1.png",
+          link: "/onze-locaties",
         },
         {
           id: 2,
@@ -171,7 +187,9 @@ export default {
     const slidesPerView = ref(3);
 
     const handleResize = () => {
-      if (window.innerWidth <= 768) {
+      if (window.innerWidth <= 520) {
+        slidesPerView.value = 1;
+      } else if (window.innerWidth <= 720) {
         slidesPerView.value = 2;
       } else if (window.innerWidth <= 1028) {
         slidesPerView.value = 3;

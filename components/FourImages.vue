@@ -6,7 +6,7 @@
       >
         <NuxtLink
           to="/over-werkstek"
-          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-md"
+          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-md hover:shadow-xl"
           :class="{ active: isRouteActive('/over-werkstek') }"
           :style="{
             backgroundImage: `url('${Data[0].imageSrc}')`,
@@ -38,7 +38,7 @@
         </NuxtLink>
         <NuxtLink
           to="/over-werkstek"
-          class="flex flex-wrap w-[60%] h-full rounded-md"
+          class="flex flex-wrap w-[60%] h-full rounded-md hover:shadow-xl"
           :class="{ active: isRouteActive('/over-werkstek') }"
           :style="{
             backgroundImage: `url('${Data[1].imageSrc}')`,
@@ -74,7 +74,7 @@
       >
         <NuxtLink
           to="/over-werkstek"
-          class="flex flex-wrap w-[60%] h-full rounded-md"
+          class="flex flex-wrap w-[60%] h-full rounded-md hover:shadow-xl"
           :class="{ active: isRouteActive('/over-werkstek') }"
           :style="{
             backgroundImage: `url('${Data[2].imageSrc}')`,
@@ -106,7 +106,7 @@
         </NuxtLink>
         <NuxtLink
           to="/over-werkstek"
-          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-md"
+          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-md hover:shadow-xl"
           :class="{ active: isRouteActive('/over-werkstek') }"
           :style="{
             backgroundImage: `url('${Data[3].imageSrc}')`,
@@ -141,7 +141,7 @@
   </section>
 </template>
 
-<style>
+<style scoped>
 .bg-shape-orange {
   border-radius: 50px 10px;
 }

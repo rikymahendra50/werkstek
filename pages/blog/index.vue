@@ -7,7 +7,7 @@
 
   <Blog :show-title-header="false" class="my-10" />
 
-  <Blog2 :ShowTitleCategory="true" />
+  <Blog2 :ShowTitleCategory="true" @categoryClick="handleCategoryClick" />
 
   <BgBigGreen
     title1="Blijf op de hoogte "
@@ -17,5 +17,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    handleCategoryClick(category) {
+      // Handle category click event di sini
+      console.log(`Kategori yang diklik: ${category}`);
+      // Lakukan sesuatu dengan kategori yang diklik, misalnya muat ulang data blog
+    },
+  },
+};
 </script>

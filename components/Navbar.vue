@@ -24,12 +24,10 @@
       <!-- Navbar -->
       <div class="hidden lg:flex z-[99999] items-center justify-between w-full">
         <ul
-          class="flex space-x-5 items-center justify-between xl:text-xl gap-3 pr-10 bg-primary p-1 rounded-full text-white w-[80%]"
+          class="flex space-x-5 items-center justify-between md:gap-2 xl:gap-3 pr-10 bg-primary p-1 rounded-full text-tertiary md:w-[78%] xl:w-[80%]"
         >
-          <li class="bg-white rounded-full px-4">
-            <p class="text-quaternary py-2 leading-10 tracking-widest">
-              Werkstek
-            </p>
+          <li class="bg-white rounded-full">
+            <Werkstek />
           </li>
           <li>
             <NuxtLink
@@ -80,15 +78,15 @@
           </li>
           <li>
             <NuxtLink
-              to="/wekstek-community"
+              to="/blog"
               class="pr-1 navlink"
-              :class="{ active: isRouteActive('/wekstek-community') }"
+              :class="{ active: isRouteActive('/blog') }"
               >Werkstek Blog</NuxtLink
             >
           </li>
           <li>
             <NuxtLink
-              to="/wekstek-community"
+              to="/faq"
               class="pr-1 navlink"
               :class="{ active: isRouteActive('/faq') }"
               >FAQ</NuxtLink
@@ -102,17 +100,38 @@
             >
           </li> -->
         </ul>
-        <NuxtLink
-          to="/"
-          class="border border-quaternary rounded-full flex items-center gap-2 p-1 px-1 lg:px-2"
+        <!-- <NuxtLink
+          to="/contact"
+          class="border border-quaternary rounded-full flex items-center gap-1 p-1 lg:px-2 max-h-[64px]"
         >
-          <p class="p-3 text-sm lg:text-base">Contact opnemen</p>
+          <p class="text-sm lg:text-base">Contact opnemen</p>
           <div
-            class="rounded-full bg-quaternary text-white flex items-center justify-center aspect-square"
+            class="rounded-full bg-quaternary text-white flex items-center justify-center"
           >
-            <img src="/images/arrow-small-right.svg" alt="arrow" class="mr-1" />
+            <svg
+              width="46"
+              viewBox="0 0 58 56"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                y="0.0263672"
+                width="55"
+                height="55"
+                rx="27.5"
+                fill="black"
+              />
+              <path
+                d="M25.8682 35.6041L34.3755 27.0967L25.8682 18.5894"
+                stroke="white"
+                stroke-width="2.57812"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </div>
-        </NuxtLink>
+        </NuxtLink> -->
+        <ButtonSM buttonLink="/contact" buttonTitle="Contact opnemen" />
       </div>
       <!-- Dark Background Transition -->
       <transition

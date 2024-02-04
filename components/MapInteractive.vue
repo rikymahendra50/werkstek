@@ -1,16 +1,22 @@
 <template>
-  <section class="container-custom relative z-20 py-10" :class="marginCustom">
+  <section
+    :class="{
+      'container-custom': ShowContainerCustom,
+      'relative z-20': true,
+      'w-full': !containerCustom,
+    }"
+  >
     <div
       id="map"
-      class="relative w-full h-[420px] lg:h-[619px] border-2 z-[-999]"
+      :class="`relative w-full h-[420px] lg:h-[619px] border-2 z-[-999]`"
     ></div>
-    <div class="mx-10">
+    <div class="mx-2 sm:mx-10 container-custom">
       <div class="bg-tertiary box-shadow mt-[-200px] z-10 rounded-[40px]">
         <div
           class="min-h-[278px] md:grid md:grid-cols-3 items-center h-full px-10 font-semibold gap-1 md:gap-3 py-9"
         >
           <p
-            class="text-[20px] md:text-[25px] font-bold lg:leading-10 lg:text-4xl text-secondary"
+            class="text-[25px] font-bold lg:leading-10 lg:text-4xl text-secondary mb-4 md:mb-0"
           >
             {{ titleMap }}
           </p>
@@ -25,7 +31,7 @@
             <div class="relative">
               <div
                 @click="toggleDropdown(category)"
-                class="w-full flex items-center justify-between bg-[#F7F7F7] rounded-full px-5 min-h-[50px] cursor-pointer text-quaternary sm:text-[14px] mb-2 md:mb-0"
+                class="italic w-full flex items-center justify-between bg-[#F7F7F7] rounded-full px-5 min-h-[50px] cursor-pointer text-quaternary sm:text-[14px] mb-2 md:mb-0"
               >
                 {{ category.selectedOption }}
 
@@ -41,13 +47,13 @@
               </div>
               <ul
                 v-if="category.showDropdown"
-                class="absolute text-[10px] lg:text-[16px] top-[100%] left-0 bg-white rounded-[5px] mt-1 w-full text-black z-20"
+                class="absolute text-[10px] lg:text-[16px] top-[100%] left-0 bg-[#F7F7F7] rounded-[5px] mt-1 w-full text-quaternary z-20"
               >
                 <li
                   v-for="(option, idx) in category.options"
                   :key="idx"
                   @click="selectOption(category, option)"
-                  class="pt-1 cursor-pointer hover:bg-secondary px-5"
+                  class="pt-1 cursor-pointer hover:bg-secondary hover:text-tertiary px-5 md:pb-2"
                 >
                   {{ option }}
                 </li>
@@ -56,67 +62,32 @@
           </div>
           <div class="text-tertiary grid justify-end md:col-span-3 mt-4">
             <Button
-              to="/"
+              @click="performSearch"
               class="bg-primary rounded-full min-h-[48px] flex items-center gap-4 pl-3 pr-1"
             >
               <p class="font-semibold text-sm">Uitgebreid zoeken</p>
               <div
                 class="bg-tertiary text-primary flex items-center justify-center rounded-full min-w-[40px] min-h-[40px]"
               >
+                <svg
+                  width="9"
+                  height="15"
+                  viewBox="0 0 9 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
+                  <path
+                    d="M1.8125 13.8749L7.99968 7.68767L1.8125 1.50049"
+                    stroke="#F0912D"
+                    stroke-width="1.875"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </div>
             </Button>
           </div>
         </div>
-
-        <!-- <div class="flex justify-between mb-4">
-            <div
-              v-for="(category, index) in categories"
-              :key="index"
-              class="flex flex-col w-[40%]"
-            >
-              <p class="text-[11px] sm:text-[16px] pb-2">
-                {{ category.title }}
-              </p>
-              <div class="relative">
-                <div
-                  @click="toggleDropdown(category)"
-                  class="search-map-category text-[10px] text-[#676767] sm:text-[14px]"
-                >
-                  {{ category.selectedOption }}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10"
-                    height="8"
-                    viewBox="0 0 12 11"
-                    fill="none"
-                  >
-                    <path
-                      d="M6 10.2579L0.803848 0.724833H11.1962L6 10.2579Z"
-                      fill="#859C81"
-                    />
-                  </svg>
-                </div>
-                <ul
-                  v-if="category.showDropdown"
-                  class="absolute text-[10px] lg:text-[16px] top-[100%] left-0 bg-white border border-gray-300 rounded-[5px] mt-1 w-[97%] text-[#676767] lg:px-8 z-20"
-                >
-                  <li
-                    v-for="(option, idx) in category.options"
-                    :key="idx"
-                    @click="selectOption(category, option)"
-                    class="px-2 pt-1 cursor-pointer"
-                  >
-                    {{ option }}
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div> -->
-        <!-- Button -->
-        <!-- <div class="w-full flex justify-end">
-          <ButtonSM @click="performSearch" />
-        </div> -->
       </div>
     </div>
   </section>
@@ -130,9 +101,9 @@
 let googleMapsScriptLoaded = false;
 export default {
   props: {
-    marginCustom: {
-      type: String,
-      required: false,
+    ShowContainerCustom: {
+      type: Boolean,
+      default: true,
     },
     searchCustom: {
       type: Boolean,
@@ -150,8 +121,8 @@ export default {
         {
           lat: -8.653840910873269,
           lng: 115.21785198506426,
-          name: "Company 1",
-          description: "Deskripsion A",
+          name: "Tolstraat 186-188 H, Amsterdam De Pijp",
+          area: "1104 m2",
           image: "/images/img-home-1.png",
           popularity: 100,
           city: "Rotterdam",
@@ -160,21 +131,10 @@ export default {
         },
         // test
         {
-          lat: -8.607897,
-          lng: 115.243932,
-          name: "Company e",
-          description: "Deskripsion e",
-          image: "/images/img-home-1.png",
-          popularity: 100,
-          city: "Rotterdam",
-          type: "Kantoorruimte",
-          price: 4,
-        },
-        {
           lat: -8.62717144710956,
           lng: 115.20910166137442,
           name: "Company B",
-          description: "Deskripsi B",
+          area: "Deskripsi B",
           image: "/images/img-home-1.png",
           popularity: 20,
           city: "Utrecht",
@@ -185,7 +145,7 @@ export default {
           lat: -8.62717144710956,
           lng: 115.29189271629312,
           name: "Company C",
-          description: "Deskripsi C",
+          area: "Deskripsi C",
           image: "/images/img-home-1.png",
           popularity: 20,
           city: "Den Haag",
@@ -196,7 +156,7 @@ export default {
           lat: -8.641220836289818,
           lng: 115.17259520426518,
           name: "Company D",
-          description: "Deskripsi D",
+          area: "Deskripsi D",
           image: "/images/img-home-1.png",
           popularity: 20,
           city: "Amsterdam",
@@ -262,8 +222,8 @@ export default {
       const allCities = this.locations.map((location) => location.city);
 
       let selectedCityFix = selectedOption[0].selectedOption;
-      let selectedTypeFix = selectedOption[1].selectedOption;
-      let selectedPriceFix = selectedOption[2].selectedOption;
+      // let selectedTypeFix = selectedOption[1].selectedOption;
+      let selectedPriceFix = selectedOption[1].selectedOption;
 
       // console.log(selectedCityFix);
       // console.log(selectedTypeFix);
@@ -271,15 +231,15 @@ export default {
 
       const selectedOptionByUser = [
         selectedCityFix,
-        selectedTypeFix,
+        // selectedTypeFix,
         selectedPriceFix,
       ];
 
       const filteredData = this.locations.filter((location) => {
         return (
           location.city === selectedOptionByUser[0] &&
-          location.type === selectedOptionByUser[1] &&
-          location.price === parseInt(selectedOptionByUser[2])
+          // location.type === selectedOptionByUser[1] &&
+          location.price === parseInt(selectedOptionByUser[1])
         );
       });
 
@@ -340,19 +300,20 @@ export default {
         });
 
         const contentString = `
-          <div>
-            <h2>${location.name}</h2>
-            <img src="${location.image}" alt="${location.name}" style="width:200px;height:100px;">
-            <p>${location.description}</p>
+          <div class="max-w-[200px] w-full h-full flex flex-col text-end">
+            <img src="${location.image}" alt="${location.name}" class="w-[200px] min-h-[100px]">
+            <h2 class="text-primary mt-2">${location.name}</h2>
+            <p class="text-black text-[10px] my-2">${location.area}</p>
             <p>Price: $${location.price}</p>
           </div>
         `;
 
         const infowindow = new google.maps.InfoWindow({
           content: contentString,
+          closeBoxMargin: "10px 10px 0 0",
         });
 
-        marker.addListener("mouseover", () => {
+        marker.addListener("click", () => {
           if (this.currentInfoWindow) {
             this.currentInfoWindow.close();
           }
@@ -361,9 +322,18 @@ export default {
           this.currentInfoWindow = infowindow;
         });
 
-        marker.addListener("mouseout", () => {
-          infowindow.close();
-        });
+        // marker.addListener("mouseover", () => {
+        //   if (this.currentInfoWindow) {
+        //     this.currentInfoWindow.close();
+        //   }
+
+        //   infowindow.open(this.map, marker);
+        //   this.currentInfoWindow = infowindow;
+        // });
+
+        // marker.addListener("mouseout", () => {
+        //   infowindow.close();
+        // });
 
         this.markers.push(marker);
       });

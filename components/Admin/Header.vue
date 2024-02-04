@@ -62,7 +62,7 @@
           data-state="closed"
         >
           <img
-            src="/images/author.png"
+            :src="imageSrcAdmin"
             width="32"
             height="32"
             alt="Avatar"
@@ -75,7 +75,7 @@
   </header>
 </template>
 
-<script setup lang="ts">
+<script>
 const showDrawer = inject("showTableOrMobileSidebar");
 </script>
 

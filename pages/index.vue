@@ -11,7 +11,7 @@
     :count2="StatistiekLocaties.titleBg2.count"
     :count3="StatistiekLocaties.titleBg3.count"
   />
-  <MapInteractive />
+  <MapInteractive class="py-10" />
   <SliderLocaties />
   <SliderTestimony />
   <FourImages />

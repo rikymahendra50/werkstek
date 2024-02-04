@@ -1,15 +1,46 @@
 <template>
   <div class="py-10" :class="background">
-    <div class="flex mx-2 md:mx-3 lg:mx-4 items-center sm:flex-row flex-col">
-      <img
-        :src="image"
-        :alt="imageAlt"
-        class="max-w-[600px] w-[60%] sm:w-[50%] lg:w-[100%] order-1"
-        :class="imageClasses"
-      />
+    <div class="grid md:grid-cols-2 mx-2 md:mx-3 lg:mx-4 items-center">
+      <div class="order-2 flex justify-end max-w-[600px]">
+        <div class="w-[70%] md:w-[100%]">
+          <svg
+            viewBox="0 0 597 632"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M597 40C597 17.9086 579.091 0 557 0H145C122.909 0 105 17.9086 105 40V41.9942C105 64.0856 87.0914 81.9942 65 81.9942H40C17.9086 81.9942 0 99.9028 0 121.994V592C0 614.091 17.9086 632 40 632H105H557C579.091 632 597 614.091 597 592V81.9942V40Z"
+              fill="url(#pattern0)"
+            />
+            <defs>
+              <pattern
+                id="pattern0"
+                patternContentUnits="objectBoundingBox"
+                width="1"
+                height="1"
+              >
+                <use
+                  xlink:href="#image0_86_3523"
+                  transform="matrix(0.00176144 0 0 0.00166389 -0.0284325 0)"
+                />
+              </pattern>
+              <image
+                id="image0_86_3523"
+                width="600"
+                height="601"
+                xlink:href="/images/image-page4-3.png"
+              />
+            </defs>
+          </svg>
+        </div>
+      </div>
+
       <div class="flex-col mx-5" :class="textClasses">
         <h1
-          class="text-[18px] md:text-[29px] lg:text-[36px] text-[#404040] md:my-6"
+          class="text-[20px] md:text-[29px] lg:text-[36px] text-[#404040] mb-3 md:my-6 font-bold"
         >
           {{ title }}
         </h1>
@@ -34,7 +65,7 @@ export default {
   props: {
     background: {
       type: String,
-      required: false,
+      default: "bg-white",
     },
     image: {
       type: String,

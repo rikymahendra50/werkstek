@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <NuxtLink to="/blogs/example">
+    <NuxtLink to="/blog/example">
       <div
         class="overflow-hidden p-1.5 transition-shadow hover:shadow-md duration-500 rounded-md"
       >
@@ -43,5 +43,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped></style>
