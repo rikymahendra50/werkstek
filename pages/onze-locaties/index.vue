@@ -1,5 +1,5 @@
 <template>
-  <StatistiekLocaties
+  <!-- <StatistiekLocaties
     :image="StatistiekLocaties.image"
     :title1="StatistiekLocaties.title1"
     :title2="StatistiekLocaties.title2"
@@ -10,7 +10,20 @@
     :count1="StatistiekLocaties.titleBg1.count"
     :count2="StatistiekLocaties.titleBg2.count"
     :count3="StatistiekLocaties.titleBg3.count"
+  /> -->
+
+  <StatistiekLocaties2
+    :title1="StatistiekLocaties.title1"
+    :title2="StatistiekLocaties.title2"
+    :title3="StatistiekLocaties.title3"
+    :titleBg1="StatistiekLocaties.titleBg1.title"
+    :titleBg2="StatistiekLocaties.titleBg2.title"
+    :titleBg3="StatistiekLocaties.titleBg3.title"
+    :count1="StatistiekLocaties.titleBg1.count"
+    :count2="StatistiekLocaties.titleBg2.count"
+    :count3="StatistiekLocaties.titleBg3.count"
   />
+
   <OnzeLocaties />
   <BgBigGreen
     :title1="BgBigGreen.title1"
@@ -20,8 +33,15 @@
     :mail="BgBigGreen.mail"
     :showEmailSection="BgBigGreen.showEmailSection"
     :showButtonSection="BgBigGreen.showButtonSection"
+    :backgroundColor="'primary'"
   />
 </template>
+
+<style>
+.text-shadow {
+  filter: drop-shadow(3px 3px 1px rgba(0, 0, 0, 0.2));
+}
+</style>
 
 <script>
 export default {
@@ -29,8 +49,8 @@ export default {
     return {
       StatistiekLocaties: {
         image: "/images/img-page2-1.png",
-        title1: "De Werkstek locaties",
-        title2: "De leukste kantoorruimtes",
+        title1: "Bekijk onze locaties",
+        title2: "De Werkstek locaties",
         title3:
           "De perfecte werkplek voor elke organisatie. Kies voor betaalbare huur in een professionele omgeving op een gunstige locatie, en maak deel uit van een ondernemende en inspirerende community.",
         titleBg1: { title: "Locaties", count: 280 },

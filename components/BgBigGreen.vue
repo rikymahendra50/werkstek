@@ -1,8 +1,13 @@
 <template>
-  <section class="py-16">
-    <div class="w-[95%] lg:w-[80%] bg-[#859C81] border-radius-map box-shadow">
+  <section class="py-16 flex gap-2 container-custom ml-[-20px]">
+    <span
+      class="bg-quaternary rounded-full min-w-[26px] md:min-w-[46px]"
+    ></span>
+    <div
+      :class="`w-[95%] lg:w-[80%] bg-${backgroundColor} rounded-lg box-shadow h-[318px] lg:h-[418px] flex flex-col justify-center`"
+    >
       <div
-        class="container-custom flex flex-col text-white pb-3 py-3 lg:py-8 justify-between"
+        class="mx-3 sm:mx-5 lg:mx-10 flex flex-col text-white justify-between gap-1 lg:gap-2"
       >
         <div class="w-[90%] lg:w-[60%]">
           <p
@@ -10,7 +15,9 @@
           >
             {{ title1 }}
           </p>
-          <p class="text-2xl md:text-3xl leading-normal lg:w-[60%] pt-2">
+          <p
+            class="text-2xl md:text-3xl leading-normal lg:w-[60%] pt-2 xl:text-[32px]"
+          >
             {{ title2 }}
           </p>
           <p class="text-sm md:text-base font-normal lg:w-[80%] pt-2">
@@ -19,7 +26,7 @@
         </div>
         <!-- showEmailSection -->
         <div v-if="showEmailSection" class="flex mt-3 w-[90%] lg:w-[50%]">
-          <label class="form-control w-full">
+          <!-- <label class="form-control w-full">
             <div class="label">
               <span class="label-text text-white"> {{ EmailForm.title }}</span>
             </div>
@@ -27,21 +34,22 @@
               <input
                 type="text"
                 placeholder="Mail@mail.com"
-                class="input input-bordered w-[80%] rounded-r-sm text-black box-shadow max-w-[240px]"
+                class="input input-bordered w-[80%] rounded-r-sm text-quaternary box-shadow max-w-[240px]"
               />
               <NuxtLink
                 :to="EmailForm.buttonEmailLink"
-                class="bg-primary1 flex justify-center py-2 px-3 sm:py-3 sm:px-4 w-[170px] h-[48px] items-center cursor-pointer rounded-r-[10px] box-shadow font-bold text-[12px] md:text-[18px]"
+                class="bg-primary flex justify-center py-2 px-3 sm:py-3 sm:px-4 w-[170px] h-[48px] items-center cursor-pointer rounded-r-[10px] box-shadow font-bold text-[12px] md:text-[18px]"
               >
                 {{ EmailForm.buttonEmailTitle }}
               </NuxtLink>
             </div>
-          </label>
+          </label> -->
+          <BgBigEmailInput />
         </div>
         <!-- showButtonSection -->
         <div
           v-if="showButtonSection"
-          class="flex mt-3 w-[90%] lg:w-[50%] items-center gap-5"
+          class="flex mt-3 w-[90%] lg:w-[50%] items-center gap-5 my-2"
         >
           <ButtonSM :buttonTitle="linkTitle" :buttonLink="linkButton" />
           <div v-if="showSmallerButton">
@@ -52,19 +60,22 @@
           </div>
         </div>
 
-        <div v-if="showPhoneEmail" class="flex mt-6 items-center">
+        <div v-if="showPhoneEmail" class="flex items-center mt-5">
           <div class="flex phone items-center">
             <img src="/images/white-phone.svg" alt="white-phone" />
             <NuxtLink
               :to="'tel:' + `${phoneNumber}`"
-              class="ml-2 lg:ml-3 text-sm"
+              class="ml-1 lg:ml-3 text-[12px] sm:text-sm"
             >
               {{ phoneNumber }}
             </NuxtLink>
           </div>
-          <div class="flex pl-5 lg:pl-10 items-center">
+          <div class="flex pl-2 lg:pl-10 items-center">
             <img src="/images/white-mail.svg" alt="white-phone" />
-            <NuxtLink :to="'mailto:' + `${mail}`" class="ml-2 lg:ml-3 text-sm">
+            <NuxtLink
+              :to="'mailto:' + `${mail}`"
+              class="ml-1 lg:ml-3 text-[12px] sm:text-sm"
+            >
               {{ mail }}
             </NuxtLink>
           </div>
@@ -86,6 +97,11 @@ export default {
     };
   },
   props: {
+    backgroundColor: {
+      type: String,
+      required: true,
+      default: "primary",
+    },
     title1: {
       type: String,
       required: true,

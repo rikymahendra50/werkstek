@@ -10,17 +10,14 @@
     @apply bg-emerald-200;
   }
   .container-custom {
-    @apply px-3 sm:px-6 md:px-[70px] lg:px-[80px] xl:px-[106px] mx-auto;
-  }
-  .search-map-category {
-    @apply w-[97%] flex items-center justify-between bg-white rounded-[5px] px-2 lg:px-8 h-[30px] sm:h-[39px] lg:h-[47px] lg:rounded-[10px] text-[#676767] border border-gray-300 cursor-pointer;
+    @apply px-3 sm:px-6 md:px-[30px] lg:px-[40px] xl:px-[106px] mx-auto;
   }
 
   /* .checkbox {
-    @apply bg-white text-white border-2 border-primary1;
+    @apply bg-white text-white border-2 border-primary;
 
     &:checked {
-      @apply bg-primary1 text-white border-2;
+      @apply bg-primary text-white border-2;
     }
   } */
   .navlink,
@@ -28,12 +25,26 @@
     @apply no-underline relative pb-[5px] bg-transparent;
   }
   .navlink::after {
-    @apply content-[""] absolute w-3/5 max-w-[50px] h-0.5 bg-primary1 transition-[0.2s] duration-[all] ease-[ease-out] scale-0 left-0 bottom-0;
+    @apply content-[""] absolute w-3/5 max-w-[50px] h-0.5 bg-secondary transition-[0.2s] duration-[all] ease-[ease-out] scale-0 left-0 bottom-0;
   }
   .navlink:hover::after {
     @apply scale-100;
   }
   .navlink.active::after {
+    @apply scale-100;
+  }
+
+  .categorylink,
+  .categorylink:visited {
+    @apply no-underline relative pb-[5px] bg-transparent;
+  }
+  .categorylink::after {
+    @apply content-[""] absolute w-3/5 max-w-[50px] h-0.5 bg-primary transition-[0.2s] duration-[all] ease-[ease-out] scale-0 left-0 bottom-0;
+  }
+  .categorylink:hover::after {
+    @apply scale-100;
+  }
+  .categorylink.active::after {
     @apply scale-100;
   }
 }
@@ -57,3 +68,82 @@ body {
 .border-radius-map {
   border-radius: 0px 20px 50px 0px;
 }
+
+/* Slider Range */
+.custom-wrapper {
+  margin: 0;
+  position: relative;
+}
+
+.price-input-container {
+  width: 100%;
+}
+
+.price-input .price-field {
+  display: flex;
+}
+
+.price-field span {
+  margin-top: 6px;
+}
+
+.price-field input {
+  flex: 1;
+  height: 35px;
+  border-radius: 9px;
+  text-align: center;
+  border: 0px;
+  background: #e4e4e4;
+}
+
+.price-input {
+  width: 100%;
+  color: #555;
+}
+
+.slider-container {
+  width: 100%;
+}
+
+.slider-container {
+  height: 6px;
+  position: relative;
+  background: #e4e4e4;
+  border-radius: 5px;
+}
+
+.slider-container .price-slider {
+  height: 100%;
+  left: 0%;
+  right: 0%;
+  position: absolute;
+  border-radius: 5px;
+  background: theme("colors.primary");
+}
+
+.range-input {
+  position: relative;
+}
+
+.range-input input {
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  background: none;
+  top: -51px;
+  pointer-events: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 70%;
+  background: theme("colors.primary");
+  pointer-events: auto;
+  -webkit-appearance: none;
+  border: 3px solid white;
+}
+/* End Slider Range */

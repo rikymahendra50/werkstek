@@ -1,10 +1,10 @@
 <template>
   <section>
     <span
-      class="bg-tertiary absolute top-0 z-[-99] h-[50%] w-full max-h-[415px] border-red-500"
+      class="bg-tertiary absolute top-0 z-[-99] h-[50%] w-full max-h-[415px]"
     ></span>
     <div class="lg:container-custom mx-10 flex flex-col py-10 lg:py-20">
-      <h1 class="text-primary1 text-[18px] sm:text-[20px] md:text-[30px]">
+      <h1 class="text-primary text-[18px] sm:text-[20px] md:text-[30px]">
         Blog
       </h1>
       <p

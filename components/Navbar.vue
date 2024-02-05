@@ -1,17 +1,15 @@
 <template>
   <nav class="w-full z-50 shadow-md top-0">
     <div
-      class="flex items-center justify-between h-[86px] font-medium w-full relative bg-white container-custom text-[18px]"
+      class="flex items-center justify-between w-full relative bg-white container-custom py-5"
     >
       <!-- Header logo -->
-      <div>
-        <Werkstek />
-      </div>
+
       <!-- Mobile toggle -->
       <div class="lg:hidden flex">
         <button name="toggle" @click="drawer" label="toggle">
           <svg
-            class="h-8 w-8 fill-current text-black"
+            class="h-8 w-8 fill-current text-quaternary"
             fill="none"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -24,8 +22,13 @@
         </button>
       </div>
       <!-- Navbar -->
-      <div class="hidden lg:block z-[99999]">
-        <ul class="flex space-x-5 font-medium items-center">
+      <div class="hidden lg:flex z-[99999] items-center justify-between w-full">
+        <ul
+          class="flex space-x-5 items-center justify-between md:gap-2 xl:gap-3 pr-10 bg-primary p-1 rounded-full text-tertiary md:w-[78%] xl:w-[80%]"
+        >
+          <li class="bg-white rounded-full">
+            <Werkstek />
+          </li>
           <li>
             <NuxtLink
               to="/"
@@ -52,43 +55,83 @@
               :class="{ active: isRouteActive('/over-werkstek') }"
               >Over werkstek</NuxtLink
             >
-            <ul
+            <!-- <ul
               tabindex="0"
               class="absolute top-6 py-1 mt-2 w-full dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-md"
             >
               <li>
-                <NuxtLink to="/" class="px-3 hover:text-primary1"
+                <NuxtLink to="/" class="px-3 hover:text-primary"
                   >Submenu 1</NuxtLink
                 >
               </li>
               <li>
-                <NuxtLink to="/" class="px-3 hover:text-primary1"
+                <NuxtLink to="/" class="px-3 hover:text-primary"
                   >Submenu 2</NuxtLink
                 >
               </li>
-            </ul>
-            <img
+            </ul> -->
+            <!-- <img
               src="/images/icon-dropdown.svg"
               alt="icon-dropdown"
               class="pl-2 pb-1"
-            />
+            /> -->
           </li>
           <li>
             <NuxtLink
-              to="/wekstek-community"
+              to="/blog"
               class="pr-1 navlink"
-              :class="{ active: isRouteActive('/wekstek-community') }"
-              >Werkstek updates</NuxtLink
+              :class="{ active: isRouteActive('/blog') }"
+              >Werkstek Blog</NuxtLink
             >
           </li>
-          <li
-            class="max-w-[172px] 2xl:h-[56px] bg-primary1 hover:bg-white px-3 py-2 text-white border border-primary1 hover:text-primary1 hover:border-primary1 hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
+          <li>
+            <NuxtLink
+              to="/faq"
+              class="pr-1 navlink"
+              :class="{ active: isRouteActive('/faq') }"
+              >FAQ</NuxtLink
+            >
+          </li>
+          <!-- <li
+            class="max-w-[172px] 2xl:h-[56px] bg-primary hover:bg-white px-3 py-2 text-white border border-primary hover:text-primary hover:border-primary hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
           >
             <NuxtLink to="/contact" aria-label="contact"
               >Contact opnemen</NuxtLink
             >
-          </li>
+          </li> -->
         </ul>
+        <!-- <NuxtLink
+          to="/contact"
+          class="border border-quaternary rounded-full flex items-center gap-1 p-1 lg:px-2 max-h-[64px]"
+        >
+          <p class="text-sm lg:text-base">Contact opnemen</p>
+          <div
+            class="rounded-full bg-quaternary text-white flex items-center justify-center"
+          >
+            <svg
+              width="46"
+              viewBox="0 0 58 56"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                y="0.0263672"
+                width="55"
+                height="55"
+                rx="27.5"
+                fill="black"
+              />
+              <path
+                d="M25.8682 35.6041L34.3755 27.0967L25.8682 18.5894"
+                stroke="white"
+                stroke-width="2.57812"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </NuxtLink> -->
+        <ButtonSM buttonLink="/contact" buttonTitle="Contact opnemen" />
       </div>
       <!-- Dark Background Transition -->
       <transition
@@ -106,7 +149,7 @@
         >
           <div
             @click="isOpen = false"
-            class="absolute inset-0 bg-black opacity-50"
+            class="absolute inset-0 bg-quaternary opacity-50"
             tabindex="0"
           ></div>
         </div>
@@ -174,9 +217,17 @@
           </li>
           <li class="cursor-pointer">
             <NuxtLink
+              to="/faq"
+              @click="isOpen = false"
+              class="my-4 inline-block"
+              >FAQ</NuxtLink
+            >
+          </li>
+          <li class="cursor-pointer">
+            <NuxtLink
               to="/contact"
               @click="isOpen = false"
-              class="my-8 w-full text-center font-semibold cta inline-block bg-primary1 hover:bg-white border border-primary1 px-3 py-2 rounded text-white hover:text-primary1"
+              class="my-8 w-full text-center font-semibold cta inline-block bg-primary hover:bg-white border border-primary px-3 py-2 rounded text-white hover:text-primary"
               >Contact opnemen</NuxtLink
             >
           </li>

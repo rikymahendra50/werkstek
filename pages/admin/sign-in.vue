@@ -1,7 +1,9 @@
 <template>
   <div class="grid place-items-center items-center h-screen">
-    <div class="w-[400px]">
+    <div class="w-[500px] p-10 justify-center shadow-lg">
+      <Werkstek class="mb-10" />
       <VeeForm :validation-schema="loginSchema" @submit="onSubmit">
+        <h4 class="pb-1 text-lg">Email</h4>
         <div class="flex flex-col space-y-4">
           <div>
             <VeeField
@@ -12,6 +14,7 @@
             <VeeErrorMessage name="email" class="text-sm text-error" />
           </div>
           <div>
+            <h4 class="pb-1 text-lg">Password</h4>
             <VeeField
               name="password"
               v-model="form.password"
@@ -20,8 +23,12 @@
             />
             <VeeErrorMessage name="password" class="text-sm text-error" />
           </div>
-          <div>
-            <button :disabled="loading" type="submit" class="btn btn-primary">
+          <div class="mt-5">
+            <button
+              :disabled="loading"
+              type="submit"
+              class="btn btn-primary w-full"
+            >
               Sign In
             </button>
           </div>

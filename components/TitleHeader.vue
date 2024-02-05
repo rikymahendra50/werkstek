@@ -6,7 +6,7 @@
         alt="background-title"
         class="absolute w-[50%] lg:w-[30%]"
       />
-      <span class="text-primary1 text-[14px] md:text-[18px]">{{ title }}</span>
+      <span class="text-primary text-[14px] md:text-[18px]">{{ title }}</span>
       <span class="font-semibold text-[25px] sm:text-[40px] md:text-[50px]">
         {{ secondTitle }}
       </span>

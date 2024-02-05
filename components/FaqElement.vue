@@ -23,7 +23,7 @@
         :class="[
           'rounded-[8px] text-white px-5 md:px-10 py-3 w-[100%] cursor-pointer mb-3',
           activeIndex === index
-            ? 'bg-[#859C81] w-full'
+            ? 'bg-secondary w-full'
             : 'bg-[#859C8121] border-2 border-[#1FAB71]',
         ]"
       >

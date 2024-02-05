@@ -1,31 +1,41 @@
 <template>
-  <div class="container-custom justify-around flex items-center md:py-10 py-20">
-    <div class="flex gap-2">
+  <section class="container-custom my-10">
+    <div class="grid grid-cols-12">
       <div
-        class="border-l-[7px] rounded-full border-primary1 h-[100px] sm:h-[140px] lg:h-[160px] max-h-[160px]"
-      ></div>
-      <div class="flex flex-col ml-4 lg:w-[72%]">
-        <p class="text-[#181817] font-semibold text-[20px] sm:text-[30px]">
-          Werkstek wordt vertrouwt door
-        </p>
-        <p class="text-[12px] md:text-[22px] text-[#6E6E6E]">
-          Lorem ipsum dolor sit amet, solor ut adipiscing elit.
-        </p>
+        class="col-span-6 grid grid-cols-12 min-h-[170px] sm:min-h-[200px] gap-1"
+      >
+        <div
+          class="bg-quaternary rounded-full max-w-[16px] box-shadow flex flex-col justify-center"
+        ></div>
+        <div
+          class="col-span-11 rounded-2xl bg-primary text-tertiary flex flex-col justify-center gap-3 pr-3 pl-2 xl:px-10"
+        >
+          <h1 class="text-lg md:text-2xl xl:text-3xl font-regular xl:w-[70%]">
+            Werkstek wordt vertrouwt door
+          </h1>
+          <p class="text-[12px] sm:text-sm md:text-base text-[#783E00]">
+            Lorem ipsum dolor sit amet, solor ut adipiscing elit.
+          </p>
+        </div>
+      </div>
+      <div class="col-span-6">
+        <div
+          class="grid-cols-2 grid-rows-2 grid h-full justify-items-center content-center"
+        >
+          <div class="sm:p-5 sm:m-2 flex items-center">
+            <img src="/images/logo-ipsum.svg" alt="logo-ipsum" />
+          </div>
+          <div class="sm:p-5 sm:m-2 flex items-center">
+            <img src="/images/logo-ipsum.svg" alt="logo-ipsum" />
+          </div>
+          <div class="sm:p-5 sm:m-2 flex items-center">
+            <img src="/images/logo-ipsum.svg" alt="logo-ipsum" />
+          </div>
+          <div class="sm:p-5 sm:m-2 flex items-center">
+            <img src="/images/logo-ipsum.svg" alt="logo-ipsum" />
+          </div>
+        </div>
       </div>
     </div>
-    <div class="grid-cols-2 grid-rows-2 grid">
-      <div class="border p-5 m-2">
-        <img src="/images/logo-ipsum.svg" alt="logo-ipsum" />
-      </div>
-      <div class="border p-5 m-2">
-        <img src="/images/logo-ipsum.svg" alt="logo-ipsum" />
-      </div>
-      <div class="border p-5 m-2">
-        <img src="/images/logo-ipsum.svg" alt="logo-ipsum" />
-      </div>
-      <div class="border p-5 m-2">
-        <img src="/images/logo-ipsum.svg" alt="logo-ipsum" />
-      </div>
-    </div>
-  </div>
+  </section>
 </template>

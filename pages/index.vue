@@ -1,5 +1,4 @@
 <template>
-  <MapInteractive />
   <StatistiekLocaties
     :image="StatistiekLocaties.image"
     :title1="StatistiekLocaties.title1"
@@ -12,6 +11,7 @@
     :count2="StatistiekLocaties.titleBg2.count"
     :count3="StatistiekLocaties.titleBg3.count"
   />
+  <MapInteractive class="py-10" />
   <SliderLocaties />
   <SliderTestimony />
   <FourImages />
@@ -23,6 +23,9 @@
     :showButtonSection="BgBigGreen.showButtonSection"
     :buttonTitle="BgBigGreen.titleButton"
     :buttonLink="BgBigGreen.linkButton"
+    :showEmailSection="true"
+    :show-button-section="false"
+    :backgroundColor="'secondary'"
   />
 </template>
 
