@@ -1,71 +1,33 @@
 <template>
-  <!-- <StatistiekLocaties
-    :image="StatistiekLocaties.image"
-    :title1="StatistiekLocaties.title1"
-    :title2="StatistiekLocaties.title2"
-    :title3="StatistiekLocaties.title3"
-    :titleBg1="StatistiekLocaties.titleBg1.title"
-    :titleBg2="StatistiekLocaties.titleBg2.title"
-    :titleBg3="StatistiekLocaties.titleBg3.title"
-    :count1="StatistiekLocaties.titleBg1.count"
-    :count2="StatistiekLocaties.titleBg2.count"
-    :count3="StatistiekLocaties.titleBg3.count"
-  /> -->
-
   <StatistiekLocaties2
-    :title1="StatistiekLocaties.title1"
-    :title2="StatistiekLocaties.title2"
-    :title3="StatistiekLocaties.title3"
-    :titleBg1="StatistiekLocaties.titleBg1.title"
-    :titleBg2="StatistiekLocaties.titleBg2.title"
-    :titleBg3="StatistiekLocaties.titleBg3.title"
-    :count1="StatistiekLocaties.titleBg1.count"
-    :count2="StatistiekLocaties.titleBg2.count"
-    :count3="StatistiekLocaties.titleBg3.count"
+    :title1="StatistiekLocatiesData.title1"
+    :title2="StatistiekLocatiesData.title2"
+    :title3="StatistiekLocatiesData.title3"
+    :titleBg1="StatistiekLocatiesData.titleBg1.title"
+    :titleBg2="StatistiekLocatiesData.titleBg2.title"
+    :titleBg3="StatistiekLocatiesData.titleBg3.title"
+    :count1="StatistiekLocatiesData.titleBg1.count"
+    :count2="StatistiekLocatiesData.titleBg2.count"
+    :count3="StatistiekLocatiesData.titleBg3.count"
   />
 
-  <OnzeLocaties />
+  <OnzeLocaties :showLocaties="true" />
   <BgBigGreen
-    :title1="BgBigGreen.title1"
-    :title2="BgBigGreen.title2"
-    :title3="BgBigGreen.title3"
-    :phoneNumber="BgBigGreen.phoneNumber"
-    :mail="BgBigGreen.mail"
-    :showEmailSection="BgBigGreen.showEmailSection"
-    :showButtonSection="BgBigGreen.showButtonSection"
+    :title1="BgBigGreenData.title1"
+    :title2="BgBigGreenData.title2"
+    :title3="BgBigGreenData.title3"
+    :phoneNumber="BgBigGreenData.phoneNumber"
+    :mail="BgBigGreenData.mail"
+    :showEmailSection="BgBigGreenData.showEmailSection"
+    :showButtonSection="BgBigGreenData.showButtonSection"
     :backgroundColor="'primary'"
   />
 </template>
 
-<style>
-.text-shadow {
-  filter: drop-shadow(3px 3px 1px rgba(0, 0, 0, 0.2));
-}
-</style>
+<script setup>
+const { StatistiekLocatiesData, BgBigGreenData } = useOnzeLocaties();
 
-<script>
-export default {
-  data() {
-    return {
-      StatistiekLocaties: {
-        image: "/images/img-page2-1.png",
-        title1: "Bekijk onze locaties",
-        title2: "De Werkstek locaties",
-        title3:
-          "De perfecte werkplek voor elke organisatie. Kies voor betaalbare huur in een professionele omgeving op een gunstige locatie, en maak deel uit van een ondernemende en inspirerende community.",
-        titleBg1: { title: "Locaties", count: 280 },
-        titleBg2: { title: "Statistiek 2", count: 15 },
-        titleBg3: { title: "Statistiek 3", count: 49 },
-      },
-      BgBigGreen: {
-        title1: "Aanvragen",
-        title2: "Niks kunnen vinden?",
-        title3:
-          "Neem dan contact met ons op. Samen zoeken we jouw perfecte werkplek.",
-        showButtonSection: true,
-        showEmailSection: false,
-      },
-    };
-  },
-};
+useHead({
+  title: "OnzeLocaties",
+});
 </script>

@@ -26,5 +26,12 @@
     :showEmailSection="false"
     linkTitle="Verstuur je video"
     :showPhoneEmail="false"
+    :backgroundColor="'secondary'"
   />
 </template>
+
+<script setup>
+useHead({
+  title: "WerkstekCommunity",
+});
+</script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="py-10" :class="background">
+  <div class="py-10 px-10" :class="background">
     <div class="grid md:grid-cols-2 mx-2 md:mx-3 lg:mx-4 items-center">
       <div class="order-2 flex justify-end max-w-[600px]">
         <div class="w-[70%] md:w-[100%]">
@@ -31,7 +31,7 @@
                 id="image0_86_3523"
                 width="600"
                 height="601"
-                xlink:href="/images/image-page4-3.png"
+                :xlink:href="image"
               />
             </defs>
           </svg>

@@ -1,6 +1,6 @@
 <template>
   <div class="w-full flex items-center justify-center">
-    <div class="flex flex-col justify-center items-center text-center my-5">
+    <div class="flex flex-col justify-center items-center text-center py-10">
       <img
         src="/images/bg-title.svg"
         alt="background-title"

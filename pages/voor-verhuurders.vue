@@ -63,6 +63,8 @@
   <SliderTestimony />
 </template>
 
-<script>
-export default {};
+<script setup>
+useHead({
+  title: "voor-Verhuurders",
+});
 </script>

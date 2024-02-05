@@ -19,7 +19,7 @@
           >
             <NuxtLink
               :to="buttonLink1"
-              class="bg-primary hover:bg-secondary sm:py-3 px-3 text-[12px] lg:text-lg sm:px-6 rounded-full drop-shadow-md text-white flex items-center"
+              class="bg-primary transition hover:bg-secondary sm:py-3 px-3 text-[12px] lg:text-lg sm:px-6 rounded-full drop-shadow-md text-white flex items-center"
             >
               {{ buttonTitle1 }}
             </NuxtLink>
@@ -58,7 +58,7 @@
                 id="image0_86_3396"
                 width="550"
                 height="600"
-                xlink:href="/images/image-page4-1.png"
+                :xlink:href="image"
               />
             </defs>
           </svg>

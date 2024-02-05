@@ -13,17 +13,20 @@
     title1="Blijf op de hoogte "
     title2="Schrijf je in voor de nieuwsbrief"
     title3="Op de hoogte blijven van beschikbare werkplekken? Schrijf je dan nu vrijblijvend in!"
+    :showButtonSection="true"
+    :backgroundColor="'secondary'"
   />
 </template>
 
-<script>
-export default {
-  methods: {
-    handleCategoryClick(category) {
-      // Handle category click event di sini
-      console.log(`Kategori yang diklik: ${category}`);
-      // Lakukan sesuatu dengan kategori yang diklik, misalnya muat ulang data blog
-    },
-  },
-};
+<script setup>
+useHead({
+  title: "Blog",
+});
+// export default {
+//   methods: {
+//     handleCategoryClick(category) {
+//       console.log(`Kategori yang diklik: ${category}`);
+//     },
+//   },
+// };
 </script>

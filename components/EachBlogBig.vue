@@ -1,6 +1,8 @@
 <template>
-  <div class="mx-1 sm:mr-2 max-w-[366px] w-[50%] hover:shadow-md">
-    <NuxtLink to="/blog/riky-mahendra" class="card">
+  <div
+    class="mx-1 sm:mr-2 max-w-[366px] w-[50%] hover:shadow-md transition p-4"
+  >
+    <NuxtLink :to="link" class="card">
       <img :src="imageSrc" alt="imageBlog" class="w-full" />
       <span class="text-[14px] sm:text-[18px] md:text-[24px] font-semibold">
         {{ title }}

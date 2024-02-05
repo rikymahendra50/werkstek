@@ -1,5 +1,5 @@
 <template>
-  <section class="mx-2 md:mx-5 lg:mx-10">
+  <section class="container-custom">
     <TitleHeader2
       title1="Locaties"
       title2="werf5, Utrecht"
@@ -298,6 +298,7 @@
 export default {
   data() {
     return {
+      dataLocatiesSingle: {},
       checkBoxData: [
         {
           id: 1,

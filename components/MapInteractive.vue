@@ -3,7 +3,7 @@
     :class="{
       'container-custom': ShowContainerCustom,
       'relative z-20': true,
-      'w-full': !containerCustom,
+      'w-full': !ShowContainerCustom,
     }"
   >
     <div
@@ -53,7 +53,7 @@
                   v-for="(option, idx) in category.options"
                   :key="idx"
                   @click="selectOption(category, option)"
-                  class="pt-1 cursor-pointer hover:bg-secondary hover:text-tertiary px-5 md:pb-2"
+                  class="pt-1 cursor-pointer hover:bg-secondary transition hover:text-tertiary px-5 md:pb-2"
                 >
                   {{ option }}
                 </li>
@@ -71,7 +71,7 @@
             </div>
           </div>
           <div class="text-tertiary grid justify-end md:col-span-3 mt-4">
-            <Button
+            <button
               @click="performSearch"
               class="bg-primary rounded-full min-h-[48px] flex items-center gap-4 pl-3 pr-1"
             >
@@ -95,7 +95,7 @@
                   />
                 </svg>
               </div>
-            </Button>
+            </button>
           </div>
         </div>
       </div>
@@ -114,6 +114,7 @@ export default {
     ShowContainerCustom: {
       type: Boolean,
       default: true,
+      required: false,
     },
     searchCustom: {
       type: Boolean,
@@ -245,8 +246,6 @@ export default {
         }
       });
 
-      this.updateMarkerIcons();
-
       const filteredData = this.locations.filter((location) => {
         return (
           location.city === selectedCityFix &&
@@ -280,7 +279,7 @@ export default {
         window.googleMapsScriptLoaded = true;
         window.initMap = this.setupMap;
         const googleMapsScript = document.createElement("script");
-        googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap`;
+        googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap&`;
         googleMapsScript.defer = true;
         googleMapsScript.async = true;
         googleMapsScript.onload = () => {

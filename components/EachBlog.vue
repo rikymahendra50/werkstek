@@ -15,7 +15,7 @@
       <img
         src="/images/image-eachblog-1.png"
         alt="eachblog"
-        class="max-w-[1140px]"
+        class="max-w-[1140px] rounded-lg"
       />
       <!-- author small screen -->
       <div class="block lg:hidden my-3 min-[400px]:my-5 sm:my-7">
@@ -90,7 +90,7 @@
             werken vertegenwoordigen:
           </p>
           <div class="mt-10">
-            <h1 class="text-[#777] pb-4 text-[20px]">
+            <h1 class="font-bold pb-4 text-[20px]">
               Flexibiliteit in ruimte en kosten
             </h1>
             <p class="leading-9 text-[16px]">
@@ -104,7 +104,7 @@
             </p>
           </div>
           <div class="mt-10">
-            <h1 class="text-[#777] pb-4 text-[16px] md:text-[20px]">
+            <h1 class="font-bold pb-4 text-[16px] md:text-[20px]">
               Samenwerking en netwerken
             </h1>
             <p class="leading-9 text-[14px] md:text-[16px]">
@@ -118,7 +118,7 @@
             </p>
           </div>
           <div class="mt-10">
-            <h1 class="text-[#777] pb-4 text-[16px] md:text-[20px]">
+            <h1 class="font-bold pb-4 text-[16px] md:text-[20px]">
               Professionele uitstraling
             </h1>
             <p class="leading-9 text-[14px] md:text-[16px]">
@@ -131,7 +131,7 @@
             </p>
           </div>
           <div class="mt-10">
-            <h1 class="text-[#777] pb-4 text-[18px] md:text-[20px]">
+            <h1 class="font-bold pb-4 text-[18px] md:text-[20px]">
               Gemeenschappelijke voorzieningen en ondersteuning
             </h1>
             <p class="leading-9 text-[16px]">
@@ -144,7 +144,7 @@
             </p>
           </div>
           <div class="mt-10">
-            <h1 class="text-[#777] pb-4 text-[18px] md:text-[20px]">
+            <h1 class="font-bold pb-4 text-[18px] md:text-[20px]">
               Toegang tot expertise
             </h1>
             <p class="leading-9 text-[14px] md:text-[16px]">
@@ -199,7 +199,11 @@
             </div>
           </div>
           <div class="flex justify-center">
-            <ButtonSM buttonTitle="Schrijf een reactie" class="mt-10" />
+            <ButtonPrimary
+              buttonTitle="Schrijf een reactie"
+              buttonLink="/"
+              class="mt-10 max-w-[300px]"
+            />
           </div>
         </div>
         <!-- author -->

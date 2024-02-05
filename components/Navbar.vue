@@ -55,34 +55,36 @@
               :class="{ active: isRouteActive('/over-werkstek') }"
               >Over werkstek</NuxtLink
             >
-            <!-- <ul
-              tabindex="0"
-              class="absolute top-6 py-1 mt-2 w-full dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-md"
-            >
-              <li>
-                <NuxtLink to="/" class="px-3 hover:text-primary"
-                  >Submenu 1</NuxtLink
-                >
-              </li>
-              <li>
-                <NuxtLink to="/" class="px-3 hover:text-primary"
-                  >Submenu 2</NuxtLink
-                >
-              </li>
-            </ul> -->
-            <!-- <img
-              src="/images/icon-dropdown.svg"
-              alt="icon-dropdown"
-              class="pl-2 pb-1"
-            /> -->
           </li>
-          <li>
-            <NuxtLink
-              to="/blog"
-              class="pr-1 navlink"
-              :class="{ active: isRouteActive('/blog') }"
-              >Werkstek Blog</NuxtLink
+          <li class="dropdown">
+            <label
+              tabindex="0"
+              class="bg-transparent border-none text-white font-thin hover:bg-transparent cursor-pointer navlink"
+              :class="{ active: isUpdateActive() }"
             >
+              Werkstek Update
+            </label>
+            <ul
+              tabindex="0"
+              class="ml-[-20px] dropdown-content z-[1] menu p-1 shadow bg-base-100 rounded-box w-40 text-black"
+            >
+              <li class="text-sm">
+                <NuxtLink
+                  to="/blog"
+                  :class="{ active: isRouteActive('/blog') }"
+                >
+                  Werkstek Blog
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  to="/werkstek-community"
+                  :class="{ active: isRouteActive('/werkstek-community') }"
+                >
+                  Werkstek Community
+                </NuxtLink>
+              </li>
+            </ul>
           </li>
           <li>
             <NuxtLink
@@ -92,45 +94,7 @@
               >FAQ</NuxtLink
             >
           </li>
-          <!-- <li
-            class="max-w-[172px] 2xl:h-[56px] bg-primary hover:bg-white px-3 py-2 text-white border border-primary hover:text-primary hover:border-primary hover:border hover:box-border font-semibold rounded-[14px] flex items-center cursor-pointer shadow-md"
-          >
-            <NuxtLink to="/contact" aria-label="contact"
-              >Contact opnemen</NuxtLink
-            >
-          </li> -->
         </ul>
-        <!-- <NuxtLink
-          to="/contact"
-          class="border border-quaternary rounded-full flex items-center gap-1 p-1 lg:px-2 max-h-[64px]"
-        >
-          <p class="text-sm lg:text-base">Contact opnemen</p>
-          <div
-            class="rounded-full bg-quaternary text-white flex items-center justify-center"
-          >
-            <svg
-              width="46"
-              viewBox="0 0 58 56"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                y="0.0263672"
-                width="55"
-                height="55"
-                rx="27.5"
-                fill="black"
-              />
-              <path
-                d="M25.8682 35.6041L34.3755 27.0967L25.8682 18.5894"
-                stroke="white"
-                stroke-width="2.57812"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
-        </NuxtLink> -->
         <ButtonSM buttonLink="/contact" buttonTitle="Contact opnemen" />
       </div>
       <!-- Dark Background Transition -->
@@ -209,7 +173,7 @@
           </li>
           <li class="cursor-pointer">
             <NuxtLink
-              to="/wekstek-community"
+              to="/werkstek-community"
               @click="isOpen = false"
               class="my-4 inline-block"
               >Werkstek updates</NuxtLink
@@ -250,6 +214,12 @@ export default {
     },
     drawer() {
       this.isOpen = !this.isOpen;
+    },
+    isUpdateActive() {
+      return (
+        this.$route.path.startsWith("/blog") ||
+        this.$route.path.startsWith("/werkstek-community")
+      );
     },
   },
   watch: {

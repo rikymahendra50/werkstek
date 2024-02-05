@@ -7,6 +7,8 @@
   <FaqElement />
 </template>
 
-<script>
-export default {};
+<script setup>
+useHead({
+  title: "FAQ",
+});
 </script>

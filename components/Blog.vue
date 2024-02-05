@@ -2,7 +2,7 @@
   <section class="mx-5 lg:container-custom py-10">
     <div v-if="dontShowTitle">
       <div v-if="!showTitleHeader">
-        <div class="pb-5 md:pb-10 sm:w-[70%]">
+        <div class="pl-3 pb-5 md:pb-10 sm:w-[70%]">
           <h1 class="text-[26px] md:text-[32px] font-bold">
             Lees onze laatste blog’s
           </h1>
@@ -25,13 +25,13 @@
           :imageSrc="perBlog[0].image"
           :title="perBlog[0].title"
           :description="perBlog[0].description"
-          perBlogLink="/"
+          :link="perBlog[0].link"
         />
         <EachBlogBig
           :imageSrc="perBlog[1].image"
           :title="perBlog[1].title"
           :description="perBlog[1].description"
-          perBlogLink="/"
+          :link="perBlog[1].link"
         />
       </div>
       <div class="flex-col justify-between lg:flex hidden lg:w-[40%]">
@@ -39,22 +39,19 @@
           :imageSrc="perBlog[2].image"
           :title="perBlog[2].title"
           :description="perBlog[2].description"
-          :perBlogLink="perBlog[2].description"
-          perBlogLink="/"
+          :link="perBlog[2].link"
         />
         <EachBlogSmall
           :imageSrc="perBlog[3].image"
           :title="perBlog[3].title"
           :description="perBlog[3].description"
-          :perBlogLink="perBlog[3].description"
-          perBlogLink="/"
+          :link="perBlog[3].link"
         />
         <EachBlogSmall
           :imageSrc="perBlog[4].image"
           :title="perBlog[4].title"
           :description="perBlog[4].description"
-          :perBlogLink="perBlog[4].description"
-          perBlogLink="/"
+          :link="perBlog[4].link"
         />
       </div>
     </div>
@@ -82,6 +79,7 @@ export default {
             "Blox reality startup Lorem ipsum od dillogi bell in the city ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska. Jinesade bel när feras redorade i belogi. FAR paratyp imuvåning, och pesask vyfisat.",
+          link: "/blog/rikymahendra",
         },
         {
           image: "/images/img-big-blog-2.png",
@@ -89,24 +87,28 @@ export default {
             "Blox reality startup Lorem ipsum od dillogi bell in the city ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska. Jinesade bel när feras redorade i belogi. FAR paratyp imuvåning, och pesask vyfisat.",
+          link: "/blog/rikymahendra",
         },
         {
           image: "/images/img-small-blog-1.png",
           title: "BASAL METABOLIC RATE: WHAT IS IT ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
+          link: "/blog/rikymahendra",
         },
         {
           image: "/images/img-small-blog-2.png",
           title: "BASAL METABOLIC RATE: WHAT IS IT ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
+          link: "/blog/rikymahendra",
         },
         {
           image: "/images/img-small-blog-3.png",
           title: "BASAL METABOLIC RATE: WHAT IS IT ...",
           description:
             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
+          link: "/blog/rikymahendra",
         },
       ],
     };

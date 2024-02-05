@@ -38,7 +38,7 @@
         </NuxtLink>
         <NuxtLink
           to="/over-werkstek"
-          class="flex flex-wrap w-[60%] h-full rounded-md hover:shadow-xl"
+          class="flex flex-wrap w-[60%] h-full rounded-md transition hover:shadow-xl"
           :class="{ active: isRouteActive('/over-werkstek') }"
           :style="{
             backgroundImage: `url('${Data[1].imageSrc}')`,
@@ -74,7 +74,7 @@
       >
         <NuxtLink
           to="/over-werkstek"
-          class="flex flex-wrap w-[60%] h-full rounded-md hover:shadow-xl"
+          class="flex flex-wrap w-[60%] h-full rounded-md transition hover:shadow-xl"
           :class="{ active: isRouteActive('/over-werkstek') }"
           :style="{
             backgroundImage: `url('${Data[2].imageSrc}')`,
@@ -106,7 +106,7 @@
         </NuxtLink>
         <NuxtLink
           to="/over-werkstek"
-          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-md hover:shadow-xl"
+          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-md transition hover:shadow-xl"
           :class="{ active: isRouteActive('/over-werkstek') }"
           :style="{
             backgroundImage: `url('${Data[3].imageSrc}')`,

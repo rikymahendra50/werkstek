@@ -1,6 +1,6 @@
 <template>
-  <div class="hover:shadow-xl">
-    <NuxtLink to="/" class="flex">
+  <div class="transition hover:shadow-xl p-2">
+    <NuxtLink :to="link" class="flex">
       <img
         :src="imageSrc"
         alt="image-person2"
