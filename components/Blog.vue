@@ -32,72 +32,82 @@
       </div>
       <div class="flex-col justify-between lg:flex hidden lg:w-[40%]">
         <EachBlogSmall
-          v-for="(blog, index) in perBlog.slice(2, 5)"
-          :key="index"
-          :imageSrc="blog.image"
-          :title="blog.title"
-          :description="blog.description"
-          :link="blog.link"
+          v-for="article in articles.slice(2, 5)"
+          :key="article.id"
+          :imageSrc="article.image"
+          :title="article.title"
+          :description="article.description"
+          :link="article.link"
         />
       </div>
+      <!-- <ul>
+    <li v-for="article in articles" :key="article.id">
+      <img :src="article.image" alt="Article Image" />
+      <h2>{{ article.title }}</h2>
+      <p>{{ article.meta }}</p>
+      <p>Total Views: {{ article.total_view }}</p>
+    </li>
+  </ul> -->
     </div>
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      perBlog: [
-        {
-          image: "/images/img-big-blog-1.png",
-          title:
-            "Blox reality startup Lorem ipsum od dillogi bell in the city ...",
-          description:
-            "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska. Jinesade bel när feras redorade i belogi. FAR paratyp imuvåning, och pesask vyfisat.",
-          link: "/blog/rikymahendra",
-        },
-        {
-          image: "/images/img-big-blog-2.png",
-          title:
-            "Blox reality startup Lorem ipsum od dillogi bell in the city ...",
-          description:
-            "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska. Jinesade bel när feras redorade i belogi. FAR paratyp imuvåning, och pesask vyfisat.",
-          link: "/blog/rikymahendra",
-        },
-        {
-          image: "/images/img-small-blog-1.png",
-          title: "BASAL METABOLIC RATE: WHAT IS IT ...",
-          description:
-            "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
-          link: "/blog/rikymahendra",
-        },
-        {
-          image: "/images/img-small-blog-2.png",
-          title: "BASAL METABOLIC RATE: WHAT IS IT ...",
-          description:
-            "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
-          link: "/blog/rikymahendra",
-        },
-        {
-          image: "/images/img-small-blog-3.png",
-          title: "BASAL METABOLIC RATE: WHAT IS IT ...",
-          description:
-            "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
-          link: "/blog/rikymahendra",
-        },
-      ],
-    };
-  },
-  props: {
-    showTitleHeader: {
-      type: Boolean,
-      default: false,
-    },
-    dontShowTitle: {
-      type: Boolean,
-      default: true,
-    },
-  },
-};
+<script setup>
+const { articles } = useArticle();
+
+// export default {
+//   data() {
+//     return {
+//       perBlog: [
+//         {
+//           image: "/images/img-big-blog-1.png",
+//           title:
+//             "Blox reality startup Lorem ipsum od dillogi bell in the city ...",
+//           description:
+//             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska. Jinesade bel när feras redorade i belogi. FAR paratyp imuvåning, och pesask vyfisat.",
+//           link: "/blog/rikymahendra",
+//         },
+//         {
+//           image: "/images/img-big-blog-2.png",
+//           title:
+//             "Blox reality startup Lorem ipsum od dillogi bell in the city ...",
+//           description:
+//             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska. Jinesade bel när feras redorade i belogi. FAR paratyp imuvåning, och pesask vyfisat.",
+//           link: "/blog/rikymahendra",
+//         },
+//         {
+//           image: "/images/img-small-blog-1.png",
+//           title: "BASAL METABOLIC RATE: WHAT IS IT ...",
+//           description:
+//             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
+//           link: "/blog/rikymahendra",
+//         },
+//         {
+//           image: "/images/img-small-blog-2.png",
+//           title: "BASAL METABOLIC RATE: WHAT IS IT ...",
+//           description:
+//             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
+//           link: "/blog/rikymahendra",
+//         },
+//         {
+//           image: "/images/img-small-blog-3.png",
+//           title: "BASAL METABOLIC RATE: WHAT IS IT ...",
+//           description:
+//             "Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom diska",
+//           link: "/blog/rikymahendra",
+//         },
+//       ],
+//     };
+//   },
+//   props: {
+//     showTitleHeader: {
+//       type: Boolean,
+//       default: false,
+//     },
+//     dontShowTitle: {
+//       type: Boolean,
+//       default: true,
+//     },
+//   },
+// };
 </script>
