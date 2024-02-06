@@ -4,7 +4,7 @@
       class="bg-quaternary rounded-full min-w-[26px] md:min-w-[46px]"
     ></span>
     <div
-      :class="`w-[95%] lg:w-[80%] bg-${backgroundColor} rounded-lg box-shadow h-[318px] lg:h-[418px] flex flex-col justify-center`"
+      :class="`w-[95%] lg:w-[80%] bg-${backgroundColor} rounded-2xl box-shadow h-[318px] lg:h-[418px] flex flex-col justify-center`"
     >
       <div
         class="mx-3 sm:mx-5 lg:mx-10 flex flex-col text-white justify-between gap-1 lg:gap-2"
@@ -51,7 +51,11 @@
           v-if="showButtonSection"
           class="flex mt-3 w-[90%] lg:w-[50%] items-center gap-5 my-2"
         >
-          <ButtonSM :buttonTitle="linkTitle" :buttonLink="linkButton" />
+          <ButtonSM
+            :buttonTitle="linkTitle"
+            :buttonLink="linkButton"
+            class="bg-tertiary bg-opacity-70 text-black"
+          />
           <div v-if="showSmallerButton">
             <ButtonSmaller
               :buttonTitle="linkTitleSmaller"

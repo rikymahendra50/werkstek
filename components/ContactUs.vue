@@ -154,7 +154,7 @@
             <button
               type="submit"
               :disabled="loading"
-              class="mt-4 bg-primary hover:bg-secondary min-w-[120px] sm:min-w-[152px] min-h-[42px] sm:min-h-[52px] rounded-full flex items-center justify-center cursor-pointer"
+              class="mt-4 bg-primary hover:bg-secondary transition min-w-[120px] sm:min-w-[152px] min-h-[42px] sm:min-h-[52px] rounded-full flex items-center justify-center cursor-pointer"
             >
               <span
                 class="text-[20px] xl:text-lg lg:text-lg text-center text-white"

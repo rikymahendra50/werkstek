@@ -3,7 +3,7 @@
     :class="{
       'container-custom': ShowContainerCustom,
       'relative z-20': true,
-      'w-full': !containerCustom,
+      'w-full': !ShowContainerCustom,
     }"
   >
     <div
@@ -11,7 +11,7 @@
       :class="`relative w-full h-[420px] lg:h-[619px] border-2 z-[-999]`"
     ></div>
     <div class="mx-2 sm:mx-10 container-custom">
-      <div class="bg-tertiary box-shadow mt-[-200px] z-10 rounded-[40px]">
+      <div class="bg-tertiary box-shadow mt-[-100px] z-10 rounded-[40px]">
         <div
           class="min-h-[278px] md:grid md:grid-cols-3 items-center h-full px-10 font-semibold gap-1 md:gap-3 py-9"
         >
@@ -53,7 +53,7 @@
                   v-for="(option, idx) in category.options"
                   :key="idx"
                   @click="selectOption(category, option)"
-                  class="pt-1 cursor-pointer hover:bg-secondary hover:text-tertiary px-5 md:pb-2"
+                  class="pt-1 cursor-pointer hover:bg-secondary transition hover:text-tertiary px-5 md:pb-2"
                 >
                   {{ option }}
                 </li>
@@ -71,7 +71,7 @@
             </div>
           </div>
           <div class="text-tertiary grid justify-end md:col-span-3 mt-4">
-            <Button
+            <button
               @click="performSearch"
               class="bg-primary rounded-full min-h-[48px] flex items-center gap-4 pl-3 pr-1"
             >
@@ -95,17 +95,13 @@
                   />
                 </svg>
               </div>
-            </Button>
+            </button>
           </div>
         </div>
       </div>
     </div>
   </section>
 </template>
-
-<style>
-/* style */
-</style>
 
 <script scoped>
 let googleMapsScriptLoaded = false;
@@ -114,6 +110,7 @@ export default {
     ShowContainerCustom: {
       type: Boolean,
       default: true,
+      required: false,
     },
     searchCustom: {
       type: Boolean,
@@ -160,9 +157,9 @@ export default {
           area: "Deskripsi C",
           image: "/images/img-home-1.png",
           popularity: 20,
-          city: "Den Haag",
+          city: "Rotterdam",
           type: "Andere Optie 2",
-          price: 8,
+          price: 240,
           filtered: false,
         },
         {
@@ -175,6 +172,18 @@ export default {
           city: "Amsterdam",
           type: "Andere Optie 1",
           price: 4,
+          filtered: false,
+        },
+        {
+          lat: -8.616146108681335,
+          lng: 115.17967680101556,
+          name: "Company E",
+          area: "Deskripsi E",
+          image: "/images/img-home-1.png",
+          popularity: 20,
+          city: "Rotterdam",
+          type: "Andere Optie 1",
+          price: 710,
           filtered: false,
         },
       ],
@@ -212,7 +221,8 @@ export default {
   methods: {
     updateLastSelectedPrices(prices) {
       this.lastSelectedPrices = prices;
-      console.log("Last Selected Prices:", this.lastSelectedPrices);
+      // console.log("Last Selected Prices:", this.lastSelectedPrices);
+      this.clearInfoWindows();
     },
 
     selectOption(category, option) {
@@ -232,6 +242,8 @@ export default {
       const minPrice = selectedPriceFix.minPrice;
       const maxPrice = selectedPriceFix.maxPrice;
 
+      this.clearInfoWindows();
+
       this.locations.forEach((location) => {
         const isLocationInFilter =
           location.city === selectedCityFix &&
@@ -242,10 +254,9 @@ export default {
 
         if (isLocationInFilter) {
           this.moveToLocation(location.lat, location.lng);
+          this.showInfoWindow(location.lat, location.lng, location);
         }
       });
-
-      this.updateMarkerIcons();
 
       const filteredData = this.locations.filter((location) => {
         return (
@@ -259,19 +270,129 @@ export default {
         console.log("Matching Data:", filteredData);
         filteredData.forEach((location) => {
           this.moveToLocation(location.lat, location.lng);
+
+          this.showInfoWindow(location.lat, location.lng, location);
         });
       } else {
-        console.log("Sorry not found, Please Adjust your filter");
-        alert("Sorry not found, Please Adjust your filter");
+        console.log("Sorry, the location you selected is not available");
+        alert("Sorry, the location you selected is not available");
       }
+    },
+
+    showInfoWindow(lat, lng, location) {
+      const marker = this.findMarkerByLatLng(lat, lng);
+
+      if (marker) {
+        this.clearInfoWindows();
+
+        const contentString = this.buildInfoWindowContent(location);
+
+        const infowindow = new google.maps.InfoWindow({
+          content: contentString,
+          closeBoxMargin: "10px 10px 0 0",
+        });
+
+        infowindow.open(this.map, marker);
+        this.currentInfoWindow = infowindow;
+      }
+    },
+
+    buildInfoWindowContent(location) {
+      return `
+        <div class="max-w-[190px] w-full h-full flex flex-col text-end">
+          <img src="${location.image}" alt="${location.name}" class="w-[200px] min-h-[100px]">
+          <h2 class="text-primary mt-2">${location.name}</h2>
+          <p class="text-black text-[10px] my-2">${location.area}</p>
+          <p>Price: $${location.price}</p>
+        </div>
+      `;
+    },
+
+    clearInfoWindows() {
+      // Tutup dan hapus semua InfoWindow
+      if (this.currentInfoWindow) {
+        this.currentInfoWindow.close();
+      }
+    },
+
+    findMarkerByLatLng(lat, lng) {
+      return this.markers.find((marker) => {
+        const position = marker.getPosition();
+        return position.lat() === lat && position.lng() === lng;
+      });
     },
 
     // Move To Location when search
     moveToLocation(lat, lng) {
       if (this.map) {
+        // Pindahkan pusat peta ke lokasi yang baru
         this.map.setCenter({ lat, lng });
-        this.map.setZoom(30);
+
+        // Temukan marker yang difilter
+        const filteredMarkers = this.markers.filter(
+          (marker) => marker.details.filtered
+        );
+
+        // Buat batas (bounds) yang mencakup semua marker yang difilter
+        const bounds = new google.maps.LatLngBounds();
+        filteredMarkers.forEach((marker) => {
+          bounds.extend(marker.getPosition());
+        });
+
+        // Setelah mendapatkan batas, fit peta ke batas tersebut
+        this.map.fitBounds(bounds);
+
+        // Pastikan level zoom tidak terlalu tinggi atau rendah
+        const maxZoom = 15;
+        const minZoom = 10;
+        const currentZoom = this.map.getZoom();
+        this.map.setZoom(Math.min(Math.max(currentZoom, minZoom), maxZoom));
+
+        // Buka info window untuk marker yang sesuai
+        const matchingMarker = this.markers.find((marker) =>
+          marker.getPosition().equals(new google.maps.LatLng(lat, lng))
+        );
+
+        if (matchingMarker) {
+          matchingMarker.details.filtered = true;
+          this.updateMarkerIcons();
+
+          const infowindow = new google.maps.InfoWindow({
+            content: `
+              <div style="max-width: 190px;" class="text-end">
+                <img src="${matchingMarker.details.image}" alt="${matchingMarker.details.name}" style="width: 200px; min-height: 100px;">
+                <h2 style="color: #F0912D; margin-top: 2px;">${matchingMarker.details.name}</h2>
+                <p style="color: black; font-size: 10px; margin: 2px 0;">${matchingMarker.details.area}</p>
+                <p style="color: black;">Price: $${matchingMarker.details.price}</p>
+              </div>
+            `,
+            closeBoxMargin: "10px 10px 0 0",
+          });
+
+          infowindow.open(this.map, matchingMarker);
+          this.currentInfoWindow = infowindow;
+        }
       }
+    },
+
+    updateMarkerIcons() {
+      const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
+
+      this.markers.forEach((marker, index) => {
+        const location = this.locations[index];
+        let iconColor = "/images/logo-wekstek.png";
+
+        if (location.filtered) {
+          iconColor = "/images/person-comment-1.png";
+        }
+
+        const iconUrl = iconBase + iconColor;
+
+        marker.setIcon({
+          url: iconUrl,
+          scaledSize: new google.maps.Size(30, 30),
+        });
+      });
     },
 
     // Map Function
@@ -280,7 +401,7 @@ export default {
         window.googleMapsScriptLoaded = true;
         window.initMap = this.setupMap;
         const googleMapsScript = document.createElement("script");
-        googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap`;
+        googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap&`;
         googleMapsScript.defer = true;
         googleMapsScript.async = true;
         googleMapsScript.onload = () => {
@@ -310,6 +431,7 @@ export default {
           map: this.map,
           title: location.name,
           icon: icon,
+          details: location,
         });
 
         const contentString = `
@@ -351,13 +473,13 @@ export default {
         this.markers.push(marker);
       });
     },
-  },
-  setBoundsForMarkers() {
-    const bounds = new google.maps.LatLngBounds();
-    this.markers.forEach((marker) => {
-      bounds.extend(marker.getPosition());
-    });
-    this.map.fitBounds(bounds);
+    setBoundsForMarkers() {
+      const bounds = new google.maps.LatLngBounds();
+      this.markers.forEach((marker) => {
+        bounds.extend(marker.getPosition());
+      });
+      this.map.fitBounds(bounds);
+    },
   },
 };
 </script>

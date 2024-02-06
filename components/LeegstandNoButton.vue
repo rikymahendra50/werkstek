@@ -1,10 +1,11 @@
 <template>
-  <div class="py-10" :class="background">
+  <div class="py-10 px-10" :class="background">
     <div class="grid md:grid-cols-2 mx-2 md:mx-3 lg:mx-4 items-center">
       <div class="order-2 flex justify-end max-w-[600px]">
         <div class="w-[70%] md:w-[100%]">
           <svg
-            viewBox="0 0 597 632"
+            width="100%"
+            viewBox="0 0 598 632"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -12,26 +13,26 @@
             <path
               fill-rule="evenodd"
               clip-rule="evenodd"
-              d="M597 40C597 17.9086 579.091 0 557 0H145C122.909 0 105 17.9086 105 40V41.9942C105 64.0856 87.0914 81.9942 65 81.9942H40C17.9086 81.9942 0 99.9028 0 121.994V592C0 614.091 17.9086 632 40 632H105H557C579.091 632 597 614.091 597 592V81.9942V40Z"
-              fill="url(#pattern0)"
+              d="M492 40C492 17.9086 474.091 0 452 0H40C17.9086 0 0 17.9086 0 40V631C0 631.552 0.447715 632 1 632H492H558C580.091 632 598 614.091 598 592V121.994C598 99.9028 580.091 81.9942 558 81.9942H532C509.909 81.9942 492 64.0855 492 41.9942V40Z"
+              :fill="'url(#pattern1-' + uniqueId + ')'"
             />
             <defs>
               <pattern
-                id="pattern0"
+                :id="'pattern1-' + uniqueId"
                 patternContentUnits="objectBoundingBox"
                 width="1"
                 height="1"
               >
                 <use
-                  xlink:href="#image0_86_3523"
-                  transform="matrix(0.00176144 0 0 0.00166389 -0.0284325 0)"
+                  :xlink:href="'#image0_' + uniqueId"
+                  :transform="'matrix(0.0017585 0 0 0.00166389 -0.0275488 0)'"
                 />
               </pattern>
               <image
-                id="image0_86_3523"
+                :id="'image0_' + uniqueId"
                 width="600"
                 height="601"
-                xlink:href="/images/image-page4-3.png"
+                :xlink:href="image"
               />
             </defs>
           </svg>
@@ -63,6 +64,10 @@
 <script>
 export default {
   props: {
+    uniqueIdProp: {
+      type: Number,
+      required: true,
+    },
     background: {
       type: String,
       default: "bg-white",
@@ -97,6 +102,12 @@ export default {
       default: true,
     },
   },
+  data() {
+    return {
+      uniqueId: `component-${Math.floor(Math.random() * 10000)}`,
+    };
+  },
+
   computed: {
     imageClasses() {
       return {

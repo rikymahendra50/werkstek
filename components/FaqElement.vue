@@ -21,7 +21,7 @@
       <div
         @click="toggleDetail(index)"
         :class="[
-          'rounded-[8px] text-white px-5 md:px-10 py-3 w-[100%] cursor-pointer mb-3',
+          'rounded-[8px] text-white px-5 md:px-10 py-3 w-[100%] cursor-pointer mb-3 transition',
           activeIndex === index
             ? 'bg-secondary w-full'
             : 'bg-[#859C8121] border-2 border-[#1FAB71]',

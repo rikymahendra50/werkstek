@@ -3,6 +3,7 @@
     <div class="flex sm:order-1 max-w-[600px]">
       <div class="w-[70%] md:w-full">
         <svg
+          width="100%"
           viewBox="0 0 598 632"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -12,26 +13,26 @@
             fill-rule="evenodd"
             clip-rule="evenodd"
             d="M492 40C492 17.9086 474.091 0 452 0H40C17.9086 0 0 17.9086 0 40V631C0 631.552 0.447715 632 1 632H492H558C580.091 632 598 614.091 598 592V121.994C598 99.9028 580.091 81.9942 558 81.9942H532C509.909 81.9942 492 64.0855 492 41.9942V40Z"
-            fill="url(#pattern0)"
+            fill="url(#pattern1)"
           />
           <defs>
             <pattern
-              id="pattern0"
+              id="pattern1"
               patternContentUnits="objectBoundingBox"
               width="1"
               height="1"
             >
               <use
-                xlink:href="#image0_86_3492"
+                xlink:href="#image0_86_3718"
                 transform="matrix(0.0017585 0 0 0.00166389 -0.0275488 0)"
               />
             </pattern>
             <image
-              id="image0_86_3492"
+              id="image0_86_3718"
               width="600"
               height="601"
-              xlink:href="/images/image-page4-2.png"
-            ></image>
+              :xlink:href="image"
+            />
           </defs>
         </svg>
       </div>

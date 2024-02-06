@@ -15,6 +15,10 @@
 </template>
 
 <script setup lang="ts">
+useHead({
+  title: "AdminHome",
+});
+
 const { $user, $logout } = useAuth();
 definePageMeta({
   layout: "admin",
@@ -22,5 +26,4 @@ definePageMeta({
   middleware: ["auth", "admin"],
 });
 </script>
-
 <style scoped></style>
