@@ -34,7 +34,6 @@
             <Checkbox titleCheckBox="Kantoorruimte" />
             <Checkbox titleCheckBox="Anders" />
           </div>
-          <!-- slider -->
           <SliderRange
             title="De prijs per maand"
             :minPrice="250"
@@ -44,21 +43,27 @@
             :priceGap="500"
             class="my-2"
           />
-          <!-- end slider -->
-          <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
-          <div class="flex my-2">
-            <input
-              type="text"
-              placeholder="Min"
-              class="input input-bordered w-[35%] p-[10px] mr-2 input-md"
-            />
-            <input
-              type="text"
-              placeholder="Max"
-              class="input input-bordered w-[35%] p-[10px] input-md"
-            />
+          <div class="w-[80%]">
+            <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
+            <div class="flex my-2">
+              <div class="w-[50%] relative">
+                <input
+                  type="text"
+                  placeholder="Min"
+                  class="input input-bordered w-[90%] p-[10px] mr-2 input-md"
+                />
+                <span class="absolute top-3 right-6">m<sup>2</sup></span>
+              </div>
+              <div class="w-[50%] relative">
+                <input
+                  type="text"
+                  placeholder="Max"
+                  class="input input-bordered w-[90%] p-[10px] input-md"
+                />
+                <span class="absolute top-3 right-6">m<sup>2</sup></span>
+              </div>
+            </div>
           </div>
-          <!-- checkbox -->
           <p class="my-3">-</p>
           <div class="flex justify-between">
             <div class="flex flex-col w-[33%] gap-2">
@@ -80,20 +85,15 @@
             class="w-8 h-8 mt-3"
           />
           <p class="text-base mt-3 opacity-50">Meer filter opties</p>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58334447.393653534!2d54.64843750000003!3d26.82556878670093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3663f18a24cbe857%3A0xa9416bfcd3a0f459!2sAsia!5e0!3m2!1sid!2sid!4v1705553884962!5m2!1sid!2sid"
-            loading="lazy"
-            class="w-[90%] h-[200px] my-5"
-          ></iframe>
         </div>
       </div>
       <div
         class="py-5 lg:w-[65%] overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col"
       >
-        <div v-for="items in eachLocaties">
+        <div v-for="items in eachLocaties" :key="items.id">
           <NuxtLink
-            to="/onze-locaties/detail"
-            class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg"
+            :to="items.detailLink"
+            class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg group hover:shadow-md transition"
           >
             <div
               class="grid col-span-4 md:col-span-5 h-[100px] md:min-h-[210px] bg-no-repeat bg-cover rounded-lg relative text-white"
@@ -145,18 +145,18 @@
                 }}</span>
               </div>
               <div class="flex justify-end w-full">
-                <NuxtLink :to="items.detailLink" class="flex mt-2 sm:mt-0">
+                <div class="flex mt-2 sm:mt-0">
                   <div
-                    class="text-primary hover:text-secondary sm:w-[90%] text-[12px] sm:text-[14px] md:text-[18px] border border-primary hover:border-secondary px-1 sm:px-2 lg:px-4 text-center rounded-full items-center flex justify-center"
+                    class="text-primary group-hover:text-secondary transition sm:w-[90%] text-[12px] sm:text-[14px] md:text-[18px] border border-primary group-hover:border-secondary px-1 sm:px-2 lg:px-4 text-center rounded-full items-center flex justify-center"
                   >
                     {{ items.detailLinkTitle }}
                   </div>
                   <div
-                    class="bg-primary max-w-[21px] min-h-[21px] sm:max-w-[31px] sm:min-h-[31px] lg:max-w-[41px] lg:min-h-[41px] rounded-full"
+                    class="bg-primary group-hover:bg-secondary max-w-[21px] min-h-[21px] sm:max-w-[31px] sm:min-h-[31px] lg:max-w-[41px] lg:min-h-[41px] rounded-full"
                   >
                     <img src="/images/arrow-right.svg" alt="arrow" />
                   </div>
-                </NuxtLink>
+                </div>
               </div>
             </div>
           </NuxtLink>
@@ -172,6 +172,7 @@ export default {
     return {
       eachLocaties: [
         {
+          id: 1,
           image: "/images/img-each-locatie-1.png",
           type: "Regular",
           locatie: "Locatie",
@@ -181,10 +182,11 @@ export default {
           phoneNumber: "+31302393838",
           mailAdres: "Mail adres",
           detailLinkTitle: "Neem een kijkje",
-          detailLink: "/onze-locaties/onze-locaties-single",
+          detailLink: "/onze-locaties/rikymahendra",
           rating: 9.4,
         },
         {
+          id: 2,
           image: "/images/img-each-locatie-2.jpg",
           type: "Premium",
           locatie: "Locatie",
@@ -194,10 +196,11 @@ export default {
           phoneNumber: "+31302393838",
           mailAdres: "Mail adres",
           detailLinkTitle: "Neem een kijkje",
-          detailLink: "/onze-locaties/onze-locaties-single",
+          detailLink: "/onze-locaties/rikymahendra",
           rating: 9.4,
         },
         {
+          id: 3,
           image: "/images/img-each-locatie-3.jpg",
           type: "Premium",
           locatie: "Locatie",
@@ -207,7 +210,7 @@ export default {
           phoneNumber: "+31302393838",
           mailAdres: "Mail adres",
           detailLinkTitle: "Neem een kijkje",
-          detailLink: "/onze-locaties/onze-locaties-single",
+          detailLink: "/onze-locaties/rikymahendra",
           rating: 9.4,
         },
       ],

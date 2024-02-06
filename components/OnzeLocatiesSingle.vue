@@ -1,17 +1,25 @@
 <template>
-  <section class="mx-2 md:mx-5 lg:mx-10">
+  <section class="container-custom">
     <TitleHeader2
       title1="Locaties"
       title2="werf5, Utrecht"
       title3="Categorie"
     />
     <div class="flex gap-2 sm:gap-5">
-      <div class="flex flex-col w-[60%] max-w-[727px]">
-        <div class="flex flex-col">
-          <img
-            src="/images/img-page3-1.jpg"
-            class="rounded-[8px] max-h-[364px]"
-          />
+      <div class="flex flex-col w-[50%] sm:w-[60%] max-w-[727px]">
+        <div class="flex flex-col md:min-h-[400px]">
+          <div
+            class="bg-[url('/images/img-page3-1.jpg')] min-h-[200px] md:min-h-[400px] bg-no-repeat bg-cover relative"
+          >
+            <div
+              class="bg-primary absolute top-5 text-white p-1 md:p-3 md:w-[30%]"
+            >
+              <span class="text-sm md:text-lg">Prijs :</span> <br />
+              <span class="text-sm md:text-lg font-semibold"
+                >€ 450 per/maand</span
+              >
+            </div>
+          </div>
           <div class="grid grid-cols-3 items-center gap-2 mt-3">
             <div class="max-w-[245px]">
               <img src="/images/img-page3-2.png" class="w-full" />
@@ -24,7 +32,7 @@
             </div>
           </div>
         </div>
-        <div class="mt-10 md:mt-16 w-[95%] text-justify">
+        <div class="mt-2 sm:mt-10 md:mt-16 w-[100%] text-justify">
           <h1
             class="text-[#363636] text-[20px] md:text-[25px] font-semibold my-3"
           >
@@ -72,7 +80,7 @@
           </div>
         </div>
       </div>
-      <div class="w-[40%] block">
+      <div class="w-[50%] sm:w-[40%] block">
         <ul class="rounded-[8px] bg-[#859C811A] py-4 px-2 md:px-5">
           <li class="py-1 lg:py-2 flex">
             <svg
@@ -280,15 +288,19 @@
           <ButtonLarge
             buttonTitle="Aanvragen"
             buttonLink="/voor-verhuurders"
-            class="my-2 rounded-full"
+            class="my-2 rounded-full text-sm"
           />
-          <ButtonLarge buttonTitle="Contact opnemen" buttonLink="/contact" />
+          <ButtonLarge
+            buttonTitle="Contact opnemen"
+            buttonLink="/contact"
+            class="my-2 rounded-full text-sm"
+          />
         </div>
-        <iframe
+        <!-- <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58334447.393653534!2d54.64843750000003!3d26.82556878670093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3663f18a24cbe857%3A0xa9416bfcd3a0f459!2sAsia!5e0!3m2!1sid!2sid!4v1705553884962!5m2!1sid!2sid"
           loading="lazy"
           class="w-full mt-5 max-h-[300px]"
-        ></iframe>
+        ></iframe> -->
       </div>
     </div>
   </section>
@@ -298,6 +310,7 @@
 export default {
   data() {
     return {
+      dataLocatiesSingle: {},
       checkBoxData: [
         {
           id: 1,

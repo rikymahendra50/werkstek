@@ -24,7 +24,7 @@
           v-for="(itemTestimony, index) in Testimony"
           :key="itemTestimony.id"
         >
-          <div
+          <!-- <div
             class="relative text-left px-5 py-5 rounded-[16px] flex flex-col box-shadow2 my-10"
           >
             <img
@@ -59,7 +59,13 @@
                 />
               </div>
             </div>
-          </div>
+          </div> -->
+          <EachTestimony
+            :imageSrc="itemTestimony.imageSrc"
+            :description="itemTestimony.description"
+            :testimonyName="itemTestimony.name"
+            :position="itemTestimony.position"
+          />
         </swiper-slide>
         <div class="swiper-pagination-custom"></div>
       </swiper>

@@ -17,13 +17,17 @@
           <div
             class="flex mt-5 lg:mt-10 justify-between w-full min-[420px]:w-[70%] sm:w-[60%] md:w-[98%] lg:w-[90%]"
           >
-            <NuxtLink
+            <!-- <NuxtLink
               :to="buttonLink1"
-              class="bg-primary hover:bg-secondary sm:py-3 px-3 text-[12px] lg:text-lg sm:px-6 rounded-full drop-shadow-md text-white flex items-center"
+              class="bg-primary transition hover:bg-secondary sm:py-3 px-3 text-[12px] lg:text-lg sm:px-6 rounded-full drop-shadow-md text-white flex items-center"
             >
               {{ buttonTitle1 }}
-            </NuxtLink>
-            <ButtonSM :buttonLink="buttonLink2" :buttonTitle="buttonTitle2" />
+            </NuxtLink> -->
+            <!-- <ButtonSM :buttonLink="buttonLink2" :buttonTitle="buttonTitle2" /> -->
+            <ButtonPrimary
+              :buttonLink="buttonLink1"
+              :buttonTitle="buttonTitle1"
+            />
           </div>
         </div>
       </div>
@@ -40,11 +44,11 @@
               fill-rule="evenodd"
               clip-rule="evenodd"
               d="M657 40C657 17.9086 639.091 0 617 0H181C158.909 0 141 17.9086 141 40V57C141 79.0914 123.091 97 101 97H40C17.9086 97 0 114.909 0 137V704C0 726.091 17.9086 744 40 744H141H617C639.091 744 657 726.091 657 704V97V40Z"
-              fill="url(#pattern0)"
+              fill="url(#pattern3)"
             />
             <defs>
               <pattern
-                id="pattern0"
+                id="pattern3"
                 patternContentUnits="objectBoundingBox"
                 width="1"
                 height="1"
@@ -58,7 +62,7 @@
                 id="image0_86_3396"
                 width="550"
                 height="600"
-                xlink:href="/images/image-page4-1.png"
+                :xlink:href="image"
               />
             </defs>
           </svg>

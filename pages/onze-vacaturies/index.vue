@@ -6,3 +6,9 @@
   />
   <OnzeVacaturies />
 </template>
+
+<script setup>
+useHead({
+  title: "OnzeVacaturies",
+});
+</script>
