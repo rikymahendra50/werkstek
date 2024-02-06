@@ -7,7 +7,7 @@
 
   <Blog :show-title-header="false" class="my-10" />
 
-  <Blog2 :ShowTitleCategory="true" @categoryClick="handleCategoryClick" />
+  <Blog2 :ShowTitleCategory="true" />
 
   <BgBigGreen
     title1="Blijf op de hoogte "
@@ -22,11 +22,4 @@
 useHead({
   title: "Blog",
 });
-// export default {
-//   methods: {
-//     handleCategoryClick(category) {
-//       console.log(`Kategori yang diklik: ${category}`);
-//     },
-//   },
-// };
 </script>

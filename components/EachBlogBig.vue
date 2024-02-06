@@ -12,7 +12,7 @@
       >
         {{ description }}
       </span>
-      <ButtonBlog :perBlogLink="link" />
+      <ButtonBlog />
     </NuxtLink>
   </div>
 </template>

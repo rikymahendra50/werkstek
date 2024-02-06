@@ -4,7 +4,8 @@
       <div class="order-2 flex justify-end max-w-[600px]">
         <div class="w-[70%] md:w-[100%]">
           <svg
-            viewBox="0 0 597 632"
+            width="100%"
+            viewBox="0 0 657 744"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -12,7 +13,7 @@
             <path
               fill-rule="evenodd"
               clip-rule="evenodd"
-              d="M597 40C597 17.9086 579.091 0 557 0H145C122.909 0 105 17.9086 105 40V41.9942C105 64.0856 87.0914 81.9942 65 81.9942H40C17.9086 81.9942 0 99.9028 0 121.994V592C0 614.091 17.9086 632 40 632H105H557C579.091 632 597 614.091 597 592V81.9942V40Z"
+              d="M657 40C657 17.9086 639.091 0 617 0H181C158.909 0 141 17.9086 141 40V57C141 79.0914 123.091 97 101 97H40C17.9086 97 0 114.909 0 137V704C0 726.091 17.9086 744 40 744H141H617C639.091 744 657 726.091 657 704V97V40Z"
               fill="url(#pattern0)"
             />
             <defs>
@@ -23,14 +24,15 @@
                 height="1"
               >
                 <use
-                  xlink:href="#image0_86_3523"
-                  transform="matrix(0.00176144 0 0 0.00166389 -0.0284325 0)"
+                  xlink:href="#image0_86_3396"
+                  transform="matrix(0.00188737 0 0 0.00166667 -0.0190259 0)"
                 />
               </pattern>
               <image
-                id="image0_86_3523"
-                width="600"
-                height="601"
+                id="image0_86_3396"
+                width="550"
+                height="600"
+                preserveAspectRatio="xMidYMid slice"
                 :xlink:href="image"
               />
             </defs>

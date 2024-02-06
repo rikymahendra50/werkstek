@@ -22,36 +22,22 @@
     <div class="flex w-full">
       <div class="flex w-full lg:w-[60%] justify-center">
         <EachBlogBig
-          :imageSrc="perBlog[0].image"
-          :title="perBlog[0].title"
-          :description="perBlog[0].description"
-          :link="perBlog[0].link"
-        />
-        <EachBlogBig
-          :imageSrc="perBlog[1].image"
-          :title="perBlog[1].title"
-          :description="perBlog[1].description"
-          :link="perBlog[1].link"
+          v-for="(blog, index) in perBlog.slice(0, 2)"
+          :key="index"
+          :imageSrc="blog.image"
+          :title="blog.title"
+          :description="blog.description"
+          :link="blog.link"
         />
       </div>
       <div class="flex-col justify-between lg:flex hidden lg:w-[40%]">
         <EachBlogSmall
-          :imageSrc="perBlog[2].image"
-          :title="perBlog[2].title"
-          :description="perBlog[2].description"
-          :link="perBlog[2].link"
-        />
-        <EachBlogSmall
-          :imageSrc="perBlog[3].image"
-          :title="perBlog[3].title"
-          :description="perBlog[3].description"
-          :link="perBlog[3].link"
-        />
-        <EachBlogSmall
-          :imageSrc="perBlog[4].image"
-          :title="perBlog[4].title"
-          :description="perBlog[4].description"
-          :link="perBlog[4].link"
+          v-for="(blog, index) in perBlog.slice(2, 5)"
+          :key="index"
+          :imageSrc="blog.image"
+          :title="blog.title"
+          :description="blog.description"
+          :link="blog.link"
         />
       </div>
     </div>
@@ -60,16 +46,6 @@
 
 <script>
 export default {
-  props: {
-    showTitleHeader: {
-      type: Boolean,
-      default: false,
-    },
-    dontShowTitle: {
-      type: Boolean,
-      default: true,
-    },
-  },
   data() {
     return {
       perBlog: [
@@ -112,6 +88,16 @@ export default {
         },
       ],
     };
+  },
+  props: {
+    showTitleHeader: {
+      type: Boolean,
+      default: false,
+    },
+    dontShowTitle: {
+      type: Boolean,
+      default: true,
+    },
   },
 };
 </script>

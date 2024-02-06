@@ -44,12 +44,6 @@ export default {
       );
     },
   },
-  props: {
-    ShowTitleCategory: {
-      type: Boolean,
-      default: true,
-    },
-  },
   methods: {
     handleCategoryClick(category) {
       this.activeCategory = category;

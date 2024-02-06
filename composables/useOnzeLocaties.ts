@@ -1,6 +1,6 @@
 export default function useOnzeLocatiesData() {
-  const StatistiekLocatiesData = ref({
-    image: "/images/img-page2-1.png",
+  const StatistiekLocaties2Data = ref({
+    image: "/images/img-page2-w.png",
     title1: "Bekijk onze locaties",
     title2: "De Werkstek locaties",
     title3:
@@ -20,7 +20,7 @@ export default function useOnzeLocatiesData() {
   });
 
   return {
-    StatistiekLocatiesData,
+    StatistiekLocaties2Data,
     BgBigGreenData,
   };
 }

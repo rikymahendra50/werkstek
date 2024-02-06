@@ -1,14 +1,14 @@
 <template>
   <StatistiekLocaties2
-    :title1="StatistiekLocatiesData.title1"
-    :title2="StatistiekLocatiesData.title2"
-    :title3="StatistiekLocatiesData.title3"
-    :titleBg1="StatistiekLocatiesData.titleBg1.title"
-    :titleBg2="StatistiekLocatiesData.titleBg2.title"
-    :titleBg3="StatistiekLocatiesData.titleBg3.title"
-    :count1="StatistiekLocatiesData.titleBg1.count"
-    :count2="StatistiekLocatiesData.titleBg2.count"
-    :count3="StatistiekLocatiesData.titleBg3.count"
+    :title1="StatistiekLocaties2Data.title1"
+    :title2="StatistiekLocaties2Data.title2"
+    :title3="StatistiekLocaties2Data.title3"
+    :titleBg1="StatistiekLocaties2Data.titleBg1.title"
+    :titleBg2="StatistiekLocaties2Data.titleBg2.title"
+    :titleBg3="StatistiekLocaties2Data.titleBg3.title"
+    :count1="StatistiekLocaties2Data.titleBg1.count"
+    :count2="StatistiekLocaties2Data.titleBg2.count"
+    :count3="StatistiekLocaties2Data.titleBg3.count"
   />
 
   <OnzeLocaties :showLocaties="true" />
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-const { StatistiekLocatiesData, BgBigGreenData } = useOnzeLocaties();
+const { StatistiekLocaties2Data, BgBigGreenData } = useOnzeLocaties();
 
 useHead({
   title: "OnzeLocaties",

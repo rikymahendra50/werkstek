@@ -91,8 +91,8 @@
         class="py-5 lg:w-[65%] overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col"
       >
         <div v-for="items in eachLocaties" :key="items.id">
-          <a
-            :href="items.detailLink"
+          <NuxtLink
+            :to="items.detailLink"
             class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg shadow-md"
           >
             <div
@@ -146,7 +146,7 @@
                 }}</span>
               </div>
               <div class="flex justify-end w-full">
-                <NuxtLink :to="items.detailLink" class="flex mt-2 sm:mt-0">
+                <div class="flex mt-2 sm:mt-0">
                   <div
                     class="text-primary hover:text-secondary transition sm:w-[90%] text-[12px] sm:text-[14px] md:text-[18px] border border-primary hover:border-secondary px-1 sm:px-2 lg:px-4 text-center rounded-full items-center flex justify-center"
                   >
@@ -157,11 +157,11 @@
                   >
                     <img src="/images/arrow-right.svg" alt="arrow" />
                   </div>
-                </NuxtLink>
+                </div>
               </div>
             </div>
             <!-- problem -->
-          </a>
+          </NuxtLink>
         </div>
       </div>
     </div>
