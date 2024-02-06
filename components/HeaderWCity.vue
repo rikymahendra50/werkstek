@@ -7,7 +7,7 @@
         <div class="grid gap-2">
           <p class="text-[24px]">{{ title1 }}</p>
           <h1
-            class="text-4xl md:text-[35px] lg:text-[45px] text-[#231E1F] lg:leading-[74px]"
+            class="text-4xl md:text-[35px] font-semibold lg:text-[45px] text-[#231E1F] lg:leading-[74px]"
           >
             {{ title2 }}
           </h1>

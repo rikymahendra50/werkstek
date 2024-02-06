@@ -5,7 +5,7 @@
         <div class="w-[70%] md:w-[100%]">
           <svg
             width="100%"
-            viewBox="0 0 657 744"
+            viewBox="0 0 598 632"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -13,26 +13,25 @@
             <path
               fill-rule="evenodd"
               clip-rule="evenodd"
-              d="M657 40C657 17.9086 639.091 0 617 0H181C158.909 0 141 17.9086 141 40V57C141 79.0914 123.091 97 101 97H40C17.9086 97 0 114.909 0 137V704C0 726.091 17.9086 744 40 744H141H617C639.091 744 657 726.091 657 704V97V40Z"
-              fill="url(#pattern0)"
+              d="M492 40C492 17.9086 474.091 0 452 0H40C17.9086 0 0 17.9086 0 40V631C0 631.552 0.447715 632 1 632H492H558C580.091 632 598 614.091 598 592V121.994C598 99.9028 580.091 81.9942 558 81.9942H532C509.909 81.9942 492 64.0855 492 41.9942V40Z"
+              :fill="'url(#pattern1-' + uniqueId + ')'"
             />
             <defs>
               <pattern
-                id="pattern0"
+                :id="'pattern1-' + uniqueId"
                 patternContentUnits="objectBoundingBox"
                 width="1"
                 height="1"
               >
                 <use
-                  xlink:href="#image0_86_3396"
-                  transform="matrix(0.00188737 0 0 0.00166667 -0.0190259 0)"
+                  :xlink:href="'#image0_' + uniqueId"
+                  :transform="'matrix(0.0017585 0 0 0.00166389 -0.0275488 0)'"
                 />
               </pattern>
               <image
-                id="image0_86_3396"
-                width="550"
-                height="600"
-                preserveAspectRatio="xMidYMid slice"
+                :id="'image0_' + uniqueId"
+                width="600"
+                height="601"
                 :xlink:href="image"
               />
             </defs>
@@ -65,6 +64,10 @@
 <script>
 export default {
   props: {
+    uniqueIdProp: {
+      type: Number,
+      required: true,
+    },
     background: {
       type: String,
       default: "bg-white",
@@ -99,6 +102,12 @@ export default {
       default: true,
     },
   },
+  data() {
+    return {
+      uniqueId: `component-${Math.floor(Math.random() * 10000)}`,
+    };
+  },
+
   computed: {
     imageClasses() {
       return {

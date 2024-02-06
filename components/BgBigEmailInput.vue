@@ -4,11 +4,11 @@
   >
     <input
       type="text"
-      class="bg-transparent pl-2 text-sm h-full outline-none box-border text-white"
+      class="bg-transparent pl-2 text-sm h-full outline-none box-border text-tertiary"
       placeholder="Mail@gmail.com"
-      :style="{ WebkitAppearance: 'none' }"
+      :style="{ WebkitAppearance: 'none', color: 'white' }"
     />
-    <button class="rounded-full bg-tertiary text-white">
+    <button class="rounded-full bg-tertiary text-tertiary">
       <svg
         width="34"
         height="35"

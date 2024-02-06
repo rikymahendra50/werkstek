@@ -78,6 +78,14 @@
               </li>
               <li>
                 <NuxtLink
+                  to="/onze-vacaturies"
+                  :class="{ active: isRouteActive('/onze-vacaturies') }"
+                >
+                  Westek Vacaturies
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
                   to="/werkstek-community"
                   :class="{ active: isRouteActive('/werkstek-community') }"
                 >
@@ -95,7 +103,11 @@
             >
           </li>
         </ul>
-        <ButtonSM buttonLink="/contact" buttonTitle="Contact opnemen" />
+        <ButtonSM
+          buttonLink="/contact"
+          buttonTitle="Contact opnemen"
+          class="hover:bg-slate-50 xl:p-2"
+        />
       </div>
       <!-- Dark Background Transition -->
       <transition
@@ -171,13 +183,42 @@
               >Over werkstek</NuxtLink
             >
           </li>
-          <li class="cursor-pointer">
-            <NuxtLink
+          <li class="cursor-pointer dropdown">
+            <!-- <NuxtLink
               to="/werkstek-community"
               @click="isOpen = false"
               class="my-4 inline-block"
               >Werkstek updates</NuxtLink
+            > -->
+            <label
+              tabindex="1"
+              class="bg-transparent border-none my-4 inline-block font-thin cursor-pointer"
             >
+              Werkstek Update
+            </label>
+            <ul
+              tabindex="1"
+              class="ml-[-20px] dropdown-content z-[1] menu p-1 shadow bg-base-100 rounded-box w-40 text-black"
+            >
+              <li class="text-sm">
+                <NuxtLink to="/blog" @click="isOpen = false">
+                  Werkstek Blog
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/onze-vacaturies" @click="isOpen = false">
+                  Westek Vacaturies
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  to="/werkstek-community"
+                  :class="{ active: isRouteActive('/werkstek-community') }"
+                >
+                  Werkstek Community
+                </NuxtLink>
+              </li>
+            </ul>
           </li>
           <li class="cursor-pointer">
             <NuxtLink

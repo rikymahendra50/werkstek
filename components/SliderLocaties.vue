@@ -22,7 +22,7 @@
           <ButtonSM
             buttonTitle="Bekijk alle locaties"
             buttonLink="/onze-locaties"
-            class="z-10"
+            class="z-10 hover:bg-secondary hover:bg-opacity-70 hover:text-tertiary"
           />
         </div>
       </div>

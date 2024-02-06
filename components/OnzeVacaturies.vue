@@ -107,7 +107,6 @@
                 </span>
               </div>
             </div>
-            <!-- problem -->
             <div class="grid col-span-4 md:col-span-3 ml-5 items-center">
               <span class="text-[14px] sm:text-lg font-semibold">{{
                 items.locatie
@@ -144,7 +143,6 @@
                 </NuxtLink>
               </div>
             </div>
-            <!-- problem -->
           </a>
         </div>
       </div>
@@ -168,7 +166,7 @@ export default {
           phoneNumber: "+31302393838",
           mailAdres: "Mail adres",
           detailLinkTitle: "Neem een kijkje",
-          detailLink: "/onze-locaties/onze-locaties-single",
+          detailLink: "/onze-vacaturies/onze-locaties-single",
           rating: 9.4,
         },
         {
@@ -182,7 +180,7 @@ export default {
           phoneNumber: "+31302393838",
           mailAdres: "Mail adres",
           detailLinkTitle: "Neem een kijkje",
-          detailLink: "/onze-locaties/onze-locaties-single",
+          detailLink: "/onze-vacaturies/onze-locaties-single",
           rating: 9.4,
         },
         {
@@ -196,7 +194,7 @@ export default {
           phoneNumber: "+31302393838",
           mailAdres: "Mail adres",
           detailLinkTitle: "Neem een kijkje",
-          detailLink: "/onze-locaties/onze-locaties-single",
+          detailLink: "/onze-vacaturies/onze-locaties-single",
           rating: 9.4,
         },
       ],

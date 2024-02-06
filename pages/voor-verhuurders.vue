@@ -27,6 +27,7 @@
   <LeegstandNoButton
     background="bg-tertiary"
     image="/images/image-page4-3.png"
+    :uniqueIdProp="4"
     imageAlt="image-page4-3"
     title="Ruimtes inrichten"
     description="Werkstek richt kantoorruimtes in zodat deze aantrekkelijk zijn voor zzp’ers en ondernemingen. Daarbij houden wij rekening met de wensen en behoeften van onze huurders. Zo kijken we bijvoorbeeld of er een ruimte aanwezig is of gecreëerd kan worden voor het organiseren van evenementen."
@@ -36,6 +37,7 @@
   <MapInteractive :ShowContainerCustom="false" />
 
   <LeegstandNoButton
+    :uniqueIdProp="5"
     image="/images/image-page4-4.png"
     imageAlt="image-page4-4"
     title="Ruimtes promoten"
@@ -43,6 +45,7 @@
     :leftToRight="true"
   />
   <LeegstandNoButton
+    :uniqueIdProp="6"
     image="/images/image-page4-5.png"
     imageAlt="image-page4-5"
     title="Faciliteiten"

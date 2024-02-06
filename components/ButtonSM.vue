@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="buttonLink"
-    class="border border-quaternary rounded-full flex items-center gap-2 p-1 px-1 lg:px-2"
+    class="border border-quaternary hover:bg-opacity-60 transition rounded-full flex items-center gap-2 p-1 px-1 lg:px-2"
   >
     <p class="p-1 sm:p-3 text-sm lg:text-base">{{ buttonTitle }}</p>
     <div

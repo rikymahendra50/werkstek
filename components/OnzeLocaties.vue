@@ -93,7 +93,7 @@
         <div v-for="items in eachLocaties" :key="items.id">
           <NuxtLink
             :to="items.detailLink"
-            class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg shadow-md"
+            class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg group hover:shadow-md transition"
           >
             <div
               class="grid col-span-4 md:col-span-5 h-[100px] md:min-h-[210px] bg-no-repeat bg-cover rounded-lg relative text-white"
@@ -123,7 +123,6 @@
                 </span>
               </div>
             </div>
-            <!-- problem -->
             <div class="grid col-span-4 md:col-span-3 ml-5 items-center">
               <span class="text-[14px] sm:text-lg font-semibold">{{
                 items.locatie
@@ -148,19 +147,18 @@
               <div class="flex justify-end w-full">
                 <div class="flex mt-2 sm:mt-0">
                   <div
-                    class="text-primary hover:text-secondary transition sm:w-[90%] text-[12px] sm:text-[14px] md:text-[18px] border border-primary hover:border-secondary px-1 sm:px-2 lg:px-4 text-center rounded-full items-center flex justify-center"
+                    class="text-primary group-hover:text-secondary transition sm:w-[90%] text-[12px] sm:text-[14px] md:text-[18px] border border-primary group-hover:border-secondary px-1 sm:px-2 lg:px-4 text-center rounded-full items-center flex justify-center"
                   >
                     {{ items.detailLinkTitle }}
                   </div>
                   <div
-                    class="bg-primary max-w-[21px] min-h-[21px] sm:max-w-[31px] sm:min-h-[31px] lg:max-w-[41px] lg:min-h-[41px] rounded-full"
+                    class="bg-primary group-hover:bg-secondary max-w-[21px] min-h-[21px] sm:max-w-[31px] sm:min-h-[31px] lg:max-w-[41px] lg:min-h-[41px] rounded-full"
                   >
                     <img src="/images/arrow-right.svg" alt="arrow" />
                   </div>
                 </div>
               </div>
             </div>
-            <!-- problem -->
           </NuxtLink>
         </div>
       </div>

@@ -6,7 +6,7 @@
       >
         <NuxtLink
           to="/over-werkstek"
-          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-md hover:shadow-xl"
+          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-xl hover:shadow-xl"
           :class="{ active: isRouteActive('/over-werkstek') }"
           :style="{
             backgroundImage: `url('${Data[0].imageSrc}')`,
@@ -17,7 +17,7 @@
         >
           <div class="flex justify-center items-end w-full relative">
             <div
-              class="h-[45%] sm:h-[30%] md:h-[40%] w-[95%] max-w-[430px] bg-secondary mb-2 rounded-2xl flex items-end pl-2 pb-3 sm:pl-4 sm:pb-4 relative"
+              class="h-[45%] sm:h-[30%] md:h-[40%] w-[95%] max-w-[430px] bg-secondary mb-2 rounded-xl flex items-end pl-2 pb-3 sm:pl-4 sm:pb-4 relative"
             >
               <div
                 class="bg-quaternary rounded-full max-w-[22px] sm:max-w-[44px] absolute top-1 right-1 sm:top-3 sm:right-3"
@@ -38,7 +38,7 @@
         </NuxtLink>
         <NuxtLink
           to="/over-werkstek"
-          class="flex flex-wrap w-[60%] h-full rounded-md transition hover:shadow-xl"
+          class="flex flex-wrap w-[60%] h-full rounded-xl transition hover:shadow-xl"
           :class="{ active: isRouteActive('/over-werkstek') }"
           :style="{
             backgroundImage: `url('${Data[1].imageSrc}')`,
@@ -49,7 +49,7 @@
         >
           <div class="flex justify-end items-end w-full relative">
             <div
-              class="max-w-[430px] h-[45%] sm:h-[30%] md:h-[40%] w-[60%] mr-4 bg-tertiary mb-2 rounded-2xl flex items-end pl-2 pb-3 sm:pl-4 sm:pb-4 relative"
+              class="max-w-[430px] h-[45%] sm:h-[30%] md:h-[40%] w-[60%] mr-4 bg-tertiary mb-2 rounded-xl flex items-end pl-2 pb-3 sm:pl-4 sm:pb-4 relative"
             >
               <div
                 class="bg-quaternary rounded-full max-w-[22px] sm:max-w-[44px] absolute top-1 right-1 sm:top-3 sm:right-3"
@@ -74,7 +74,7 @@
       >
         <NuxtLink
           to="/over-werkstek"
-          class="flex flex-wrap w-[60%] h-full rounded-md transition hover:shadow-xl"
+          class="flex flex-wrap w-[60%] h-full rounded-xl transition hover:shadow-xl"
           :class="{ active: isRouteActive('/over-werkstek') }"
           :style="{
             backgroundImage: `url('${Data[2].imageSrc}')`,
@@ -106,7 +106,7 @@
         </NuxtLink>
         <NuxtLink
           to="/over-werkstek"
-          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-md transition hover:shadow-xl"
+          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-xl transition hover:shadow-xl"
           :class="{ active: isRouteActive('/over-werkstek') }"
           :style="{
             backgroundImage: `url('${Data[3].imageSrc}')`,

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mx-1 sm:mr-2 max-w-[366px] w-[50%] hover:shadow-md transition p-4"
+    class="mx-1 sm:mr-2 max-w-[366px] w-[50%] hover:shadow-md transition p-4 group"
   >
     <NuxtLink :to="link" class="card">
       <img :src="imageSrc" alt="imageBlog" class="w-full" />
@@ -12,7 +12,18 @@
       >
         {{ description }}
       </span>
-      <ButtonBlog />
+      <div class="flex">
+        <div
+          class="text-primary group-hover:text-secondary group-hover:border-secondary transition rounded-full text-[14px] sm:text-[16px] md:text-[20px] border border-primary px-2 w-full min-[420px]:w-[50%] md:w-[60%] lg:w-[60%] xl:w-[55%] text-center items-center flex justify-center"
+        >
+          Lees Verder
+        </div>
+        <div
+          class="bg-primary group-hover:bg-secondary max-w-[41px] min-h-[41px] rounded-full"
+        >
+          <img src="/images/arrow-right.svg" alt="arrow" />
+        </div>
+      </div>
     </NuxtLink>
   </div>
 </template>

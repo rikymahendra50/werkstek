@@ -8,7 +8,7 @@ export default function useOverWerkstek() {
     description2:
       "Werkstek heeft de kennis en ervaring om leegstaande kantoorpanden in te richten en te verhuren aan ondernemers uit verschillende branches.",
     buttonTitle1: "Over Werkstek",
-    buttonLink1: "#",
+    buttonLink1: "/faq",
   });
 
   return {
