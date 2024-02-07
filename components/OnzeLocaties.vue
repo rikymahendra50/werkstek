@@ -7,100 +7,101 @@
     />
     <div class="container-custom flex flex-col lg:flex-row" v-if="showLocaties">
       <div class="w-full lg:w-[35%]">
-        <p class="text-base opacity-50">Kies een locatie</p>
-        <details class="dropdown">
-          <summary
-            class="m-1 btn bg-[white] normal-case font-normal w-[300px] max-w-[90%] justify-between"
-          >
-            <div class="flex items-center">
-              <img src="/images/location.svg" class="pl-1 pr-3" />
-              <span>Chose Location</span>
-            </div>
-
-            <img src="/images/arrow-down.svg" class="p-1" />
-          </summary>
-          <ul
-            class="p-2 shadow menu dropdown-content z-[1] bg-white rounded-[8px] w-[90%]"
-          >
-            <li
-              v-for="location in eachLocaties"
-              :key="location.id"
-              class="py-1 text-md"
+        <form action="">
+          <p class="text-base opacity-50">Kies een locatie</p>
+          <details class="dropdown">
+            <summary
+              class="m-1 btn bg-[white] normal-case font-normal w-[300px] max-w-[90%] justify-between"
             >
-              <button @click="selectLocation(location)">
-                {{ location.name }}
-              </button>
-            </li>
-            <li class="py-1 text-md"><button>Other item..</button></li>
-          </ul>
-        </details>
-        <div class="flex flex-col">
-          <p class="text-base mt-3 opacity-50 pb-3">Soort locatie</p>
-          <div class="grid grid-cols-2 grid-rows-2 gap-2">
-            <Checkbox
-              v-for="(soortlocati, index) in soortLocaties"
-              :key="index"
-              :titleCheckBox="soortlocati.name"
-              v-model="soortlocati.checked"
-              @click="selectSoort(soortlocati)"
+              <div class="flex items-center">
+                <img src="/images/location.svg" class="pl-1 pr-3" />
+                <span>Chose Location</span>
+              </div>
+              <img src="/images/arrow-down.svg" class="p-1" />
+            </summary>
+            <ul
+              class="p-2 shadow menu dropdown-content z-[1] bg-white rounded-[8px] w-[90%]"
+            >
+              <li
+                v-for="location in eachLocaties"
+                :key="location.id"
+                class="py-1 text-md"
+              >
+                <button @click="selectLocation(location)">
+                  {{ location.name }}
+                </button>
+              </li>
+              <li class="py-1 text-md"><button>Other Location..</button></li>
+            </ul>
+          </details>
+          <div class="flex flex-col">
+            <p class="text-base mt-3 opacity-50 pb-3">Soort locatie</p>
+            <div class="grid grid-cols-2 grid-rows-2 gap-2">
+              <Checkbox
+                v-for="(soortlocati, index) in soortLocaties"
+                :key="index"
+                :titleCheckBox="soortlocati.name"
+                v-model="soortlocati.checked"
+                @click="selectSoort(soortlocati)"
+              />
+            </div>
+            <SliderRange
+              title="De prijs per maand"
+              :minPrice="250"
+              :maxPrice="850"
+              :minRange="250"
+              :maxRange="850"
+              :priceGap="500"
+              class="my-2"
             />
-          </div>
-          <SliderRange
-            title="De prijs per maand"
-            :minPrice="250"
-            :maxPrice="850"
-            :minRange="250"
-            :maxRange="850"
-            :priceGap="500"
-            class="my-2"
-          />
-          <div class="w-[80%]">
-            <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
-            <div class="flex my-2">
-              <div class="w-[50%] relative">
-                <input
-                  type="text"
-                  placeholder="Min"
-                  class="input input-bordered w-[90%] p-[10px] mr-2 input-md"
-                />
-                <span class="absolute top-3 right-9">m<sup>2</sup></span>
-              </div>
-              <div class="w-[50%] relative">
-                <input
-                  type="text"
-                  placeholder="Max"
-                  class="input input-bordered w-[90%] p-[10px] input-md"
-                />
-                <span class="absolute top-3 right-9">m<sup>2</sup></span>
+            <div class="w-[80%]">
+              <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
+              <div class="flex my-2">
+                <div class="w-[50%] relative">
+                  <input
+                    type="text"
+                    placeholder="Min"
+                    class="input input-bordered w-[90%] p-[10px] mr-2 input-md"
+                  />
+                  <span class="absolute top-3 right-9">m<sup>2</sup></span>
+                </div>
+                <div class="w-[50%] relative">
+                  <input
+                    type="text"
+                    placeholder="Max"
+                    class="input input-bordered w-[90%] p-[10px] input-md"
+                  />
+                  <span class="absolute top-3 right-9">m<sup>2</sup></span>
+                </div>
               </div>
             </div>
-          </div>
-          <p class="my-3">-</p>
-          <div class="flex justify-between">
-            <div class="flex flex-col w-[33%] gap-2">
-              <Checkbox titleCheckBox="Wifi" />
-              <Checkbox titleCheckBox="Parkeerplaats" />
-              <Checkbox titleCheckBox="Receptie" />
-              <Checkbox titleCheckBox="Koffiebar" />
+            <p class="my-3">-</p>
+            <div class="flex justify-between">
+              <div class="flex flex-col w-[33%] gap-2">
+                <Checkbox titleCheckBox="Wifi" />
+                <Checkbox titleCheckBox="Parkeerplaats" />
+                <Checkbox titleCheckBox="Receptie" />
+                <Checkbox titleCheckBox="Koffiebar" />
+              </div>
+              <div class="flex flex-col w-[67%] gap-2">
+                <Checkbox titleCheckBox="Keuken" />
+                <Checkbox titleCheckBox="Vlakbij het treinstation" />
+                <Checkbox titleCheckBox="Loungeplekken" />
+                <Checkbox titleCheckBox="Vergaderruimtes met videoschermen" />
+              </div>
             </div>
-            <div class="flex flex-col w-[67%] gap-2">
-              <Checkbox titleCheckBox="Keuken" />
-              <Checkbox titleCheckBox="Vlakbij het treinstation" />
-              <Checkbox titleCheckBox="Loungeplekken" />
-              <Checkbox titleCheckBox="Vergaderruimtes met videoschermen" />
+            <div class="mt-5">
+              <img src="/images/filter-icon.svg" alt="filter" class="w-8 h-8" />
+              <p class="text-base mt-3 opacity-50">Meer filter opties</p>
             </div>
+            <Map />
           </div>
-          <div class="mt-5">
-            <img src="/images/filter-icon.svg" alt="filter" class="w-8 h-8" />
-            <p class="text-base mt-3 opacity-50">Meer filter opties</p>
-          </div>
-          <Map />
-        </div>
+        </form>
       </div>
       <div
         class="py-5 lg:w-[65%] overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col"
       >
-        <div v-for="item in filteredLocations" :key="item.id">
+        <!-- <div v-for="item in eachLocaties" :key="item.id">
           <NuxtLink
             :to="item.detailLink"
             class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg group hover:shadow-md transition min-h-[150px] sm:min-h-[170px] md:min-h-[200px]"
@@ -170,7 +171,22 @@
               </div>
             </div>
           </NuxtLink>
-        </div>
+        </div> -->
+        <eachLocaties
+          v-for="item in eachLocaties"
+          :key="item.id"
+          :link="item.detailLink"
+          :image="item.image"
+          :rating="item.rating"
+          :type="item.type"
+          :locatie="item.locatie"
+          :adres="item.adres"
+          :phoneNumber="item.phoneNumber"
+          :pricePerMonth="item.pricePerMonth"
+          :mailAdres="item.mailAdres"
+          :detailLinkTitle="item.detailLinkTitle"
+          :opervlakte="item.opervlakte"
+        />
       </div>
     </div>
   </section>

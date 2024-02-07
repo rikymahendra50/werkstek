@@ -1,11 +1,11 @@
-<!-- <template>
+<template>
   <div>
-    <h3>My Google Maps Demo</h3>
+    <h3>My Google Maps Demo.. coming soon</h3>
     <div id="map"></div>
   </div>
 </template>
 
-<script>
+<!-- <script>
 export default {
   mounted() {
     this.initMap();
@@ -42,7 +42,3 @@ export default {
   height: 200px;
 }
 </style> -->
-
-<template>
-  <p>Google Maps</p>
-</template>

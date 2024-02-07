@@ -1,4 +1,6 @@
 <template>
+  <floating-whatsapp />
+
   <StatistiekLocaties
     :image="StatistiekLocatiesData.image"
     :title1="StatistiekLocatiesData.title1"
