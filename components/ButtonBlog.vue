@@ -1,18 +1,19 @@
 <template>
-  <NuxtLink
-    to="/blog/riky-mahendra"
-    class="text-primary text-[14px] sm:text-[16px] md:text-[20px] border border-primary py-[3px] px-4 w-[60%] sm:w-[40%] md:w-[66%] lg:w-[65%] text-center rounded-[14px]"
-    >{{ titleButton }}</NuxtLink
-  >
+  <div class="flex">
+    <div
+      class="text-primary transition rounded-full text-[14px] sm:text-[16px] md:text-[20px] border border-primary px-2 w-full min-[420px]:w-[50%] md:w-[60%] lg:w-[60%] xl:w-[55%] text-center items-center flex justify-center"
+    >
+      {{ titleButton }}
+    </div>
+    <div class="bg-primary max-w-[41px] min-h-[41px] rounded-full">
+      <img src="/images/arrow-right.svg" alt="arrow" />
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    perBlogLink: {
-      type: String,
-      default: "#",
-    },
     titleButton: {
       type: String,
       default: "Lees verder",

@@ -1,9 +1,9 @@
 <template>
   <NuxtLink
     :to="buttonLink"
-    class="bg-primary w-full sm:w-[49%] py-2 text-center max-h-[40px] text-[12px] md:text-[16px] rounded-[8px] md:rounded-[10px]"
+    class="bg-primary w-full sm:w-[49%] py-2 rounded-full text-center max-h-[50px] text-[12px] md:text-[16px]"
   >
-    <p class="white text-[18px] text-center text-white">
+    <p class="text-[18px] text-center text-white font-thin">
       {{ buttonTitle }}
     </p>
   </NuxtLink>

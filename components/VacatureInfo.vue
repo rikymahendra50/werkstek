@@ -17,7 +17,5 @@
         <p class="text-[18px] md:text-[20px]">Tags :</p>
       </div>
     </div>
-    <p class="text-[#777] text-[16px]">Omschrijving hier</p>
-    <p>-</p>
   </section>
 </template>

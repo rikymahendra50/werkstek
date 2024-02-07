@@ -1,7 +1,6 @@
 <template>
   <div class="relative">
     <!-- md and below sidebar -->
-
     <Transition
       enter-active-class="transition-transform ease-in opacity-0  duration-700"
       leave-active-class="transition ease-out -translate-x-full duration-700"

@@ -5,11 +5,6 @@
       <h1 class="text-[40px] text-[#363636]">{{ title2 }}</h1>
       <p class="text-[#4A4A4A] text-[16px]">{{ title3 }}</p>
     </div>
-    <img
-      src="/images/bg-title.svg"
-      alt="background-title"
-      class="absolute w-[50%] lg:w-[60%] right-20"
-    />
   </div>
 </template>
 <script>

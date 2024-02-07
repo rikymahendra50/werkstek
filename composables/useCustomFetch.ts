@@ -13,7 +13,6 @@ export function useCustomFetch<T>(
       window.location.replace("/admin/sign-in");
     }
   };
-
   const credential = useCookie<AuthCredential | null>("auth-token", {
     expires: new Date(Date.now() + 12096e5), // 2 weeks from now
     sameSite: "lax",

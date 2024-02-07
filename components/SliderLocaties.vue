@@ -1,8 +1,5 @@
 <template>
   <section class="bg-tertiary relative flex flex-col py-10">
-    <span
-      class="bg-bgdot bg-no-repeat w-[20%] lg:w-[15%] top-0 h-full right-0 absolute bg-cover z-1 rotate-180"
-    ></span>
     <div class="grid grid-cols-1 grid-rows-1">
       <div class="grid w-full container-custom">
         <div class="flex justify-between items-center mb-5">
@@ -25,7 +22,7 @@
           <ButtonSM
             buttonTitle="Bekijk alle locaties"
             buttonLink="/onze-locaties"
-            class="z-10"
+            class="z-10 hover:bg-secondary hover:bg-opacity-70 hover:text-tertiary"
           />
         </div>
       </div>
@@ -76,11 +73,17 @@
   background-repeat: no-repeat;
   background-color: theme("colors.primary");
   width: 40px;
+  border-radius: 10px;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: theme("colors.secondary");
 }
 
 .swiper-button-prev {
   background-image: url("/images/arrow-left.svg");
-  left: 0;
+  left: 5px;
 }
 
 .swiper-button-next {

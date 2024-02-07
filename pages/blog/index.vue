@@ -13,9 +13,13 @@
     title1="Blijf op de hoogte "
     title2="Schrijf je in voor de nieuwsbrief"
     title3="Op de hoogte blijven van beschikbare werkplekken? Schrijf je dan nu vrijblijvend in!"
+    :showButtonSection="true"
+    :backgroundColor="'secondary'"
   />
 </template>
 
-<script>
-export default {};
+<script setup>
+useHead({
+  title: "Blog",
+});
 </script>

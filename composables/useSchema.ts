@@ -47,7 +47,6 @@ export default function () {
         .min(1, "Password is required"),
     })
   );
-
   return {
     contactSchema,
     loginSchema,

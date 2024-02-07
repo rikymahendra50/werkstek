@@ -1,13 +1,14 @@
 <template>
   <NuxtLink
     :to="buttonLink"
-    class="bg-primary max-w-[172px] h-[30px] sm:h-[40px] lg:h-[52px] px-3 lg:px-5 rounded-[14px] flex items-center justify-center cursor-pointer"
+    class="border border-quaternary hover:bg-opacity-60 transition rounded-full flex items-center gap-2 p-1 px-1 lg:px-2"
   >
-    <span
-      class="text-[10px] min-[400px]:text-[12px] md:text-[14px] sm:font-bold text-center text-white"
+    <p class="p-1 sm:p-3 text-sm lg:text-base">{{ buttonTitle }}</p>
+    <div
+      class="rounded-full bg-quaternary text-white flex items-center justify-center aspect-square"
     >
-      {{ buttonTitle }}
-    </span>
+      <img src="/images/arrow-small-right.svg" alt="arrow" class="m-1" />
+    </div>
   </NuxtLink>
 </template>
 

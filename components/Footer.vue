@@ -1,10 +1,14 @@
 <template>
-  <section id="footer" class="relative border-t-2 border-quaternary">
+  <section id="footer" class="relative border-t-2 border-secondary">
     <div
-      class="pb-20 pt-10 flex flex-col lg:flex-row relative container-custom"
+      class="pb-20 pt-10 flex flex-col lg:flex-row relative container-custom gap-3 sm:gap-0"
     >
       <div class="text-[12px] md:text-[15px] relative sm:w-[70%] lg:w-[40%]">
-        <Werkstek />
+        <img
+          src="/images/logo-werstek-primary.svg"
+          alt="logo"
+          class="ml-[-10px] sm:ml-[-30px]"
+        />
         <p class="text-[15px] pt-5 md:w-[90%]">
           Een gezellige werkplek huren in een leuke omgeving?Op deze locaties
           hebben wij kantoorruimtes
@@ -91,21 +95,23 @@
           <!-- <hr class="border-b-2 border-primary lg:border-[#1FAB71] w-[50px]" /> -->
           <ul class="text-[12px] md:text-[15px]">
             <NuxtLink :to="'tel:085-0290598'">
-              <li class="flex pt-3">
+              <li class="flex pt-3 items-center gap-2">
                 <img
-                  src="/images/telp.svg"
+                  src="/images/telp-bg-primary.svg"
                   alt="icon-phone-yellow"
-                  class="pr-2 w-[20px] lg:w-[24px]"
-                />085-0290598
+                  class="w-5 sm:w-7"
+                />
+                <p>085-0290598</p>
               </li>
             </NuxtLink>
             <NuxtLink :to="'mailto:info@werkstek.nl'">
-              <li class="flex pt-3">
+              <li class="flex pt-3 items-center gap-2">
                 <img
-                  src="/images/email.svg"
+                  src="/images/email-bg-primary.svg"
                   alt="icon-email.svg"
-                  class="pr-2 w-[20px] lg:w-[24px]"
-                />Werkplekken
+                  class="w-5 sm:w-7"
+                />
+                <p>Werkplekken</p>
               </li>
             </NuxtLink>
           </ul>

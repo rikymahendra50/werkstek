@@ -1,9 +1,9 @@
 <template>
   <NuxtLink
     :to="buttonLink"
-    class="rounded-[14px] drop-shadow-md text-[#404040]"
+    class="rounded-full flex items-center gap-2 p-1 px-1 lg:px-4 bg-[#576855] hover:bg-primary transition"
   >
-    {{ buttonTitle }}
+    <span class="p-1 sm:p-3 text-sm lg:text-base">{{ buttonTitle }}</span>
   </NuxtLink>
 </template>
 

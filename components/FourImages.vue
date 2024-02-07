@@ -1,100 +1,147 @@
 <template>
-  <section class="bg-tertiary py-20 relative">
-    <div class="flex flex-col items-center justify-center h-full py-10">
-      <span class="bg-bgdot bg-no-repeat w-[30%] h-full absolute left-0"></span>
-      <span
-        class="bg-primary w-[60%] max-w-[710px] h-[20%] sm:h-[100%] max-h-[376px] absolute top-24 left-28 sm:top-14 sm:left-14 bg-shape-orange"
-      ></span>
+  <section>
+    <div class="flex flex-col container-custom gap-4">
       <div
-        class="flex z-10 w-[88%] h-[250px] sm:h-[400px] md:h-[600px] lg:h-[853px] text-white justify-center"
+        class="flex z-10 h-[150px] min-[400px]:h-[200px] sm:h-[400px] md:h-[350px] lg:h-[398px] text-white gap-2"
       >
-        <div class="flex-col max-w-[613px] w-full">
-          <NuxtLink
-            to="/over-werkstek"
-            class="flex flex-wrap w-[100%] h-[54%]"
-            :class="{ active: isRouteActive('/over-werkstek') }"
-            :style="{
-              backgroundImage: `url('${Data[0].imageSrc}')`,
-              background: `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${Data[0].imageSrc}')`,
-              backgroundPosition: 'center center',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
-            }"
-          >
-            <div class="w-full flex justify-center items-center">
-              <h1 class="text-[14px] sm:text-[20px] xl:text-[35px] md:w-[50%]">
+        <NuxtLink
+          to="/over-werkstek"
+          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-xl hover:shadow-xl"
+          :class="{ active: isRouteActive('/over-werkstek') }"
+          :style="{
+            backgroundImage: `url('${Data[0].imageSrc}')`,
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }"
+        >
+          <div class="flex justify-center items-end w-full relative">
+            <div
+              class="h-[45%] sm:h-[30%] md:h-[40%] w-[95%] max-w-[430px] bg-secondary mb-2 rounded-xl flex items-end pl-2 pb-3 sm:pl-4 sm:pb-4 relative"
+            >
+              <div
+                class="bg-quaternary rounded-full max-w-[22px] sm:max-w-[44px] absolute top-1 right-1 sm:top-3 sm:right-3"
+              >
+                <img
+                  src="/images/arrow-right.svg"
+                  alt="arrow"
+                  class="rotate-[-40deg]"
+                />
+              </div>
+              <h1
+                class="text-[10px] min-[420px]:text-sm sm:text-[20px] lg:text-2xl sm:w-[80%] pl-1"
+              >
                 {{ Data[0].title }}
               </h1>
             </div>
-          </NuxtLink>
-          <NuxtLink
-            to="/onze-vacaturies"
-            class="flex flex-wrap w-[100%] max-h-[391px] h-[46%]"
-            :class="{ active: isRouteActive('/') }"
-            :style="{
-              backgroundImage: `url('${Data[1].imageSrc}')`,
-              background: `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${Data[1].imageSrc}')`,
-              backgroundPosition: 'center center',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
-            }"
-          >
-            <div class="w-full flex justify-center items-center">
+          </div>
+        </NuxtLink>
+        <NuxtLink
+          to="/over-werkstek"
+          class="flex flex-wrap w-[60%] h-full rounded-xl transition hover:shadow-xl"
+          :class="{ active: isRouteActive('/over-werkstek') }"
+          :style="{
+            backgroundImage: `url('${Data[1].imageSrc}')`,
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }"
+        >
+          <div class="flex justify-end items-end w-full relative">
+            <div
+              class="max-w-[430px] h-[45%] sm:h-[30%] md:h-[40%] w-[60%] mr-4 bg-tertiary mb-2 rounded-xl flex items-end pl-2 pb-3 sm:pl-4 sm:pb-4 relative"
+            >
+              <div
+                class="bg-quaternary rounded-full max-w-[22px] sm:max-w-[44px] absolute top-1 right-1 sm:top-3 sm:right-3"
+              >
+                <img
+                  src="/images/arrow-right.svg"
+                  alt="arrow"
+                  class="rotate-[-40deg]"
+                />
+              </div>
               <h1
-                class="text-[14px] sm:text-[20px] xl:text-[35px] md:w-[50%] pl-2"
+                class="text-[10px] min-[420px]:text-sm sm:text-[20px] lg:text-2xl sm:w-[60%] pl-1 text-secondary"
               >
                 {{ Data[1].title }}
               </h1>
             </div>
-          </NuxtLink>
-        </div>
-        <div class="flex flex-col max-w-[512px] w-full">
-          <NuxtLink
-            to="/onze-locaties"
-            class="flex flex-wrap w-full max-h-[428px] h-[54%] justify-center items-center"
-            :class="{ active: isRouteActive('/onze-locaties') }"
-            :style="{
-              backgroundImage: `url('${Data[2].imageSrc}')`,
-              background: `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${Data[2].imageSrc}')`,
-              backgroundPosition: 'center center',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
-            }"
-          >
-            <h1
-              class="text-[14px] sm:text-[20px] xl:text-[35px] md:w-[50%] pl-2 sm:pl-0"
-            >
-              {{ Data[2].title }}
-            </h1>
-          </NuxtLink>
-          <NuxtLink
-            to="/wekstek-community"
-            class="flex flex-wrap w-full max-h-[428px] h-[49.7%] justify-center items-center"
-            :class="{ active: isRouteActive('/wekstek-community') }"
-            :style="{
-              backgroundImage: `url('${Data[3].imageSrc}')`,
-              background: `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${Data[3].imageSrc}')`,
-              backgroundPosition: 'center center',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
-            }"
-          >
-            <h1
-              class="text-[14px] sm:text-[20px] xl:text-[35px] md:w-[50%] pl-4 sm:pl-0"
-            >
-              {{ Data[3].title }}
-            </h1>
-          </NuxtLink>
-        </div>
+          </div>
+        </NuxtLink>
       </div>
-      <span
-        class="bg-primary w-[60%] max-w-[710px] h-[20%] sm:h-[100%] max-h-[376px] absolute bottom-24 right-28 sm:bottom-14 sm:right-16 bg-shape-orange"
-      ></span>
+      <div
+        class="flex z-10 h-[200px] sm:h-[400px] md:h-[350px] lg:h-[398px] text-white gap-2"
+      >
+        <NuxtLink
+          to="/over-werkstek"
+          class="flex flex-wrap w-[60%] h-full rounded-xl transition hover:shadow-xl"
+          :class="{ active: isRouteActive('/over-werkstek') }"
+          :style="{
+            backgroundImage: `url('${Data[2].imageSrc}')`,
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }"
+        >
+          <div class="flex justify-start items-end w-full relative">
+            <div
+              class="max-w-[430px] h-[45%] sm:h-[30%] md:h-[40%] w-[60%] ml-2 lg:ml-4 bg-tertiary mb-2 lg:mb-4 rounded-2xl flex items-end sm:pl-4 sm:pb-4 relative"
+            >
+              <div
+                class="bg-quaternary rounded-full max-w-[22px] sm:max-w-[44px] absolute top-1 right-1 sm:top-3 sm:right-3"
+              >
+                <img
+                  src="/images/arrow-right.svg"
+                  alt="arrow"
+                  class="rotate-[-40deg]"
+                />
+              </div>
+              <h1
+                class="text-[10px] min-[420px]:text-sm sm:text-[20px] lg:text-2xl sm:w-[60%] pl-2 pb-2 text-secondary"
+              >
+                {{ Data[2].title }}
+              </h1>
+            </div>
+          </div>
+        </NuxtLink>
+        <NuxtLink
+          to="/over-werkstek"
+          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-xl transition hover:shadow-xl"
+          :class="{ active: isRouteActive('/over-werkstek') }"
+          :style="{
+            backgroundImage: `url('${Data[3].imageSrc}')`,
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }"
+        >
+          <div class="flex justify-start items-end w-full relative">
+            <div
+              class="h-[45%] sm:h-[30%] md:h-[40%] w-[80%] max-w-[430px] bg-secondary mb-2 ml-2 rounded-2xl flex items-end pl-2 pb-3 sm:pl-4 sm:pb-4 relative"
+            >
+              <div
+                class="bg-quaternary rounded-full max-w-[22px] sm:max-w-[44px] absolute top-1 right-1 sm:top-3 sm:right-3"
+              >
+                <img
+                  src="/images/arrow-right.svg"
+                  alt="arrow"
+                  class="rotate-[-40deg]"
+                />
+              </div>
+              <h1
+                class="text-[10px] min-[420px]:text-sm sm:text-[20px] lg:text-2xl lg:pl-2 lg:pb-2 text-tertiary"
+              >
+                {{ Data[3].title }}
+              </h1>
+            </div>
+          </div>
+        </NuxtLink>
+      </div>
     </div>
   </section>
 </template>
 
-<style>
+<style scoped>
 .bg-shape-orange {
   border-radius: 50px 10px;
 }

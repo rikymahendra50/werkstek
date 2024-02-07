@@ -12,15 +12,16 @@
             class="btn btn-square btn-sm"
           >
             <icon name="i-heroicons-x-mark" />
-
             <span class="sr-only">Toggle notifications</span>
           </button>
         </div>
       </div>
       <div class="flex-1 overflow-auto py-2">
         <nav class="grid items-start px-4 text-sm font-medium">
-          <a
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+          <!-- Home -->
+          <NuxtLink
+            to="/"
+            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
             href="#"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
@@ -37,35 +38,44 @@
               <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
-            Home </a
-          ><a
-            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
+            Home
+          </NuxtLink>
+          <!-- Locations -->
+          <a
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
-            ><svg
+          >
+            <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
-              viewBox="0 0 24 24"
               fill="none"
-              stroke="currentColor"
+              viewBox="0 0 24 24"
               stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-4 w-4"
+              stroke="currentColor"
+              class="w-4 h-4"
             >
-              <circle cx="8" cy="21" r="1"></circle>
-              <circle cx="19" cy="21" r="1"></circle>
               <path
-                d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
-              ></path>
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+              />
             </svg>
-            Orders
+            Location
+            <!-- notification -->
             <div
               class="whitespace-nowrap border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
             >
               6
             </div></a
-          ><a
+          >
+          <!-- Folder -->
+          <a
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
           >
@@ -90,8 +100,10 @@
               <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
               <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
             </svg>
-            Customers </a
-          ><a
+            Contact</a
+          >
+          <!-- Category -->
+          <a
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
             ><svg
@@ -109,61 +121,44 @@
               <path d="M3 3v18h18"></path>
               <path d="m19 9-5 5-4-4-3 3"></path>
             </svg>
-            Analytics </a
-          ><a
+            Category
+          </a>
+          <!-- Facility -->
+          <a
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
-            ><svg
+          >
+            <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
               fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-4 w-4"
+              class="w-6 h-6"
             >
               <path
-                d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
-              ></path>
-              <circle cx="12" cy="12" r="3"></circle>
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819"
+              />
             </svg>
-            Settings
+            Facility
           </a>
+          <button @click="$logout()" class="btn btn-error mt-20">Logout</button>
         </nav>
       </div>
-      <!-- <div class="mt-auto p-4">
-        <div
-          class="rounded-lg border bg-card text-card-foreground shadow-sm"
-          data-v0-t="card"
-        >
-          <div class="flex flex-col space-y-1.5 p-6 pb-4">
-            <h3
-              class="text-2xl font-semibold whitespace-nowrap leading-none tracking-tight"
-            >
-              Upgrade to Pro
-            </h3>
-            <p class="text-sm text-muted-foreground">
-              Unlock all features and get unlimited access to our support team
-            </p>
-          </div>
-          <div class="p-6">
-            <button
-              class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
-            >
-              Upgrade
-            </button>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const showDrawer = inject("showTableOrMobileSidebar");
+const { $user, $logout } = useAuth();
+definePageMeta({
+  layout: "admin",
+  // @ts-ignore
+  middleware: ["auth", "admin"],
+});
 </script>
 
 <style scoped></style>

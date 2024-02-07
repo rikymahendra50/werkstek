@@ -1,22 +1,22 @@
 <template>
-  <section class="bg-tertiary relative flex items-center">
-    <div class="grid md:grid-rows-1 md:grid-cols-2 z-10">
-      <div class="container-custom flex items-center py-24">
-        <div class="grid lg:ml-10">
-          <p class="text-[19px] lg:text-[24px]">{{ title1 }}</p>
+  <section class="relative flex items-center">
+    <div
+      class="grid md:grid-rows-1 md:grid-cols-2 z-10 bg-[url('/images/bg-header-w-city.jpg')] bg-no-repeat bg-cover w-full"
+    >
+      <div class="container-custom flex items-center py-24 min-h-[468px]">
+        <div class="grid gap-2">
+          <p class="text-[24px]">{{ title1 }}</p>
           <h1
-            class="text-[35px] lg:text-[55px] text-[#231E1F] lg:leading-[74px]"
+            class="text-4xl md:text-[35px] font-semibold lg:text-[45px] text-[#231E1F] lg:leading-[74px]"
           >
             {{ title2 }}
           </h1>
-          <p
-            class="text-[14px] lg:text-[20px] text-[#6E6E6E] leading-8 lg:mt-5"
-          >
+          <p class="text-[20px] text-[#6E6E6E] leading-8 lg:mt-5 font-medium">
             {{ description }}
           </p>
         </div>
       </div>
-      <div class="hidden md:grid relative mt-5 justify-items-center items-end">
+      <div class="hidden sm:grid relative mt-5 justify-items-center items-end">
         <img alt="image" class="z-10 max-w-[532px] w-[90%]" :src="imageSrc" />
       </div>
     </div>

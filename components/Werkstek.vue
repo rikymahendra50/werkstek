@@ -1,17 +1,11 @@
 <template>
-  <svg
-    class="w-auto md:block h-10"
-    viewBox="0 0 273 64"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
+  <div
+    class="md:max-w-[160px] xl:max-w-[215px] min-h-[66px] flex items-center font-bold"
   >
-    <title>Werkstek</title>
-    <image
-      href="/images/logo-wekstek.svg"
-      x="0"
-      y="0"
-      width="100%"
-      height="100%"
-    />
-  </svg>
+    <img src="/images/logo-werstek-secondary.svg" alt="logo" />
+  </div>
 </template>
+
+<script>
+//
+</script>

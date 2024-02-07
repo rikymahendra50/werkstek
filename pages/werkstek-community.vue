@@ -10,6 +10,7 @@
   <Blog2 />
 
   <LeegstandNoButton
+    :uniqe-id="10"
     image="/images/img-page10-1.png"
     imgAlt="image-page4-2"
     title="Leegstand vullen"
@@ -26,5 +27,12 @@
     :showEmailSection="false"
     linkTitle="Verstuur je video"
     :showPhoneEmail="false"
+    :backgroundColor="'secondary'"
   />
 </template>
+
+<script setup>
+useHead({
+  title: "WerkstekCommunity",
+});
+</script>
