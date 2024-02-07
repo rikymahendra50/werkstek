@@ -20,7 +20,7 @@
       />
     </div>
     <div class="flex w-full">
-      <div class="flex w-full lg:w-[60%] justify-center">
+      <!-- <div class="flex w-full lg:w-[60%] justify-center">
         <EachBlogBig
           v-for="(blog, index) in perBlog.slice(0, 2)"
           :key="index"
@@ -32,28 +32,50 @@
       </div>
       <div class="flex-col justify-between lg:flex hidden lg:w-[40%]">
         <EachBlogSmall
+          v-for="(blog, index) in perBlog.slice(2, 5)"
+          :key="index"
+          :imageSrc="blog.image"
+          :title="blog.title"
+          :description="blog.description"
+          :link="blog.link"
+        />
+      </div> -->
+      <div class="flex w-full lg:w-[60%] justify-center">
+        <EachBlogBig
+          v-for="article in articles.slice(0, 2)"
+          :key="article.id"
+          :imageSrc="article.image"
+          :title="article.title"
+          :description="article.title"
+          :link="article.link"
+        />
+      </div>
+      <div class="flex-col justify-between lg:flex hidden lg:w-[40%]">
+        <EachBlogSmall
           v-for="article in articles.slice(2, 5)"
           :key="article.id"
           :imageSrc="article.image"
           :title="article.title"
-          :description="article.description"
+          :description="article.title"
           :link="article.link"
         />
       </div>
-      <!-- <ul>
-    <li v-for="article in articles" :key="article.id">
-      <img :src="article.image" alt="Article Image" />
-      <h2>{{ article.title }}</h2>
-      <p>{{ article.meta }}</p>
-      <p>Total Views: {{ article.total_view }}</p>
-    </li>
-  </ul> -->
     </div>
   </section>
 </template>
 
-<script setup>
-const { articles } = useArticle();
+<script>
+export default {
+  props: {
+    dontShowTitle: Boolean,
+    showTitleHeader: Boolean,
+  },
+  setup(props) {
+    const { articles } = useArticle();
+
+    return { articles, props };
+  },
+};
 
 // export default {
 //   data() {

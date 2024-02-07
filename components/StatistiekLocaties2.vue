@@ -38,7 +38,7 @@
               id="image0_57_14544"
               width="4096"
               height="2732"
-              xlink:href="/images/onze-locaties.png"
+              :xlink:href="image"
             ></image>
           </defs>
         </svg>
@@ -92,6 +92,10 @@
 <script>
 export default {
   props: {
+    image: {
+      type: String,
+      required: true,
+    },
     title1: {
       type: String,
       required: true,
