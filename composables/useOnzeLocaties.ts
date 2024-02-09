@@ -1,6 +1,6 @@
 export default function useOnzeLocatiesData() {
   const StatistiekLocaties2Data = ref({
-    image: "/images/img-page2-w.png",
+    image: "/images/onze-locaties.png",
     title1: "Bekijk onze locaties",
     title2: "De Werkstek locaties",
     title3:

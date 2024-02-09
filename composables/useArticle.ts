@@ -1,5 +1,4 @@
 // fetchArticles.ts
-
 import { ref, Ref, onMounted } from "vue";
 
 interface Article {
@@ -38,9 +37,10 @@ export default function useArticle(): { articles: Ref<Article[]> } {
     }
   };
 
-  onMounted(fetchArticle);
-
-  return {
-    articles,
+  const setupArticle = () => {
+    onMounted(fetchArticle);
+    return { articles };
   };
+
+  return setupArticle();
 }

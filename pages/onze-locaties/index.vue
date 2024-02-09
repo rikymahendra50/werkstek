@@ -1,5 +1,6 @@
 <template>
   <StatistiekLocaties2
+    :image="StatistiekLocaties2Data.image"
     :title1="StatistiekLocaties2Data.title1"
     :title2="StatistiekLocaties2Data.title2"
     :title3="StatistiekLocaties2Data.title3"
