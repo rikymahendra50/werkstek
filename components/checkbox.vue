@@ -10,7 +10,7 @@
 <style>
 input[type="checkbox"] {
   appearance: none;
-  width: 24px;
+  min-width: 24px;
   height: 24px;
   display: flex;
   border: 1px solid theme("colors.primary");

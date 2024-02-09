@@ -20,26 +20,6 @@
       />
     </div>
     <div class="flex w-full">
-      <!-- <div class="flex w-full lg:w-[60%] justify-center">
-        <EachBlogBig
-          v-for="(blog, index) in perBlog.slice(0, 2)"
-          :key="index"
-          :imageSrc="blog.image"
-          :title="blog.title"
-          :description="blog.description"
-          :link="blog.link"
-        />
-      </div>
-      <div class="flex-col justify-between lg:flex hidden lg:w-[40%]">
-        <EachBlogSmall
-          v-for="(blog, index) in perBlog.slice(2, 5)"
-          :key="index"
-          :imageSrc="blog.image"
-          :title="blog.title"
-          :description="blog.description"
-          :link="blog.link"
-        />
-      </div> -->
       <div class="flex w-full lg:w-[60%] justify-center">
         <EachBlogBig
           v-for="article in articles.slice(0, 2)"
@@ -47,7 +27,7 @@
           :imageSrc="article.image"
           :title="article.title"
           :description="article.title"
-          :link="article.link"
+          :link="`/blog/${article.slug}`"
         />
       </div>
       <div class="flex-col justify-between lg:flex hidden lg:w-[40%]">
@@ -57,7 +37,7 @@
           :imageSrc="article.image"
           :title="article.title"
           :description="article.title"
-          :link="article.link"
+          :link="`/blog/${article.slug}`"
         />
       </div>
     </div>
@@ -72,7 +52,6 @@ export default {
   },
   setup(props) {
     const { articles } = useArticle();
-
     return { articles, props };
   },
 };
