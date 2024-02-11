@@ -1,13 +1,19 @@
 <template>
-  <div class="flex justify-start items-center">
+  <!-- <div class="flex justify-start items-center">
     <input type="checkbox" :id="titleCheckBox" class="mr-2 pt-[0.7px]" />
     <label :for="titleCheckBox" class="cursor-pointer">{{
       titleCheckBox
     }}</label>
-  </div>
+  </div> -->
+  <input
+    type="checkbox"
+    v-model="writeableComputed"
+    :value="eachValue"
+    class="mr-2 pt-[0.07px]"
+  />
 </template>
 
-<style>
+<style scoped>
 input[type="checkbox"] {
   appearance: none;
   min-width: 24px;
@@ -36,13 +42,20 @@ input[type="checkbox"]:checked:after {
 }
 </style>
 
-<script>
-export default {
-  props: {
-    titleCheckBox: {
-      type: String,
-      required: false,
-    },
+<script setup lang="ts">
+const props = defineProps<{
+  modelValue: Boolean;
+  eachValue: String;
+}>();
+
+const emit = defineEmits(["update:modelValue"]);
+
+const writeableComputed = computed({
+  get() {
+    return props.modelValue;
   },
-};
+  set(value) {
+    emit("update:modelValue", value);
+  },
+});
 </script>

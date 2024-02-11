@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="grid col-span-4 md:col-span-3 ml-5 items-center">
-        <span class="text-[14px] sm:text-lg font-semibold">{{ name }}</span>
+        <span class="text-[14px] sm:text-lg font-semibold">{{ city }}</span>
         <span class="text-sm">{{ adres }}</span>
         <div class="flex justify-between">
           <span class="text-[12px] sm:text-base font-bold">{{
@@ -75,6 +75,9 @@ export default {
       type: String,
       required: true,
     },
+    deopervlakte: {
+      type: Number,
+    },
     rating: {
       type: Number,
       required: true,
@@ -83,7 +86,7 @@ export default {
       type: String,
       required: true,
     },
-    name: {
+    city: {
       type: String,
       required: true,
     },

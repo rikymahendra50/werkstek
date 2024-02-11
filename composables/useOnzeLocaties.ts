@@ -9,8 +9,8 @@ export default function useOnzeLocatiesData() {
     titleBg2: { title: "Statistiek 2", count: 15 },
     titleBg3: { title: "Statistiek 3", count: 49 },
   });
-
-  const checkbox = ref({
+  const dropdownData = ref(["Utrecht", "Locatie", "Denpasar", "Amsterdam"]);
+  const checkboxData = ref({
     soortLocaties: [
       {
         id: 1,
@@ -60,8 +60,7 @@ export default function useOnzeLocatiesData() {
       },
     ],
   });
-
-  const Locaties = ref([
+  const LocatiesData = ref([
     {
       id: 1,
       name: "Utrecht",
@@ -150,7 +149,8 @@ export default function useOnzeLocatiesData() {
   return {
     StatistiekLocaties2Data,
     BgBigGreenData,
-    Locaties,
-    checkbox,
+    LocatiesData,
+    checkboxData,
+    dropdownData,
   };
 }
