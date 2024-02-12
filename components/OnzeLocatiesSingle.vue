@@ -296,11 +296,7 @@
             class="my-2 rounded-full text-sm"
           />
         </div>
-        <!-- <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58334447.393653534!2d54.64843750000003!3d26.82556878670093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3663f18a24cbe857%3A0xa9416bfcd3a0f459!2sAsia!5e0!3m2!1sid!2sid!4v1705553884962!5m2!1sid!2sid"
-          loading="lazy"
-          class="w-full mt-5 max-h-[300px]"
-        ></iframe> -->
+        <!-- add google map here -->
       </div>
     </div>
   </section>

@@ -147,3 +147,57 @@ input[type="range"]::-webkit-slider-thumb {
   border: 3px solid white;
 }
 /* End Slider Range */
+
+input[type="radio"] {
+  appearance: none;
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  border: 1px solid theme("colors.primary");
+  border-radius: 0.5em;
+  cursor: pointer;
+  outline: none;
+  cursor: pointer;
+  justify-content: center;
+}
+
+input[type="radio"]:after {
+  content: url("/images/tick.svg");
+  color: white;
+  display: none;
+  font-weight: white;
+}
+
+input[type="radio"]:checked {
+  background-color: theme("colors.primary");
+}
+input[type="radio"]:checked:after {
+  display: block;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  border: 1px solid theme("colors.primary");
+  border-radius: 0.5em;
+  cursor: pointer;
+  outline: none;
+  cursor: pointer;
+  justify-content: center;
+}
+
+input[type="checkbox"]:after {
+  content: url("/images/tick.svg");
+  color: white;
+  display: none;
+  font-weight: white;
+}
+
+input[type="checkbox"]:checked {
+  background-color: theme("colors.primary");
+}
+input[type="checkbox"]:checked:after {
+  display: block;
+}

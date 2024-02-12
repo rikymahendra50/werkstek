@@ -1,5 +1,6 @@
 <template>
   <StatistiekLocaties2
+    :image="StatistiekLocaties2Data.image"
     :title1="StatistiekLocaties2Data.title1"
     :title2="StatistiekLocaties2Data.title2"
     :title3="StatistiekLocaties2Data.title3"
@@ -10,8 +11,7 @@
     :count2="StatistiekLocaties2Data.titleBg2.count"
     :count3="StatistiekLocaties2Data.titleBg3.count"
   />
-
-  <OnzeLocaties :showLocaties="true" />
+  <OnzeLocaties />
   <BgBigGreen
     :title1="BgBigGreenData.title1"
     :title2="BgBigGreenData.title2"

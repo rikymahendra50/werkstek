@@ -27,13 +27,15 @@
           class="flex space-x-5 items-center justify-between md:gap-2 xl:gap-3 pr-10 bg-primary p-1 rounded-full text-tertiary md:w-[78%] xl:w-[80%]"
         >
           <li class="bg-white rounded-full">
-            <Werkstek />
+            <NuxtLink to="/">
+              <Werkstek />
+            </NuxtLink>
           </li>
           <li>
             <NuxtLink
-              to="/"
+              to="/onze-vacaturies"
               class="navlink"
-              :class="{ active: isRouteActive('/') }"
+              :class="{ active: isRouteActive('/onze-vacaturies') }"
               >Verhuur</NuxtLink
             >
           </li>
@@ -56,14 +58,15 @@
               >Over werkstek</NuxtLink
             >
           </li>
+          <!-- ini -->
           <li class="dropdown">
-            <label
+            <span
               tabindex="0"
               class="bg-transparent border-none text-white font-thin hover:bg-transparent cursor-pointer navlink"
               :class="{ active: isUpdateActive() }"
             >
               Werkstek Update
-            </label>
+            </span>
             <ul
               tabindex="0"
               class="ml-[-20px] dropdown-content z-[1] menu p-1 shadow bg-base-100 rounded-box w-40 text-black"
@@ -159,11 +162,16 @@
           @click="isOpen = false"
           class="flex w-full items-center p-4 border-b"
         >
-          <Werkstek />
+          <NuxtLink to="/">
+            <Werkstek />
+          </NuxtLink>
         </span>
         <ul class="divide-y font-sans">
           <li class="cursor-pointer">
-            <NuxtLink to="/" @click="isOpen = false" class="my-4 inline-block"
+            <NuxtLink
+              to="/onze-vacaturies"
+              @click="isOpen = false"
+              class="my-4 inline-block"
               >Verhuur</NuxtLink
             >
           </li>
@@ -184,18 +192,12 @@
             >
           </li>
           <li class="cursor-pointer dropdown">
-            <!-- <NuxtLink
-              to="/werkstek-community"
-              @click="isOpen = false"
-              class="my-4 inline-block"
-              >Werkstek updates</NuxtLink
-            > -->
-            <label
+            <div
               tabindex="1"
               class="bg-transparent border-none my-4 inline-block font-thin cursor-pointer"
             >
               Werkstek Update
-            </label>
+            </div>
             <ul
               tabindex="1"
               class="ml-[-20px] dropdown-content z-[1] menu p-1 shadow bg-base-100 rounded-box w-40 text-black"
@@ -259,6 +261,7 @@ export default {
     isUpdateActive() {
       return (
         this.$route.path.startsWith("/blog") ||
+        this.$route.path.startsWith("/werkstek-vacaturies") ||
         this.$route.path.startsWith("/werkstek-community")
       );
     },

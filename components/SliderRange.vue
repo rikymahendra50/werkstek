@@ -24,22 +24,28 @@
 
       <!-- Slider -->
       <div class="range-input">
-        <input
-          type="range"
-          class="min-range"
-          min="0"
-          max="1000"
-          v-model="localMinRange"
-          step="1"
-        />
-        <input
-          type="range"
-          class="max-range"
-          min="0"
-          max="1000"
-          v-model="localMaxRange"
-          step="1"
-        />
+        <label :for="idInputMin">
+          <input
+            :id="idInputMin"
+            type="range"
+            class="min-range"
+            min="0"
+            max="1000"
+            v-model="localMinRange"
+            step="1"
+          />
+        </label>
+        <label :for="idInputMax">
+          <input
+            :id="idInputMax"
+            type="range"
+            class="max-range"
+            min="0"
+            max="1000"
+            v-model="localMaxRange"
+            step="1"
+          />
+        </label>
       </div>
     </div>
   </div>
@@ -48,6 +54,12 @@
 <script>
 export default {
   props: {
+    idInputMin: {
+      type: String,
+    },
+    idInputMax: {
+      type: String,
+    },
     title: {
       type: String,
     },
@@ -106,6 +118,10 @@ export default {
     updatePrice() {
       this.localMinPrice = this.localMinRange;
       this.localMaxPrice = this.localMaxRange;
+      this.$emit("price-change", {
+        minPrice: this.localMinPrice,
+        maxPrice: this.localMaxPrice,
+      });
     },
   },
 };

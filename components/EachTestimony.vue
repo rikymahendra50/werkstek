@@ -23,7 +23,7 @@
         <p
           class="font-medium text-[12px] md:text-[14px] md:leading-7 text-[#999999]"
         >
-          {{ Position }}
+          {{ position }}
         </p>
       </div>
       <div class="ml-auto">

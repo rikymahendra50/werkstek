@@ -74,17 +74,6 @@
               <hr />
               <VeeErrorMessage name="name" class="text-sm text-error" />
             </div>
-            <!-- <div class="flex items-center mt-3">
-              <label>Je e-mailadres (verplicht)</label>
-              <VeeErrorMessage name="email" class="text-sm text-error pl-10" />
-            </div>
-            <VeeField
-              name="email"
-              v-model="dataForm.email"
-              type="text"
-              class="input w-full input-sm"
-            />
-            <hr /> -->
             <div class="flex flex-col my-2">
               <div class="flex items-center">
                 <label>Je e-mailadres (verplicht)</label>
@@ -113,24 +102,6 @@
               <hr />
               <VeeErrorMessage name="subject" class="text-sm text-error" />
             </div>
-            <!-- <div class="flex items-center mt-3">
-              <label>Je bericht</label>
-              <VeeErrorMessage
-                name="message"
-                class="text-sm text-error pl-10"
-              />
-            </div>
-            <VeeField
-              name="message"
-              v-model="dataForm.message"
-              v-slot="{ field }"
-            >
-              <textarea
-                v-bind="field"
-                class="textarea textarea-sm textarea-ghost h-[100px] min-h-[50px] max-h-[150px]"
-              ></textarea>
-              <hr />
-            </VeeField> -->
             <div class="flex flex-col my-2">
               <div class="flex items-center">
                 <label>Je bericht</label>
@@ -209,45 +180,3 @@ async function onSubmit(values, ctx) {
   loading.value = false;
 }
 </script>
-
-<style>
-/* .login-box {
-  box-sizing: border-box;
-}
-
-.login-box .user-box {
-  position: relative;
-}
-
-.login-box .user-box input,
-.login-box .user-box textarea {
-  width: 100%;
-  padding: 10px 0;
-  color: #777;
-  margin-bottom: 30px;
-  border: none;
-  border-bottom: 1px solid #777;
-  outline: none;
-  background: transparent;
-}
-
-.login-box .user-box label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 10px 0;
-  color: #777;
-  pointer-events: none;
-  transition: 0.5s;
-}
-
-.login-box .user-box input:focus ~ label,
-.login-box .user-box input:valid ~ label,
-.login-box .user-box textarea:focus ~ label,
-.login-box .user-box textarea:valid ~ label {
-  top: -20px;
-  left: 0;
-  color: #777;
-  font-size: 12px;
-} */
-</style>
