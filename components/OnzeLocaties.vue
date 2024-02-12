@@ -23,6 +23,7 @@
                 {{ selectedName || "Alles" }}
               </div>
               <img src="/images/arrow-down.svg" class="p-1" alt="arrow" />
+              <img src="/images/arrow-down.svg" class="p-1" alt="arrow" />
             </summary>
             <ul
               class="p-2 shadow menu dropdown-content z-[1] bg-white rounded-[8px] w-[90%]"
@@ -380,6 +381,12 @@ const filteredData = computed(() => {
       item.functie.some((functie) => selectedFunctie.value.includes(functie))
     );
   }
+  // filter checkbox
+  if (selectedFunctie.value.length > 0) {
+    filteredItems = filteredItems.filter((item) =>
+      item.functie.some((functie) => selectedFunctie.value.includes(functie))
+    );
+  }
 
   // slider range price
   if (selectedMinPrice.price >= 0 && selectedMaxPrice.value) {
@@ -389,7 +396,31 @@ const filteredData = computed(() => {
         item.price <= selectedMaxPrice.value
     );
   }
+  // slider range price
+  if (selectedMinPrice.price >= 0 && selectedMaxPrice.value) {
+    filteredItems = filteredItems.filter(
+      (item) =>
+        item.price >= selectedMinPrice.value &&
+        item.price <= selectedMaxPrice.value
+    );
+  }
 
+  // filter metermin dan metermax
+  if (selectedMeterMin.value && selectedMeterMax.value) {
+    filteredItems = filteredItems.filter(
+      (item) => item.deopervlakte > selectedMeterMin.value
+    );
+  } else if (!selectedMeterMin.value && selectedMeterMax.value) {
+    filteredItems = filteredItems.filter(
+      (item) => item.deopervlakte <= selectedMeterMax.value
+    );
+  } else if (selectedMeterMin.value && selectedMeterMax.value) {
+    filteredItems = filteredItems.filter(
+      (item) =>
+        item.deopervlakte >= selectedMeterMin.value &&
+        item.deopervlakte <= selectedMeterMax.value
+    );
+  }
   // filter metermin dan metermax
   if (selectedMeterMin.value && selectedMeterMax.value) {
     filteredItems = filteredItems.filter(
