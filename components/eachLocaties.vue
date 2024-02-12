@@ -70,46 +70,36 @@ export default {
   props: {
     link: {
       type: String,
-      required: true,
     },
     opervlakte: {
       type: String,
-      required: true,
     },
     image: {
       type: String,
-      required: true,
     },
     rating: {
       type: Number,
-      required: true,
     },
     type: {
       type: String,
-      required: true,
     },
     city: {
       type: String,
-      required: true,
     },
     adres: {
       type: String,
-      required: true,
     },
     phoneNumber: {
       type: String,
-      required: true,
     },
     price: {
-      required: true,
+      type: Number,
     },
     mailAdres: {
       type: String,
-      required: true,
     },
     detailLinkTitle: {
       type: String,
-      required: true,
     },
   },
 };
