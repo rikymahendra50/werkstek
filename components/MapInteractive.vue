@@ -221,7 +221,6 @@ export default {
   methods: {
     updateLastSelectedPrices(prices) {
       this.lastSelectedPrices = prices;
-      // console.log("Last Selected Prices:", this.lastSelectedPrices);
       this.clearInfoWindows();
     },
 
@@ -234,6 +233,7 @@ export default {
       category.showDropdown = !category.showDropdown;
     },
 
+    // function ketika tombol diklik
     performSearch() {
       const selectedOption = this.categories;
       let selectedCityFix = selectedOption[0].selectedOption;
@@ -270,7 +270,6 @@ export default {
         console.log("Matching Data:", filteredData);
         filteredData.forEach((location) => {
           this.moveToLocation(location.lat, location.lng);
-
           this.showInfoWindow(location.lat, location.lng, location);
         });
       } else {
@@ -341,8 +340,8 @@ export default {
         // Setelah mendapatkan batas, fit peta ke batas tersebut
         this.map.fitBounds(bounds);
 
-        // Pastikan level zoom tidak terlalu tinggi atau rendah
-        const maxZoom = 15;
+        // Memastikan level zoom tidak terlalu tinggi atau rendah
+        const maxZoom = 12;
         const minZoom = 10;
         const currentZoom = this.map.getZoom();
         this.map.setZoom(Math.min(Math.max(currentZoom, minZoom), maxZoom));
@@ -354,7 +353,7 @@ export default {
 
         if (matchingMarker) {
           matchingMarker.details.filtered = true;
-          this.updateMarkerIcons();
+          this.updateMarker();
 
           const infowindow = new google.maps.InfoWindow({
             content: `
@@ -365,7 +364,6 @@ export default {
                 <p style="color: black;">Price: $${matchingMarker.details.price}</p>
               </div>
             `,
-            closeBoxMargin: "10px 10px 0 0",
           });
 
           infowindow.open(this.map, matchingMarker);
@@ -374,21 +372,21 @@ export default {
       }
     },
 
-    updateMarkerIcons() {
-      const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
+    updateMarker() {
+      // const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
 
       this.markers.forEach((marker, index) => {
-        const location = this.locations[index];
-        let iconColor = "/images/logo-wekstek.png";
+        // const location = this.locations[index];
+        // let iconColor = "/images/logo-wekstek.png";
 
-        if (location.filtered) {
-          iconColor = "/images/person-comment-1.png";
-        }
+        // if (location.filtered) {
+        //   iconColor = "/images/person-comment-1.png";
+        // }
 
-        const iconUrl = iconBase + iconColor;
+        // const iconUrl = iconBase + iconColor;
 
         marker.setIcon({
-          url: iconUrl,
+          // url: iconUrl,
           scaledSize: new google.maps.Size(30, 30),
         });
       });
@@ -435,7 +433,7 @@ export default {
 
         const contentString = `
           <div class="max-w-[190px] w-full h-full flex flex-col text-end">
-            <img src="${location.image}" alt="${location.name}" class="w-[200px] min-h-[100px]">
+            <img src="${location.image}" alt="${location.name}" class="w-full min-h-[100px]">
             <h2 class="text-primary mt-2">${location.name}</h2>
             <p class="text-black text-[10px] my-2">${location.area}</p>
             <p>Price: $${location.price}</p>
@@ -455,19 +453,6 @@ export default {
           infowindow.open(this.map, marker);
           this.currentInfoWindow = infowindow;
         });
-
-        // marker.addListener("mouseover", () => {
-        //   if (this.currentInfoWindow) {
-        //     this.currentInfoWindow.close();
-        //   }
-
-        //   infowindow.open(this.map, marker);
-        //   this.currentInfoWindow = infowindow;
-        // });
-
-        // marker.addListener("mouseout", () => {
-        //   infowindow.close();
-        // });
 
         this.markers.push(marker);
       });
