@@ -5,11 +5,11 @@
       secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-    <div class="container-custom grid lg:grid-cols-12" v-if="showLocaties">
+    <div class="container-custom grid lg:grid-cols-12 gap-2">
       <div class="w-full lg:col-span-4">
         <!-- city -->
         <form class="flex flex-col">
-          <label class="text-base opacity-50">Kies een locatie</label>
+          <span class="text-base opacity-50">Kies een locatie</span>
           <select id="kota" v-model="selectedCity" class="dropdown">
             <option value="">Alles</option>
             <option
@@ -98,7 +98,9 @@
               </div>
             </div>
             <p class="my-3">-</p>
-            <div class="flex justify-between gap-2 text-sm sm:text-base">
+            <div
+              class="flex justify-between gap-2 text-sm sm:text-base w-[95%]"
+            >
               <div class="flex flex-col">
                 <fieldset id="functie" class="flex flex-col gap-2">
                   <div
@@ -141,8 +143,8 @@
               </div>
             </div>
             <div class="mt-5">
-              <img src="/images/filter-icon.svg" alt="filter" class="w-8 h-8" />
-              <p class="text-base mt-3 opacity-50">Meer filter opties</p>
+              <img src="/images/filter-icon.svg" class="w-5 h-5 my-4" />
+              <p class="text-base opacity-50">Meer filter opties</p>
             </div>
             <Map />
           </div>
@@ -152,80 +154,32 @@
         id="locatieList"
         class="lg:col-span-8 py-5 overflow-auto max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
       >
-        <eachLocaties
-          v-for="locatie in filteredData"
-          :key="locatie.id"
-          :city="locatie.city"
-          :link="locatie.detailLink"
-          :image="locatie.image"
-          :rating="locatie.rating"
-          :type="locatie.type"
-          :adres="locatie.adres"
-          :phoneNumber="locatie.phoneNumber"
-          :price="locatie.price"
-          :mailAdres="locatie.mailAdres"
-          :detailLinkTitle="locatie.detailLinkTitle"
-        />
+        <div v-if="filteredData.length > 0">
+          <eachLocaties
+            v-for="locatie in filteredData"
+            :key="locatie.id"
+            :city="locatie.city"
+            :link="locatie.detailLink"
+            :image="locatie.image"
+            :rating="locatie.rating"
+            :type="locatie.type"
+            :adres="locatie.adres"
+            :phoneNumber="locatie.phoneNumber"
+            :price="locatie.price"
+            :mailAdres="locatie.mailAdres"
+            :detailLinkTitle="locatie.detailLinkTitle"
+            :opervlakte="locatie.opervlakte"
+          />
+        </div>
+        <div v-else>
+          <div class="flex items-center justify-center">No item selected</div>
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <style scoped>
-input[type="radio"] {
-  appearance: none;
-  min-width: 24px;
-  height: 24px;
-  display: flex;
-  border: 1px solid theme("colors.primary");
-  border-radius: 0.5em;
-  cursor: pointer;
-  outline: none;
-  cursor: pointer;
-  justify-content: center;
-}
-
-input[type="radio"]:after {
-  content: url("/images/tick.svg");
-  color: white;
-  display: none;
-  font-weight: white;
-}
-
-input[type="radio"]:checked {
-  background-color: theme("colors.primary");
-}
-input[type="radio"]:checked:after {
-  display: block;
-}
-
-input[type="checkbox"] {
-  appearance: none;
-  min-width: 24px;
-  height: 24px;
-  display: flex;
-  border: 1px solid theme("colors.primary");
-  border-radius: 0.5em;
-  cursor: pointer;
-  outline: none;
-  cursor: pointer;
-  justify-content: center;
-}
-
-input[type="checkbox"]:after {
-  content: url("/images/tick.svg");
-  color: white;
-  display: none;
-  font-weight: white;
-}
-
-input[type="checkbox"]:checked {
-  background-color: theme("colors.primary");
-}
-input[type="checkbox"]:checked:after {
-  display: block;
-}
-
 .scrollbar-onze {
   overflow-y: auto;
   scrollbar-width: none;
@@ -375,7 +329,6 @@ export default {
       selectedMaxPrice: 0,
       selectedSoortLocatie: "",
       selectedFunctie: [],
-      selectedPrice: 0,
     };
   },
   methods: {
@@ -438,11 +391,5 @@ export default {
       return filteredItems;
     },
   },
-  props: {
-    showLocaties: {
-      type: Boolean,
-      default: true,
-    },
-  },
 };
-</script>
+
