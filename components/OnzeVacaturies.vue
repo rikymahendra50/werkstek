@@ -9,7 +9,7 @@
       <div class="w-full md:w-[35%]">
         <span class="text-base opacity-50">Kies een locatie</span>
         <form id="filterForm">
-          <select id="kota" v-model="selectedCity" class="dropdown">
+          <!-- <select id="kota" v-model="selectedCity" class="dropdown">
             <option value="">Alles</option>
             <option
               class="text-sm flex items-center p-5"
@@ -18,7 +18,30 @@
             >
               {{ item }}
             </option>
-          </select>
+          </select> -->
+          <details class="dropdown" @toggle="toggleDropdown">
+            <summary
+              class="m-1 btn bg-[white] normal-case font-normal w-[300px] max-w-[90%] justify-between"
+            >
+              <div class="flex items-center">
+                <img src="/images/location.svg" class="pl-1 pr-3" />
+                {{ selectedCity || "Alles" }}
+              </div>
+              <img src="/images/arrow-down.svg" class="p-1" />
+            </summary>
+            <ul
+              class="p-2 shadow menu dropdown-content z-[1] bg-white rounded-[8px] w-[90%]"
+              v-if="isOpen"
+            >
+              <li
+                class="py-1 text-md"
+                v-for="(item, index) in city"
+                :key="index"
+              >
+                <option @click="selectCity(item)">{{ item }}</option>
+              </li>
+            </ul>
+          </details>
         </form>
         <div class="flex flex-col">
           <p class="text-base mt-3 opacity-50 mb-2">Soort locatie</p>
@@ -122,6 +145,7 @@
 export default {
   data() {
     return {
+      isOpen: false,
       city: ["Utrecht", "Locatie", "Example", "Amsterdam"],
       soortLocaties: [
         {
@@ -209,6 +233,7 @@ export default {
           rating: 9.4,
         },
       ],
+      isOpen: false,
       selectedCity: "",
       selectedMinPrice: 0,
       selectedMaxPrice: 0,
@@ -226,6 +251,13 @@ export default {
     handlePriceChange(priceData) {
       this.selectedMinPrice = priceData.minPrice;
       this.selectedMaxPrice = priceData.maxPrice;
+    },
+    toggleDropdown() {
+      this.isOpen = !this.isOpen;
+    },
+    selectCity(city) {
+      this.selectedCity = city;
+      // this.isOpen = false;
     },
   },
   computed: {
@@ -271,6 +303,8 @@ export default {
 <!-- <script>
 export default {
   setup() {
+    const city = ["Utrecht", "Locatie", "Example", "Amsterdam"];
+
     // Membuat data reaktif menggunakan ref
     const selectedCity = ref("");
     const selectedSoortLocatie = ref("");
@@ -291,18 +325,15 @@ export default {
       async () => {
         // Melakukan permintaan data ke API ketika properti terpilih berubah
         try {
-          const response = await axios.get(
-            "url_api",
-            {
-              params: {
-                city: selectedCity.value,
-                soortLocatie: selectedSoortLocatie.value,
-                functie: selectedFunctie.value,
-                minPrice: selectedMinPrice.value,
-                maxPrice: selectedMaxPrice.value,
-              },
-            }
-          );
+          const response = await axios.get("url_api", {
+            params: {
+              city: selectedCity.value,
+              soortLocatie: selectedSoortLocatie.value,
+              functie: selectedFunctie.value,
+              minPrice: selectedMinPrice.value,
+              maxPrice: selectedMaxPrice.value,
+            },
+          });
           // Memperbarui data yang difilter dengan hasil respons dari API
           filteredData.value = response.data;
         } catch (error) {

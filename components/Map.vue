@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="border max-w-[360px] min-h-[290px]">
     <h3>My Google Maps Demo.. coming soon</h3>
     <div id="map"></div>
   </div>

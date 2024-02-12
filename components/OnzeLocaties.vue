@@ -10,7 +10,11 @@
         <!-- city -->
         <form class="flex flex-col">
           <span class="text-base opacity-50">Kies een locatie</span>
-          <select id="kota" v-model="selectedCity" class="dropdown">
+          <!-- <select
+            id="kota"
+            v-model="selectedCity"
+            class="border p-2 rounded-lg w-[80%] px-3"
+          >
             <option value="">Alles</option>
             <option
               class="text-sm flex items-center p-5"
@@ -19,7 +23,30 @@
             >
               {{ item }}
             </option>
-          </select>
+          </select> -->
+          <details class="dropdown" @toggle="toggleDropdown">
+            <summary
+              class="m-1 btn bg-[white] normal-case font-normal w-[300px] max-w-[90%] justify-between"
+            >
+              <div class="flex items-center">
+                <img src="/images/location.svg" class="pl-1 pr-3" />
+                {{ selectedCity || "Alles" }}
+              </div>
+              <img src="/images/arrow-down.svg" class="p-1" />
+            </summary>
+            <ul
+              class="p-2 shadow menu dropdown-content z-[1] bg-white rounded-[8px] w-[90%]"
+              v-if="isOpen"
+            >
+              <li
+                class="py-1 text-md"
+                v-for="(item, index) in city"
+                :key="index"
+              >
+                <option @click="selectCity(item)">{{ item }}</option>
+              </li>
+            </ul>
+          </details>
         </form>
         <!-- end city -->
         <div class="flex flex-col">
@@ -151,7 +178,6 @@
         </div>
       </div>
       <div
-        id="locatieList"
         class="lg:col-span-8 py-5 overflow-auto max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
       >
         <div v-if="filteredData.length > 0">
@@ -194,7 +220,7 @@
 export default {
   data() {
     return {
-      city: ["Utrecht", "Locatie", "Example", "Amsterdam"],
+      city: ["Alles", "Utrecht", "Locatie", "Example", "Amsterdam"],
       soortLocatiesRadio: [
         {
           id: 1,
@@ -322,6 +348,7 @@ export default {
           rating: 9.4,
         },
       ],
+      isOpen: false,
       selectedCity: "",
       selectedMeterMin: null,
       selectedMeterMax: null,
@@ -332,6 +359,18 @@ export default {
     };
   },
   methods: {
+    toggleDropdown() {
+      // if (this.isOpen) {
+      //   this.isOpen = false;
+      // } else if (!this.isOpen) {
+      //   this.isOpen = true;
+      // }
+      this.isOpen = !this.isOpen;
+    },
+    selectCity(city) {
+      this.selectedCity = city;
+      this.isOpen = false;
+    },
     handlePriceChange(priceData) {
       this.selectedMinPrice = priceData.minPrice;
       this.selectedMaxPrice = priceData.maxPrice;
@@ -392,4 +431,4 @@ export default {
     },
   },
 };
-
+</script>
