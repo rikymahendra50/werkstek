@@ -7,91 +7,135 @@
     />
     <div class="flex flex-col md:flex-row container-custom">
       <div class="w-full md:w-[35%]">
-        <label class="text-base opacity-50">Kies een locatie</label>
+        <span class="text-base opacity-50">Kies een locatie</span>
         <form id="filterForm">
-          <select id="name" @change="filterVacaturies">
-            <option value="" class="text-sm flex items-center p-5">All</option>
+          <!-- <select id="kota" v-model="selectedCity" class="dropdown">
+            <option value="">Alles</option>
             <option
-              v-for="vacaturie in Vacaturies"
-              :key="vacaturie.name"
-              :value="vacaturie.name"
+              class="text-sm flex items-center p-5"
+              v-for="(item, index) in city"
+              :key="index"
             >
-              {{ vacaturie.name }}
+              {{ item }}
             </option>
-          </select>
+          </select> -->
+          <details class="dropdown" @toggle="toggleDropdown">
+            <summary
+              class="m-1 btn bg-[white] normal-case font-normal w-[300px] max-w-[90%] justify-between"
+            >
+              <div class="flex items-center">
+                <img src="/images/location.svg" class="pl-1 pr-3" />
+                {{ selectedCity || "Alles" }}
+              </div>
+              <img src="/images/arrow-down.svg" class="p-1" />
+            </summary>
+            <ul
+              class="p-2 shadow menu dropdown-content z-[1] bg-white rounded-[8px] w-[90%]"
+              v-if="isOpen"
+            >
+              <li
+                class="py-1 text-md"
+                v-for="(item, index) in city"
+                :key="index"
+              >
+                <option @click="selectCity(item)">{{ item }}</option>
+              </li>
+            </ul>
+          </details>
         </form>
         <div class="flex flex-col">
-          <p class="text-base mt-3 opacity-50">Soort locatie</p>
-          <!-- soort locatie -->
-          <fieldset
-            id="soortLocatie"
-            class="form-control w-[90%] flex flex-col gap-2 mt-2"
-          >
-            <Checkbox
-              v-for="soortlocati in checkbox.soortLocaties"
-              :key="soortlocati.id"
-              :id="soortlocati.id"
-              :titleCheckBox="soortlocati.name"
-              @change="filterVacaturies"
-            />
-          </fieldset>
-          <!-- end soort locatie -->
-
-          <!-- slider -->
+          <p class="text-base mt-3 opacity-50 mb-2">Soort locatie</p>
+          <div class="flex flex-col">
+            <fieldset id="soortLocatie" class="flex flex-col gap-2">
+              <div
+                class="flex justify-start items-center"
+                v-for="item in soortLocaties"
+                :key="item.id"
+              >
+                <input
+                  type="radio"
+                  :id="item.id"
+                  :value="item.name"
+                  :name="item.name"
+                  class="mr-2 pt-[0.7px]"
+                  v-model="selectedSoortLocatie"
+                />
+                <label :for="item.id" class="cursor-pointer">{{
+                  item.name
+                }}</label>
+              </div>
+            </fieldset>
+          </div>
           <SliderRange
-            title="Aantal uur per week"
-            idInputMin="priceMin"
-            idInputMax="priceMax"
+            :title="'De prijs per maand'"
+            :idInputMin="'priceMin'"
+            :idInputMax="'priceMax'"
             :minPrice="0"
             :maxPrice="1000"
             :minRange="0"
             :maxRange="850"
             :priceGap="100"
-            class="my-2"
-            @input="filterVacaturies"
+            class="my-2 w-[80%]"
+            @price-change="handlePriceChange"
           />
-          <!-- end slider -->
-
-          <!-- checkbox2 -->
-          <p class="text-base mt-3 opacity-50">Opleidings niveau</p>
-          <!-- Opleidings niveau -->
+          <p class="text-base mt-3 opacity-50 mb-2">Opleidings niveau</p>
           <div
             id="Opleidings"
             class="form-control w-[90%] flex flex-col gap-2 mt-2"
           >
-            <Checkbox
-              v-for="opleiding in checkbox.opleidings"
-              :key="opleiding.id"
-              :id="opleiding.id"
-              :titleCheckBox="opleiding.name"
-              @change="filterVacaturies"
-            />
+            <div
+              class="flex justify-between gap-2 text-sm sm:text-base w-[95%]"
+            >
+              <div class="flex flex-col">
+                <fieldset id="functie" class="flex flex-col gap-2">
+                  <div
+                    class="flex justify-start items-center"
+                    v-for="item in opleidings"
+                    :key="item.id"
+                  >
+                    <input
+                      type="radio"
+                      :id="item.id"
+                      :value="item.name"
+                      :name="item.name"
+                      class="mr-2 pt-[0.7px]"
+                      v-model="selectedFunctie"
+                    />
+                    <label :for="item.id" class="cursor-pointer">{{
+                      item.name
+                    }}</label>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
           </div>
-          <!-- end Opleidings niveau -->
-          <!-- filter options -->
           <img src="/images/filter-icon.svg" class="w-5 h-5 my-4" />
           <p class="text-base opacity-50">Meer filter opties</p>
-          <!-- end filter options -->
         </div>
       </div>
       <div
         class="py-5 md:w-[65%] overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col"
       >
-        <eachLocaties
-          v-for="item in filteredVacaturies"
-          :key="item.id"
-          :link="item.detailLink"
-          :image="item.image"
-          :rating="item.rating"
-          :type="item.type"
-          :name="item.name"
-          :adres="item.adres"
-          :phoneNumber="item.phoneNumber"
-          :price="item.price"
-          :mailAdres="item.mailAdres"
-          :detailLinkTitle="item.detailLinkTitle"
-          :opervlakte="item.opervlakte"
-        />
+        <div v-if="filteredData.length > 0">
+          <eachLocaties
+            v-for="item in filteredData"
+            :key="item.id"
+            :link="item.detailLink"
+            :image="item.image"
+            :rating="item.rating"
+            :type="item.type"
+            :city="item.city"
+            :adres="item.adres"
+            :phoneNumber="item.phoneNumber"
+            :price="item.price"
+            :mailAdres="item.mailAdres"
+            :detailLinkTitle="item.detailLinkTitle"
+            :opervlakte="item.opervlakte"
+          />
+        </div>
+        <div v-else>
+          <div class="flex items-center justify-center">No item selected</div>
+        </div>
       </div>
     </div>
   </section>
@@ -101,52 +145,52 @@
 export default {
   data() {
     return {
-      checkbox: {
-        soortLocaties: [
-          {
-            id: 1,
-            name: "Alles",
-          },
-          {
-            id: 2,
-            name: "Stage plaats",
-          },
-          {
-            id: 3,
-            name: "Functie 1",
-          },
-          {
-            id: 4,
-            name: "Functie 2",
-          },
-        ],
-        opleidings: [
-          {
-            id: 1,
-            name: "Alles2",
-          },
-          {
-            id: 2,
-            name: "MBO",
-          },
-          {
-            id: 3,
-            name: "HBO",
-          },
-          {
-            id: 4,
-            name: "Universiteit",
-          },
-        ],
-      },
+      isOpen: false,
+      city: ["Utrecht", "Locatie", "Example", "Amsterdam"],
+      soortLocaties: [
+        {
+          id: 1,
+          name: "Alles",
+        },
+        {
+          id: 2,
+          name: "Stage plaats",
+        },
+        {
+          id: 3,
+          name: "Functie 1",
+        },
+        {
+          id: 4,
+          name: "Functie 2",
+        },
+      ],
+      opleidings: [
+        {
+          id: 5,
+          name: "Alles",
+        },
+        {
+          id: 6,
+          name: "MBO",
+        },
+        {
+          id: 7,
+          name: "HBO",
+        },
+        {
+          id: 8,
+          name: "Universiteit",
+        },
+      ],
       Vacaturies: [
         {
           id: 1,
           type: "Regular",
           image: "/images/img-each-locatie-1.png",
-          soortLocaties: ["Alles"],
-          opleidings: ["Alles2", "MBO", "HBO"],
-          name: "Amsterdam",
+          soortLocaties: "Alles",
+          opleidings: "MBO",
+          city: "Amsterdam",
           adres: "Adres",
           opervlakte: "opervlakte",
           price: 495,
@@ -160,9 +204,9 @@ export default {
           id: 2,
           type: "Premium",
           image: "/images/img-each-locatie-2.jpg",
-          soortLocaties: ["Stage plaats", "Functie 1"],
-          opleidings: ["Alles2", "MBO"],
-          name: "Locatie",
+          soortLocaties: "Stage plaats",
+          opleidings: "MBO",
+          city: "Locatie",
           adres: "Adres",
           opervlakte: "opervlakte",
           price: 495,
@@ -176,9 +220,9 @@ export default {
           id: 3,
           type: "Premium",
           image: "/images/img-each-locatie-3.jpg",
-          soortLocaties: ["Stage plaats"],
-          opleidings: ["Alles2", "MBO", "HBO"],
-          name: "Locatie",
+          soortLocaties: "Stage plaats",
+          opleidings: "HBO",
+          city: "Locatie",
           adres: "Adres",
           opervlakte: "opervlakte",
           price: 680,
@@ -189,7 +233,12 @@ export default {
           rating: 9.4,
         },
       ],
-      filteredVacaturies: [],
+      isOpen: false,
+      selectedCity: "",
+      selectedMinPrice: 0,
+      selectedMaxPrice: 0,
+      selectedSoortLocatie: "",
+      selectedFunctie: "",
     };
   },
   props: {
@@ -199,66 +248,109 @@ export default {
     },
   },
   methods: {
-    filterVacaturies() {
-      // query selector
-      const nameValue = document.getElementById("name").value;
-      const soortLocatieCheckboxes = document.querySelectorAll(
-        '#soortLocatie input[type="checkbox"]'
-      );
-      // price
-      const priceMinValue = parseFloat(
-        document.getElementById("priceMin").value
-      );
-      const priceMaxValue = parseFloat(
-        document.getElementById("priceMax").value
-      );
-      // end price
-
-      const OpleidingsCheckboxes = document.querySelectorAll(
-        '#Opleidings input[type="checkbox"]'
-      );
-
-      const filteredData = this.Vacaturies.filter((vacaturie) => {
-        let isValid = true;
-
-        // by Name
-        if (nameValue && vacaturie.name !== nameValue) {
-          isValid = false;
-        }
-
-        // by type
-        soortLocatieCheckboxes.forEach((checkbox) => {
-          if (
-            checkbox.checked &&
-            !vacaturie.soortLocaties.includes(checkbox.id)
-          ) {
-            isValid = false;
-          }
-        });
-
-        // by price
-        if (!isNaN(priceMinValue) && vacaturie.price < priceMinValue) {
-          isValid = false;
-        }
-        if (!isNaN(priceMaxValue) && vacaturie.price > priceMaxValue) {
-          isValid = false;
-        }
-
-        // opleidings
-        OpleidingsCheckboxes.forEach((checkbox) => {
-          if (checkbox.checked && !vacaturie.opleidings.includes(checkbox.id)) {
-            isValid = false;
-          }
-        });
-
-        return isValid;
-      });
-
-      this.filteredVacaturies = filteredData;
+    handlePriceChange(priceData) {
+      this.selectedMinPrice = priceData.minPrice;
+      this.selectedMaxPrice = priceData.maxPrice;
+    },
+    toggleDropdown() {
+      this.isOpen = !this.isOpen;
+    },
+    selectCity(city) {
+      this.selectedCity = city;
+      // this.isOpen = false;
     },
   },
-  mounted() {
-    this.filteredVacaturies = this.Vacaturies;
+  computed: {
+    filteredData() {
+      let filteredItems = this.Vacaturies;
+
+      // filter dropdown city
+      if (this.selectedCity && this.selectedCity !== "Alles") {
+        filteredItems = filteredItems.filter(
+          (item) => item.city === this.selectedCity
+        );
+      }
+
+      // filter radio
+      if (this.selectedSoortLocatie && this.selectedSoortLocatie !== "Alles") {
+        filteredItems = filteredItems.filter(
+          (item) => item.soortLocaties === this.selectedSoortLocatie
+        );
+      }
+
+      // filter radio
+      if (this.selectedFunctie && this.selectedFunctie !== "Alles") {
+        filteredItems = filteredItems.filter(
+          (item) => item.opleidings === this.selectedFunctie
+        );
+      }
+
+      // slider range price
+      if (this.selectedMinPrice >= 0 && this.selectedMaxPrice) {
+        filteredItems = filteredItems.filter(
+          (item) =>
+            item.price >= this.selectedMinPrice &&
+            item.price <= this.selectedMaxPrice
+        );
+      }
+
+      return filteredItems;
+    },
   },
 };
 </script>
+
+<!-- <script>
+export default {
+  setup() {
+    const city = ["Utrecht", "Locatie", "Example", "Amsterdam"];
+
+    // Membuat data reaktif menggunakan ref
+    const selectedCity = ref("");
+    const selectedSoortLocatie = ref("");
+    const selectedFunctie = ref("");
+    const selectedMinPrice = ref(0);
+    const selectedMaxPrice = ref(0);
+    const filteredData = ref([]);
+
+    // Menggunakan watch untuk memantau perubahan pada properti tertentu
+    watch(
+      [
+        selectedCity,
+        selectedSoortLocatie,
+        selectedFunctie,
+        selectedMinPrice,
+        selectedMaxPrice,
+      ],
+      async () => {
+        // Melakukan permintaan data ke API ketika properti terpilih berubah
+        try {
+          const response = await axios.get("url_api", {
+            params: {
+              city: selectedCity.value,
+              soortLocatie: selectedSoortLocatie.value,
+              functie: selectedFunctie.value,
+              minPrice: selectedMinPrice.value,
+              maxPrice: selectedMaxPrice.value,
+            },
+          });
+          // Memperbarui data yang difilter dengan hasil respons dari API
+          filteredData.value = response.data;
+        } catch (error) {
+          console.error("Gagal mengambil data dari API:", error);
+        }
+      }
+    );
+
+    // Mengembalikan data dan metode yang diperlukan ke dalam template
+    return {
+      selectedCity,
+      selectedSoortLocatie,
+      selectedFunctie,
+      selectedMinPrice,
+      selectedMaxPrice,
+      filteredData,
+    };
+  },
+};
+</script> -->

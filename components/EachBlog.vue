@@ -1,7 +1,7 @@
 <template>
   <section>
     <span
-      class="bg-tertiary absolute top-0 z-[-99] h-[50%] w-full max-h-[415px]"
+      class="bg-tertiary absolute top-0 z-[-99] h-[30%] sm:h-[50%] w-full max-h-[415px]"
     ></span>
     <div class="lg:container-custom mx-10 flex flex-col py-10 lg:py-20">
       <h1 class="text-primary text-[18px] sm:text-[20px] md:text-[30px]">
@@ -18,8 +18,8 @@
         class="max-w-[1140px] rounded-lg"
       />
       <!-- author small screen -->
-      <div class="block lg:hidden my-3 min-[400px]:my-5 sm:my-7">
-        <div class="flex items-center max-h-[150px] overflow-hidden">
+      <div class="block lg:hidden my-3 min-[400px]:my-5 sm:my-7 p-3">
+        <div class="flex items-center max-h-[150px] overflow-hidden shadow-sm">
           <img
             src="/images/author.png"
             alt="author"
@@ -167,43 +167,87 @@
             ontwikkelen van nieuwe ideeën en het versnellen van groei.
           </p>
           <!-- comment -->
-          <div class="flex mt-10 gap-5 items-center sm:items-start">
+          <div
+            class="flex mt-10 gap-5 items-center sm:items-start p-2 shadow-md rounded-lg"
+            v-for="DataComment in DataComments.slice(0, 1)"
+            :key="DataComment.id"
+          >
             <img
-              src="/images/person-comment-1.png"
+              :src="`/images/${DataComment.image}`"
               alt="person-comment-1"
               class="object-cover max-w-[100px] max-h-[100px]"
             />
             <div class="flex flex-col gap-2 md:gap-4">
               <h3 class="text-[#121416] text-[20px] md:text-[24px]">
-                Luci Avetisyan
+                {{ DataComment.name }}
               </h3>
               <p class="text-[#6D767E] text-[14px] lg:text-[18px]">
-                Sed cras nec a nulla sapien adipiscing ut etiam. In sem viverra
-                mollis metus quam adipiscing vel nascetur condimentum felis
-                sapien. Pede consequat laoreet enim sit aliquet mollis semper.
+                {{ DataComment.comment }}
               </p>
               <div class="flex gap-2 mt-2">
-                <NuxtLink to="/"
+                <NuxtLink :to="DataComment.behance"
                   ><img src="/images/behance.svg" alt="behance" />
                 </NuxtLink>
-                <NuxtLink to="/"
+                <NuxtLink :to="DataComment.myspace"
                   ><img src="/images/myspace.svg" alt="myspace"
                 /></NuxtLink>
-                <NuxtLink to="/">
+                <NuxtLink :to="DataComment.medium">
                   <img src="/images/medium.svg" alt="medium" />
                 </NuxtLink>
-                <NuxtLink to="/">
+                <NuxtLink :to="DataComment.github">
                   <img src="/images/github.svg" alt="github" />
                 </NuxtLink>
               </div>
             </div>
           </div>
           <div class="flex justify-center">
-            <ButtonPrimary
+            <!-- <ButtonPrimary
               buttonTitle="Schrijf een reactie"
               buttonLink="/"
               class="mt-10 max-w-[300px]"
-            />
+            /> -->
+            <div
+              class="flex mt-10 gap-5 items-center sm:items-start p-2 shadow-md rounded-lg transition"
+              v-for="DataComment in DataComments"
+              :key="DataComment.id"
+              v-if="showMore"
+            >
+              <img
+                :src="`/images/${DataComment.image}`"
+                alt="person-comment-1"
+                class="object-cover max-w-[100px] max-h-[100px]"
+              />
+              <div class="flex flex-col gap-2 md:gap-4">
+                <h3 class="text-[#121416] text-[20px] md:text-[24px]">
+                  {{ DataComment.name }}
+                </h3>
+                <p class="text-[#6D767E] text-[14px] lg:text-[18px]">
+                  {{ DataComment.comment }}
+                </p>
+                <div class="flex gap-2 mt-2">
+                  <NuxtLink :to="DataComment.behance"
+                    ><img src="/images/behance.svg" alt="behance" />
+                  </NuxtLink>
+                  <NuxtLink :to="DataComment.myspace"
+                    ><img src="/images/myspace.svg" alt="myspace"
+                  /></NuxtLink>
+                  <NuxtLink :to="DataComment.medium">
+                    <img src="/images/medium.svg" alt="medium" />
+                  </NuxtLink>
+                  <NuxtLink :to="DataComment.github">
+                    <img src="/images/github.svg" alt="github" />
+                  </NuxtLink>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center">
+            <button
+              @click="showMore = !showMore"
+              class="bg-primary max-w-[300px] mt-10 focus:outline-none rounded-full text-white p-3 hover:bg-secondary transition"
+            >
+              {{ showMore ? "Tampilkan lebih sedikit" : "Schrijf een reactie" }}
+            </button>
           </div>
         </div>
         <!-- author -->
@@ -249,7 +293,21 @@
 export default {
   data() {
     return {
+      showMore: false,
       maxWord: 20,
+      DataComments: [
+        {
+          id: 1,
+          name: "Luci Avetisyan",
+          image: "person-comment-1.png",
+          comment:
+            "Sed cras nec a nulla sapien adipiscing ut etiam. In sem viverra mollis metus quam adipiscing vel nascetur condimentum felis sapien. Pede consequat laoreet enim sit aliquet mollis semper.",
+          behance: "/",
+          myspace: "/",
+          medium: "/",
+          github: "/",
+        },
+      ],
     };
   },
 };

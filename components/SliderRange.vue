@@ -118,6 +118,10 @@ export default {
     updatePrice() {
       this.localMinPrice = this.localMinRange;
       this.localMaxPrice = this.localMaxRange;
+      this.$emit("price-change", {
+        minPrice: this.localMinPrice,
+        maxPrice: this.localMaxPrice,
+      });
     },
   },
 };

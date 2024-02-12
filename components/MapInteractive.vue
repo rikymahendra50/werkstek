@@ -274,7 +274,6 @@ export default {
           this.showInfoWindow(location.lat, location.lng, location);
         });
       } else {
-        console.log("Sorry, the location you selected is not available");
         alert("Sorry, the location you selected is not available");
       }
     },

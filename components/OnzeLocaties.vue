@@ -1,187 +1,3 @@
-<!-- <template>
-  <section class="py-20">
-    <TitleHeader
-      title="Onze locaties"
-      secondTitle="Bekijk al onze locaties"
-      description="Op deze locaties hebben we kantoorruimtes"
-    />
-    <div class="container-custom flex flex-col lg:flex-row" v-if="showLocaties">
-      <div class="w-full lg:w-[35%]">
-        <form id="filterForm">
-          <label id="city" class="text-base opacity-50">Kies een locatie</label>
-          <details id="name" class="dropdown">
-            <summary
-              class="m-1 btn bg-[white] normal-case font-normal w-[300px] max-w-[90%] justify-between"
-            >
-              <div class="flex items-center">
-                <img src="/images/location.svg" class="pl-1 pr-3" />
-                <span>Chose Location</span>
-              </div>
-              <img src="/images/arrow-down.svg" class="p-1" />
-            </summary>
-            <ul
-              class="shadow menu dropdown-content z-[1] bg-white rounded-[8px] w-[90%]"
-            >
-              <li
-                v-for="location in eachLocaties"
-                :key="location.id"
-                class="my-1 p-2 text-md cursor-pointer hover:bg-primary hover:text-white transition rounded-md"
-              >
-                {{ location.name }}
-              </li>
-            </ul>
-          </details>
-          <div class="flex flex-col">
-            <p class="text-base mt-3 opacity-50 pb-3">Soort locatie</p>
-            <div class="grid grid-cols-2 grid-rows-2 gap-2">
-              <Checkbox
-                v-for="(soortlocati, index) in soortLocaties"
-                :key="index"
-                :titleCheckBox="soortlocati.name"
-                v-model="soortlocati.checked"
-                @click="selectSoort(soortlocati)"
-              />
-            </div>
-            <SliderRange
-              title="De prijs per maand"
-              :minPrice="250"
-              :maxPrice="850"
-              :minRange="250"
-              :maxRange="850"
-              :priceGap="500"
-              class="my-2"
-            />
-            <div class="w-[80%]">
-              <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
-              <div class="flex my-2">
-                <div class="w-[50%] relative">
-                  <input
-                    type="text"
-                    placeholder="Min"
-                    class="input input-bordered w-[90%] p-[10px] mr-2 input-md"
-                  />
-                  <span class="absolute top-3 right-9">m<sup>2</sup></span>
-                </div>
-                <div class="w-[50%] relative">
-                  <input
-                    type="text"
-                    placeholder="Max"
-                    class="input input-bordered w-[90%] p-[10px] input-md"
-                  />
-                  <span class="absolute top-3 right-9">m<sup>2</sup></span>
-                </div>
-              </div>
-            </div>
-            <p class="my-3">-</p>
-            <div class="flex justify-between">
-              <div class="flex flex-col w-[33%] gap-2">
-                <Checkbox titleCheckBox="Wifi" />
-                <Checkbox titleCheckBox="Parkeerplaats" />
-                <Checkbox titleCheckBox="Receptie" />
-                <Checkbox titleCheckBox="Koffiebar" />
-              </div>
-              <div class="flex flex-col w-[67%] gap-2">
-                <Checkbox titleCheckBox="Keuken" />
-                <Checkbox titleCheckBox="Vlakbij het treinstation" />
-                <Checkbox titleCheckBox="Loungeplekken" />
-                <Checkbox titleCheckBox="Vergaderruimtes met videoschermen" />
-              </div>
-            </div>
-            <div class="mt-5">
-              <img src="/images/filter-icon.svg" alt="filter" class="w-8 h-8" />
-              <p class="text-base mt-3 opacity-50">Meer filter opties</p>
-            </div>
-            <Map />
-          </div>
-        </form>
-      </div>
-      <div
-        class="py-5 lg:w-[65%] overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col"
-      >
-        <eachLocaties
-          v-for="item in eachLocaties"
-          :key="item.id"
-          :link="item.detailLink"
-          :image="item.image"
-          :rating="item.rating"
-          :type="item.type"
-          :locatie="item.locatie"
-          :adres="item.adres"
-          :phoneNumber="item.phoneNumber"
-          :pricePerMonth="item.pricePerMonth"
-          :mailAdres="item.mailAdres"
-          :detailLinkTitle="item.detailLinkTitle"
-          :opervlakte="item.opervlakte"
-        />
-      </div>
-    </div>
-  </section>
-</template>
-<-- <script>
-export default {
-  data() {
-    return {
-      eachLocaties: [
-        {
-          id: 1,
-          name: "Utrecht",
-          soortLocatie: "alles",
-          image: "/images/img-each-locatie-1.png",
-          type: "Regular",
-          locatie: "Utrecht",
-          adres: "Adres",
-          opervlakte: "Opervlakte",
-          pricePerMonth: "€ 495 p/maand",
-          phoneNumber: "+31302393838",
-          mailAdres: "Mail adres",
-          detailLinkTitle: "Neem een kijkje",
-          detailLink: "/onze-locaties/rikymahendra",
-          rating: 9.4,
-        },
-        {
-          id: 2,
-          name: "Locatie",
-          soortlocatie: "Anders",
-          image: "/images/img-each-locatie-2.jpg",
-          type: "Premium",
-          locatie: "Locatie",
-          adres: "Adres",
-          opervlakte: "Opervlakte",
-          pricePerMonth: "€ 495 p/maand",
-          phoneNumber: "+31302393838",
-          mailAdres: "Mail adres",
-          detailLinkTitle: "Neem een kijkje",
-          detailLink: "/onze-locaties/rikymahendra",
-          rating: 9.4,
-        },
-        {
-          id: 3,
-          name: "Locatie",
-          soortlocatie: "Kantoorruimte",
-          image: "/images/img-each-locatie-3.jpg",
-          type: "Premium",
-          locatie: "Locatie",
-          adres: "Adres",
-          opervlakte: "Opervlakte",
-          pricePerMonth: "€ 495 p/maand",
-          phoneNumber: "+31302393838",
-          mailAdres: "Mail adres",
-          detailLinkTitle: "Neem een kijkje",
-          detailLink: "/onze-locaties/rikymahendra",
-          rating: 9.4,
-        },
-      ],
-    };
-  },
-  props: {
-    showLocaties: {
-      type: Boolean,
-      default: true,
-    },
-  },
-};
-</script> -->
-
 <template>
   <section class="py-20">
     <TitleHeader
@@ -189,48 +5,98 @@ export default {
       secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-    <div class="container-custom flex flex-col lg:flex-row" v-if="showLocaties">
-      <div class="w-full lg:w-[35%]">
+    <div class="container-custom grid lg:grid-cols-12 gap-2">
+      <div class="w-full lg:col-span-4">
         <!-- city -->
-        <label class="text-base opacity-50">Kies een locatie</label>
-        <select id="name" @change="filterLocaties">
-          <option value="" class="text-sm flex items-center p-5">All</option>
-          <option
-            v-for="locatie in Locaties"
-            :key="locatie.name"
-            :value="locatie.name"
+        <form class="flex flex-col">
+          <span class="text-base opacity-50">Kies een locatie</span>
+          <!-- <select
+            id="kota"
+            v-model="selectedCity"
+            class="border p-2 rounded-lg w-[80%] px-3"
           >
-            {{ locatie.name }}
-          </option>
-        </select>
-        <br />
+            <option value="">Alles</option>
+            <option
+              class="text-sm flex items-center p-5"
+              v-for="(item, index) in city"
+              :key="index"
+            >
+              {{ item }}
+            </option>
+          </select> -->
+          <details class="dropdown" @toggle="toggleDropdown">
+            <summary
+              class="m-1 btn bg-[white] normal-case font-normal w-[300px] max-w-[90%] justify-between"
+            >
+              <div class="flex items-center">
+                <img src="/images/location.svg" class="pl-1 pr-3" />
+                {{ selectedCity || "Alles" }}
+              </div>
+              <img src="/images/arrow-down.svg" class="p-1" />
+            </summary>
+            <ul
+              class="p-2 shadow menu dropdown-content z-[1] bg-white rounded-[8px] w-[90%]"
+              v-if="isOpen"
+            >
+              <li
+                class="py-1 text-md"
+                v-for="(item, index) in city"
+                :key="index"
+              >
+                <option @click="selectCity(item)">{{ item }}</option>
+              </li>
+            </ul>
+          </details>
+        </form>
         <!-- end city -->
         <div class="flex flex-col">
           <!-- soort Locatie -->
           <p class="text-base mt-3 opacity-50 pb-3">Soort locatie</p>
-          <fieldset
-            id="soortLocatie"
-            class="grid grid-cols-2 grid-rows-2 gap-2"
-          >
-            <Checkbox
-              v-for="soortlocati in checkbox.soortLocaties"
-              :key="soortlocati.id"
-              :id="soortlocati.id"
-              :titleCheckBox="soortlocati.name"
-              @change="filterLocaties"
-            />
+          <fieldset id="soortLocatie" class="grid grid-cols-2 gap-2">
+            <div class="flex items-center gap-2 cursor-pointer">
+              <input
+                id="Alles"
+                value="Alles"
+                type="radio"
+                v-model="selectedSoortLocatie"
+                name="soort"
+              />
+              <label for="Alles" class="cursor-pointer">Alles</label>
+            </div>
+            <div class="flex items-center gap-2 cursor-pointer">
+              <input
+                id="Anders"
+                type="radio"
+                value="Anders"
+                v-model="selectedSoortLocatie"
+                name="soort"
+              />
+              <label for="Anders" class="cursor-pointer">Anders</label>
+            </div>
+            <div class="flex items-center gap-2 cursor-pointer">
+              <input
+                id="Kantoorruimte"
+                type="radio"
+                value="Kantoorruimte"
+                v-model="selectedSoortLocatie"
+                name="soort"
+              />
+              <label for="Kantoorruimte" class="cursor-pointer"
+                >Kantoorruimte</label
+              >
+            </div>
           </fieldset>
           <SliderRange
-            title="De prijs per maand"
-            idInputMin="priceMin"
-            idInputMax="priceMax"
+            :title="'De prijs per maand'"
+            :idInputMin="'priceMin'"
+            :idInputMax="'priceMax'"
             :minPrice="0"
             :maxPrice="1000"
             :minRange="0"
             :maxRange="850"
             :priceGap="100"
             class="my-2"
-            @input="filterLocaties"
+            @price-change="handlePriceChange"
           />
           <div class="w-full">
             <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
@@ -242,7 +108,7 @@ export default {
                   placeholder="Min"
                   min="0"
                   class="input input-bordered w-[90%] p-[10px] mr-2 input-md"
-                  @input="filterLocaties"
+                  v-model="selectedMeterMin"
                 /><br />
                 <span class="absolute top-3 right-14">m<sup>2</sup></span>
               </div>
@@ -253,63 +119,87 @@ export default {
                   min="0"
                   placeholder="Max"
                   class="input input-bordered w-[90%] p-[10px] mr-2 input-md"
-                  @input="filterLocaties"
+                  v-model="selectedMeterMax"
                 /><br />
                 <span class="absolute top-3 right-14">m<sup>2</sup></span>
               </div>
             </div>
             <p class="my-3">-</p>
-            <div class="flex justify-between gap-2 text-sm sm:text-base">
+            <div
+              class="flex justify-between gap-2 text-sm sm:text-base w-[95%]"
+            >
               <div class="flex flex-col">
-                <fieldset id="functie">
-                  <Checkbox
-                    v-for="soortlocati in checkbox.functie.slice(0, 4)"
-                    :key="soortlocati.id"
-                    :id="soortlocati.id"
-                    :titleCheckBox="soortlocati.name"
-                    @change="filterLocaties"
-                    class="mt-2"
-                  />
+                <fieldset id="functie" class="flex flex-col gap-2">
+                  <div
+                    class="flex justify-start items-center"
+                    v-for="item in functieCheckbox.slice(0, 4)"
+                    :key="item.id"
+                  >
+                    <input
+                      type="checkbox"
+                      :id="item.name"
+                      :value="item.name"
+                      class="mr-2 pt-[0.7px]"
+                      v-model="selectedFunctie"
+                    />
+                    <label :for="item.name" class="cursor-pointer">{{
+                      item.name
+                    }}</label>
+                  </div>
                 </fieldset>
               </div>
               <div class="flex flex-col">
-                <Checkbox
-                  v-for="soortlocati in checkbox.functie.slice(4, 8)"
-                  :key="soortlocati.id"
-                  :id="soortlocati.id"
-                  :titleCheckBox="soortlocati.name"
-                  @change="filterLocaties"
-                  class="mt-2"
-                />
+                <fieldset id="functie" class="flex flex-col gap-2">
+                  <div
+                    class="flex justify-start items-center"
+                    v-for="item in functieCheckbox.slice(4, 8)"
+                    :key="item.id"
+                  >
+                    <input
+                      type="checkbox"
+                      :id="item.name"
+                      :value="item.name"
+                      class="mr-2 pt-[0.7px]"
+                      v-model="selectedFunctie"
+                    />
+                    <label :for="item.name" class="cursor-pointer">{{
+                      item.name
+                    }}</label>
+                  </div>
+                </fieldset>
               </div>
             </div>
             <div class="mt-5">
-              <img src="/images/filter-icon.svg" alt="filter" class="w-8 h-8" />
-              <p class="text-base mt-3 opacity-50">Meer filter opties</p>
+              <img src="/images/filter-icon.svg" class="w-5 h-5 my-4" />
+              <p class="text-base opacity-50">Meer filter opties</p>
             </div>
             <Map />
           </div>
         </div>
       </div>
       <div
-        id="locatieList"
-        class="py-5 lg:w-[65%] overflow-auto max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
+        class="lg:col-span-8 py-5 overflow-auto max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
       >
-        <eachLocaties
-          v-for="locatie in filteredLocaties"
-          :key="locatie.id"
-          :name="locatie.name"
-          :link="locatie.detailLink"
-          :image="locatie.image"
-          :rating="locatie.rating"
-          :type="locatie.type"
-          :adres="locatie.adres"
-          :phoneNumber="locatie.phoneNumber"
-          :price="locatie.price"
-          :mailAdres="locatie.mailAdres"
-          :detailLinkTitle="locatie.detailLinkTitle"
-          :opervlakte="locatie.opervlakte"
-        />
+        <div v-if="filteredData.length > 0">
+          <eachLocaties
+            v-for="locatie in filteredData"
+            :key="locatie.id"
+            :city="locatie.city"
+            :link="locatie.detailLink"
+            :image="locatie.image"
+            :rating="locatie.rating"
+            :type="locatie.type"
+            :adres="locatie.adres"
+            :phoneNumber="locatie.phoneNumber"
+            :price="locatie.price"
+            :mailAdres="locatie.mailAdres"
+            :detailLinkTitle="locatie.detailLinkTitle"
+            :opervlakte="locatie.opervlakte"
+          />
+        </div>
+        <div v-else>
+          <div class="flex items-center justify-center">No item selected</div>
+        </div>
       </div>
     </div>
   </section>
@@ -330,65 +220,65 @@ export default {
 export default {
   data() {
     return {
-      checkbox: {
-        soortLocaties: [
-          {
-            id: 1,
-            name: "Alles",
-          },
-          {
-            id: 2,
-            name: "Anders",
-          },
-          {
-            id: 3,
-            name: "Kantoorruimte",
-          },
-        ],
-        functie: [
-          {
-            id: 9,
-            name: "Wifi",
-          },
-          {
-            id: 10,
-            name: "Parkeerplaats",
-          },
-          {
-            id: 11,
-            name: "Receptie",
-          },
-          {
-            id: 12,
-            name: "Koffiebar",
-          },
-          {
-            id: 13,
-            name: "Keuken",
-          },
-          {
-            id: 14,
-            name: "Vlakbij het treinstation",
-          },
-          {
-            id: 15,
-            name: "Loungeplekken",
-          },
-          {
-            id: 16,
-            name: "Vergaderruimtes met videoschermen",
-          },
-        ],
-      },
+      city: ["Alles", "Utrecht", "Locatie", "Example", "Amsterdam"],
+      soortLocatiesRadio: [
+        {
+          id: 1,
+          name: "Alles",
+        },
+        {
+          id: 2,
+          name: "Anders",
+        },
+        {
+          id: 3,
+          name: "Kantoorruimte",
+        },
+      ],
+      functieCheckbox: [
+        {
+          id: 9,
+          name: "Wifi",
+        },
+        {
+          id: 10,
+          name: "Parkeerplaats",
+        },
+        {
+          id: 11,
+          name: "Receptie",
+        },
+        {
+          id: 12,
+          name: "Koffiebar",
+        },
+        {
+          id: 13,
+          name: "Keuken",
+        },
+        {
+          id: 14,
+          name: "Vlakbij het treinstation",
+        },
+        {
+          id: 15,
+          name: "Loungeplekken",
+        },
+        {
+          id: 16,
+          name: "Vergaderruimtes met videoschermen",
+        },
+      ],
       Locaties: [
         {
           id: 1,
-          name: "Utrecht",
-          soortLocaties: ["Alles", "Anders"],
+          city: "Utrecht",
+          soortLocaties: "Anders",
           deopervlakte: 19,
           price: 320,
           functie: ["Wifi", "Parkeerplaats"],
-          image: "/images/img-each-locatie-3.jpg",
+          coordinate: 0,
+          image: "/images/img-each-locatie-1.png",
           type: "Premium",
           adres: "Adres",
           opervlakte: "Opervlakte",
@@ -400,12 +290,13 @@ export default {
         },
         {
           id: 2,
-          name: "Locatie",
-          soortLocaties: ["Anders", "Alles"],
+          city: "Locatie",
+          soortLocaties: "Alles",
           price: 100,
           deopervlakte: 20,
           functie: ["Wifi", "Parkeerplaats", "Loungeplekken"],
-          image: "/images/img-each-locatie-3.jpg",
+          coordinate: 0,
+          image: "/images/img-each-locatie-2.jpg",
           type: "Premium",
           adres: "Adres",
           opervlakte: "Opervlakte",
@@ -417,8 +308,8 @@ export default {
         },
         {
           id: 3,
-          name: "Locatie",
-          soortLocaties: ["Anders"],
+          city: "Example",
+          soortLocaties: "Anders",
           price: 120,
           deopervlakte: 23,
           functie: [
@@ -428,6 +319,7 @@ export default {
             "Loungeplekken",
             "Koffiebar",
           ],
+          coordinate: 0,
           image: "/images/img-each-locatie-3.jpg",
           type: "Premium",
           adres: "Adres",
@@ -440,12 +332,12 @@ export default {
         },
         {
           id: 4,
-          name: "Amsterdam",
-          soortLocaties: ["Alles"],
+          city: "Amsterdam",
+          soortLocaties: "Alles",
           price: 100,
           deopervlakte: 25,
           functie: ["Loungeplekken", "Loungeplekken", "Koffiebar"],
-          image: "/images/img-each-locatie-3.jpg",
+          image: "/images/img-each-locatie-1.png",
           type: "Premium",
           adres: "Adres",
           opervlakte: "Opervlakte",
@@ -456,94 +348,87 @@ export default {
           rating: 9.4,
         },
       ],
-      filteredLocaties: [],
+      isOpen: false,
+      selectedCity: "",
+      selectedMeterMin: null,
+      selectedMeterMax: null,
+      selectedMinPrice: 0,
+      selectedMaxPrice: 0,
+      selectedSoortLocatie: "",
+      selectedFunctie: [],
     };
   },
-  props: {
-    showLocaties: {
-      type: Boolean,
-      default: true,
-    },
-  },
   methods: {
-    filterLocaties() {
-      // query selector
-      const nameValue = document.getElementById("name").value;
-      const priceMinValue = parseFloat(
-        document.getElementById("priceMin").value
-      );
-      const priceMaxValue = parseFloat(
-        document.getElementById("priceMax").value
-      );
-      const deopervlakteMinValue = parseFloat(
-        document.getElementById("deopervlakteMin").value
-      );
-      const deopervlakteMaxValue = parseFloat(
-        document.getElementById("deopervlakteMax").value
-      );
-      const soortLocatieCheckboxes = document.querySelectorAll(
-        '#soortLocatie input[type="checkbox"]'
-      );
-      const functieCheckboxes = document.querySelectorAll(
-        '#functie input[type="checkbox"]'
-      );
-
-      // function filter data
-      const filteredData = this.Locaties.filter((locatie) => {
-        let isValid = true;
-
-        // by Name
-        if (nameValue && locatie.name !== nameValue) {
-          isValid = false;
-        }
-
-        // by price
-        if (!isNaN(priceMinValue) && locatie.price < priceMinValue) {
-          isValid = false;
-        }
-        if (!isNaN(priceMaxValue) && locatie.price > priceMaxValue) {
-          isValid = false;
-        }
-
-        // by deopervlakte
-        if (
-          !isNaN(deopervlakteMinValue) &&
-          locatie.deopervlakte < deopervlakteMinValue
-        ) {
-          isValid = false;
-        }
-        if (
-          !isNaN(deopervlakteMaxValue) &&
-          locatie.deopervlakte > deopervlakteMaxValue
-        ) {
-          isValid = false;
-        }
-
-        // by type
-        soortLocatieCheckboxes.forEach((checkbox) => {
-          if (
-            checkbox.checked &&
-            !locatie.soortLocaties.includes(checkbox.id)
-          ) {
-            isValid = false;
-          }
-        });
-
-        // by functi
-        functieCheckboxes.forEach((checkbox) => {
-          if (checkbox.checked && !locatie.functie.includes(checkbox.id)) {
-            isValid = false;
-          }
-        });
-
-        return isValid;
-      });
-
-      this.filteredLocaties = filteredData;
+    toggleDropdown() {
+      // if (this.isOpen) {
+      //   this.isOpen = false;
+      // } else if (!this.isOpen) {
+      //   this.isOpen = true;
+      // }
+      this.isOpen = !this.isOpen;
+    },
+    selectCity(city) {
+      this.selectedCity = city;
+      this.isOpen = false;
+    },
+    handlePriceChange(priceData) {
+      this.selectedMinPrice = priceData.minPrice;
+      this.selectedMaxPrice = priceData.maxPrice;
     },
   },
-  mounted() {
-    this.filteredLocaties = this.Locaties;
+  computed: {
+    filteredData() {
+      let filteredItems = this.Locaties;
+
+      // filter dropdown city
+      if (this.selectedCity && this.selectedCity !== "Alles") {
+        filteredItems = filteredItems.filter(
+          (item) => item.city === this.selectedCity
+        );
+      }
+
+      // filter radio
+      if (this.selectedSoortLocatie && this.selectedSoortLocatie !== "Alles") {
+        filteredItems = filteredItems.filter(
+          (item) => item.soortLocaties === this.selectedSoortLocatie
+        );
+      }
+
+      // filter checkbox
+      if (this.selectedFunctie.length > 0) {
+        filteredItems = filteredItems.filter((item) =>
+          item.functie.some((functie) => this.selectedFunctie.includes(functie))
+        );
+      }
+
+      // slider range price
+      if (this.selectedMinPrice >= 0 && this.selectedMaxPrice) {
+        filteredItems = filteredItems.filter(
+          (item) =>
+            item.price >= this.selectedMinPrice &&
+            item.price <= this.selectedMaxPrice
+        );
+      }
+
+      // filter metermin dan metermax
+      if (this.selectedMeterMin && !this.selectedMeterMax) {
+        filteredItems = filteredItems.filter(
+          (item) => item.deopervlakte > this.selectedMeterMin
+        );
+      } else if (!this.selectedMeterMin && this.selectedMeterMax) {
+        filteredItems = filteredItems.filter(
+          (item) => item.deopervlakte <= this.selectedMeterMax
+        );
+      } else if (this.selectedMeterMin && this.selectedMeterMax) {
+        filteredItems = filteredItems.filter(
+          (item) =>
+            item.deopervlakte >= this.selectedMeterMin &&
+            item.deopervlakte <= this.selectedMeterMax
+        );
+      }
+
+      return filteredItems;
+    },
   },
 };
 </script>

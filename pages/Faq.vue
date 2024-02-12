@@ -5,6 +5,7 @@
     description="Lorem ipsum dolor sit amet, solor ut adipiscing elit. Lorem ipsum dolor sit amet, solor ut adipiscing elit."
   />
   <FaqElement />
+  <!-- {{ facilities }} -->
 </template>
 
 <script setup>
