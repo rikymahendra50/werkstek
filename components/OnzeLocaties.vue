@@ -10,20 +10,6 @@
         <!-- city -->
         <form class="flex flex-col">
           <span class="text-base opacity-50">Kies een locatie</span>
-          <!-- <select
-            id="kota"
-            v-model="selectedCity"
-            class="border p-2 rounded-lg w-[80%] px-3"
-          >
-            <option value="">Alles</option>
-            <option
-              class="text-sm flex items-center p-5"
-              v-for="(item, index) in city"
-              :key="index"
-            >
-              {{ item }}
-            </option>
-          </select> -->
           <details class="dropdown" @toggle="toggleDropdown">
             <summary
               class="m-1 btn bg-[white] normal-case font-normal w-[300px] max-w-[90%] justify-between"
@@ -34,7 +20,7 @@
                   class="pl-1 pr-3"
                   alt="location"
                 />
-                {{ selectedCity || "Alles" }}
+                {{ selectedName || "Alles" }}
               </div>
               <img src="/images/arrow-down.svg" class="p-1" alt="arrow" />
             </summary>
@@ -44,10 +30,10 @@
             >
               <li
                 class="py-1 text-md"
-                v-for="(item, index) in city"
+                v-for="(item, index) in name"
                 :key="index"
               >
-                <option @click="selectCity(item)">{{ item }}</option>
+                <option @click="selectName(item)">{{ item }}</option>
               </li>
             </ul>
           </details>
@@ -57,37 +43,20 @@
           <!-- soort Locatie -->
           <p class="text-base mt-3 opacity-50 pb-3">Soort locatie</p>
           <fieldset id="soortLocatie" class="grid grid-cols-2 gap-2">
-            <div class="flex items-center gap-2 cursor-pointer">
+            <div
+              class="flex items-center gap-2 cursor-pointer"
+              v-for="item in soortLocatiesRadio"
+            >
               <input
-                id="Alles"
-                value="Alles"
+                :id="item.id"
+                :value="item.name"
                 type="radio"
                 v-model="selectedSoortLocatie"
                 name="soort"
               />
-              <label for="Alles" class="cursor-pointer">Alles</label>
-            </div>
-            <div class="flex items-center gap-2 cursor-pointer">
-              <input
-                id="Anders"
-                type="radio"
-                value="Anders"
-                v-model="selectedSoortLocatie"
-                name="soort"
-              />
-              <label for="Anders" class="cursor-pointer">Anders</label>
-            </div>
-            <div class="flex items-center gap-2 cursor-pointer">
-              <input
-                id="Kantoorruimte"
-                type="radio"
-                value="Kantoorruimte"
-                v-model="selectedSoortLocatie"
-                name="soort"
-              />
-              <label for="Kantoorruimte" class="cursor-pointer"
-                >Kantoorruimte</label
-              >
+              <label :for="item.id" class="cursor-pointer">{{
+                item.name
+              }}</label>
             </div>
           </fieldset>
           <SliderRange
@@ -188,7 +157,7 @@
       <div
         class="lg:col-span-8 py-5 overflow-auto max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
       >
-        <div v-if="filteredData.length > 0">
+        <!-- <div v-if="filteredData.length > 0">
           <eachLocaties
             v-for="locatie in filteredData"
             :key="locatie.id"
@@ -207,10 +176,25 @@
         </div>
         <div v-else>
           <div class="flex items-center justify-center">No item selected</div>
-        </div>
-        <pre>
+        </div> -->
+        <!-- <pre>
           {{ data }}
-        </pre>
+        </pre> -->
+        <eachLocaties
+          v-for="(locatie, index) in data.data"
+          :key="locatie.id"
+          :name="locatie.name"
+          :image="locatie.image"
+          :link="locatie.link"
+          :rating="locatie.rating"
+          :type="locatie.type"
+          :adres="locatie.adres"
+          :phoneNumber="locatie.phoneNumber"
+          :price="locatie.price"
+          :mailAdres="locatie.mailAdres"
+          :detailLinkTitle="locatie.detailLinkTitle"
+          :opervlakte="locatie.opervlakte"
+        />
       </div>
     </div>
   </section>
@@ -218,7 +202,13 @@
 
 <script setup>
 const { requestOptions } = useRequestOptions();
-const city = ref(["Alles", "Utrecht", "Locatie", "Example", "Amsterdam"]);
+const { data, refresh } = useFetch(`/locations`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const name = ref(["Alles", "Utrecht", "Locatie", "Example", "Amsterdam"]);
+
 const soortLocatiesRadio = ref([
   {
     id: 1,
@@ -270,7 +260,7 @@ const functieCheckbox = ref([
 const Locaties = ref([
   {
     id: 1,
-    city: "Utrecht",
+    name: "Utrecht",
     soortLocaties: "Anders",
     deopervlakte: 19,
     price: 320,
@@ -288,7 +278,7 @@ const Locaties = ref([
   },
   {
     id: 2,
-    city: "Locatie",
+    name: "Locatie",
     soortLocaties: "Alles",
     price: 100,
     deopervlakte: 20,
@@ -306,7 +296,7 @@ const Locaties = ref([
   },
   {
     id: 3,
-    city: "Example",
+    name: "Example",
     soortLocaties: "Anders",
     price: 120,
     deopervlakte: 23,
@@ -330,7 +320,7 @@ const Locaties = ref([
   },
   {
     id: 4,
-    city: "Amsterdam",
+    name: "Amsterdam",
     soortLocaties: "Alles",
     price: 100,
     deopervlakte: 25,
@@ -347,7 +337,7 @@ const Locaties = ref([
   },
 ]);
 const isOpen = ref(false);
-const selectedCity = ref();
+const selectedName = ref();
 const selectedMeterMin = ref(null);
 const selectedMeterMax = ref(null);
 const selectedMinPrice = ref(0);
@@ -356,15 +346,10 @@ const selectedSoortLocatie = ref("");
 const selectedFunctie = ref([]);
 
 function toggleDropdown() {
-  // if (this.isOpen) {
-  //   this.isOpen = false;
-  // } else if (!this.isOpen) {
-  //   this.isOpen = true;
-  // }
   isOpen.value = !isOpen.value;
 }
-function selectCity(city) {
-  selectedCity.value = city;
+function selectName(name) {
+  selectedName.value = name;
   isOpen.value = false;
 }
 function handlePriceChange(priceData) {
@@ -376,16 +361,16 @@ const filteredData = computed(() => {
   let filteredItems = Locaties.value;
 
   // filter dropdown city
-  if (selectedCity.value && selectedCity.value !== "Alles") {
+  if (selectedName.value && selectedName.value !== "Alles") {
     filteredItems = filteredItems.filter(
-      (item) => item.city === selectedCity.value
+      (item) => item.name === selectedName.value
     );
   }
 
   // filter radio
   if (selectedSoortLocatie.value && selectedSoortLocatie.value !== "Alles") {
     filteredItems = filteredItems.filter(
-      (item) => item.soortLocaties === electedSoortLocatie.value
+      (item) => item.soortLocaties === selectedSoortLocatie.value
     );
   }
 
@@ -424,11 +409,6 @@ const filteredData = computed(() => {
 
   return filteredItems;
 });
-
-const { data, refresh } = useFetch(`/products`, {
-  method: "get",
-  ...requestOptions,
-});
 </script>
 
 <style scoped>
@@ -437,7 +417,6 @@ const { data, refresh } = useFetch(`/products`, {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-
 .scrollbar-onze::-webkit-scrollbar {
   display: none;
 }
