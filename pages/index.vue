@@ -1,6 +1,5 @@
 <template>
   <floating-whatsapp />
-
   <StatistiekLocaties
     :image="StatistiekLocatiesData.image"
     :title1="StatistiekLocatiesData.title1"
@@ -15,7 +14,7 @@
   />
   <MapInteractive class="py-10" />
   <SliderLocaties />
-  <SliderTestimony />
+  <SliderTestimony class="my-20" />
   <FourImages />
   <!-- <Blog :showTitleHeader="true" /> -->
   <BgBigGreen

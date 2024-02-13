@@ -72,7 +72,7 @@
                   :value="item.name"
                   :name="item.name"
                   class="mr-2 pt-[0.7px]"
-                  v-model="selectedTypeId"
+                  v-model="selectedSoortLocatie"
                 />
                 <label :for="item.id" class="cursor-pointer">{{
                   item.name
@@ -88,7 +88,7 @@
             :maxPrice="100000"
             :minRange="0"
             :maxRange="850"
-            :priceGap="1000"
+            :priceGap="100000"
             class="my-2"
             @price-change="handlePriceChange"
           />
@@ -230,74 +230,65 @@ export default {
     };
   },
   setup() {
+    // Membuat data reaktif menggunakan ref
+    const selectedCity = ref("");
+    const selectedSoortLocatie = ref("");
+    const selectedFunctie = ref("");
+    const selectedMinPrice = ref(0);
+    const selectedMaxPrice = ref(0);
+    const selectedMeterMin = ref();
+    const selectedMeterMax = ref();
+    const filteredData = ref([]);
+
     function handlePriceChange(priceData) {
       selectedMinPrice.value = priceData.minPrice;
       selectedMaxPrice.value = priceData.maxPrice;
     }
 
-    const selectedCity = ref("");
-    const selectedSoortLocatie = ref("");
-    const selectedFunctie = ref([]);
-    const selectedMinPrice = ref();
-    const selectedMaxPrice = ref();
-    const filteredData = ref([]);
-    // const selectedLocationId = ref([]);
-    const selectedTypeId = ref("");
-
+    // Menggunakan watch untuk memantau perubahan pada properti tertentu
     watch(
       [
         selectedCity,
         selectedSoortLocatie,
+        selectedMeterMin,
+        selectedMeterMax,
         selectedFunctie,
         selectedMinPrice,
         selectedMaxPrice,
-        // selectedLocationId,
-        selectedTypeId,
       ],
       async () => {
-        // console.log("Watch triggered");
-        // console.log("selectedTypeId value:", selectedFunctie.value);
-        if (selectedCity.value === "Alles") {
-          try {
-            const response = await axios.get(
-              "http://api-staging-werkstek.spdigitalhosting.com/api/v1/products"
-            );
-            filteredData.value = response.data;
-          } catch (error) {
-            console.error("Gagal mengambil data dari API:", error);
-          }
-          try {
-            const response = await axios.get(
-              "http://api-staging-werkstek.spdigitalhosting.com/api/v1/products",
-              {
-                params: {
-                  "filter[search]": selectedCity.value,
-                  "filter[min_price]": selectedMinPrice.value,
-                  "filter[max_price]": selectedMaxPrice.value,
-                  // "filter[location_id]": selectedLocationId.value,
-                  "filter[productFacility.facility_id]": selectedFunctie.value,
-                  "filter[type_id]": selectedTypeId.value,
-                },
-              }
-            );
-            // Memperbarui data yang difilter dengan hasil respons dari API
-            filteredData.value = response.data;
-          } catch (error) {
-            console.error("Gagal mengambil data dari API:", error);
-          }
+        await new Promise((resolve) => setTimeout(resolve, 900));
+        try {
+          const response = await axios.get(
+            "http://api-staging-werkstek.spdigitalhosting.com/api/v1/products",
+            {
+              params: {
+                "filter[search]": selectedCity.value,
+                "filter[min_price]": selectedMinPrice.value,
+                "filter[max_price]": selectedMaxPrice.value,
+                "filter[min_area]": selectedMeterMin.value,
+                "filter[max_area]": selectedMeterMax.value,
+                // "filter[location_id]": selectedLocationId.value,
+                // "filter[type_id]": selectedTypeId.value,
+              },
+            }
+          );
+          filteredData.value = response.data;
+        } catch (error) {
+          console.error("Failed to retrieve data from API:", error);
         }
       }
     );
-    // Mengembalikan data dan metode yang diperlukan ke dalam template
     return {
       selectedCity,
+      handlePriceChange,
+      selectedMeterMin,
+      selectedMeterMax,
       selectedSoortLocatie,
       selectedFunctie,
       selectedMinPrice,
       selectedMaxPrice,
       filteredData,
-      selectedTypeId,
-      handlePriceChange,
     };
   },
   mounted() {

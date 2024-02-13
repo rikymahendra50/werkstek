@@ -16,11 +16,11 @@
                 <span class="label-text">Locatie</span>
               </label>
               <select class="select select-bordered" v-model="selectedCity">
-                <option disabled selected>Locatie</option>
                 <option
                   class="text-sm flex items-center p-5"
                   v-for="(item, index) in city"
                   :key="index"
+                  :value="item"
                 >
                   {{ item }}
                 </option>
@@ -171,7 +171,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      city: ["Alles", "Simon Stevinweg 27", "Antareslaan 65", "Computerweg 1"],
+      city: ["Simon Stevinweg 27", "Antareslaan 65", "Computerweg 1"],
       soortLocatiesRadio: [
         {
           id: 1,
@@ -237,8 +237,6 @@ export default {
     const selectedMeterMax = ref();
     const filteredData = ref([]);
 
-    console.log(selectedMaxPrice.value);
-
     function handlePriceChange(priceData) {
       selectedMinPrice.value = priceData.minPrice;
       selectedMaxPrice.value = priceData.maxPrice;
@@ -264,8 +262,8 @@ export default {
                 "filter[search]": selectedCity.value,
                 "filter[min_price]": selectedMinPrice.value,
                 "filter[max_price]": selectedMaxPrice.value,
-                // "filter[min_area]": selectedMeterMin.value,
-                // "filter[max_area]": selectedMeterMax.value,
+                "filter[min_area]": selectedMeterMin.value,
+                "filter[max_area]": selectedMeterMax.value,
                 // "filter[location_id]": selectedLocationId.value,
                 // "filter[type_id]": selectedTypeId.value,
               },
