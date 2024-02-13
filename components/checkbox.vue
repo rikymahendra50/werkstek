@@ -5,7 +5,7 @@
       titleCheckBox
     }}</label>
   </div> -->
-  <input
+  <!-- <input
     type="checkbox"
     v-model="writeableComputed"
     :value="eachValue"
@@ -58,4 +58,5 @@ const writeableComputed = computed({
     emit("update:modelValue", value);
   },
 });
-</script>
+</script> -->
+</template>

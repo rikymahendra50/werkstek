@@ -1,39 +1,62 @@
+<style scoped>
+.scrollbar-onze {
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-onze::-webkit-scrollbar {
+  display: none;
+}
+</style>
 <template>
   <section class="py-20">
     <TitleHeader
-      title="Onze Vacaturies"
-      secondTitle="Bekijk al onze Vacaturies"
+      title="Onze locaties"
+      secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-    <div class="lg:grid lg:grid-cols-12 container-custom">
-      <div class="w-full col-span-4">
-        <!-- filter -->
-        <span class="text-base opacity-50">Kies een locatie</span>
-        <form id="filterForm">
-          <details class="dropdown" @toggle="toggleDropdown">
-            <summary
-              class="m-1 btn bg-[white] normal-case font-normal w-[300px] max-w-[90%] justify-between"
+    <div class="grid md:grid-cols-12 container-custom">
+      <div class="md:col-span-4">
+        <!-- <span class="text-base mt-3 opacity-50 mb-2">Kies een locatie</span>
+        <div id="filterForm" class="flex-col flex form-control max-w-xs">
+          <label class="label">
+            <span class="label-text">Pick the best fantasy franchise</span>
+          </label>
+          <select
+            id="kota"
+            class="select select-bordered dropdown"
+            v-model="selectedCity"
+          >
+            <option
+              class="text-sm flex items-center p-5"
+              v-for="(item, index) in city"
+              :key="index"
+              :value="item"
             >
-              <div class="flex items-center">
-                <img src="/images/location.svg" class="pl-1 pr-3" />
-                {{ selectedName || "Alles" }}
-              </div>
-              <img src="/images/arrow-down.svg" class="p-1" />
-            </summary>
-            <ul
-              class="p-2 shadow menu dropdown-content z-[1] bg-white rounded-[8px] w-[90%]"
-              v-if="isOpen"
+              {{ item }}
+            </option>
+          </select>
+        </div> -->
+        <span class="text-base mt-3 opacity-50">Kies een locatie</span>
+        <div class="flex-col form-control max-w-xs mt-2">
+          <select
+            id="kota"
+            class="select select-bordered dropdown"
+            v-model="selectedCity"
+          >
+            <option disabled selected>Alles</option>
+            <option
+              class="text-sm flex items-center p-5"
+              v-for="(item, index) in city"
+              :key="index"
+              :value="item"
             >
-              <li
-                class="py-1 text-md"
-                v-for="(item, index) in name"
-                :key="index"
-              >
-                <option @click="selectName(item)">{{ item }}</option>
-              </li>
-            </ul>
-          </details>
-        </form>
+              {{ item }}
+            </option>
+          </select>
+        </div>
+
         <div class="flex flex-col">
           <p class="text-base mt-3 opacity-50 mb-2">Soort locatie</p>
           <div class="flex flex-col">
@@ -62,11 +85,11 @@
             :idInputMin="'priceMin'"
             :idInputMax="'priceMax'"
             :minPrice="0"
-            :maxPrice="1000"
+            :maxPrice="100000"
             :minRange="0"
             :maxRange="850"
-            :priceGap="100"
-            class="my-2 w-[80%]"
+            :priceGap="1000"
+            class="my-2"
             @price-change="handlePriceChange"
           />
           <p class="text-base mt-3 opacity-50 mb-2">Opleidings niveau</p>
@@ -81,11 +104,32 @@
                 <fieldset id="functie" class="flex flex-col gap-2">
                   <div
                     class="flex justify-start items-center"
-                    v-for="item in opleidings"
+                    v-for="item in opleidings.slice(0, 4)"
                     :key="item.id"
                   >
                     <input
-                      type="radio"
+                      type="checkbox"
+                      :id="item.id"
+                      :value="item.name"
+                      :name="item.name"
+                      class="mr-2 pt-[0.7px]"
+                      v-model="selectedFunctie"
+                    />
+                    <label :for="item.id" class="cursor-pointer">{{
+                      item.name
+                    }}</label>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="flex flex-col">
+                <fieldset id="functie" class="flex flex-col gap-2">
+                  <div
+                    class="flex justify-start items-center"
+                    v-for="item in opleidings.slice(4, 8)"
+                    :key="item.id"
+                  >
+                    <input
+                      type="checkbox"
                       :id="item.id"
                       :value="item.name"
                       :name="item.name"
@@ -105,130 +149,164 @@
         </div>
       </div>
       <div
-        class="py-5 col-span-8 overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col scrollbar-onze"
+        class="py-5 md:col-span-8 overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col scrollbar-onze"
       >
-        <!-- data -->
         <eachLocaties
-          v-for="(item, index) in data.data"
+          v-for="(item, index) in filteredData.data"
           :key="item.id"
           :name="item.name"
-          :image="item.image"
-          :price="parseFloat(item.price)"
           :link="item.slug"
+          :price="item.price"
+          :image="
+            item.images.find((image, imageIndex) => imageIndex === index)?.image
+          "
+          :rating="item.is_saleable"
         />
       </div>
     </div>
   </section>
 </template>
 
-<script setup>
-const { requestOptions } = useRequestOptions();
-const { data, refresh } = useFetch(`/products`, {
-  method: "get",
-  ...requestOptions,
-});
+<script>
+import { ref, watch } from "vue";
+import axios from "axios";
 
-const name = ref([
-  "Alles",
-  "Simon Stevinweg 27",
-  "Locatie",
-  "Example",
-  "Amsterdam",
-]);
-
-const soortLocatiesRadio = ref([
-  {
-    id: 1,
-    name: "Alles",
+export default {
+  data() {
+    return {
+      city: ["Alles", "Simon Stevinweg 27", "Antareslaan 65", "Computerweg 1"],
+      soortLocatiesRadio: [
+        {
+          id: 1,
+          name: "Alles",
+        },
+        {
+          id: 2,
+          name: "Stage Plaats",
+        },
+        {
+          id: 3,
+          name: "Functie 1",
+        },
+        {
+          id: 4,
+          name: "Functie 2",
+        },
+      ],
+      opleidings: [
+        {
+          id: 9,
+          name: "Wifi",
+        },
+        {
+          id: 10,
+          name: "Parkeerplaats",
+        },
+        {
+          id: 11,
+          name: "Receptie",
+        },
+        {
+          id: 12,
+          name: "Koffiebar",
+        },
+        {
+          id: 13,
+          name: "Keuken",
+        },
+        {
+          id: 14,
+          name: "Vlakbij het treinstation",
+        },
+        {
+          id: 15,
+          name: "Loungeplekken",
+        },
+        {
+          id: 16,
+          name: "Vergaderruimtes met videoschermen",
+        },
+      ],
+    };
   },
-  {
-    id: 2,
-    name: "Stage plaats",
-  },
-  {
-    id: 3,
-    name: "Functie 1",
-  },
-  {
-    id: 4,
-    name: "Functie 2",
-  },
-]);
+  setup() {
+    function handlePriceChange(priceData) {
+      selectedMinPrice.value = priceData.minPrice;
+      selectedMaxPrice.value = priceData.maxPrice;
+    }
+    // Membuat data reaktif menggunakan ref
+    const selectedCity = ref("");
+    const selectedSoortLocatie = ref("");
+    const selectedFunctie = ref([]);
+    const selectedMinPrice = ref();
+    const selectedMaxPrice = ref();
+    const filteredData = ref([]);
 
-const opleidings = ref([
-  {
-    id: 5,
-    name: "Alles",
-  },
-  {
-    id: 6,
-    name: "MBO",
-  },
-  {
-    id: 7,
-    name: "HBO",
-  },
-  {
-    id: 8,
-    name: "Universiteit",
-  },
-]);
+    console.log(selectedFunctie.value);
 
-const isOpen = ref(false);
-const selectedName = ref();
-const selectedMinPrice = ref(0);
-const selectedMaxPrice = ref(0);
-const selectedSoortLocatie = ref("");
-const selectedFunctie = ref([]);
-
-function toggleDropdown() {
-  isOpen.value = !isOpen.value;
-}
-
-function selectName(name) {
-  selectedName.value = name;
-}
-
-function handlePriceChange(priceData) {
-  selectedMinPrice.value = priceData.minPrice;
-  selectedMaxPrice.value = priceData.maxPrice;
-}
-
-const filterData = computed(() => {
-  let filteredItems = [];
-
-  // filter dropdown city
-  if (selectedName.value && selectedName.value !== "Alles") {
-    filteredItems = filteredItems.filter(
-      (item) => item.name === selectedName.value
+    // Menggunakan watch untuk memantau perubahan pada properti tertentu
+    watch(
+      [
+        selectedCity,
+        selectedSoortLocatie,
+        selectedFunctie,
+        selectedMinPrice,
+        selectedMaxPrice,
+      ],
+      async () => {
+        if (selectedCity.value === "Alles") {
+          try {
+            const response = await axios.get(
+              "http://api-staging-werkstek.spdigitalhosting.com/api/v1/products"
+            );
+            filteredData.value = response.data;
+          } catch (error) {
+            console.error("Gagal mengambil data dari API:", error);
+          }
+        } else {
+          try {
+            const response = await axios.get(
+              "http://api-staging-werkstek.spdigitalhosting.com/api/v1/products",
+              {
+                params: {
+                  "filter[search]": selectedCity.value,
+                  "filter[min_price]": selectedMinPrice.value,
+                  "filter[max_price]": selectedMaxPrice.value,
+                  // "filter[location_id]": selectedLocationId.value,
+                  // "filter[type_id]": selectedTypeId.value,
+                },
+              }
+            );
+            // Memperbarui data yang difilter dengan hasil respons dari API
+            filteredData.value = response.data;
+          } catch (error) {
+            console.error("Gagal mengambil data dari API:", error);
+          }
+        }
+      }
     );
-  }
-
-  // filter radio
-  if (selectedSoortLocatie.value && selectedSoortLocatie.value !== "Alles") {
-    filteredItems = filteredItems.filter(
-      (item) => item.soortLocaties === selectedSoortLocatie.value
-    );
-  }
-
-  // filter radio
-  if (selectedFunctie.value && selectedFunctie.value !== "Alles") {
-    filteredItems = filteredItems.filter(
-      (item) => item.opleidings === selectedFunctie.value
-    );
-  }
-
-  // slider range price
-  if (parseInt(selectedMinPrice) >= 0 && parseInt(selectedMaxPrice)) {
-    filteredItems = filteredItems.filter(
-      (item) =>
-        item.price >= parseInt(selectedMinPrice) &&
-        item.price <= parseInt(selectedMaxPrice)
-    );
-  }
-
-  return filteredItems;
-});
+    // Mengembalikan data dan metode yang diperlukan ke dalam template
+    return {
+      selectedCity,
+      selectedSoortLocatie,
+      selectedFunctie,
+      selectedMinPrice,
+      selectedMaxPrice,
+      filteredData,
+      handlePriceChange,
+    };
+  },
+  mounted() {
+    axios
+      .get("http://api-staging-werkstek.spdigitalhosting.com/api/v1/products")
+      .then((response) => {
+        this.filteredData = response.data;
+      })
+      .catch((error) => {
+        console.error("Failed to retrieve data from API:", error);
+      });
+  },
+};
 </script>
 
 <style scoped>
@@ -237,7 +315,6 @@ const filterData = computed(() => {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-
 .scrollbar-onze::-webkit-scrollbar {
   display: none;
 }

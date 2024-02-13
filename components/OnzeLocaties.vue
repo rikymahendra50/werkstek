@@ -5,40 +5,30 @@
       secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-    <div class="container-custom grid lg:grid-cols-12 gap-2">
-      <div class="w-full lg:col-span-4">
+    <div class="md:grid md:grid-cols-12 container-custom">
+      <div class="md:col-span-4 max-w-[500px]">
         <!-- city -->
-        <form class="flex flex-col">
-          <span class="text-base opacity-50">Kies een locatie</span>
-          <details class="dropdown" @toggle="toggleDropdown">
-            <summary
-              class="m-1 btn bg-[white] normal-case font-normal w-[300px] max-w-[90%] justify-between"
-            >
-              <div class="flex items-center">
-                <img
-                  src="/images/location.svg"
-                  class="pl-1 pr-3"
-                  alt="location"
-                />
-                {{ selectedName || "Alles" }}
-              </div>
-              <img src="/images/arrow-down.svg" class="p-1" alt="arrow" />
-              <img src="/images/arrow-down.svg" class="p-1" alt="arrow" />
-            </summary>
-            <ul
-              class="p-2 shadow menu dropdown-content z-[1] bg-white rounded-[8px] w-[90%]"
-              v-if="isOpen"
-            >
-              <li
-                class="py-1 text-md"
-                v-for="(item, index) in name"
-                :key="index"
-              >
-                <option @click="selectName(item)">{{ item }}</option>
-              </li>
-            </ul>
-          </details>
-        </form>
+        <div class="flex flex-col">
+          <form id="filterForm">
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="text-base opacity-50">Kies een locatie</span>
+                <span class="label-text">Locatie</span>
+              </label>
+              <select class="select select-bordered" v-model="selectedCity">
+                <option disabled selected>Locatie</option>
+                <option
+                  class="text-sm flex items-center p-5"
+                  v-for="(item, index) in city"
+                  :key="index"
+                >
+                  {{ item }}
+                </option>
+                <img src="/images/arrow-down.svg" class="p-1" alt="arrow" />
+              </select>
+            </div>
+          </form>
+        </div>
         <!-- end city -->
         <div class="flex flex-col">
           <!-- soort Locatie -->
@@ -65,17 +55,17 @@
             :idInputMin="'priceMin'"
             :idInputMax="'priceMax'"
             :minPrice="0"
-            :maxPrice="1000"
+            :maxPrice="100000"
             :minRange="0"
             :maxRange="850"
-            :priceGap="100"
+            :priceGap="1000"
             class="my-2"
             @price-change="handlePriceChange"
           />
           <div class="w-full">
             <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
-            <div class="flex my-2">
-              <div class="w-[50%] relative">
+            <div class="flex my-2 max-w-[300px]">
+              <div class="relative">
                 <input
                   type="number"
                   id="deopervlakteMin"
@@ -86,7 +76,7 @@
                 /><br />
                 <span class="absolute top-3 right-14">m<sup>2</sup></span>
               </div>
-              <div class="w-[50%] relative">
+              <div class="relative">
                 <input
                   type="number"
                   id="deopervlakteMax"
@@ -156,290 +146,163 @@
         </div>
       </div>
       <div
-        class="lg:col-span-8 py-5 overflow-auto max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
+        class="md:col-span-8 py-5 overflow-auto max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
       >
-        <!-- <div v-if="filteredData.length > 0">
-          <eachLocaties
-            v-for="locatie in filteredData"
-            :key="locatie.id"
-            :city="locatie.city"
-            :link="locatie.detailLink"
-            :image="locatie.image"
-            :rating="locatie.rating"
-            :type="locatie.type"
-            :adres="locatie.adres"
-            :phoneNumber="locatie.phoneNumber"
-            :price="locatie.price"
-            :mailAdres="locatie.mailAdres"
-            :detailLinkTitle="locatie.detailLinkTitle"
-            :opervlakte="locatie.opervlakte"
-          />
-        </div>
-        <div v-else>
-          <div class="flex items-center justify-center">No item selected</div>
-        </div> -->
-        <!-- <pre>
-          {{ data }}
-        </pre> -->
         <eachLocaties
-          v-for="(locatie, index) in data.data"
-          :key="locatie.id"
-          :name="locatie.name"
-          :image="locatie.image"
-          :link="locatie.link"
-          :rating="locatie.rating"
-          :type="locatie.type"
-          :adres="locatie.adres"
-          :phoneNumber="locatie.phoneNumber"
-          :price="locatie.price"
-          :mailAdres="locatie.mailAdres"
-          :detailLinkTitle="locatie.detailLinkTitle"
-          :opervlakte="locatie.opervlakte"
+          v-for="(item, index) in filteredData.data"
+          :key="item.id"
+          :name="item.name"
+          :link="item.slug"
+          :price="item.price"
+          :image="
+            item.images.find((image, imageIndex) => imageIndex === index)?.image
+          "
+          :rating="item.is_saleable"
         />
       </div>
+      <pre>
+        {{ filteredData }}
+      </pre>
     </div>
   </section>
 </template>
 
-<script setup>
-const { requestOptions } = useRequestOptions();
-const { data, refresh } = useFetch(`/locations`, {
-  method: "get",
-  ...requestOptions,
-});
+<script>
+import { ref, watch } from "vue";
+import axios from "axios";
 
-const name = ref(["Alles", "Utrecht", "Locatie", "Example", "Amsterdam"]);
+export default {
+  data() {
+    return {
+      city: ["Alles", "Simon Stevinweg 27", "Antareslaan 65", "Computerweg 1"],
+      soortLocatiesRadio: [
+        {
+          id: 1,
+          name: "Alles",
+        },
+        {
+          id: 2,
+          name: "Stage Plaats",
+        },
+        {
+          id: 3,
+          name: "Functie 1",
+        },
+        {
+          id: 4,
+          name: "Functie 2",
+        },
+      ],
+      functieCheckbox: [
+        {
+          id: 9,
+          name: "Wifi",
+        },
+        {
+          id: 10,
+          name: "Parkeerplaats",
+        },
+        {
+          id: 11,
+          name: "Receptie",
+        },
+        {
+          id: 12,
+          name: "Koffiebar",
+        },
+        {
+          id: 13,
+          name: "Keuken",
+        },
+        {
+          id: 14,
+          name: "Vlakbij het treinstation",
+        },
+        {
+          id: 15,
+          name: "Loungeplekken",
+        },
+        {
+          id: 16,
+          name: "Vergaderruimtes met videoschermen",
+        },
+      ],
+    };
+  },
+  setup() {
+    // Membuat data reaktif menggunakan ref
+    const selectedCity = ref("");
+    const selectedSoortLocatie = ref("");
+    const selectedFunctie = ref("");
+    const selectedMinPrice = ref(0);
+    const selectedMaxPrice = ref(0);
+    const selectedMeterMin = ref();
+    const selectedMeterMax = ref();
+    const filteredData = ref([]);
 
-const soortLocatiesRadio = ref([
-  {
-    id: 1,
-    name: "Alles",
-  },
-  {
-    id: 2,
-    name: "Anders",
-  },
-  {
-    id: 3,
-    name: "Kantoorruimte",
-  },
-]);
-const functieCheckbox = ref([
-  {
-    id: 9,
-    name: "Wifi",
-  },
-  {
-    id: 10,
-    name: "Parkeerplaats",
-  },
-  {
-    id: 11,
-    name: "Receptie",
-  },
-  {
-    id: 12,
-    name: "Koffiebar",
-  },
-  {
-    id: 13,
-    name: "Keuken",
-  },
-  {
-    id: 14,
-    name: "Vlakbij het treinstation",
-  },
-  {
-    id: 15,
-    name: "Loungeplekken",
-  },
-  {
-    id: 16,
-    name: "Vergaderruimtes met videoschermen",
-  },
-]);
-const Locaties = ref([
-  {
-    id: 1,
-    name: "Utrecht",
-    soortLocaties: "Anders",
-    deopervlakte: 19,
-    price: 320,
-    functie: ["Wifi", "Parkeerplaats"],
-    coordinate: 0,
-    image: "/images/img-each-locatie-1.png",
-    type: "Premium",
-    adres: "Adres",
-    opervlakte: "Opervlakte",
-    phoneNumber: "+31302393838",
-    mailAdres: "Mail adres",
-    detailLinkTitle: "Neem een kijkje",
-    detailLink: "/onze-locaties/rikymahendra",
-    rating: 9.4,
-  },
-  {
-    id: 2,
-    name: "Locatie",
-    soortLocaties: "Alles",
-    price: 100,
-    deopervlakte: 20,
-    functie: ["Wifi", "Parkeerplaats", "Loungeplekken"],
-    coordinate: 0,
-    image: "/images/img-each-locatie-2.jpg",
-    type: "Premium",
-    adres: "Adres",
-    opervlakte: "Opervlakte",
-    phoneNumber: "+31302393838",
-    mailAdres: "Mail adres",
-    detailLinkTitle: "Neem een kijkje",
-    detailLink: "/onze-locaties/rikymahendra",
-    rating: 9.4,
-  },
-  {
-    id: 3,
-    name: "Example",
-    soortLocaties: "Anders",
-    price: 120,
-    deopervlakte: 23,
-    functie: [
-      "Wifi",
-      "Parkeerplaats",
-      "Loungeplekken",
-      "Loungeplekken",
-      "Koffiebar",
-    ],
-    coordinate: 0,
-    image: "/images/img-each-locatie-3.jpg",
-    type: "Premium",
-    adres: "Adres",
-    opervlakte: "Opervlakte",
-    phoneNumber: "+31302393838",
-    mailAdres: "Mail adres",
-    detailLinkTitle: "Neem een kijkje",
-    detailLink: "/onze-locaties/rikymahendra",
-    rating: 9.4,
-  },
-  {
-    id: 4,
-    name: "Amsterdam",
-    soortLocaties: "Alles",
-    price: 100,
-    deopervlakte: 25,
-    functie: ["Loungeplekken", "Loungeplekken", "Koffiebar"],
-    image: "/images/img-each-locatie-1.png",
-    type: "Premium",
-    adres: "Adres",
-    opervlakte: "Opervlakte",
-    phoneNumber: "+31302393838",
-    mailAdres: "Mail adres",
-    detailLinkTitle: "Neem een kijkje",
-    detailLink: "/onze-locaties/rikymahendra",
-    rating: 9.4,
-  },
-]);
-const isOpen = ref(false);
-const selectedName = ref();
-const selectedMeterMin = ref(null);
-const selectedMeterMax = ref(null);
-const selectedMinPrice = ref(0);
-const selectedMaxPrice = ref(0);
-const selectedSoortLocatie = ref("");
-const selectedFunctie = ref([]);
+    console.log(selectedMaxPrice.value);
 
-function toggleDropdown() {
-  isOpen.value = !isOpen.value;
-}
-function selectName(name) {
-  selectedName.value = name;
-  isOpen.value = false;
-}
-function handlePriceChange(priceData) {
-  selectedMinPrice.value = priceData.minPrice;
-  selectedMaxPrice.value = priceData.maxPrice;
-}
+    function handlePriceChange(priceData) {
+      selectedMinPrice.value = priceData.minPrice;
+      selectedMaxPrice.value = priceData.maxPrice;
+    }
 
-const filteredData = computed(() => {
-  let filteredItems = Locaties.value;
-
-  // filter dropdown city
-  if (selectedName.value && selectedName.value !== "Alles") {
-    filteredItems = filteredItems.filter(
-      (item) => item.name === selectedName.value
+    // Menggunakan watch untuk memantau perubahan pada properti tertentu
+    watch(
+      [
+        selectedCity,
+        selectedSoortLocatie,
+        selectedMeterMin,
+        selectedMeterMax,
+        selectedFunctie,
+        selectedMinPrice,
+        selectedMaxPrice,
+      ],
+      async () => {
+        try {
+          const response = await axios.get(
+            "http://api-staging-werkstek.spdigitalhosting.com/api/v1/products",
+            {
+              params: {
+                "filter[search]": selectedCity.value,
+                "filter[min_price]": selectedMinPrice.value,
+                "filter[max_price]": selectedMaxPrice.value,
+                // "filter[min_area]": selectedMeterMin.value,
+                // "filter[max_area]": selectedMeterMax.value,
+                // "filter[location_id]": selectedLocationId.value,
+                // "filter[type_id]": selectedTypeId.value,
+              },
+            }
+          );
+          filteredData.value = response.data;
+        } catch (error) {
+          console.error("Failed to retrieve data from API:", error);
+        }
+      }
     );
-  }
-
-  // filter radio
-  if (selectedSoortLocatie.value && selectedSoortLocatie.value !== "Alles") {
-    filteredItems = filteredItems.filter(
-      (item) => item.soortLocaties === selectedSoortLocatie.value
-    );
-  }
-
-  // filter checkbox
-  if (selectedFunctie.value.length > 0) {
-    filteredItems = filteredItems.filter((item) =>
-      item.functie.some((functie) => selectedFunctie.value.includes(functie))
-    );
-  }
-  // filter checkbox
-  if (selectedFunctie.value.length > 0) {
-    filteredItems = filteredItems.filter((item) =>
-      item.functie.some((functie) => selectedFunctie.value.includes(functie))
-    );
-  }
-
-  // slider range price
-  if (selectedMinPrice.price >= 0 && selectedMaxPrice.value) {
-    filteredItems = filteredItems.filter(
-      (item) =>
-        item.price >= selectedMinPrice.value &&
-        item.price <= selectedMaxPrice.value
-    );
-  }
-  // slider range price
-  if (selectedMinPrice.price >= 0 && selectedMaxPrice.value) {
-    filteredItems = filteredItems.filter(
-      (item) =>
-        item.price >= selectedMinPrice.value &&
-        item.price <= selectedMaxPrice.value
-    );
-  }
-
-  // filter metermin dan metermax
-  if (selectedMeterMin.value && selectedMeterMax.value) {
-    filteredItems = filteredItems.filter(
-      (item) => item.deopervlakte > selectedMeterMin.value
-    );
-  } else if (!selectedMeterMin.value && selectedMeterMax.value) {
-    filteredItems = filteredItems.filter(
-      (item) => item.deopervlakte <= selectedMeterMax.value
-    );
-  } else if (selectedMeterMin.value && selectedMeterMax.value) {
-    filteredItems = filteredItems.filter(
-      (item) =>
-        item.deopervlakte >= selectedMeterMin.value &&
-        item.deopervlakte <= selectedMeterMax.value
-    );
-  }
-  // filter metermin dan metermax
-  if (selectedMeterMin.value && selectedMeterMax.value) {
-    filteredItems = filteredItems.filter(
-      (item) => item.deopervlakte > selectedMeterMin.value
-    );
-  } else if (!selectedMeterMin.value && selectedMeterMax.value) {
-    filteredItems = filteredItems.filter(
-      (item) => item.deopervlakte <= selectedMeterMax.value
-    );
-  } else if (selectedMeterMin.value && selectedMeterMax.value) {
-    filteredItems = filteredItems.filter(
-      (item) =>
-        item.deopervlakte >= selectedMeterMin.value &&
-        item.deopervlakte <= selectedMeterMax.value
-    );
-  }
-
-  return filteredItems;
-});
+    return {
+      selectedCity,
+      handlePriceChange,
+      selectedMeterMin,
+      selectedMeterMax,
+      selectedSoortLocatie,
+      selectedFunctie,
+      selectedMinPrice,
+      selectedMaxPrice,
+      filteredData,
+    };
+  },
+  mounted() {
+    axios
+      .get("http://api-staging-werkstek.spdigitalhosting.com/api/v1/products")
+      .then((response) => {
+        this.filteredData = response.data;
+      })
+      .catch((error) => {
+        console.error("Failed to retrieve data from API:", error);
+      });
+  },
+};
 </script>
 
 <style scoped>
