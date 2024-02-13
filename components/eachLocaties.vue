@@ -1,15 +1,15 @@
 <template>
   <div>
     <NuxtLink
-      :to="link"
+      :to="`onze-locaties/${link}`"
       class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg group hover:shadow-lg transition min-h-[150px] sm:min-h-[170px] md:min-h-[200px]"
       style="box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.05)"
     >
       <div
         class="grid col-span-4 md:col-span-5 md:min-h-[210px] h-full bg-no-repeat bg-cover rounded-lg relative text-white"
         :style="{
-          backgroundImage: `url('${image}')`,
-          background: `linear-gradient(90deg, rgba(251,249,249,0) 39%, rgba(255,255,255,1) 100%), url('${image}')`,
+          backgroundImage: `url('/images/${image}')`,
+          background: `linear-gradient(90deg, rgba(251,249,249,0) 39%, rgba(255,255,255,1) 100%), url('/images/${image}')`,
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="grid col-span-4 md:col-span-3 ml-5 items-center">
-        <span class="text-[14px] sm:text-lg font-semibold">{{ city }}</span>
+        <span class="text-[14px] sm:text-lg font-semibold">{{ name }}</span>
         <span class="text-sm">{{ adres }}</span>
         <div class="flex justify-between">
           <span class="text-[12px] sm:text-base font-bold">{{
@@ -70,46 +70,37 @@ export default {
   props: {
     link: {
       type: String,
-      required: true,
     },
     opervlakte: {
       type: String,
-      required: true,
     },
     image: {
       type: String,
-      required: true,
     },
     rating: {
       type: Number,
-      required: true,
     },
     type: {
       type: String,
-      required: true,
     },
-    city: {
+    name: {
       type: String,
-      required: true,
     },
     adres: {
       type: String,
-      required: true,
     },
     phoneNumber: {
       type: String,
-      required: true,
     },
     price: {
-      required: true,
+      type: Number,
     },
     mailAdres: {
       type: String,
-      required: true,
     },
     detailLinkTitle: {
       type: String,
-      required: true,
+      default: "Neem een kijkje",
     },
   },
 };

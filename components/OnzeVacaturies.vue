@@ -1,31 +1,22 @@
 <template>
   <section class="py-20">
     <TitleHeader
-      title="Onze locaties"
-      secondTitle="Bekijk al onze locaties"
+      title="Onze Vacaturies"
+      secondTitle="Bekijk al onze Vacaturies"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-    <div class="flex flex-col md:flex-row container-custom">
-      <div class="w-full md:w-[35%]">
+    <div class="lg:grid lg:grid-cols-12 container-custom">
+      <div class="w-full col-span-4">
+        <!-- filter -->
         <span class="text-base opacity-50">Kies een locatie</span>
         <form id="filterForm">
-          <!-- <select id="kota" v-model="selectedCity" class="dropdown">
-            <option value="">Alles</option>
-            <option
-              class="text-sm flex items-center p-5"
-              v-for="(item, index) in city"
-              :key="index"
-            >
-              {{ item }}
-            </option>
-          </select> -->
           <details class="dropdown" @toggle="toggleDropdown">
             <summary
               class="m-1 btn bg-[white] normal-case font-normal w-[300px] max-w-[90%] justify-between"
             >
               <div class="flex items-center">
                 <img src="/images/location.svg" class="pl-1 pr-3" />
-                {{ selectedCity || "Alles" }}
+                {{ selectedName || "Alles" }}
               </div>
               <img src="/images/arrow-down.svg" class="p-1" />
             </summary>
@@ -35,10 +26,10 @@
             >
               <li
                 class="py-1 text-md"
-                v-for="(item, index) in city"
+                v-for="(item, index) in name"
                 :key="index"
               >
-                <option @click="selectCity(item)">{{ item }}</option>
+                <option @click="selectName(item)">{{ item }}</option>
               </li>
             </ul>
           </details>
@@ -49,7 +40,7 @@
             <fieldset id="soortLocatie" class="flex flex-col gap-2">
               <div
                 class="flex justify-start items-center"
-                v-for="item in soortLocaties"
+                v-for="item in soortLocatiesRadio"
                 :key="item.id"
               >
                 <input
@@ -114,243 +105,140 @@
         </div>
       </div>
       <div
-        class="py-5 md:w-[65%] overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col"
+        class="py-5 col-span-8 overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col scrollbar-onze"
       >
-        <div v-if="filteredData.length > 0">
-          <eachLocaties
-            v-for="item in filteredData"
-            :key="item.id"
-            :link="item.detailLink"
-            :image="item.image"
-            :rating="item.rating"
-            :type="item.type"
-            :city="item.city"
-            :adres="item.adres"
-            :phoneNumber="item.phoneNumber"
-            :price="item.price"
-            :mailAdres="item.mailAdres"
-            :detailLinkTitle="item.detailLinkTitle"
-            :opervlakte="item.opervlakte"
-          />
-        </div>
-        <div v-else>
-          <div class="flex items-center justify-center">No item selected</div>
-        </div>
+        <!-- data -->
+        <eachLocaties
+          v-for="(item, index) in data.data"
+          :key="item.id"
+          :name="item.name"
+          :image="item.image"
+          :price="parseFloat(item.price)"
+          :link="item.slug"
+        />
       </div>
     </div>
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isOpen: false,
-      city: ["Utrecht", "Locatie", "Example", "Amsterdam"],
-      soortLocaties: [
-        {
-          id: 1,
-          name: "Alles",
-        },
-        {
-          id: 2,
-          name: "Stage plaats",
-        },
-        {
-          id: 3,
-          name: "Functie 1",
-        },
-        {
-          id: 4,
-          name: "Functie 2",
-        },
-      ],
-      opleidings: [
-        {
-          id: 5,
-          name: "Alles",
-        },
-        {
-          id: 6,
-          name: "MBO",
-        },
-        {
-          id: 7,
-          name: "HBO",
-        },
-        {
-          id: 8,
-          name: "Universiteit",
-        },
-      ],
-      Vacaturies: [
-        {
-          id: 1,
-          type: "Regular",
-          image: "/images/img-each-locatie-1.png",
-          soortLocaties: "Alles",
-          opleidings: "MBO",
-          city: "Amsterdam",
-          adres: "Adres",
-          opervlakte: "opervlakte",
-          price: 495,
-          phoneNumber: "+31302393838",
-          mailAdres: "Mail adres",
-          detailLinkTitle: "Neem een kijkje",
-          detailLink: "/onze-vacaturies/onze-locaties-single",
-          rating: 9.4,
-        },
-        {
-          id: 2,
-          type: "Premium",
-          image: "/images/img-each-locatie-2.jpg",
-          soortLocaties: "Stage plaats",
-          opleidings: "MBO",
-          city: "Locatie",
-          adres: "Adres",
-          opervlakte: "opervlakte",
-          price: 495,
-          phoneNumber: "+31302393838",
-          mailAdres: "Mail adres",
-          detailLinkTitle: "Neem een kijkje",
-          detailLink: "/onze-vacaturies/onze-locaties-single",
-          rating: 9.4,
-        },
-        {
-          id: 3,
-          type: "Premium",
-          image: "/images/img-each-locatie-3.jpg",
-          soortLocaties: "Stage plaats",
-          opleidings: "HBO",
-          city: "Locatie",
-          adres: "Adres",
-          opervlakte: "opervlakte",
-          price: 680,
-          phoneNumber: "+31302393838",
-          mailAdres: "Mail adres",
-          detailLinkTitle: "Neem een kijkje",
-          detailLink: "/onze-vacaturies/onze-locaties-single",
-          rating: 9.4,
-        },
-      ],
-      isOpen: false,
-      selectedCity: "",
-      selectedMinPrice: 0,
-      selectedMaxPrice: 0,
-      selectedSoortLocatie: "",
-      selectedFunctie: "",
-    };
+<script setup>
+const { requestOptions } = useRequestOptions();
+const { data, refresh } = useFetch(`/products`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const name = ref([
+  "Alles",
+  "Simon Stevinweg 27",
+  "Locatie",
+  "Example",
+  "Amsterdam",
+]);
+
+const soortLocatiesRadio = ref([
+  {
+    id: 1,
+    name: "Alles",
   },
-  props: {
-    showLocaties: {
-      type: Boolean,
-      default: true,
-    },
+  {
+    id: 2,
+    name: "Stage plaats",
   },
-  methods: {
-    handlePriceChange(priceData) {
-      this.selectedMinPrice = priceData.minPrice;
-      this.selectedMaxPrice = priceData.maxPrice;
-    },
-    toggleDropdown() {
-      this.isOpen = !this.isOpen;
-    },
-    selectCity(city) {
-      this.selectedCity = city;
-      // this.isOpen = false;
-    },
+  {
+    id: 3,
+    name: "Functie 1",
   },
-  computed: {
-    filteredData() {
-      let filteredItems = this.Vacaturies;
-
-      // filter dropdown city
-      if (this.selectedCity && this.selectedCity !== "Alles") {
-        filteredItems = filteredItems.filter(
-          (item) => item.city === this.selectedCity
-        );
-      }
-
-      // filter radio
-      if (this.selectedSoortLocatie && this.selectedSoortLocatie !== "Alles") {
-        filteredItems = filteredItems.filter(
-          (item) => item.soortLocaties === this.selectedSoortLocatie
-        );
-      }
-
-      // filter radio
-      if (this.selectedFunctie && this.selectedFunctie !== "Alles") {
-        filteredItems = filteredItems.filter(
-          (item) => item.opleidings === this.selectedFunctie
-        );
-      }
-
-      // slider range price
-      if (this.selectedMinPrice >= 0 && this.selectedMaxPrice) {
-        filteredItems = filteredItems.filter(
-          (item) =>
-            item.price >= this.selectedMinPrice &&
-            item.price <= this.selectedMaxPrice
-        );
-      }
-
-      return filteredItems;
-    },
+  {
+    id: 4,
+    name: "Functie 2",
   },
-};
+]);
+
+const opleidings = ref([
+  {
+    id: 5,
+    name: "Alles",
+  },
+  {
+    id: 6,
+    name: "MBO",
+  },
+  {
+    id: 7,
+    name: "HBO",
+  },
+  {
+    id: 8,
+    name: "Universiteit",
+  },
+]);
+
+const isOpen = ref(false);
+const selectedName = ref();
+const selectedMinPrice = ref(0);
+const selectedMaxPrice = ref(0);
+const selectedSoortLocatie = ref("");
+const selectedFunctie = ref([]);
+
+function toggleDropdown() {
+  isOpen.value = !isOpen.value;
+}
+
+function selectName(name) {
+  selectedName.value = name;
+}
+
+function handlePriceChange(priceData) {
+  selectedMinPrice.value = priceData.minPrice;
+  selectedMaxPrice.value = priceData.maxPrice;
+}
+
+const filterData = computed(() => {
+  let filteredItems = [];
+
+  // filter dropdown city
+  if (selectedName.value && selectedName.value !== "Alles") {
+    filteredItems = filteredItems.filter(
+      (item) => item.name === selectedName.value
+    );
+  }
+
+  // filter radio
+  if (selectedSoortLocatie.value && selectedSoortLocatie.value !== "Alles") {
+    filteredItems = filteredItems.filter(
+      (item) => item.soortLocaties === selectedSoortLocatie.value
+    );
+  }
+
+  // filter radio
+  if (selectedFunctie.value && selectedFunctie.value !== "Alles") {
+    filteredItems = filteredItems.filter(
+      (item) => item.opleidings === selectedFunctie.value
+    );
+  }
+
+  // slider range price
+  if (parseInt(selectedMinPrice) >= 0 && parseInt(selectedMaxPrice)) {
+    filteredItems = filteredItems.filter(
+      (item) =>
+        item.price >= parseInt(selectedMinPrice) &&
+        item.price <= parseInt(selectedMaxPrice)
+    );
+  }
+
+  return filteredItems;
+});
 </script>
 
-<!-- <script>
-export default {
-  setup() {
-    const city = ["Utrecht", "Locatie", "Example", "Amsterdam"];
+<style scoped>
+.scrollbar-onze {
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
 
-    // Membuat data reaktif menggunakan ref
-    const selectedCity = ref("");
-    const selectedSoortLocatie = ref("");
-    const selectedFunctie = ref("");
-    const selectedMinPrice = ref(0);
-    const selectedMaxPrice = ref(0);
-    const filteredData = ref([]);
-
-    // Menggunakan watch untuk memantau perubahan pada properti tertentu
-    watch(
-      [
-        selectedCity,
-        selectedSoortLocatie,
-        selectedFunctie,
-        selectedMinPrice,
-        selectedMaxPrice,
-      ],
-      async () => {
-        // Melakukan permintaan data ke API ketika properti terpilih berubah
-        try {
-          const response = await axios.get("url_api", {
-            params: {
-              city: selectedCity.value,
-              soortLocatie: selectedSoortLocatie.value,
-              functie: selectedFunctie.value,
-              minPrice: selectedMinPrice.value,
-              maxPrice: selectedMaxPrice.value,
-            },
-          });
-          // Memperbarui data yang difilter dengan hasil respons dari API
-          filteredData.value = response.data;
-        } catch (error) {
-          console.error("Gagal mengambil data dari API:", error);
-        }
-      }
-    );
-
-    // Mengembalikan data dan metode yang diperlukan ke dalam template
-    return {
-      selectedCity,
-      selectedSoortLocatie,
-      selectedFunctie,
-      selectedMinPrice,
-      selectedMaxPrice,
-      filteredData,
-    };
-  },
-};
-</script> -->
+.scrollbar-onze::-webkit-scrollbar {
+  display: none;
+}
+</style>
