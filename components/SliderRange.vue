@@ -7,8 +7,8 @@
           <div
             class="price-slider"
             :style="{
-              left: `${(localMinPrice / 100000) * 100}%`,
-              right: `${100 - (localMaxPrice / 100000) * 100}%`,
+              left: `${(localMinPrice / 200000) * 100}%`,
+              right: `${100 - (localMaxPrice / 200000) * 100}%`,
             }"
           ></div>
         </div>
@@ -29,8 +29,8 @@
             :id="idInputMin"
             type="range"
             class="min-range"
-            min="0"
-            max="100000"
+            min="10000"
+            max="200000"
             v-model="localMinRange"
             step="5000"
           />
@@ -40,8 +40,8 @@
             :id="idInputMax"
             type="range"
             class="max-range"
-            min="0"
-            max="100000"
+            min="10000"
+            max="200000"
             v-model="localMaxRange"
             step="5000"
           />

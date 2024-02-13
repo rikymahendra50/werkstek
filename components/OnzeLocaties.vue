@@ -160,9 +160,6 @@
           :rating="item.is_saleable"
         />
       </div>
-      <pre>
-        {{ filteredData }}
-      </pre>
     </div>
   </section>
 </template>

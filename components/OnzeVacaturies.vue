@@ -72,7 +72,7 @@
                   :value="item.name"
                   :name="item.name"
                   class="mr-2 pt-[0.7px]"
-                  v-model="selectedSoortLocatie"
+                  v-model="selectedTypeId"
                 />
                 <label :for="item.id" class="cursor-pointer">{{
                   item.name
@@ -110,7 +110,7 @@
                     <input
                       type="checkbox"
                       :id="item.id"
-                      :value="item.name"
+                      :value="item.id"
                       :name="item.name"
                       class="mr-2 pt-[0.7px]"
                       v-model="selectedFunctie"
@@ -131,7 +131,7 @@
                     <input
                       type="checkbox"
                       :id="item.id"
-                      :value="item.name"
+                      :value="item.id"
                       :name="item.name"
                       class="mr-2 pt-[0.7px]"
                       v-model="selectedFunctie"
@@ -195,35 +195,35 @@ export default {
       ],
       opleidings: [
         {
-          id: 9,
+          id: 5,
           name: "Wifi",
         },
         {
-          id: 10,
+          id: 6,
           name: "Parkeerplaats",
         },
         {
-          id: 11,
+          id: 7,
           name: "Receptie",
         },
         {
-          id: 12,
+          id: 8,
           name: "Koffiebar",
         },
         {
-          id: 13,
+          id: 9,
           name: "Keuken",
         },
         {
-          id: 14,
+          id: 10,
           name: "Vlakbij het treinstation",
         },
         {
-          id: 15,
+          id: 11,
           name: "Loungeplekken",
         },
         {
-          id: 16,
+          id: 12,
           name: "Vergaderruimtes met videoschermen",
         },
       ],
@@ -234,17 +234,16 @@ export default {
       selectedMinPrice.value = priceData.minPrice;
       selectedMaxPrice.value = priceData.maxPrice;
     }
-    // Membuat data reaktif menggunakan ref
+
     const selectedCity = ref("");
     const selectedSoortLocatie = ref("");
     const selectedFunctie = ref([]);
     const selectedMinPrice = ref();
     const selectedMaxPrice = ref();
     const filteredData = ref([]);
+    // const selectedLocationId = ref([]);
+    const selectedTypeId = ref("");
 
-    console.log(selectedFunctie.value);
-
-    // Menggunakan watch untuk memantau perubahan pada properti tertentu
     watch(
       [
         selectedCity,
@@ -252,8 +251,12 @@ export default {
         selectedFunctie,
         selectedMinPrice,
         selectedMaxPrice,
+        // selectedLocationId,
+        selectedTypeId,
       ],
       async () => {
+        // console.log("Watch triggered");
+        // console.log("selectedTypeId value:", selectedFunctie.value);
         if (selectedCity.value === "Alles") {
           try {
             const response = await axios.get(
@@ -263,7 +266,6 @@ export default {
           } catch (error) {
             console.error("Gagal mengambil data dari API:", error);
           }
-        } else {
           try {
             const response = await axios.get(
               "http://api-staging-werkstek.spdigitalhosting.com/api/v1/products",
@@ -273,7 +275,8 @@ export default {
                   "filter[min_price]": selectedMinPrice.value,
                   "filter[max_price]": selectedMaxPrice.value,
                   // "filter[location_id]": selectedLocationId.value,
-                  // "filter[type_id]": selectedTypeId.value,
+                  "filter[productFacility.facility_id]": selectedFunctie.value,
+                  "filter[type_id]": selectedTypeId.value,
                 },
               }
             );
@@ -293,6 +296,7 @@ export default {
       selectedMinPrice,
       selectedMaxPrice,
       filteredData,
+      selectedTypeId,
       handlePriceChange,
     };
   },
