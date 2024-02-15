@@ -1,4 +1,6 @@
 <template>
+  <span>anda memasuki halaman milik riky </span>
+
   <section class="container-custom">
     <TitleHeader2
       title1="Locaties"

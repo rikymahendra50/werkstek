@@ -8,7 +8,7 @@
   >
     <div
       id="map"
-      :class="`relative w-full h-[420px] lg:h-[619px] border-2 z-[-999]`"
+      :class="`relative w-full h-[420px] lg:h-[619px] z-[-999]`"
     ></div>
     <div class="mx-2 sm:mx-10 container-custom">
       <div class="bg-tertiary box-shadow mt-[-100px] z-10 rounded-[40px]">
@@ -102,6 +102,43 @@
     </div>
   </section>
 </template>
+
+<!-- <style>
+.gm-style-cc {
+  display: none !important;
+}
+
+.gm-style-iw-d {
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.gm-ui-hover-effect {
+  background-color: white !important;
+  position: absolute !important;
+  border-radius: 50%;
+  top: 5px !important;
+  right: 5px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.gm-ui-hover-effect:span {
+  width: 200px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.gm-style-iw-c {
+  padding: 0 !important;
+}
+
+.gm-style-cc a {
+  display: none !important;
+}
+</style> -->
 
 <script scoped>
 let googleMapsScriptLoaded = false;
@@ -413,6 +450,10 @@ export default {
       this.map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: -8.653840910873269, lng: 115.21785198506426 },
         zoom: 13,
+        fullscreenControl: false,
+        zoomControl: false,
+        keyboardShortcuts: false,
+        mapId: null,
       });
 
       const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
@@ -434,9 +475,11 @@ export default {
         const contentString = `
           <div class="max-w-[190px] w-full h-full flex flex-col text-end">
             <img src="${location.image}" alt="${location.name}" class="w-full min-h-[100px]">
+            <div class="px-2 pb-4">
             <h2 class="text-primary mt-2">${location.name}</h2>
             <p class="text-black text-[10px] my-2">${location.area}</p>
             <p>Price: $${location.price}</p>
+            </div>
           </div>
         `;
 

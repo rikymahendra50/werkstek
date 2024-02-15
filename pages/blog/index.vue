@@ -5,7 +5,7 @@
     description="Lees hier onze interessante blogs"
   />
 
-  <Blog :show-title-header="false" class="my-10" />
+  <Blog :showTitleHeader="false" class="my-10" />
 
   <Blog2 :ShowTitleCategory="true" />
 

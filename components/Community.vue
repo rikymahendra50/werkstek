@@ -42,8 +42,8 @@
       </div>
     </div>
     <!-- <pre>
-      {{ data }}
-    </pre> -->
+        {{ data.data }}
+      </pre> -->
   </section>
 </template>
 

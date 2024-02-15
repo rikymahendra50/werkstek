@@ -19,7 +19,7 @@
         :link="item.link"
         :image="item.image"
         :title="item.title"
-        :description="item.description"
+        :description="item.meta"
         v-for="item in data.data"
         :key="item"
       />

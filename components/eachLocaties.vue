@@ -29,7 +29,7 @@
           <span
             class="bg-primary absolute top-[20%] sm:top-[30%] md:top-[20%] left-0 flex sm:py-1 px-1 sm:px-2 rounded-full ml-2 mt-2 text-[12px] sm:text-sm font-semibold"
           >
-            {{ type }}
+            Regular
           </span>
         </div>
       </div>

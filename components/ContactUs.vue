@@ -239,7 +239,7 @@
                 v-model="dataForm.lastname"
                 type="text"
                 class="input w-full input-sm"
-                placeholder="lastname"
+                placeholder="Last Name"
                 autocomplete="name"
               />
               <hr />
