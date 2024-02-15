@@ -1,5 +1,10 @@
 <template>
   <section class="container-custom">
+    <HeaderWCity
+      title1="Bekijk onze locaties"
+      title2="De Werkstek Vacatures"
+      description="Lorem ipsum dolor sit amet, solor ut adipiscing elit.Lorem ipsum dolor sit amet, solor ut adipiscing elit."
+    />
     <div class="flex flex-col md:flex-row my-20 gap-10">
       <img
         src="/images/Lees alles over Werkstek.png"

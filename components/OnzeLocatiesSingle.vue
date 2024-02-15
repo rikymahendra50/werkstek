@@ -1,36 +1,31 @@
 <template>
-  <span>anda memasuki halaman milik riky </span>
-
   <section class="container-custom">
-    <TitleHeader2
-      title1="Locaties"
-      title2="werf5, Utrecht"
-      title3="Categorie"
-    />
+    <TitleHeader2 :title1="title" :title2="subTitle" :title3="thirdTitle" />
     <div class="flex gap-2 sm:gap-5">
       <div class="flex flex-col w-[50%] sm:w-[60%] max-w-[727px]">
         <div class="flex flex-col md:min-h-[400px]">
           <div
-            class="bg-[url('/images/img-page3-1.jpg')] min-h-[200px] md:min-h-[400px] bg-no-repeat bg-cover relative"
+            class="min-h-[200px] md:min-h-[400px] bg-no-repeat bg-cover relative"
+            :style="{ backgroundImage: 'url(' + imageBanner + ')' }"
           >
             <div
               class="bg-primary absolute top-5 text-white p-1 md:p-3 md:w-[30%]"
             >
               <span class="text-sm md:text-lg">Prijs :</span> <br />
               <span class="text-sm md:text-lg font-semibold"
-                >€ 450 per/maand</span
+                >€ {{ price }} per/maand</span
               >
             </div>
           </div>
           <div class="grid grid-cols-3 items-center gap-2 mt-3">
             <div class="max-w-[245px]">
-              <img src="/images/img-page3-2.png" class="w-full" />
+              <img :src="imageSrc1" class="w-full" />
             </div>
             <div class="max-w-[245px]">
-              <img src="/images/img-page3-3.png" class="w-full" />
+              <img :src="imageSrc2" class="w-full" />
             </div>
             <div class="max-w-[245px]">
-              <img src="/images/img-page3-4.jpg" class="w-full" />
+              <img :src="imageSrc3" class="w-full" />
             </div>
           </div>
         </div>
@@ -38,10 +33,11 @@
           <h1
             class="text-[#363636] text-[20px] md:text-[25px] font-semibold my-3"
           >
-            Over WERF5
+            <!-- Over WERF5 -->
+            {{ title }}
           </h1>
           <p class="text-[12px] md:text-[14px] lg:text-[16px]">
-            WERF5 is een gedeelde werkplek / kantoor-, en activiteitenruimte in
+            <!-- WERF5 is een gedeelde werkplek / kantoor-, en activiteitenruimte in
             een knusse werfkelder aan de Oudegracht. Overdag werken freelancers
             binnen WERF5 aan hun eigen projecten. Er zijn 8 vaste werkplekken en
             8 flexwerkplekken, een vergaderruimte en een kayak die vrij te
@@ -52,7 +48,8 @@
             elkaar graag bij projecten en bij vragen. Er zijn regelmatig
             werkplekken beschikbaar binnen WERF5 en het is altijd mogelijk om
             een of twee daagjes kosteloos te komen werken om het uit te
-            proberen. We drinken trouwens alleen maar goeie bonenkoffie. ?
+            proberen. We drinken trouwens alleen maar goeie bonenkoffie. ? -->
+            {{ description }}
           </p>
         </div>
         <p class="text-[#495057] text-base mt-10 mb-3 ml-5">
@@ -298,7 +295,7 @@
             class="my-2 rounded-full text-sm"
           />
         </div>
-        <!-- add google map here -->
+        <Map />
       </div>
     </div>
   </section>
@@ -306,6 +303,38 @@
 
 <script>
 export default {
+  props: {
+    imageBanner: {
+      type: String,
+    },
+    title: {
+      type: String,
+    },
+    subTitle: {
+      type: String,
+    },
+    thirdTitle: {
+      type: String,
+    },
+    imageSrc1: {
+      type: String,
+    },
+    imageSrc2: {
+      type: String,
+    },
+    imageSrc3: {
+      type: String,
+    },
+    location: {
+      type: String,
+    },
+    price: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+  },
   data() {
     return {
       dataLocatiesSingle: {},

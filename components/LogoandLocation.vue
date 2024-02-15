@@ -20,7 +20,7 @@
           ondernemers, waardoor je als verhuurder geen zorgen hoeft te maken
           over de risico's van leegstand.
         </p>
-        <NuxtLink to="/" class="group">
+        <NuxtLink to="https://maps.app.goo.gl/B2n6ZjGxupqbL2nt7" class="group">
           <div class="flex items-center gap-3">
             <span
               ><svg

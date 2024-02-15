@@ -473,14 +473,17 @@ export default {
         });
 
         const contentString = `
-          <div class="max-w-[190px] w-full h-full flex flex-col text-end">
+        <div class="max-w-[190px] w-full h-full flex flex-col text-end">
+          <div class="relative">
             <img src="${location.image}" alt="${location.name}" class="w-full min-h-[100px]">
-            <div class="px-2 pb-4">
+            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
+          </div>
+          <div class="px-2 pb-4">
             <h2 class="text-primary mt-2">${location.name}</h2>
             <p class="text-black text-[10px] my-2">${location.area}</p>
             <p>Price: $${location.price}</p>
-            </div>
           </div>
+        </div>
         `;
 
         const infowindow = new google.maps.InfoWindow({

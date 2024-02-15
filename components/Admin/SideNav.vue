@@ -20,8 +20,13 @@
         <nav class="grid items-start px-4 text-sm font-medium">
           <!-- Home -->
           <NuxtLink
-            to="/"
-            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
+            to="/admin/home"
+            :class="{
+              'bg-red-500 text-white': isHomeActive,
+              'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50':
+                !isHomeActive,
+            }"
+            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50 border-2"
             href="#"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
@@ -40,8 +45,8 @@
             </svg>
             Home
           </NuxtLink>
-          <!-- Locations -->
-          <a
+          <NuxtLink
+            to="/"
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
           >
@@ -67,14 +72,40 @@
               />
             </svg>
             Location
-            <!-- notification -->
+          </NuxtLink>
+          <NuxtLink
+            to="/admin/locations"
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+            href="#"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+              />
+            </svg>
+            Location
             <div
               class="whitespace-nowrap border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
             >
               6
-            </div></a
-          >
-          <!-- Folder -->
+            </div>
+          </NuxtLink>
           <a
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
@@ -102,7 +133,6 @@
             </svg>
             Contact</a
           >
-          <!-- Category -->
           <a
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
@@ -123,7 +153,6 @@
             </svg>
             Category
           </a>
-          <!-- Facility -->
           <a
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="#"
@@ -144,6 +173,26 @@
             </svg>
             Facility
           </a>
+          <a
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+            href="#"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"
+              />
+            </svg>
+            Article
+          </a>
           <button @click="$logout()" class="btn btn-error mt-20">Logout</button>
         </nav>
       </div>
@@ -153,12 +202,15 @@
 
 <script setup lang="ts">
 const showDrawer = inject("showTableOrMobileSidebar");
-const { $user, $logout } = useAuth();
+const { $logout } = useAuth();
 definePageMeta({
   layout: "admin",
   // @ts-ignore
   middleware: ["auth", "admin"],
 });
+
+const route = useRoute();
+const isHomeActive = route.path === "/";
 </script>
 
 <style scoped></style>

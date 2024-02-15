@@ -95,7 +95,7 @@
             werken vertegenwoordigen: -->
             {{ body }}
           </p>
-          <div class="mt-10">
+          <!-- <div class="mt-10">
             <h1 class="font-bold pb-4 text-[20px]">
               Flexibiliteit in ruimte en kosten
             </h1>
@@ -171,7 +171,7 @@
             expertise en advies van anderen in de gemeenschap. Het delen van
             kennis en ervaring kan helpen bij het oplossen van problemen, het
             ontwikkelen van nieuwe ideeën en het versnellen van groei.
-          </p>
+          </p> -->
           <!-- comment -->
           <div
             class="flex mt-10 gap-5 items-center sm:items-start p-2 shadow-md rounded-lg"
@@ -243,14 +243,16 @@
               </NuxtLink>
             </div>
           </div>
-          <NuxtLink to="/">
-            <div
-              class="flex flex-col mt-24 max-w-[20px] h-[20px] justify-center items-center"
-            >
-              <img src="/images/share.svg" />
-              <p class="text-[14px] md:text-[16px]">share</p>
+          <div class="flex justify-center">
+            <div @click="sharePage" class="cursor-pointer">
+              <div
+                class="flex flex-col mt-24 max-w-[20px] h-[20px] justify-center items-center"
+              >
+                <img src="/images/share.svg" />
+                <p class="text-[14px] md:text-[16px]">share</p>
+              </div>
             </div>
-          </NuxtLink>
+          </div>
         </div>
       </div>
     </div>
@@ -270,6 +272,20 @@ export default {
       this.slice2 += 1;
       if ((this.comment.length = this.slice2)) {
         this.showMore = true;
+      }
+    },
+    sharePage() {
+      if (navigator.share) {
+        navigator
+          .share({
+            title: document.title,
+            text: "Check out this page!",
+            url: window.location.href,
+          })
+          .then(() => console.log("Page shared successfully"))
+          .catch((error) => console.error("Error sharing page:", error));
+      } else {
+        console.log("Web Share API is not supported");
       }
     },
   },

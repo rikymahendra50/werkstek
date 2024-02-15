@@ -30,7 +30,6 @@
                   <span class="label-text">Locatie</span>
                 </label>
                 <select class="select select-bordered" v-model="selectedCity">
-                  <span>Locatie</span>
                   <option
                     class="text-sm flex items-center p-5"
                     v-for="(item, index) in city"
@@ -59,6 +58,7 @@
                   type="radio"
                   @change="handleSoortLocatieChange(item.id)"
                   name="soort"
+                  :checked="selectedSoortLocatie === item.id"
                 />
                 <label :for="item.id" class="cursor-pointer">{{
                   item.name
@@ -70,9 +70,9 @@
               :idInputMin="'priceMin'"
               :idInputMax="'priceMax'"
               :minPrice="0"
-              :maxPrice="200000"
+              :maxPrice="10000"
               :minRange="0"
-              :maxRange="850"
+              :maxRange="85000"
               :priceGap="10000"
               class="my-2"
               @price-change="handlePriceChange"
@@ -187,15 +187,11 @@ export default {
         },
         {
           id: 2,
-          name: "Stage Plaats",
+          name: "Kantoorruimte",
         },
         {
           id: 3,
-          name: "Functie 1",
-        },
-        {
-          id: 4,
-          name: "Functie 2",
+          name: "Anders",
         },
       ],
       functieCheckbox: [
@@ -242,10 +238,10 @@ export default {
   setup() {
     // Membuat data reaktif menggunakan ref
     const selectedCity = ref("");
-    const selectedSoortLocatie = ref("");
+    const selectedSoortLocatie = ref(null);
     const selectedFunctie = ref([]);
-    const selectedMinPrice = ref(0);
-    const selectedMaxPrice = ref(0);
+    const selectedMinPrice = ref();
+    const selectedMaxPrice = ref();
     const selectedMeterMin = ref();
     const selectedMeterMax = ref();
     const filteredData = ref([]);
@@ -256,11 +252,16 @@ export default {
     }
 
     function handleSoortLocatieChange(id) {
-      selectedSoortLocatie.value = id;
+      selectedSoortLocatie.value =
+        selectedSoortLocatie.value === id ? null : id;
     }
 
     function handlefunctieCheckbox(id) {
       selectedFunctie.value = id;
+    }
+
+    function handleLocatie(item) {
+      selectedCity.value = item;
     }
 
     watch(
@@ -275,7 +276,6 @@ export default {
       ],
       async () => {
         try {
-          console.log(selectedFunctie.value);
           const response = await axios.get(
             "http://api-staging-werkstek.spdigitalhosting.com/api/v1/products",
             {
@@ -285,7 +285,7 @@ export default {
                 "filter[max_price]": selectedMaxPrice.value,
                 "filter[min_area]": selectedMeterMin.value,
                 "filter[max_area]": selectedMeterMax.value,
-                // "filter[location_id]": selectedLocationId.value,
+                // // "filter[location_id]": selectedLocationId.value,
                 "filter[type_id]": selectedSoortLocatie.value,
                 "filter[productFacility.facility_id]": selectedFunctie.value,
               },
@@ -302,6 +302,7 @@ export default {
       handlePriceChange,
       handleSoortLocatieChange,
       handlefunctieCheckbox,
+      handleLocatie,
       selectedMeterMin,
       selectedMeterMax,
       selectedSoortLocatie,
