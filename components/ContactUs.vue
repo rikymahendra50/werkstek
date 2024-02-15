@@ -213,23 +213,24 @@
           v-slot="{ errors }"
         >
           <div class="flex flex-col">
+            <!-- name -->
             <div class="flex flex-col my-2">
               <div class="flex items-center">
-                <label for="firstname">Je naam (verplicht) (firstname)</label>
+                <label for="name">Je naam (verplicht) (firstname)</label>
               </div>
               <VeeField
-                id="firstname"
-                name="firstname"
-                v-model="dataForm.firstname"
+                id="name"
+                name="name"
+                v-model="dataForm.name"
                 type="text"
                 class="input w-full input-sm"
-                placeholder="First Name"
+                placeholder="Name"
                 autocomplete="name"
               />
               <hr />
-              <VeeErrorMessage name="firstname" class="text-sm text-error" />
+              <VeeErrorMessage name="name" class="text-sm text-error" />
             </div>
-            <div class="flex flex-col my-2">
+            <!-- <div class="flex flex-col my-2">
               <div class="flex items-center">
                 <label for="lastname">Je naam (verplicht) (lastname)</label>
               </div>
@@ -244,7 +245,8 @@
               />
               <hr />
               <VeeErrorMessage name="lastname" class="text-sm text-error" />
-            </div>
+            </div> -->
+            <!-- end name -->
             <div class="flex flex-col my-2">
               <div class="flex items-center">
                 <label for="email">Je e-mailadres (verplicht)</label>
@@ -261,6 +263,24 @@
               <hr />
               <VeeErrorMessage name="email" class="text-sm text-error" />
             </div>
+            <!-- Subject -->
+            <div class="flex flex-col my-2">
+              <div class="flex items-center">
+                <label for="subject">Subject</label>
+              </div>
+              <VeeField
+                id="subject"
+                name="subject"
+                v-model="dataForm.subject"
+                type="text"
+                class="input w-full input-sm"
+                placeholder="Onderwerp"
+                autocomplete="Onderwerp"
+              />
+              <hr />
+              <VeeErrorMessage name="subject" class="text-sm text-error" />
+            </div>
+            <!-- end subject -->
             <div class="flex flex-col my-2">
               <div class="flex items-center">
                 <label for="message">Je bericht</label>
@@ -303,8 +323,7 @@
             <button
               type="submit"
               :disabled="loading"
-              class="mt-4 bg-primary hover:bg-secondary transition min-w-[120px] sm:min-w-[152px] min-h-[42px] sm:min-h-[52px] rounded-full flex items-center justify-center cursor-pointer"
-              @click="onSubmit"
+              class="mt-4 bg-primary disabled:bg-secondary hover:bg-secondary transition min-w-[120px] sm:min-w-[152px] min-h-[42px] sm:min-h-[52px] rounded-full flex items-center justify-center cursor-pointer"
             >
               <span
                 class="text-[20px] xl:text-lg lg:text-lg text-center text-white"
@@ -326,8 +345,7 @@ const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 
 const dataForm = ref({
-  firstname: undefined,
-  lastname: undefined,
+  name: undefined,
   email: undefined,
   subject: undefined,
   message: undefined,
@@ -344,6 +362,7 @@ async function onSubmit(values, ctx) {
   });
 
   if (error.value) {
+    // Menetapkan pesan kesalahan menggunakan properti `errors`
     ctx.setErrors(transformErrors(error.value?.data));
     snackbar.add({
       type: "error",

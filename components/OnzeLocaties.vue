@@ -60,9 +60,9 @@
                   name="soort"
                   :checked="selectedSoortLocatie === item.id"
                 />
-                <label :for="item.id" class="cursor-pointer">{{
-                  item.name
-                }}</label>
+                <label :for="item.id" class="cursor-pointer">
+                  {{ item.name }}
+                </label>
               </div>
             </fieldset>
             <SliderRange
