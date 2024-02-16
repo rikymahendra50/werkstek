@@ -1,3 +1,3 @@
 <template>
-  <eachVacaturies />
+  <p>test</p>
 </template>

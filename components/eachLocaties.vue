@@ -1,7 +1,7 @@
 <template>
   <div>
     <NuxtLink
-      :to="link"
+      :to="`onze-locaties/${link}`"
       class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg group hover:shadow-lg transition min-h-[150px] sm:min-h-[170px] md:min-h-[200px]"
       style="box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.05)"
     >
@@ -29,22 +29,20 @@
           <span
             class="bg-primary absolute top-[20%] sm:top-[30%] md:top-[20%] left-0 flex sm:py-1 px-1 sm:px-2 rounded-full ml-2 mt-2 text-[12px] sm:text-sm font-semibold"
           >
-            {{ type }}
+            Regular
           </span>
         </div>
       </div>
       <div class="grid col-span-4 md:col-span-3 ml-5 items-center">
-        <span class="text-[14px] sm:text-lg font-semibold">{{ city }}</span>
-        <span class="text-sm">{{ adres }}</span>
+        <span class="text-[14px] sm:text-lg font-semibold">{{ name }}</span>
+        <span class="text-sm">Adres</span>
         <div class="flex justify-between">
-          <span class="text-[12px] sm:text-base font-bold">{{
-            opervlakte
-          }}</span>
-          <span class="text-[12px] sm:text-base">{{ phoneNumber }}</span>
+          <span class="text-[12px] sm:text-base font-bold"> Opervlakte </span>
+          <span class="text-[12px] sm:text-base">phoneNumber</span>
         </div>
         <div class="flex justify-between">
           <span class="text-[12px] sm:text-base">€ {{ price }}</span>
-          <span class="text-[12px] sm:text-base">{{ mailAdres }}</span>
+          <span class="text-[12px] sm:text-base">mailAdres</span>
         </div>
         <div class="flex justify-end w-full">
           <div class="flex mt-2 sm:mt-0">
@@ -70,46 +68,35 @@ export default {
   props: {
     link: {
       type: String,
-      required: true,
     },
     opervlakte: {
       type: String,
-      required: true,
     },
     image: {
       type: String,
-      required: true,
     },
     rating: {
       type: Number,
-      required: true,
     },
     type: {
       type: String,
-      required: true,
     },
-    city: {
+    name: {
       type: String,
-      required: true,
     },
     adres: {
       type: String,
-      required: true,
     },
     phoneNumber: {
       type: String,
-      required: true,
     },
-    price: {
-      required: true,
-    },
+    price: {},
     mailAdres: {
       type: String,
-      required: true,
     },
     detailLinkTitle: {
       type: String,
-      required: true,
+      default: "Neem een kijkje",
     },
   },
 };

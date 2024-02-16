@@ -1,22 +1,24 @@
 <template>
   <div>
-    {{ $user }}
-
     <div class="alert alert-success alert-sm">
       <span class="text-white text-lg">Welcome {{ $user?.first_name }}</span>
     </div>
+    {{ $user }}
+    <p>Admin Name : {{ $user?.first_name }}, {{ $user?.last_name }}</p>
 
-    <p>Admin Name : {{ $user?.first_name }}</p>
-
-    <p>Profile : {{ $user?.profile_picture }}</p>
-
-    <!-- <button @click="$logout()" class="btn btn-error">Logout</button> -->
+    {{ data }}
   </div>
 </template>
 
 <script setup lang="ts">
 useHead({
   title: "AdminHome",
+});
+
+const { requestOptions } = useRequestOptions();
+const { data, error } = useFetch(`/admins/profile`, {
+  method: "get",
+  ...requestOptions,
 });
 
 const { $user, $logout } = useAuth();

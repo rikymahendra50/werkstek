@@ -17,14 +17,17 @@
     </div>
     <div class="flex w-full">
       <div class="flex w-full lg:w-[60%] justify-center">
-        <EachBlogBig v-for="article in data?.data?.slice(0, 2)" :key="article.id" :imageSrc="article.image"
+        <EachBlogBig v-for="article in data.data.slice(0, 2)" :key="article.id" :imageSrc="article.image"
           :title="article.title" :description="article.meta" :link="`/blog/${article.slug}`" />
       </div>
       <div class="flex-col justify-between lg:flex hidden lg:w-[40%]">
-        <EachBlogSmall v-for="article in data?.data.slice(2, 5)" :key="article.id" :imageSrc="article.image"
+        <EachBlogSmall v-for="article in data.data.slice(2, 5)" :key="article.id" :imageSrc="article.image"
           :title="article.title" :description="article.meta" :link="`/blog/${article.slug}`" />
       </div>
     </div>
+    <!-- <pre>
+        {{ data.data }}
+      </pre> -->
   </section>
 </template>
 
