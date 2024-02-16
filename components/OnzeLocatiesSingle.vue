@@ -69,9 +69,16 @@
                     {{ itemCheckBox.name }}
                   </td>
                   <td
-                    class="w-[60%] sm:w-[50%] flex items-start text-quaternary"
+                    class="w-[60%] sm:w-[50%] flex items-start text-quaternary gap-3"
                   >
-                    <Checkbox :titleCheckBox="itemCheckBox.checkBoxTitle" />
+                    <input
+                      type="checkbox"
+                      name="checkbox"
+                      checked
+                      disabled
+                      value="1"
+                    />
+                    <label for="checkbox">Fiture</label>
                   </td>
                 </tr>
               </tbody>

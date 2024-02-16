@@ -16,7 +16,6 @@
   <SliderLocaties />
   <SliderTestimony class="my-20" />
   <FourImages />
-  <!-- <Blog :showTitleHeader="true" /> -->
   <BgBigGreen
     :title1="BgBigGreenData.title1"
     :title2="BgBigGreenData.title2"

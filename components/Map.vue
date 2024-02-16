@@ -238,7 +238,7 @@ export default {
 
         if (matchingMarker) {
           matchingMarker.details.filtered = true;
-          this.updateMarker();
+          // this.updateMarker();
 
           const infowindow = new google.maps.InfoWindow({
             content: `
@@ -259,25 +259,25 @@ export default {
       }
     },
 
-    updateMarker() {
-      // const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
+    // updateMarker() {
+    //   // const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
 
-      this.markers.forEach((marker, index) => {
-        // const location = this.locations[index];
-        // let iconColor = "/images/logo-wekstek.png";
+    //   this.markers.forEach((marker, index) => {
+    //     // const location = this.locations[index];
+    //     // let iconColor = "/images/logo-wekstek.png";
 
-        // if (location.filtered) {
-        //   iconColor = "/images/person-comment-1.png";
-        // }
+    //     // if (location.filtered) {
+    //     //   iconColor = "/images/person-comment-1.png";
+    //     // }
 
-        // const iconUrl = iconBase + iconColor;
+    //     // const iconUrl = iconBase + iconColor;
 
-        marker.setIcon({
-          // url: iconUrl,
-          scaledSize: new google.maps.Size(30, 30),
-        });
-      });
-    },
+    //     marker.setIcon({
+    //       // url: iconUrl,
+    //       scaledSize: new google.maps.Size(30, 30),
+    //     });
+    //   });
+    // },
 
     // Map Function
     loadGoogleMapsScript() {

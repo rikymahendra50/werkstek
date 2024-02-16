@@ -2,9 +2,9 @@
   <div class="border-r bg-white">
     <div class="flex h-full max-h-screen flex-col gap-4">
       <div class="flex h-[60px] items-center border-b px-6 justify-between">
-        <a class="flex items-center gap-2 font-semibold" href="#"
-          ><Werkstek
-        /></a>
+        <NuxtLink to="/admin" class="flex items-center gap-2 font-semibold">
+          <Werkstek />
+        </NuxtLink>
         <div class="block lg:hidden">
           <button
             type="button"
@@ -20,14 +20,13 @@
         <nav class="grid items-start px-4 text-sm font-medium">
           <!-- Home -->
           <NuxtLink
-            to="/admin/home"
+            to="/admin"
             :class="{
               'bg-red-500 text-white': isHomeActive,
               'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50':
                 !isHomeActive,
             }"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50 border-2"
-            href="#"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -46,9 +45,8 @@
             Home
           </NuxtLink>
           <NuxtLink
-            to="/"
+            to="/admin/location"
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            href="#"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -74,47 +72,10 @@
             Location
           </NuxtLink>
           <NuxtLink
-            to="/admin/locations"
+            to="/admin/location"
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            href="#"
           >
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="2"
-              stroke="currentColor"
-              class="w-4 h-4"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-              />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
-              />
-            </svg>
-            Location
-            <div
-              class="whitespace-nowrap border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-            >
-              6
-            </div>
-          </NuxtLink>
-          <a
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            href="#"
-          >
-            <icon name="i-heroicons-folder" /> Folder </a
-          ><a
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            href="#"
-            ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -131,11 +92,44 @@
               <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
               <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
             </svg>
-            Contact</a
-          >
+            Contact
+            <div
+              class="whitespace-nowrap border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
+            >
+              6
+            </div>
+          </NuxtLink>
           <a
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            href="#"
+          >
+            <icon name="i-heroicons-folder" /> Folder
+          </a>
+          <NuxtLink
+            to="/admin"
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4"
+            >
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            Contact
+          </NuxtLink>
+          <NuxtLink
+            to="/"
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -152,10 +146,10 @@
               <path d="m19 9-5 5-4-4-3 3"></path>
             </svg>
             Category
-          </a>
-          <a
+          </NuxtLink>
+          <NuxtLink
+            to="/"
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            href="#"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -172,10 +166,10 @@
               />
             </svg>
             Facility
-          </a>
-          <a
+          </NuxtLink>
+          <NuxtLink
+            to="/"
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            href="#"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +186,7 @@
               />
             </svg>
             Article
-          </a>
+          </NuxtLink>
           <button @click="$logout()" class="btn btn-error mt-20">Logout</button>
         </nav>
       </div>

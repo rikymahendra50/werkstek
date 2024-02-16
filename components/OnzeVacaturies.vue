@@ -26,7 +26,7 @@
           <span class="text-base mt-3 opacity-50">Kies een locatie</span>
           <div class="flex-col form-control max-w-xs mt-2">
             <select
-              id="kota"
+              id="city"
               class="select select-bordered dropdown"
               v-model="selectedCity"
             >
@@ -71,7 +71,7 @@
               :minPrice="0"
               :maxPrice="100000"
               :minRange="0"
-              :maxRange="850"
+              :maxRange="85000"
               :priceGap="100000"
               class="my-2"
               @price-change="handlePriceChange"
@@ -97,7 +97,7 @@
                         :value="item.id"
                         :name="item.name"
                         class="mr-2 pt-[0.7px]"
-                        v-model="selectedFunctie"
+                        @change="handlefunctieCheckbox(item.id)"
                       />
                       <label :for="item.id" class="cursor-pointer">{{
                         item.name
@@ -118,7 +118,7 @@
                         :value="item.id"
                         :name="item.name"
                         class="mr-2 pt-[0.7px]"
-                        v-model="selectedFunctie"
+                        @change="handlefunctieCheckbox(item.id)"
                       />
                       <label :for="item.id" class="cursor-pointer">{{
                         item.name
@@ -157,7 +157,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      showFilter: null,
+      showFilter: false,
+      screenWidth: 0,
       city: ["Alles", "Simon Stevinweg 27", "Antareslaan 65", "Computerweg 1"],
       soortLocatiesRadio: [
         {
@@ -218,11 +219,24 @@ export default {
       this.showFilter = !this.showFilter;
     },
   },
+  mounted() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth > 768) {
+      this.showFilter = true;
+    }
+  },
+  updated() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 768) {
+      this.showFilter = false;
+    } else {
+      this.showFilter = true;
+    }
+  },
   setup() {
-    // Membuat data reaktif menggunakan ref
-    const selectedCity = ref("");
-    const selectedSoortLocatie = ref("");
-    const selectedFunctie = ref("");
+    const selectedCity = ref();
+    const selectedSoortLocatie = ref();
+    const selectedFunctie = ref([]);
     const selectedMinPrice = ref(0);
     const selectedMaxPrice = ref(0);
     const selectedMeterMin = ref();
@@ -234,7 +248,10 @@ export default {
       selectedMaxPrice.value = priceData.maxPrice;
     }
 
-    // Menggunakan watch untuk memantau perubahan pada properti tertentu
+    function handlefunctieCheckbox(id) {
+      selectedFunctie.value = id;
+    }
+
     watch(
       [
         selectedCity,
@@ -248,20 +265,30 @@ export default {
       async () => {
         await new Promise((resolve) => setTimeout(resolve, 900));
         try {
+          let params = {};
+
+          // Filter berdasarkan kota hanya jika bukan "Alles"
+          if (selectedCity.value !== "Alles") {
+            params["filter[search]"] = selectedCity.value;
+          }
+
+          // Filter berdasarkan soortlocatie hanya jika bukan "Alles"
+          if (selectedSoortLocatie.value !== "Alles") {
+            params["filter[type_id]"] = selectedSoortLocatie.value;
+          }
+
+          params["filter[productFacility.facility_id]"] = selectedFunctie.value;
+
+          // params["filter[min_price]"] = selectedMinPrice.value;
+          // params["filter[max_price]"] = selectedMaxPrice.value;
+
+          paramsfilter[productFacility.facility_id] = selectedFunctie.value;
+
           const response = await axios.get(
             "http://api-staging-werkstek.spdigitalhosting.com/api/v1/products",
-            {
-              params: {
-                "filter[search]": selectedCity.value,
-                "filter[min_price]": selectedMinPrice.value,
-                "filter[max_price]": selectedMaxPrice.value,
-                "filter[min_area]": selectedMeterMin.value,
-                "filter[max_area]": selectedMeterMax.value,
-                // "filter[location_id]": selectedLocationId.value,
-                // "filter[type_id]": selectedTypeId.value,
-              },
-            }
+            { params: params }
           );
+
           filteredData.value = response.data;
         } catch (error) {
           console.error("Failed to retrieve data from API:", error);
@@ -271,6 +298,7 @@ export default {
     return {
       selectedCity,
       handlePriceChange,
+      handlefunctieCheckbox,
       selectedMeterMin,
       selectedMeterMax,
       selectedSoortLocatie,

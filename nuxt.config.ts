@@ -1,7 +1,7 @@
 /**
  * replace with actual title or name of the project
  */
-const projectName = "WEKSTECK";
+const projectName = "WERKSTEK";
 /**
  * replace with actual description for seo
  */

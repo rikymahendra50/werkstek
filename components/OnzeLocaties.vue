@@ -121,9 +121,9 @@
                         class="mr-2 pt-[0.7px]"
                         @change="handlefunctieCheckbox(item.id)"
                       />
-                      <label :for="item.name" class="cursor-pointer">{{
-                        item.name
-                      }}</label>
+                      <label :for="item.name" class="cursor-pointer">
+                        {{ item.name }}
+                      </label>
                     </div>
                   </fieldset>
                 </div>
@@ -165,7 +165,7 @@
           :image="
             item.images.find((image, imageIndex) => imageIndex === index)?.image
           "
-          :rating="item.is_saleable"
+          :rating="9.4"
         />
       </div>
     </div>
@@ -178,7 +178,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      showFilter: null,
+      showFilter: false,
+      screenWidth: 0,
       city: ["Simon Stevinweg 27", "Antareslaan 65", "Computerweg 1"],
       soortLocatiesRadio: [
         {
@@ -235,9 +236,23 @@ export default {
       this.showFilter = !this.showFilter;
     },
   },
+  mounted() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth > 768) {
+      this.showFilter = true;
+    }
+  },
+  updated() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 768) {
+      this.showFilter = false;
+    } else {
+      this.showFilter = true;
+    }
+  },
   setup() {
     // Membuat data reaktif menggunakan ref
-    const selectedCity = ref("");
+    const selectedCity = ref();
     const selectedSoortLocatie = ref(null);
     const selectedFunctie = ref([]);
     const selectedMinPrice = ref();
@@ -255,15 +270,17 @@ export default {
       selectedSoortLocatie.value =
         selectedSoortLocatie.value === id ? null : id;
     }
-
-    function handlefunctieCheckbox(id) {
-      selectedFunctie.value = id;
-    }
-
     function handleLocatie(item) {
       selectedCity.value = item;
     }
-
+    function handlefunctieCheckbox(id) {
+      const index = selectedFunctie.value.indexOf(id);
+      if (index !== -1) {
+        selectedFunctie.value.splice(index, 1);
+      } else {
+        selectedFunctie.value.push(id);
+      }
+    }
     watch(
       [
         selectedCity,
