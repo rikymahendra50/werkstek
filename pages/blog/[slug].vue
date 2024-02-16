@@ -1,26 +1,31 @@
 <template>
-  <div v-if="data && data.data">
-    <EachBlog
-      :title="data.data.title"
-      :imageSrc="data.data.image"
-      :body="data.data.body"
-      :comment="data.data.comments"
-    />
+  <div v-if="pending">Loading...</div>
+  <div v-if="data && data?.data">
+    <EachBlog :title="data?.data?.title" :imageSrc="data.data.image" :body="data?.data?.body"
+      :comment="data.data.comments" />
   </div>
-  <div v-else>Loading...</div>
 </template>
 
 <script setup>
 const route = useRoute();
-const slug = route.params.slug;
+
+const slug = computed(() => {
+  return route.params.slug
+})
 
 const { requestOptions } = useRequestOptions();
-const { data, error } = useFetch(`/articles/${slug}`, {
+
+
+const { data, error, pending } = await useFetch(`/articles/${slug.value}`, {
   method: "get",
   ...requestOptions,
 });
 
-if (error) {
+if (error.value) {
   console.error("Error fetching data:", error);
 }
+
+useHead({
+  title: data.value?.data?.title
+})
 </script>
