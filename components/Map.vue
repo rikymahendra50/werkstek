@@ -11,43 +11,6 @@
   </section>
 </template>
 
-<style>
-.gm-style-cc {
-  display: none !important;
-}
-
-.gm-style-iw-d {
-  overflow-y: auto !important;
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
-}
-
-.gm-ui-hover-effect {
-  background-color: white !important;
-  position: absolute !important;
-  border-radius: 50%;
-  top: 5px !important;
-  right: 5px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.gm-ui-hover-effect:span {
-  width: 200px;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.gm-style-iw-c {
-  padding: 0 !important;
-}
-
-.gm-style-cc a {
-  display: none !important;
-}
-</style>
-
 <script scoped>
 let googleMapsScriptLoaded = false;
 export default {

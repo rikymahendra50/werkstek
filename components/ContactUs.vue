@@ -362,7 +362,6 @@ async function onSubmit(values, ctx) {
   });
 
   if (error.value) {
-    // Menetapkan pesan kesalahan menggunakan properti `errors`
     ctx.setErrors(transformErrors(error.value?.data));
     snackbar.add({
       type: "error",

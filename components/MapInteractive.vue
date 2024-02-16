@@ -103,7 +103,7 @@
   </section>
 </template>
 
-<!-- <style>
+<style>
 .gm-style-cc {
   display: none !important;
 }
@@ -138,7 +138,7 @@
 .gm-style-cc a {
   display: none !important;
 }
-</style> -->
+</style>
 
 <script scoped>
 let googleMapsScriptLoaded = false;
@@ -295,23 +295,23 @@ export default {
         }
       });
 
-      const filteredData = this.locations.filter((location) => {
-        return (
-          location.city === selectedCityFix &&
-          location.price >= minPrice &&
-          location.price <= maxPrice
-        );
-      });
+      // const filteredData = this.locations.filter((location) => {
+      //   return (
+      //     location.city === selectedCityFix &&
+      //     location.price >= minPrice &&
+      //     location.price <= maxPrice
+      //   );
+      // });
 
-      if (filteredData.length > 0) {
-        console.log("Matching Data:", filteredData);
-        filteredData.forEach((location) => {
-          this.moveToLocation(location.lat, location.lng);
-          this.showInfoWindow(location.lat, location.lng, location);
-        });
-      } else {
-        alert("Sorry, the location you selected is not available");
-      }
+      // if (filteredData.length > 0) {
+      //   console.log("Matching Data:", filteredData);
+      //   filteredData.forEach((location) => {
+      //     this.moveToLocation(location.lat, location.lng);
+      //     this.showInfoWindow(location.lat, location.lng, location);
+      //   });
+      // } else {
+      //   alert("Sorry, the location you selected is not available");
+      // }
     },
 
     showInfoWindow(lat, lng, location) {
@@ -396,7 +396,7 @@ export default {
             content: `
               <div style="max-width: 190px;" class="text-end">
                 <img src="${matchingMarker.details.image}" alt="${matchingMarker.details.name}" style="width: 200px; min-height: 100px;">
-                <h2 style="color: #F0912D; margin-top: 2px;">${matchingMarker.details.name}</h2>
+                <h2 style="color: #F0912D; margin-top: 2px;" class="border-2 border-red-500">${matchingMarker.details.name}</h2>
                 <p style="color: black; font-size: 10px; margin: 2px 0;">${matchingMarker.details.area}</p>
                 <p style="color: black;">Price: $${matchingMarker.details.price}</p>
               </div>
