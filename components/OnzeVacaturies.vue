@@ -1,234 +1,324 @@
+<style scoped>
+.scrollbar-onze {
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-onze::-webkit-scrollbar {
+  display: none;
+}
+</style>
 <template>
   <section class="py-20">
     <TitleHeader
-      title="Onze Vacaturies"
-      secondTitle="Bekijk al onze Vacaturies"
+      title="Onze locaties"
+      secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-    <div class="lg:grid lg:grid-cols-12 container-custom">
-      <div class="w-full col-span-4">
-        <!-- filter -->
-        <span class="text-base opacity-50">Kies een locatie</span>
-        <form id="filterForm">
-          <details class="dropdown" @toggle="toggleDropdown">
-            <summary
-              class="m-1 btn bg-[white] normal-case font-normal w-[300px] max-w-[90%] justify-between"
+    <div class="md:grid md:grid-cols-12 container-custom">
+      <div class="md:col-span-4">
+        <button @click="toggleDetail" class="flex items-center gap-2">
+          <img src="/images/filter-icon.svg" class="w-5 h-5 my-4" />
+          <p class="text-base opacity-50">Meer filter opties</p>
+        </button>
+        <div v-if="showFilter">
+          <span class="text-base mt-3 opacity-50">Kies een locatie</span>
+          <div class="flex-col form-control max-w-xs mt-2">
+            <select
+              id="city"
+              class="select select-bordered dropdown"
+              v-model="selectedCity"
             >
-              <div class="flex items-center">
-                <img src="/images/location.svg" class="pl-1 pr-3" />
-                {{ selectedName || "Alles" }}
-              </div>
-              <img src="/images/arrow-down.svg" class="p-1" />
-            </summary>
-            <ul
-              class="p-2 shadow menu dropdown-content z-[1] bg-white rounded-[8px] w-[90%]"
-              v-if="isOpen"
-            >
-              <li
-                class="py-1 text-md"
-                v-for="(item, index) in name"
+              <option disabled selected>Alles</option>
+              <option
+                class="text-sm flex items-center p-5"
+                v-for="(item, index) in city"
                 :key="index"
+                :value="item"
               >
-                <option @click="selectName(item)">{{ item }}</option>
-              </li>
-            </ul>
-          </details>
-        </form>
-        <div class="flex flex-col">
-          <p class="text-base mt-3 opacity-50 mb-2">Soort locatie</p>
-          <div class="flex flex-col">
-            <fieldset id="soortLocatie" class="flex flex-col gap-2">
-              <div
-                class="flex justify-start items-center"
-                v-for="item in soortLocatiesRadio"
-                :key="item.id"
-              >
-                <input
-                  type="radio"
-                  :id="item.id"
-                  :value="item.name"
-                  :name="item.name"
-                  class="mr-2 pt-[0.7px]"
-                  v-model="selectedSoortLocatie"
-                />
-                <label :for="item.id" class="cursor-pointer">{{
-                  item.name
-                }}</label>
-              </div>
-            </fieldset>
+                {{ item }}
+              </option>
+            </select>
           </div>
-          <SliderRange
-            :title="'De prijs per maand'"
-            :idInputMin="'priceMin'"
-            :idInputMax="'priceMax'"
-            :minPrice="0"
-            :maxPrice="1000"
-            :minRange="0"
-            :maxRange="850"
-            :priceGap="100"
-            class="my-2 w-[80%]"
-            @price-change="handlePriceChange"
-          />
-          <p class="text-base mt-3 opacity-50 mb-2">Opleidings niveau</p>
-          <div
-            id="Opleidings"
-            class="form-control w-[90%] flex flex-col gap-2 mt-2"
-          >
+          <div class="flex flex-col">
+            <p class="text-base mt-3 opacity-50 mb-2">Soort locatie</p>
+            <div class="flex flex-col">
+              <fieldset id="soortLocatie" class="flex flex-col gap-2">
+                <div
+                  class="flex justify-start items-center"
+                  v-for="item in soortLocatiesRadio"
+                  :key="item.id"
+                >
+                  <input
+                    type="radio"
+                    :id="item.id"
+                    :value="item.name"
+                    :name="item.name"
+                    class="mr-2 pt-[0.7px]"
+                    v-model="selectedSoortLocatie"
+                  />
+                  <label :for="item.id" class="cursor-pointer">{{
+                    item.name
+                  }}</label>
+                </div>
+              </fieldset>
+            </div>
+            <SliderRange
+              :title="'De prijs per maand'"
+              :idInputMin="'priceMin'"
+              :idInputMax="'priceMax'"
+              :minPrice="0"
+              :maxPrice="100000"
+              :minRange="0"
+              :maxRange="85000"
+              :priceGap="100000"
+              class="my-2"
+              @price-change="handlePriceChange"
+            />
+            <p class="text-base mt-3 opacity-50 mb-2">Opleidings niveau</p>
             <div
-              class="flex justify-between gap-2 text-sm sm:text-base w-[95%]"
+              id="Opleidings"
+              class="form-control w-[90%] flex flex-col gap-2 mt-2"
             >
-              <div class="flex flex-col">
-                <fieldset id="functie" class="flex flex-col gap-2">
-                  <div
-                    class="flex justify-start items-center"
-                    v-for="item in opleidings"
-                    :key="item.id"
-                  >
-                    <input
-                      type="radio"
-                      :id="item.id"
-                      :value="item.name"
-                      :name="item.name"
-                      class="mr-2 pt-[0.7px]"
-                      v-model="selectedFunctie"
-                    />
-                    <label :for="item.id" class="cursor-pointer">{{
-                      item.name
-                    }}</label>
-                  </div>
-                </fieldset>
+              <div
+                class="flex justify-between gap-2 text-sm sm:text-base w-[95%]"
+              >
+                <div class="flex flex-col">
+                  <fieldset id="functie" class="flex flex-col gap-2">
+                    <div
+                      class="flex justify-start items-center"
+                      v-for="item in opleidings.slice(0, 4)"
+                      :key="item.id"
+                    >
+                      <input
+                        type="checkbox"
+                        :id="item.id"
+                        :value="item.id"
+                        :name="item.name"
+                        class="mr-2 pt-[0.7px]"
+                        @change="handlefunctieCheckbox(item.id)"
+                      />
+                      <label :for="item.id" class="cursor-pointer">{{
+                        item.name
+                      }}</label>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="flex flex-col">
+                  <fieldset id="functie" class="flex flex-col gap-2">
+                    <div
+                      class="flex justify-start items-center"
+                      v-for="item in opleidings.slice(4, 8)"
+                      :key="item.id"
+                    >
+                      <input
+                        type="checkbox"
+                        :id="item.id"
+                        :value="item.id"
+                        :name="item.name"
+                        class="mr-2 pt-[0.7px]"
+                        @change="handlefunctieCheckbox(item.id)"
+                      />
+                      <label :for="item.id" class="cursor-pointer">{{
+                        item.name
+                      }}</label>
+                    </div>
+                  </fieldset>
+                </div>
               </div>
             </div>
           </div>
-          <img src="/images/filter-icon.svg" class="w-5 h-5 my-4" />
-          <p class="text-base opacity-50">Meer filter opties</p>
         </div>
       </div>
       <div
-        class="py-5 col-span-8 overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col scrollbar-onze"
+        class="py-5 md:col-span-8 overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col scrollbar-onze"
       >
-        <!-- data -->
         <eachLocaties
-          v-for="(item, index) in data.data"
+          v-for="(item, index) in filteredData.data"
           :key="item.id"
           :name="item.name"
-          :image="item.image"
-          :price="parseFloat(item.price)"
           :link="item.slug"
+          :price="item.price"
+          :image="
+            item.images.find((image, imageIndex) => imageIndex === index)?.image
+          "
+          :rating="item.is_saleable"
         />
       </div>
     </div>
   </section>
 </template>
 
-<script setup>
-const { requestOptions } = useRequestOptions();
-const { data, refresh } = useFetch(`/products`, {
-  method: "get",
-  ...requestOptions,
-});
+<script>
+import { ref, watch } from "vue";
+import axios from "axios";
 
-const name = ref([
-  "Alles",
-  "Simon Stevinweg 27",
-  "Locatie",
-  "Example",
-  "Amsterdam",
-]);
-
-const soortLocatiesRadio = ref([
-  {
-    id: 1,
-    name: "Alles",
+export default {
+  data() {
+    return {
+      showFilter: false,
+      screenWidth: 0,
+      city: ["Alles", "Simon Stevinweg 27", "Antareslaan 65", "Computerweg 1"],
+      soortLocatiesRadio: [
+        {
+          id: 1,
+          name: "Alles",
+        },
+        {
+          id: 2,
+          name: "Stage Plaats",
+        },
+        {
+          id: 3,
+          name: "Functie 1",
+        },
+        {
+          id: 4,
+          name: "Functie 2",
+        },
+      ],
+      opleidings: [
+        {
+          id: 5,
+          name: "Wifi",
+        },
+        {
+          id: 6,
+          name: "Parkeerplaats",
+        },
+        {
+          id: 7,
+          name: "Receptie",
+        },
+        {
+          id: 8,
+          name: "Koffiebar",
+        },
+        {
+          id: 9,
+          name: "Keuken",
+        },
+        {
+          id: 10,
+          name: "Vlakbij het treinstation",
+        },
+        {
+          id: 11,
+          name: "Loungeplekken",
+        },
+        {
+          id: 12,
+          name: "Vergaderruimtes met videoschermen",
+        },
+      ],
+    };
   },
-  {
-    id: 2,
-    name: "Stage plaats",
+  methods: {
+    toggleDetail() {
+      this.showFilter = !this.showFilter;
+    },
   },
-  {
-    id: 3,
-    name: "Functie 1",
+  mounted() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth > 768) {
+      this.showFilter = true;
+    }
   },
-  {
-    id: 4,
-    name: "Functie 2",
+  updated() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 768) {
+      this.showFilter = false;
+    } else {
+      this.showFilter = true;
+    }
   },
-]);
+  setup() {
+    const selectedCity = ref();
+    const selectedSoortLocatie = ref();
+    const selectedFunctie = ref([]);
+    const selectedMinPrice = ref(0);
+    const selectedMaxPrice = ref(0);
+    const selectedMeterMin = ref();
+    const selectedMeterMax = ref();
+    const filteredData = ref([]);
 
-const opleidings = ref([
-  {
-    id: 5,
-    name: "Alles",
-  },
-  {
-    id: 6,
-    name: "MBO",
-  },
-  {
-    id: 7,
-    name: "HBO",
-  },
-  {
-    id: 8,
-    name: "Universiteit",
-  },
-]);
+    function handlePriceChange(priceData) {
+      selectedMinPrice.value = priceData.minPrice;
+      selectedMaxPrice.value = priceData.maxPrice;
+    }
 
-const isOpen = ref(false);
-const selectedName = ref();
-const selectedMinPrice = ref(0);
-const selectedMaxPrice = ref(0);
-const selectedSoortLocatie = ref("");
-const selectedFunctie = ref([]);
+    function handlefunctieCheckbox(id) {
+      selectedFunctie.value = id;
+    }
 
-function toggleDropdown() {
-  isOpen.value = !isOpen.value;
-}
+    watch(
+      [
+        selectedCity,
+        selectedSoortLocatie,
+        selectedMeterMin,
+        selectedMeterMax,
+        selectedFunctie,
+        selectedMinPrice,
+        selectedMaxPrice,
+      ],
+      async () => {
+        await new Promise((resolve) => setTimeout(resolve, 900));
+        try {
+          let params = {};
 
-function selectName(name) {
-  selectedName.value = name;
-}
+          // Filter berdasarkan kota hanya jika bukan "Alles"
+          if (selectedCity.value !== "Alles") {
+            params["filter[search]"] = selectedCity.value;
+          }
 
-function handlePriceChange(priceData) {
-  selectedMinPrice.value = priceData.minPrice;
-  selectedMaxPrice.value = priceData.maxPrice;
-}
+          // Filter berdasarkan soortlocatie hanya jika bukan "Alles"
+          if (selectedSoortLocatie.value !== "Alles") {
+            params["filter[type_id]"] = selectedSoortLocatie.value;
+          }
 
-const filterData = computed(() => {
-  let filteredItems = [];
+          params["filter[productFacility.facility_id]"] = selectedFunctie.value;
 
-  // filter dropdown city
-  if (selectedName.value && selectedName.value !== "Alles") {
-    filteredItems = filteredItems.filter(
-      (item) => item.name === selectedName.value
+          // params["filter[min_price]"] = selectedMinPrice.value;
+          // params["filter[max_price]"] = selectedMaxPrice.value;
+
+          paramsfilter[productFacility.facility_id] = selectedFunctie.value;
+
+          const response = await axios.get(
+            "http://api-staging-werkstek.spdigitalhosting.com/api/v1/products",
+            { params: params }
+          );
+
+          filteredData.value = response.data;
+        } catch (error) {
+          console.error("Failed to retrieve data from API:", error);
+        }
+      }
     );
-  }
-
-  // filter radio
-  if (selectedSoortLocatie.value && selectedSoortLocatie.value !== "Alles") {
-    filteredItems = filteredItems.filter(
-      (item) => item.soortLocaties === selectedSoortLocatie.value
-    );
-  }
-
-  // filter radio
-  if (selectedFunctie.value && selectedFunctie.value !== "Alles") {
-    filteredItems = filteredItems.filter(
-      (item) => item.opleidings === selectedFunctie.value
-    );
-  }
-
-  // slider range price
-  if (parseInt(selectedMinPrice) >= 0 && parseInt(selectedMaxPrice)) {
-    filteredItems = filteredItems.filter(
-      (item) =>
-        item.price >= parseInt(selectedMinPrice) &&
-        item.price <= parseInt(selectedMaxPrice)
-    );
-  }
-
-  return filteredItems;
-});
+    return {
+      selectedCity,
+      handlePriceChange,
+      handlefunctieCheckbox,
+      selectedMeterMin,
+      selectedMeterMax,
+      selectedSoortLocatie,
+      selectedFunctie,
+      selectedMinPrice,
+      selectedMaxPrice,
+      filteredData,
+    };
+  },
+  mounted() {
+    axios
+      .get("http://api-staging-werkstek.spdigitalhosting.com/api/v1/products")
+      .then((response) => {
+        this.filteredData = response.data;
+      })
+      .catch((error) => {
+        console.error("Failed to retrieve data from API:", error);
+      });
+  },
+};
 </script>
 
 <style scoped>
@@ -237,7 +327,6 @@ const filterData = computed(() => {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-
 .scrollbar-onze::-webkit-scrollbar {
   display: none;
 }

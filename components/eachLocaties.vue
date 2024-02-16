@@ -8,8 +8,8 @@
       <div
         class="grid col-span-4 md:col-span-5 md:min-h-[210px] h-full bg-no-repeat bg-cover rounded-lg relative text-white"
         :style="{
-          backgroundImage: `url('/images/${image}')`,
-          background: `linear-gradient(90deg, rgba(251,249,249,0) 39%, rgba(255,255,255,1) 100%), url('/images/${image}')`,
+          backgroundImage: `url('${image}')`,
+          background: `linear-gradient(90deg, rgba(251,249,249,0) 39%, rgba(255,255,255,1) 100%), url('${image}')`,
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
@@ -29,22 +29,20 @@
           <span
             class="bg-primary absolute top-[20%] sm:top-[30%] md:top-[20%] left-0 flex sm:py-1 px-1 sm:px-2 rounded-full ml-2 mt-2 text-[12px] sm:text-sm font-semibold"
           >
-            {{ type }}
+            Regular
           </span>
         </div>
       </div>
       <div class="grid col-span-4 md:col-span-3 ml-5 items-center">
         <span class="text-[14px] sm:text-lg font-semibold">{{ name }}</span>
-        <span class="text-sm">{{ adres }}</span>
+        <span class="text-sm">Adres</span>
         <div class="flex justify-between">
-          <span class="text-[12px] sm:text-base font-bold">{{
-            opervlakte
-          }}</span>
-          <span class="text-[12px] sm:text-base">{{ phoneNumber }}</span>
+          <span class="text-[12px] sm:text-base font-bold"> Opervlakte </span>
+          <span class="text-[12px] sm:text-base">phoneNumber</span>
         </div>
         <div class="flex justify-between">
           <span class="text-[12px] sm:text-base">€ {{ price }}</span>
-          <span class="text-[12px] sm:text-base">{{ mailAdres }}</span>
+          <span class="text-[12px] sm:text-base">mailAdres</span>
         </div>
         <div class="flex justify-end w-full">
           <div class="flex mt-2 sm:mt-0">
@@ -92,9 +90,7 @@ export default {
     phoneNumber: {
       type: String,
     },
-    price: {
-      type: Number,
-    },
+    price: {},
     mailAdres: {
       type: String,
     },

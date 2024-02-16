@@ -30,7 +30,7 @@
     <div class="flex-1">
       <div class="hidden lg:flex items-center gap-4">
         <form class="w-[90%]">
-          <div class="relative">
+          <!-- <div class="relative">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -51,7 +51,7 @@
               placeholder="Search..."
               type="search"
             />
-          </div>
+          </div> -->
         </form>
         <button
           class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground rounded-full border border-gray-200 w-8 h-8 dark:border-gray-800"
@@ -62,7 +62,7 @@
           data-state="closed"
         >
           <img
-            :src="imageSrcAdmin"
+            :src="$user?.profile_picture"
             width="32"
             height="32"
             alt="Avatar"
@@ -75,8 +75,15 @@
   </header>
 </template>
 
-<script>
+<script setup>
 const showDrawer = inject("showTableOrMobileSidebar");
+
+const { $user } = useAuth();
+definePageMeta({
+  layout: "admin",
+  // @ts-ignore
+  middleware: ["auth", "admin"],
+});
 </script>
 
 <style></style>

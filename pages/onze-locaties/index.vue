@@ -28,6 +28,6 @@
 const { StatistiekLocaties2Data, BgBigGreenData } = useOnzeLocaties();
 
 useHead({
-  title: "OnzeLocaties",
+  title: "Onze Locaties",
 });
 </script>

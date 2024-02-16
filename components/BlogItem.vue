@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <NuxtLink to="/blog/example">
+    <NuxtLink :to="`/blog/${link}`">
       <div
         class="overflow-hidden p-1.5 transition-shadow hover:shadow-md duration-500 rounded-md"
       >
@@ -28,17 +28,15 @@
 <script>
 export default {
   props: {
+    link: { String },
     image: {
       type: String,
-      required: true,
     },
     title: {
       type: String,
-      required: true,
     },
     description: {
       type: String,
-      required: true,
     },
   },
 };
