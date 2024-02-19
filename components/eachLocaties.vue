@@ -74,6 +74,7 @@ export default {
     },
     image: {
       type: String,
+      default: "/images/img-each-locatie-3.jpg",
     },
     rating: {
       type: Number,
@@ -86,9 +87,11 @@ export default {
     },
     adres: {
       type: String,
+      default: "Mail Adres",
     },
     phoneNumber: {
       type: String,
+      default: "+31302393838",
     },
     price: {},
     mailAdres: {

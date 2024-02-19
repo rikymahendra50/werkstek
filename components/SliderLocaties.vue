@@ -38,24 +38,28 @@
         >
           <swiper-slide
             class="mr-2"
-            v-for="(itemSlider, index) in SliderLocaties"
+            v-for="(itemSlider, index) in data?.data"
             :key="itemSlider.id"
             :style="{
-              backgroundImage: `url('${itemSlider.backgroundImage}')`,
-              background: `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${itemSlider.backgroundImage}')`,
+              backgroundImage: itemSlider.images[index]?.image
+                ? `url('${itemSlider.images[index]?.image}')`
+                : `url('/images/img-each-locatie-1.png')`,
+              background: itemSlider.images[index]?.image
+                ? `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${itemSlider.images[index]?.image}')`
+                : `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/img-each-locatie-1.png')`,
               backgroundPosition: 'center center',
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
             }"
           >
             <NuxtLink
-              :to="itemSlider.link"
+              :to="`/onze-locaties/${itemSlider.slug}`"
               class="h-full flex flex-col justify-center items-center text-white"
             >
               <h2 class="text-3xl pt-20">Hoofddorp</h2>
-              <p class="text-sm py-1">Simon Stevinweg 27</p>
+              <p class="text-sm py-1">{{ itemSlider.name }}</p>
               <h4 class="text-lg font-semibold">Opervlakte</h4>
-              <p class="text-sm py-1">€ 495 p/maand</p>
+              <p class="text-sm py-1">€ {{ itemSlider.price }} p/maand</p>
               <p class="text-sm">Neem een kijkje ></p>
             </NuxtLink>
           </swiper-slide>
@@ -109,8 +113,8 @@
 }
 </style>
 
-<script>
-import { ref } from "vue";
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 
 import "swiper/css";
@@ -120,63 +124,32 @@ import "swiper/css/navigation";
 
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
-export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
-  data() {
-    return {
-      SliderLocaties: [
-        {
-          id: 1,
-          link: "/",
-          backgroundImage: "/images/img-slider-home-1.png",
-        },
-        {
-          id: 2,
-          link: "/",
-          backgroundImage: "/images/img-slider-home-2.png",
-        },
-        {
-          id: 3,
-          link: "/",
-          backgroundImage: "/images/img-slider-home-3.png",
-        },
-        {
-          id: 4,
-          link: "/",
-          backgroundImage: "/images/img-slider-home-2.png",
-        },
-      ],
-    };
-  },
-  setup() {
-    const slidesPerView = ref(3);
+const { requestOptions } = useRequestOptions();
+const { data, error } = await useFetch(`/products`, {
+  method: "get",
+  ...requestOptions,
+});
 
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        slidesPerView.value = 2;
-      } else if (window.innerWidth <= 1028) {
-        slidesPerView.value = 3;
-      } else {
-        slidesPerView.value = 3.3;
-      }
-    };
+const slidesPerView = ref(3);
 
-    onMounted(() => {
-      handleResize();
-      window.addEventListener("resize", handleResize);
-    });
-
-    onBeforeUnmount(() => {
-      window.removeEventListener("resize", handleResize);
-    });
-
-    return {
-      slidesPerView,
-      modules: [Autoplay, Pagination, Navigation],
-    };
-  },
+const handleResize = () => {
+  if (window.innerWidth <= 768) {
+    slidesPerView.value = 2;
+  } else if (window.innerWidth <= 1028) {
+    slidesPerView.value = 3;
+  } else {
+    slidesPerView.value = 3.3;
+  }
 };
+
+onMounted(() => {
+  handleResize();
+  window.addEventListener("resize", handleResize);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", handleResize);
+});
+
+const modules = [Autoplay, Pagination, Navigation];
 </script>

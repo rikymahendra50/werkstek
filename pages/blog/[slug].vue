@@ -1,8 +1,12 @@
 <template>
   <div v-if="pending">Loading...</div>
   <div v-if="data && data?.data">
-    <EachBlog :title="data?.data?.title" :imageSrc="data.data.image" :body="data?.data?.body"
-      :comment="data.data.comments" />
+    <EachBlog
+      :title="data?.data?.title"
+      :imageSrc="data.data.image"
+      :body="data?.data?.body"
+      :comment="data.data.comments"
+    />
   </div>
 </template>
 
@@ -10,11 +14,10 @@
 const route = useRoute();
 
 const slug = computed(() => {
-  return route.params.slug
-})
+  return route.params.slug;
+});
 
 const { requestOptions } = useRequestOptions();
-
 
 const { data, error, pending } = await useFetch(`/articles/${slug.value}`, {
   method: "get",
@@ -26,6 +29,6 @@ if (error.value) {
 }
 
 useHead({
-  title: data.value?.data?.title
-})
+  title: data.value?.data?.title,
+});
 </script>

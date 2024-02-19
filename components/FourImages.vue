@@ -37,9 +37,9 @@
           </div>
         </NuxtLink>
         <NuxtLink
-          to="/over-werkstek"
+          to="/onze-vacaturies"
           class="flex flex-wrap w-[60%] h-full rounded-xl transition hover:shadow-xl"
-          :class="{ active: isRouteActive('/over-werkstek') }"
+          :class="{ active: isRouteActive('/onze-vacaturies') }"
           :style="{
             backgroundImage: `url('${Data[1].imageSrc}')`,
             backgroundPosition: 'center center',
@@ -73,9 +73,9 @@
         class="flex z-10 h-[200px] sm:h-[400px] md:h-[350px] lg:h-[398px] text-white gap-2"
       >
         <NuxtLink
-          to="/over-werkstek"
+          to="/onze-locaties"
           class="flex flex-wrap w-[60%] h-full rounded-xl transition hover:shadow-xl"
-          :class="{ active: isRouteActive('/over-werkstek') }"
+          :class="{ active: isRouteActive('/onze-locaties') }"
           :style="{
             backgroundImage: `url('${Data[2].imageSrc}')`,
             backgroundPosition: 'center center',
@@ -105,9 +105,9 @@
           </div>
         </NuxtLink>
         <NuxtLink
-          to="/over-werkstek"
+          to="/werkstek-community"
           class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-xl transition hover:shadow-xl"
-          :class="{ active: isRouteActive('/over-werkstek') }"
+          :class="{ active: isRouteActive('/werkstek-community') }"
           :style="{
             backgroundImage: `url('${Data[3].imageSrc}')`,
             backgroundPosition: 'center center',

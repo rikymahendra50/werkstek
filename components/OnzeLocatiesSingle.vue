@@ -36,21 +36,10 @@
             <!-- Over WERF5 -->
             {{ title }}
           </h1>
-          <p class="text-[12px] md:text-[14px] lg:text-[16px]">
-            <!-- WERF5 is een gedeelde werkplek / kantoor-, en activiteitenruimte in
-            een knusse werfkelder aan de Oudegracht. Overdag werken freelancers
-            binnen WERF5 aan hun eigen projecten. Er zijn 8 vaste werkplekken en
-            8 flexwerkplekken, een vergaderruimte en een kayak die vrij te
-            gebruiken is voor WERF5’ers. ‘savonds en in het weekend kan de
-            ruimte gebruikt worden voor workshops / Brainstorm sessies /
-            trainingen / lezingen met een maximale bezetting van 40 mensen.
-            Co-werken en kruisbestuiving staan centraal binnen WERF5. We helpen
-            elkaar graag bij projecten en bij vragen. Er zijn regelmatig
-            werkplekken beschikbaar binnen WERF5 en het is altijd mogelijk om
-            een of twee daagjes kosteloos te komen werken om het uit te
-            proberen. We drinken trouwens alleen maar goeie bonenkoffie. ? -->
-            {{ description }}
-          </p>
+          <div
+            v-html="description"
+            class="text-[12px] md:text-[14px] lg:text-[16px]"
+          ></div>
         </div>
         <p class="text-[#495057] text-base mt-10 mb-3 ml-5">
           De faciliteiten op de locatie
