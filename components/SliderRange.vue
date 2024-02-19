@@ -29,8 +29,8 @@
             :id="idInputMin"
             type="range"
             class="min-range"
-            min="10000"
-            max="1000000"
+            :min="minPrice"
+            :max="minPrice"
             v-model="localMinRange"
             step="50000"
           />
@@ -40,8 +40,8 @@
             :id="idInputMax"
             type="range"
             class="max-range"
-            min="10000"
-            max="1000000"
+            :min="minPrice"
+            :max="maxPrice"
             v-model="localMaxRange"
             step="50000"
           />
@@ -110,8 +110,10 @@ export default {
     updateRange() {
       const rangeSlider = document.querySelector(".price-slider");
       const value1 = rangeSlider.parentNode.offsetWidth;
-      rangeSlider.style.left = `${(this.localMinPrice / 1000) * value1}px`;
-      rangeSlider.style.right = `${(1 - this.localMaxPrice / 1000) * value1}px`;
+      rangeSlider.style.left = `${(this.localMinPrice / 10000) * value1}px`;
+      rangeSlider.style.right = `${
+        (1 - this.localMaxPrice / 10000) * value1
+      }px`;
     },
     updatePrice() {
       this.localMinPrice = this.localMinRange;

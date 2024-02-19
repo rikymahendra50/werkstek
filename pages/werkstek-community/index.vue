@@ -5,7 +5,6 @@
     description="Ontmoet je graag ondernemers uit verschillende branches die in hetzelfde kantoorgebouw werken? Dan zit je bij Werkstek goed. Wij hebben een gezellige community van enthousiaste ondernemers die elkaar gemakkelijk weten te vinden."
   />
 
-  <!-- <Blog :showButton="false" :dontShowTitle="false" class="my-10" /> -->
   <Community :showButton="false" :dontShowTitle="false" class="my-10" />
 
   <Community2 />
