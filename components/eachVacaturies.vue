@@ -1,26 +1,106 @@
 <template>
-  <section class="container-custom">
-    <HeaderWCity
-      title1="Bekijk onze locaties"
-      title2="De Werkstek Vacatures"
-      description="Lorem ipsum dolor sit amet, solor ut adipiscing elit.Lorem ipsum dolor sit amet, solor ut adipiscing elit."
-    />
-    <div class="flex flex-col md:flex-row my-20 gap-10">
-      <img
-        src="/images/Lees alles over Werkstek.png"
-        alt="Lees alles"
-        class="max-w-[662px] max-h-[442px]"
-      />
+  <div>
+    <NuxtLink
+      :to="`onze-vacaturies/${link}`"
+      class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg group hover:shadow-lg transition min-h-[150px] sm:min-h-[170px] md:min-h-[200px]"
+      style="box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.05)"
+    >
       <div
-        class="flex flex-col text-[#1C1F35] text-[35px] justify-center gap-3"
+        class="grid col-span-4 md:col-span-5 md:min-h-[210px] h-full bg-no-repeat bg-cover rounded-lg relative text-white"
+        :style="{
+          backgroundImage: `url('${image}')`,
+          background: `linear-gradient(90deg, rgba(251,249,249,0) 39%, rgba(255,255,255,1) 100%), url('${image}')`,
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+        }"
       >
-        <h1 class="font-semibold mb-5">Vacature info</h1>
-        <p class="text-[18px] md:text-[20px]">Locatie :</p>
-        <p class="text-[18px] md:text-[20px]">Categorie :</p>
-        <p class="text-[18px] md:text-[20px]">Datum :</p>
-        <p class="text-[18px] md:text-[20px]">Soort :</p>
-        <p class="text-[18px] md:text-[20px]">Tags :</p>
+        <div class="flex flex-col">
+          <span
+            class="bg-primary absolute top-0 left-0 flex sm:py-1 px-1 sm:px-2 gap-1 md:gap-2 rounded-full ml-2 mt-2 text-[12px] sm:text-sm"
+          >
+            <img
+              src="/images/icon-rating-white.svg"
+              alt="page2"
+              class="w-[14px]"
+            />
+            {{ rating }}
+          </span>
+          <span
+            class="bg-primary absolute top-[20%] sm:top-[30%] md:top-[20%] left-0 flex sm:py-1 px-1 sm:px-2 rounded-full ml-2 mt-2 text-[12px] sm:text-sm font-semibold"
+          >
+            Regular
+          </span>
+        </div>
       </div>
-    </div>
-  </section>
+      <div class="grid col-span-4 md:col-span-3 ml-5 items-center">
+        <span class="text-[14px] sm:text-lg font-semibold">{{ name }}</span>
+        <span class="text-sm">Adres</span>
+        <div class="flex justify-between">
+          <span class="text-[12px] sm:text-base font-bold"> Opervlakte </span>
+          <span class="text-[12px] sm:text-base">phoneNumber</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-[12px] sm:text-base">€ {{ price }}</span>
+          <span class="text-[12px] sm:text-base">mailAdres</span>
+        </div>
+        <div class="flex justify-end w-full">
+          <div class="flex mt-2 sm:mt-0">
+            <div
+              class="text-primary group-hover:text-secondary transition sm:w-[90%] text-[12px] sm:text-[14px] md:text-[18px] border border-primary group-hover:border-secondary px-1 sm:px-2 lg:px-4 text-center rounded-full items-center flex justify-center"
+            >
+              {{ detailLinkTitle }}
+            </div>
+            <div
+              class="bg-primary group-hover:bg-secondary max-w-[21px] min-h-[21px] sm:max-w-[31px] sm:min-h-[31px] lg:max-w-[41px] lg:min-h-[41px] rounded-full"
+            >
+              <img src="/images/arrow-right.svg" alt="arrow" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </NuxtLink>
+  </div>
 </template>
+
+<script>
+export default {
+  props: {
+    link: {
+      type: String,
+    },
+    opervlakte: {
+      type: String,
+    },
+    image: {
+      type: String,
+      default: "/images/img-each-locatie-3.jpg",
+    },
+    rating: {
+      type: Number,
+    },
+    type: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    adres: {
+      type: String,
+      default: "Mail Adres",
+    },
+    phoneNumber: {
+      type: String,
+      default: "+31302393838",
+    },
+    price: {},
+    mailAdres: {
+      type: String,
+    },
+    detailLinkTitle: {
+      type: String,
+      default: "Neem een kijkje",
+    },
+  },
+};
+</script>

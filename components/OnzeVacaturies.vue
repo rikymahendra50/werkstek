@@ -13,7 +13,7 @@
   <section class="py-20">
     <TitleHeader
       title="Onze locaties"
-      secondTitle="Bekijk al onze locaties"
+      secondTitle="Bekijk al onze vacaturies"
       description="Op deze locaties hebben we kantoorruimtes"
     />
     <div class="md:grid md:grid-cols-12 container-custom">
@@ -22,6 +22,7 @@
           <img src="/images/filter-icon.svg" class="w-5 h-5 my-4" />
           <p class="text-base opacity-50">Meer filter opties</p>
         </button>
+
         <div v-if="showFilter">
           <span class="text-base mt-3 opacity-50">Kies een locatie</span>
           <div class="flex-col form-control max-w-xs mt-2">
@@ -30,7 +31,7 @@
               class="select select-bordered dropdown"
               v-model="selectedCity"
             >
-              <option disabled selected>Alles</option>
+              <option disabled selected>Locatie</option>
               <option
                 class="text-sm flex items-center p-5"
                 v-for="(item, index) in city"
@@ -51,12 +52,13 @@
                   :key="item.id"
                 >
                   <input
-                    type="radio"
+                    type="checkbox"
                     :id="item.id"
                     :value="item.name"
                     :name="item.name"
                     class="mr-2 pt-[0.7px]"
-                    v-model="selectedSoortLocatie"
+                    :checked="isSelectedSoort(item.id)"
+                    @change="handleSoortLocatieChange(item.id)"
                   />
                   <label :for="item.id" class="cursor-pointer">{{
                     item.name
@@ -69,10 +71,10 @@
               :idInputMin="'priceMin'"
               :idInputMax="'priceMax'"
               :minPrice="0"
-              :maxPrice="100000"
+              :maxPrice="1000000"
               :minRange="0"
-              :maxRange="85000"
-              :priceGap="100000"
+              :maxRange="1000000"
+              :priceGap="1000000"
               class="my-2"
               @price-change="handlePriceChange"
             />
@@ -93,15 +95,18 @@
                     >
                       <input
                         type="checkbox"
-                        :id="item.id"
+                        :id="'opleiding_' + item.id"
                         :value="item.id"
-                        :name="item.name"
+                        :name="'opleiding_' + item.name"
                         class="mr-2 pt-[0.7px]"
+                        :checked="isSelectedFuncti(item.id)"
                         @change="handlefunctieCheckbox(item.id)"
                       />
-                      <label :for="item.id" class="cursor-pointer">{{
-                        item.name
-                      }}</label>
+                      <label
+                        :for="'opleiding_' + item.id"
+                        class="cursor-pointer"
+                        >{{ item.name }}</label
+                      >
                     </div>
                   </fieldset>
                 </div>
@@ -114,18 +119,29 @@
                     >
                       <input
                         type="checkbox"
-                        :id="item.id"
+                        :id="'opleiding_' + item.id"
                         :value="item.id"
-                        :name="item.name"
+                        :name="'opleiding_' + item.name"
                         class="mr-2 pt-[0.7px]"
+                        :checked="isSelectedFuncti(item.id)"
                         @change="handlefunctieCheckbox(item.id)"
                       />
-                      <label :for="item.id" class="cursor-pointer">{{
-                        item.name
-                      }}</label>
+                      <label
+                        :for="'opleiding_' + item.id"
+                        class="cursor-pointer"
+                        >{{ item.name }}</label
+                      >
                     </div>
                   </fieldset>
                 </div>
+              </div>
+              <div class="flex justify-center md:mt-4 xl:w-[80%]">
+                <button
+                  @click="showAllData"
+                  class="btn btn-outline btn-orange btn-sm mt-3"
+                >
+                  Show All Data
+                </button>
               </div>
             </div>
           </div>
@@ -134,7 +150,7 @@
       <div
         class="py-5 md:col-span-8 overflow-auto max-h-[400px] md:max-h-[870px] flex flex-col scrollbar-onze"
       >
-        <eachLocaties
+        <EachVacaturies
           v-for="(item, index) in filteredData.data"
           :key="item.id"
           :name="item.name"
@@ -143,182 +159,180 @@
           :image="
             item.images.find((image, imageIndex) => imageIndex === index)?.image
           "
-          :rating="item.is_saleable"
+          :rating="9.4"
         />
       </div>
     </div>
   </section>
 </template>
 
-<script>
-import { ref, watch } from "vue";
+<script setup>
 import axios from "axios";
+const { axiosRequest } = useAxios();
+const { requestOptions } = useRequestOptions();
+const { data, error } = await useFetch(`/products`, {
+  method: "get",
+  ...requestOptions,
+});
 
-export default {
-  data() {
-    return {
-      showFilter: false,
-      screenWidth: 0,
-      city: ["Alles", "Simon Stevinweg 27", "Antareslaan 65", "Computerweg 1"],
-      soortLocatiesRadio: [
-        {
-          id: 1,
-          name: "Alles",
-        },
-        {
-          id: 2,
-          name: "Stage Plaats",
-        },
-        {
-          id: 3,
-          name: "Functie 1",
-        },
-        {
-          id: 4,
-          name: "Functie 2",
-        },
-      ],
-      opleidings: [
-        {
-          id: 5,
-          name: "Wifi",
-        },
-        {
-          id: 6,
-          name: "Parkeerplaats",
-        },
-        {
-          id: 7,
-          name: "Receptie",
-        },
-        {
-          id: 8,
-          name: "Koffiebar",
-        },
-        {
-          id: 9,
-          name: "Keuken",
-        },
-        {
-          id: 10,
-          name: "Vlakbij het treinstation",
-        },
-        {
-          id: 11,
-          name: "Loungeplekken",
-        },
-        {
-          id: 12,
-          name: "Vergaderruimtes met videoschermen",
-        },
-      ],
-    };
-  },
-  methods: {
-    toggleDetail() {
-      this.showFilter = !this.showFilter;
-    },
-  },
-  mounted() {
-    this.screenWidth = window.innerWidth;
-    if (this.screenWidth > 768) {
-      this.showFilter = true;
-    }
-  },
-  updated() {
-    this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 768) {
-      this.showFilter = false;
-    } else {
-      this.showFilter = true;
-    }
-  },
-  setup() {
-    const selectedCity = ref();
-    const selectedSoortLocatie = ref();
-    const selectedFunctie = ref([]);
-    const selectedMinPrice = ref(0);
-    const selectedMaxPrice = ref(0);
-    const selectedMeterMin = ref();
-    const selectedMeterMax = ref();
-    const filteredData = ref([]);
+// const prices = data.value.data.map((product) => product.price);
+// console.log(prices);
 
-    function handlePriceChange(priceData) {
-      selectedMinPrice.value = priceData.minPrice;
-      selectedMaxPrice.value = priceData.maxPrice;
-    }
+// const formattedPrices = prices.map((price) => parseFloat(price) * 100);
 
-    function handlefunctieCheckbox(id) {
-      selectedFunctie.value = id;
-    }
+// const maxPriceData = Math.max(...formattedPrices);
 
-    watch(
-      [
-        selectedCity,
-        selectedSoortLocatie,
-        selectedMeterMin,
-        selectedMeterMax,
-        selectedFunctie,
-        selectedMinPrice,
-        selectedMaxPrice,
-      ],
-      async () => {
-        await new Promise((resolve) => setTimeout(resolve, 900));
-        try {
-          let params = {};
+// console.log(maxPriceData);
 
-          // Filter berdasarkan kota hanya jika bukan "Alles"
-          if (selectedCity.value !== "Alles") {
-            params["filter[search]"] = selectedCity.value;
-          }
-
-          // Filter berdasarkan soortlocatie hanya jika bukan "Alles"
-          if (selectedSoortLocatie.value !== "Alles") {
-            params["filter[type_id]"] = selectedSoortLocatie.value;
-          }
-
-          params["filter[productFacility.facility_id]"] = selectedFunctie.value;
-
-          // params["filter[min_price]"] = selectedMinPrice.value;
-          // params["filter[max_price]"] = selectedMaxPrice.value;
-
-          paramsfilter[productFacility.facility_id] = selectedFunctie.value;
-
-          const response = await axios.get(
-            "http://api-staging-werkstek.spdigitalhosting.com/api/v1/products",
-            { params: params }
-          );
-
-          filteredData.value = response.data;
-        } catch (error) {
-          console.error("Failed to retrieve data from API:", error);
-        }
-      }
-    );
-    return {
-      selectedCity,
-      handlePriceChange,
-      handlefunctieCheckbox,
-      selectedMeterMin,
-      selectedMeterMax,
-      selectedSoortLocatie,
-      selectedFunctie,
-      selectedMinPrice,
-      selectedMaxPrice,
-      filteredData,
-    };
-  },
-  mounted() {
-    axios
-      .get("http://api-staging-werkstek.spdigitalhosting.com/api/v1/products")
-      .then((response) => {
-        this.filteredData = response.data;
-      })
-      .catch((error) => {
-        console.error("Failed to retrieve data from API:", error);
-      });
-  },
+const showFilter = ref();
+const toggleDetail = () => {
+  showFilter.value = !showFilter.value;
 };
+
+onMounted(() => {
+  showAllData();
+  selectedCity.value = "Locatie";
+  if (window.innerWidth > 768) {
+    showFilter.value = true;
+  } else {
+    showFilter.value = false;
+  }
+
+  watch(
+    () => window.innerWidth,
+    (newWidth) => {
+      if (newWidth > 768) {
+        showFilter.value = true;
+      } else {
+        showFilter.value = false;
+      }
+    }
+  );
+});
+
+const name = data.value.data.map((product) => product.name);
+const city = ref(name);
+
+const soortLocatiesRadio = ref([
+  {
+    id: 1,
+    name: "Stage Plaats",
+  },
+  {
+    id: 2,
+    name: "Functie 1",
+  },
+  {
+    id: 3,
+    name: "Functie 2",
+  },
+]);
+
+const opleidings = ref([
+  {
+    id: 1,
+    name: "Wifi",
+  },
+  {
+    id: 2,
+    name: "Parkeerplaats",
+  },
+  {
+    id: 3,
+    name: "Receptie",
+  },
+  {
+    id: 4,
+    name: "Koffiebar",
+  },
+  {
+    id: 5,
+    name: "Keuken",
+  },
+  {
+    id: 6,
+    name: "Vlakbij het treinstation",
+  },
+  {
+    id: 7,
+    name: "Loungeplekken",
+  },
+  {
+    id: 8,
+    name: "Vergaderruimtes met videoschermen",
+  },
+]);
+
+const selectedCity = ref("");
+const selectedSoortLocatie = ref([]);
+const selectedFunctie = ref([]);
+const selectedMinPrice = ref();
+const selectedMaxPrice = ref();
+const filteredData = ref([]);
+
+const showAllData = () => {
+  selectedCity.value = "Locatie";
+  selectedSoortLocatie.value = "";
+  selectedFunctie.value = [];
+  selectedMinPrice.value = null;
+  selectedMaxPrice.value = null;
+};
+
+function handlePriceChange(priceData) {
+  selectedMinPrice.value = priceData.minPrice;
+  selectedMaxPrice.value = priceData.maxPrice;
+}
+
+function isSelectedSoort(id) {
+  return selectedSoortLocatie.value.includes(id);
+}
+function handleSoortLocatieChange(id) {
+  if (selectedSoortLocatie.value.includes(id)) {
+    selectedSoortLocatie.value = selectedSoortLocatie.value.filter(
+      (item) => item !== id
+    );
+  } else {
+    selectedSoortLocatie.value = [...selectedSoortLocatie.value, id];
+  }
+}
+
+function isSelectedFuncti(id) {
+  return selectedFunctie.value.includes(id);
+}
+function handlefunctieCheckbox(id) {
+  if (selectedFunctie.value.includes(id)) {
+    selectedFunctie.value = selectedFunctie.value.filter((item) => item !== id);
+  } else {
+    selectedFunctie.value = [...selectedFunctie.value, id];
+  }
+}
+
+watch(
+  [
+    selectedCity,
+    selectedSoortLocatie,
+    selectedFunctie,
+    selectedMinPrice,
+    selectedMaxPrice,
+  ],
+  async () => {
+    await new Promise((resolve) => setTimeout(resolve, 900));
+    try {
+      let params = {};
+
+      params["filter[search]"] = selectedCity.value;
+      params["filter[type_id]"] = selectedSoortLocatie.value;
+      params["filter[productFacility.facility_id]"] = selectedFunctie.value;
+      params["filter[min_price]"] = selectedMinPrice.value;
+      params["filter[max_price]"] = selectedMaxPrice.value;
+
+      const response = await axiosRequest.get("/products", { params: params });
+      filteredData.value = response.data;
+    } catch (error) {
+      console.error("Failed to retrieve data from API:", error);
+    }
+  }
+);
 </script>
 
 <style scoped>
