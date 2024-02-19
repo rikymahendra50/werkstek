@@ -11,35 +11,18 @@
     </div>
     <div class="overflow-auto">
       <table class="table">
-        <!-- head -->
         <thead>
           <tr class="text-xl">
             <th></th>
             <th>Images</th>
             <th>Names</th>
             <th>Modif</th>
-            <!-- <th>Slug</th>
-            <th>Category</th>
-            <th>Meta</th>
-            <th>Creted At</th>
-            <th>Update At</th>
-            <th>Edit and Delete</th> -->
           </tr>
         </thead>
         <tbody v-for="(item, index) in data.data" :key="index">
           <tr>
             <th>{{ index + 1 }}</th>
-            <th></th>
-            <!-- <th>
-              <img :src="item.image" alt="image" class="max-h-[100px]" />
-            </th>
-            <th>test</th> -->
-            <!-- <td>{{ item.title }}</td>
-            <td>{{ item.slug }}</td>
-            <td>Category</td>
-            <td>{{ item.meta }}</td>
-            <td>{{ item.created_at }}</td>
-            <td>{{ item.updated_at }}</td> -->
+            <th>{{ item.image }}</th>
             <td>{{ item.name }}</td>
             <td>
               <div class="flex gap-2 items-center">
@@ -59,7 +42,7 @@
 
 <script setup lang="ts">
 const { requestOptions } = useRequestOptions();
-const { data, error } = await useFetch(`/admins/location-list`, {
+const { data, error } = await useFetch(`/admins/locations`, {
   method: "get",
   ...requestOptions,
 });

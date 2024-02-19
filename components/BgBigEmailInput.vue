@@ -1,10 +1,11 @@
 <template>
-  <div class="">
-    <VeeForm
-      @submit="onSubmit"
-      :validation-schema="contactSchema"
-      v-slot="{ errors }"
-      class="rounded-full flex items-center gap-2 p-1 md:p-2 px-1 lg:px-2 bg-quaternary max-h-[60px]"
+  <VeeForm
+    @submit="onSubmit"
+    :validation-schema="contactSchema"
+    v-slot="{ errors }"
+  >
+    <div
+      class="rounded-full flex items-center md:p-2 px-1 lg:px-2 bg-quaternary max-h-[60px]"
     >
       <VeeField
         type="text"
@@ -17,7 +18,7 @@
       <button class="rounded-full bg-tertiary text-tertiary">
         <svg
           width="34"
-          height="35"
+          height="34"
           viewBox="0 0 24 25"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -31,9 +32,9 @@
           />
         </svg>
       </button>
-    </VeeForm>
-    <VeeErrorMessage name="email" class="text-sm text-error" />
-  </div>
+    </div>
+    <VeeErrorMessage name="email" class="md:ml-2 text-sm text-red-700" />
+  </VeeForm>
 </template>
 
 <script setup>

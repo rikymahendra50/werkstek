@@ -4,7 +4,7 @@
     <div class="flex gap-2 sm:gap-5">
       <div class="flex flex-col w-[50%] sm:w-[60%] max-w-[727px]">
         <div class="flex flex-col md:min-h-[400px]">
-          <div
+          <!-- <div
             class="min-h-[200px] md:min-h-[400px] bg-no-repeat bg-cover relative"
             :style="{ backgroundImage: 'url(' + imageBanner + ')' }"
           >
@@ -27,7 +27,74 @@
             <div class="max-w-[245px]">
               <img :src="imageSrc3" class="w-full" />
             </div>
+          </div> -->
+
+          <!-- Swiper -->
+          <div ref="el">
+            <Swiper
+              :modules="[
+                SwiperAutoplay,
+                SwiperEffectCreative,
+                SwiperNavigation,
+                SwiperThumbs,
+              ]"
+              :slides-per-view="1"
+              :loop="enableLoop"
+              :effect="'creative'"
+              centered-slides
+              :thumbs="{ swiper: thumbsSwiper }"
+              class="overflow-hidden relative"
+              :autoplay="{
+                delay: 8000,
+                disableOnInteraction: true,
+              }"
+              :creative-effect="{
+                prev: {
+                  shadow: false,
+                  translate: ['-20%', 0, -1],
+                },
+                next: {
+                  translate: ['100%', 0, 0],
+                },
+              }"
+            >
+              <SwiperSlide v-for="slide in images" :key="slide.id">
+                <div>
+                  <img
+                    :src="slide.image"
+                    alt="image"
+                    class="w-full h-full aspect-video min-h-[350px]"
+                  />
+                </div>
+              </SwiperSlide>
+
+              <div class="h-full w-full bg-gradient-to-l inset-0 z-10">
+                <SwipperController />
+                <div class="flex-grow"></div>
+                <Swiper
+                  :modules="[SwiperThumbs]"
+                  @swiper="setThumbsSwiper"
+                  :slides-per-view="4"
+                  :spaceBetween="10"
+                  :css-mode="true"
+                  :watch-slides-progress="true"
+                >
+                  <SwiperSlide
+                    v-for="slide in images"
+                    :key="slide.id"
+                    class="group overflow-hidden max-h-[127px] mt-5 max-w-[245px]"
+                  >
+                    <img
+                      :src="slide.image"
+                      alt="image"
+                      class="group-hover:scale-125 transition-all w-full duration-300"
+                    />
+                  </SwiperSlide>
+                </Swiper>
+              </div>
+            </Swiper>
           </div>
+          <!-- end swiper -->
         </div>
         <div class="mt-2 sm:mt-10 md:mt-16 w-[100%] text-justify">
           <h1
@@ -44,7 +111,7 @@
         <p class="text-[#495057] text-base mt-10 mb-3 ml-5">
           De faciliteiten op de locatie
         </p>
-        <div class="border w-[95%] min-w-[70px] relative">
+        <div class="w-[95%] min-w-[70px] relative">
           <span class="absolute top-[-39px] text-primary text-4xl">____</span>
           <div class="overflow-x-auto sm:px-3">
             <table class="table">
@@ -297,81 +364,109 @@
   </section>
 </template>
 
-<script>
-export default {
-  props: {
-    imageBanner: {
-      type: String,
-    },
-    title: {
-      type: String,
-    },
-    subTitle: {
-      type: String,
-    },
-    thirdTitle: {
-      type: String,
-    },
-    imageSrc1: {
-      type: String,
-    },
-    imageSrc2: {
-      type: String,
-    },
-    imageSrc3: {
-      type: String,
-    },
-    location: {
-      type: String,
-    },
-    price: {
-      type: String,
-    },
-    description: {
-      type: String,
-    },
-  },
-  data() {
-    return {
-      dataLocatiesSingle: {},
-      checkBoxData: [
-        {
-          id: 1,
-          name: "Wifi",
-          checkBoxTitle: "Lorem Epsum",
-        },
-        {
-          id: 2,
-          name: "Parkeerplaats",
-          checkBoxTitle: "Lorem Epsum",
-        },
-        {
-          id: 3,
-          name: "Receptie",
-          checkBoxTitle: "Lorem Epsum",
-        },
-        {
-          id: 4,
-          name: "Koffiebar",
-          checkBoxTitle: "Lorem Epsum",
-        },
-        {
-          id: 5,
-          name: "Vlakbij het treinstation",
-          checkBoxTitle: "Lorem Epsum",
-        },
-        {
-          id: 6,
-          name: "Loungeplekken",
-          checkBoxTitle: "Lorem Epsum",
-        },
-        {
-          id: 7,
-          name: "Vergaderruimtes met videoschermenn",
-          checkBoxTitle: "Lorem Epsum",
-        },
-      ],
-    };
-  },
+<script setup>
+const thumbsSwiper = ref(null);
+const setThumbsSwiper = (swiper) => {
+  thumbsSwiper.value = swiper;
 };
+
+const images = ref([
+  {
+    id: 1,
+    image: "/images/65b7628bc99a6.jpg",
+  },
+  {
+    id: 2,
+    image: "/images/img-slider-home-2.png",
+  },
+  {
+    id: 3,
+    image: "/images/65b7628bc99a6.jpg",
+  },
+  {
+    id: 4,
+    image: "/images/65b7628bc99a6.jpg",
+  },
+]);
+
+const props = defineProps({
+  imageBanner: {
+    type: String,
+  },
+  title: {
+    type: String,
+  },
+  subTitle: {
+    type: String,
+  },
+  thirdTitle: {
+    type: String,
+  },
+  imageSrc1: {
+    type: String,
+  },
+  imageSrc2: {
+    type: String,
+  },
+  imageSrc3: {
+    type: String,
+  },
+  location: {
+    type: String,
+  },
+  price: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
+});
+
+const checkBoxData = ref([
+  {
+    id: 1,
+    name: "Wifi",
+    checkBoxTitle: "Lorem Epsum",
+  },
+  {
+    id: 2,
+    name: "Parkeerplaats",
+    checkBoxTitle: "Lorem Epsum",
+  },
+  {
+    id: 3,
+    name: "Receptie",
+    checkBoxTitle: "Lorem Epsum",
+  },
+  {
+    id: 4,
+    name: "Koffiebar",
+    checkBoxTitle: "Lorem Epsum",
+  },
+  {
+    id: 5,
+    name: "Vlakbij het treinstation",
+    checkBoxTitle: "Lorem Epsum",
+  },
+  {
+    id: 6,
+    name: "Loungeplekken",
+    checkBoxTitle: "Lorem Epsum",
+  },
+  {
+    id: 7,
+    name: "Vergaderruimtes met videoschermenn",
+    checkBoxTitle: "Lorem Epsum",
+  },
+]);
+
+// const imageGalleries = computed(() => {
+//   return props.images;
+// });
+
+// const enableLoop = computed(() => {
+//   return imageGalleries.value.length > 1;
+// });
 </script>
+
+<style lang="scss" scoped></style>

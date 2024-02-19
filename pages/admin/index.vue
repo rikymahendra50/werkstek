@@ -49,9 +49,6 @@
           </tr>
         </tbody>
       </table>
-      <pre>
-        {{ data }}
-      </pre>
     </div>
   </div>
 </template>

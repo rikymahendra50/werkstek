@@ -120,7 +120,7 @@
             Category
           </NuxtLink>
           <NuxtLink
-            to="/admin/Facility"
+            to="/admin/facility"
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-opacity-25"
           >
             <svg
