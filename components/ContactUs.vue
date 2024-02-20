@@ -216,7 +216,7 @@
             <!-- name -->
             <div class="flex flex-col my-2">
               <div class="flex items-center">
-                <label for="name">Je naam (verplicht) (firstname)</label>
+                <label for="name">Je naam (verplicht)</label>
               </div>
               <VeeField
                 id="name"

@@ -172,6 +172,41 @@ export default {
       }
     },
     setupMap() {
+      const brightStyle = [
+        {
+          elementType: "geometry",
+          stylers: [{ color: "#ffffff" }],
+        },
+        {
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#757575" }],
+        },
+        {
+          elementType: "labels.text.stroke",
+          stylers: [{ color: "#ffffff" }],
+        },
+        {
+          featureType: "administrative",
+          elementType: "geometry.stroke",
+          stylers: [{ color: "#ffffff" }],
+        },
+        {
+          featureType: "administrative.land_parcel",
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#bdbdbd" }],
+        },
+        {
+          featureType: "poi",
+          elementType: "geometry",
+          stylers: [{ color: "#eeeeee" }],
+        },
+        {
+          featureType: "poi",
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#757575" }],
+        },
+      ];
+
       this.map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: -8.653840910873269, lng: 115.21785198506426 },
         zoom: 1,
@@ -179,6 +214,7 @@ export default {
         zoomControl: false,
         keyboardShortcuts: false,
         mapId: null,
+        styles: brightStyle,
       });
       const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
 

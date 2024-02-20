@@ -5,8 +5,8 @@
       secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-    <div class="md:grid md:grid-cols-12 container-custom">
-      <div class="md:col-span-4 max-w-[500px]">
+    <div class="md:grid md:grid-cols-12 container-custom gap-2">
+      <div class="md:col-span-4">
         <div class="mt-5">
           <button
             @click="toggleDetail"
@@ -21,7 +21,6 @@
           </button>
         </div>
         <div v-if="showFilter">
-          <!-- city -->
           <span class="text-base mt-3 opacity-50">Kies een locatie</span>
           <div class="flex-col form-control max-w-xs mt-2">
             <select
@@ -40,9 +39,7 @@
               </option>
             </select>
           </div>
-          <!-- end city -->
           <div class="flex flex-col">
-            <!-- soort Locatie -->
             <p class="text-base mt-3 opacity-50 pb-3">Soort locatie</p>
             <fieldset id="soortLocatie" class="grid grid-cols-2 gap-2">
               <div
@@ -74,9 +71,9 @@
               class="my-2"
               @price-change="handlePriceChange"
             />
-            <div class="w-full">
+            <div class="">
               <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
-              <div class="flex my-2 max-w-[300px]">
+              <div class="flex my-2">
                 <div class="relative">
                   <input
                     type="number"
@@ -101,9 +98,7 @@
                 </div>
               </div>
               <p class="my-3">-</p>
-              <div
-                class="flex justify-between gap-2 text-sm sm:text-base w-[95%]"
-              >
+              <div class="flex justify-between gap-2 text-sm lg:text-base">
                 <div class="flex flex-col">
                   <fieldset id="functie" class="flex flex-col gap-2">
                     <div
@@ -151,7 +146,7 @@
                 </div>
               </div>
               <Map />
-              <div class="flex justify-center md:mt-4 xl:w-[80%]">
+              <div class="flex justify-center md:mt-4">
                 <button
                   @click="showAllData"
                   class="btn btn-outline btn-orange btn-sm mt-3"
