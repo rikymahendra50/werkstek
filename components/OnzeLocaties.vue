@@ -170,7 +170,7 @@
           v-for="(item, index) in filteredData.data"
           :key="item.id"
           :name="item.name"
-          :link="item.slug"
+          :link="`/onze-locaties/${item.slug}`"
           :price="item.price"
           :image="
             item.images.find((image, imageIndex) => imageIndex === index)?.image

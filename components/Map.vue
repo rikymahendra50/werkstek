@@ -6,7 +6,7 @@
   >
     <div
       id="map"
-      :class="`relative w-[85%] h-[420px] lg:h-[219px] z-[-999] mt-5`"
+      :class="`relative aspect-video lg:h-[219px] z-[-999] mt-5`"
     ></div>
   </section>
 </template>
@@ -14,21 +14,8 @@
 <script scoped>
 let googleMapsScriptLoaded = false;
 export default {
-  // props: {
-  //   ShowContainerCustom: {
-  //     type: Boolean,
-  //     default: true,
-  //     required: false,
-  //   },
-  //   searchCustom: {
-  //     type: Boolean,
-  //     required: false,
-  //     default: false,
-  //   },
-  // },
   data() {
     return {
-      // titleMap: "Waar bent u op zoek naar?",
       map: null,
       markers: [],
       currentInfoWindow: null,
@@ -106,98 +93,6 @@ export default {
     }
   },
   methods: {
-    // updateLastSelectedPrices(prices) {
-    //   this.lastSelectedPrices = prices;
-    //   this.clearInfoWindows();
-    // },
-    // selectOption(category, option) {
-    //   category.selectedOption = option;
-    //   category.showDropdown = false;
-    // },
-    // toggleDropdown(category) {
-    //   category.showDropdown = !category.showDropdown;
-    // },
-
-    // function ketika tombol diklik
-    // performSearch() {
-    //   const selectedOption = this.categories;
-    //   let selectedCityFix = selectedOption[0].selectedOption;
-    //   let selectedPriceFix = this.lastSelectedPrices;
-
-    //   const minPrice = selectedPriceFix.minPrice;
-    //   const maxPrice = selectedPriceFix.maxPrice;
-
-    //   this.clearInfoWindows();
-
-    //   this.locations.forEach((location) => {
-    //     const isLocationInFilter =
-    //       location.city === selectedCityFix &&
-    //       location.price >= minPrice &&
-    //       location.price <= maxPrice;
-
-    //     location.filtered = isLocationInFilter;
-
-    //     if (isLocationInFilter) {
-    //       this.moveToLocation(location.lat, location.lng);
-    //       this.showInfoWindow(location.lat, location.lng, location);
-    //     }
-    //   });
-
-    //   const filteredData = this.locations.filter((location) => {
-    //     return (
-    //       location.city === selectedCityFix &&
-    //       location.price >= minPrice &&
-    //       location.price <= maxPrice
-    //     );
-    //   });
-
-    //   if (filteredData.length > 0) {
-    //     console.log("Matching Data:", filteredData);
-    //     filteredData.forEach((location) => {
-    //       this.moveToLocation(location.lat, location.lng);
-    //       this.showInfoWindow(location.lat, location.lng, location);
-    //     });
-    //   } else {
-    //     alert("Sorry, the location you selected is not available");
-    //   }
-    // },
-
-    // showInfoWindow(lat, lng, location) {
-    //   const marker = this.findMarkerByLatLng(lat, lng);
-
-    //   if (marker) {
-    //     this.clearInfoWindows();
-
-    //     const contentString = this.buildInfoWindowContent(location);
-
-    //     const infowindow = new google.maps.InfoWindow({
-    //       content: contentString,
-    //       closeBoxMargin: "10px 10px 0 0",
-    //     });
-
-    //     infowindow.open(this.map, marker);
-    //     this.currentInfoWindow = infowindow;
-    //   }
-    // },
-
-    // buildInfoWindowContent(location) {
-    //   return `
-    //     <div class="max-w-[190px] w-full h-full flex flex-col text-end">
-    //       <img src="${location.image}" alt="${location.name}" class="w-[200px] min-h-[100px]">
-    //       <h2 class="text-primary mt-2">${location.name}</h2>
-    //       <p class="text-black text-[10px] my-2">${location.area}</p>
-    //       <p>Price: $${location.price}</p>
-    //     </div>
-    //   `;
-    // },
-
-    // clearInfoWindows() {
-    //   // Tutup dan hapus semua InfoWindow
-    //   if (this.currentInfoWindow) {
-    //     this.currentInfoWindow.close();
-    //   }
-    // },
-
     findMarkerByLatLng(lat, lng) {
       return this.markers.find((marker) => {
         const position = marker.getPosition();
@@ -258,26 +153,6 @@ export default {
         }
       }
     },
-
-    // updateMarker() {
-    //   // const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
-
-    //   this.markers.forEach((marker, index) => {
-    //     // const location = this.locations[index];
-    //     // let iconColor = "/images/logo-wekstek.png";
-
-    //     // if (location.filtered) {
-    //     //   iconColor = "/images/person-comment-1.png";
-    //     // }
-
-    //     // const iconUrl = iconBase + iconColor;
-
-    //     marker.setIcon({
-    //       // url: iconUrl,
-    //       scaledSize: new google.maps.Size(30, 30),
-    //     });
-    //   });
-    // },
 
     // Map Function
     loadGoogleMapsScript() {

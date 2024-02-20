@@ -26,24 +26,6 @@
         </div>
         <!-- showEmailSection -->
         <div v-if="showEmailSection" class="flex mt-3 w-[90%] lg:w-[50%]">
-          <!-- <label class="form-control w-full">
-            <div class="label">
-              <span class="label-text text-white"> {{ EmailForm.title }}</span>
-            </div>
-            <div class="flex">
-              <input
-                type="text"
-                placeholder="Mail@mail.com"
-                class="input input-bordered w-[80%] rounded-r-sm text-quaternary box-shadow max-w-[240px]"
-              />
-              <NuxtLink
-                :to="EmailForm.buttonEmailLink"
-                class="bg-primary flex justify-center py-2 px-3 sm:py-3 sm:px-4 w-[170px] h-[48px] items-center cursor-pointer rounded-r-[10px] box-shadow font-bold text-[12px] md:text-[18px]"
-              >
-                {{ EmailForm.buttonEmailTitle }}
-              </NuxtLink>
-            </div>
-          </label> -->
           <BgBigEmailInput />
         </div>
         <!-- showButtonSection -->
@@ -63,7 +45,6 @@
             />
           </div>
         </div>
-
         <div v-if="showPhoneEmail" class="flex items-center mt-5">
           <div class="flex phone items-center">
             <img src="/images/white-phone.svg" alt="white-phone" />

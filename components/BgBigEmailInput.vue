@@ -11,7 +11,7 @@
         type="text"
         name="email"
         v-model="dataForm.email"
-        class="bg-transparent pl-2 text-sm h-full outline-none box-border text-tertiary"
+        class="pl-2 text-sm h-full outline-none box-border text-tertiary bg-quaternary"
         placeholder="Mail@gmail.com"
         :style="{ WebkitAppearance: 'none', color: 'white' }"
       />

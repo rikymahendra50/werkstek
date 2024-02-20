@@ -34,12 +34,12 @@
           </div>
           <div class="mt-5">
             <NuxtLink
-              to="/admin/forget-password"
+              to="/admin/forgot-password"
               :disabled="loading"
               type="submit"
-              class="border-primary p-2 text-center text-primary hover:text-secondary border-2 w-full rounded-lg hover:border-secondary"
+              class="p-2 text-center text-primary hover:text-secondary w-full rounded-lg hover:border-secondary"
             >
-              Forget Password
+              Forgot Password?
             </NuxtLink>
           </div>
         </div>
@@ -94,6 +94,10 @@ async function onSubmit(values: any, ctx: any) {
 
 useHead({
   title: "Login",
+});
+
+definePageMeta({
+  layout: false,
 });
 </script>
 

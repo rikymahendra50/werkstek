@@ -168,7 +168,6 @@ export default {
           name: "Tolstraat 186-188 H, Amsterdam De Pijp",
           area: "1104 m2",
           image: "/images/img-home-1.png",
-          popularity: 100,
           city: "Rotterdam",
           type: "Kantoorruimte",
           price: 230,
@@ -181,7 +180,6 @@ export default {
           name: "Tolstraat 186-188 H, Amsterdam De Pijp",
           area: "1104 m2",
           image: "/images/img-home-1.png",
-          popularity: 100,
           city: "Rotterdam",
           type: "Kantoorruimte",
           price: 750,
@@ -193,7 +191,6 @@ export default {
           name: "Company C",
           area: "Deskripsi C",
           image: "/images/img-home-1.png",
-          popularity: 20,
           city: "Rotterdam",
           type: "Andere Optie 2",
           price: 240,
@@ -205,7 +202,6 @@ export default {
           name: "Company D",
           area: "Deskripsi D",
           image: "/images/img-home-1.png",
-          popularity: 20,
           city: "Amsterdam",
           type: "Andere Optie 1",
           price: 4,
@@ -217,7 +213,6 @@ export default {
           name: "Company E",
           area: "Deskripsi E",
           image: "/images/img-home-1.png",
-          popularity: 20,
           city: "Rotterdam",
           type: "Andere Optie 1",
           price: 710,
@@ -270,7 +265,6 @@ export default {
       category.showDropdown = !category.showDropdown;
     },
 
-    // function ketika tombol diklik
     performSearch() {
       const selectedOption = this.categories;
       let selectedCityFix = selectedOption[0].selectedOption;
@@ -281,6 +275,8 @@ export default {
 
       this.clearInfoWindows();
 
+      let locationsFound = false;
+
       this.locations.forEach((location) => {
         const isLocationInFilter =
           location.city === selectedCityFix &&
@@ -290,28 +286,15 @@ export default {
         location.filtered = isLocationInFilter;
 
         if (isLocationInFilter) {
+          locationsFound = true;
           this.moveToLocation(location.lat, location.lng);
           this.showInfoWindow(location.lat, location.lng, location);
         }
       });
 
-      // const filteredData = this.locations.filter((location) => {
-      //   return (
-      //     location.city === selectedCityFix &&
-      //     location.price >= minPrice &&
-      //     location.price <= maxPrice
-      //   );
-      // });
-
-      // if (filteredData.length > 0) {
-      //   console.log("Matching Data:", filteredData);
-      //   filteredData.forEach((location) => {
-      //     this.moveToLocation(location.lat, location.lng);
-      //     this.showInfoWindow(location.lat, location.lng, location);
-      //   });
-      // } else {
-      //   alert("Sorry, the location you selected is not available");
-      // }
+      if (!locationsFound) {
+        alert("Data not found, please adjust your filter");
+      }
     },
 
     showInfoWindow(lat, lng, location) {
@@ -344,7 +327,6 @@ export default {
     },
 
     clearInfoWindows() {
-      // Tutup dan hapus semua InfoWindow
       if (this.currentInfoWindow) {
         this.currentInfoWindow.close();
       }
@@ -383,22 +365,26 @@ export default {
         const currentZoom = this.map.getZoom();
         this.map.setZoom(Math.min(Math.max(currentZoom, minZoom), maxZoom));
 
-        // Buka info window untuk marker yang sesuai
+        // Buka info window untuk marker yang pas
         const matchingMarker = this.markers.find((marker) =>
           marker.getPosition().equals(new google.maps.LatLng(lat, lng))
         );
 
         if (matchingMarker) {
           matchingMarker.details.filtered = true;
-          this.updateMarker();
 
           const infowindow = new google.maps.InfoWindow({
             content: `
-              <div style="max-width: 190px;" class="text-end">
-                <img src="${matchingMarker.details.image}" alt="${matchingMarker.details.name}" style="width: 200px; min-height: 100px;">
-                <h2 style="color: #F0912D; margin-top: 2px;" class="border-2 border-red-500">${matchingMarker.details.name}</h2>
-                <p style="color: black; font-size: 10px; margin: 2px 0;">${matchingMarker.details.area}</p>
-                <p style="color: black;">Price: $${matchingMarker.details.price}</p>
+              <div class="max-w-[190px] w-full h-full flex flex-col text-end">
+                <div class="relative">
+                  <img src="${matchingMarker.details.image}" alt="${matchingMarker.details.name}" class="w-full min-h-[100px]">
+                  <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
+                </div>
+                <div class="px-2 pb-4">
+                  <h2 class="text-primary mt-2">${matchingMarker.details.name}</h2>
+                  <p class="text-black text-[10px] my-2">${matchingMarker.details.area}</p>
+                  <p>Price: $${matchingMarker.details.price}</p>
+                </div>
               </div>
             `,
           });
@@ -407,26 +393,6 @@ export default {
           this.currentInfoWindow = infowindow;
         }
       }
-    },
-
-    updateMarker() {
-      // const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
-
-      this.markers.forEach((marker, index) => {
-        // const location = this.locations[index];
-        // let iconColor = "/images/logo-wekstek.png";
-
-        // if (location.filtered) {
-        //   iconColor = "/images/person-comment-1.png";
-        // }
-
-        // const iconUrl = iconBase + iconColor;
-
-        marker.setIcon({
-          // url: iconUrl,
-          scaledSize: new google.maps.Size(30, 30),
-        });
-      });
     },
 
     // Map Function
@@ -456,10 +422,10 @@ export default {
         mapId: null,
       });
 
-      const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
+      const iconBase = "/images";
 
       const icon = {
-        url: iconBase + "red-dot.png",
+        url: iconBase + "/icon-flag.png",
         scaledSize: new google.maps.Size(40, 40),
       };
 
@@ -473,7 +439,7 @@ export default {
         });
 
         const contentString = `
-        <div class="max-w-[190px] w-full h-full flex flex-col text-end">
+        <div class="max-w-[190px] w-full h-full flex flex-col text-end border-2">
           <div class="relative">
             <img src="${location.image}" alt="${location.name}" class="w-full min-h-[100px]">
             <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>

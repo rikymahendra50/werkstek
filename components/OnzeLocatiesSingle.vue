@@ -1,34 +1,9 @@
 <template>
   <section class="container-custom">
     <TitleHeader2 :title1="title" :title2="subTitle" :title3="thirdTitle" />
-    <div class="flex gap-2 sm:gap-5">
-      <div class="flex flex-col w-[50%] sm:w-[60%] max-w-[727px]">
+    <div class="md:grid grid-cols-12 gap-2 sm:gap-5">
+      <div class="col-span-8">
         <div class="flex flex-col md:min-h-[400px]">
-          <!-- <div
-            class="min-h-[200px] md:min-h-[400px] bg-no-repeat bg-cover relative"
-            :style="{ backgroundImage: 'url(' + imageBanner + ')' }"
-          >
-            <div
-              class="bg-primary absolute top-5 text-white p-1 md:p-3 md:w-[30%]"
-            >
-              <span class="text-sm md:text-lg">Prijs :</span> <br />
-              <span class="text-sm md:text-lg font-semibold"
-                >€ {{ price }} per/maand</span
-              >
-            </div>
-          </div>
-          <div class="grid grid-cols-3 items-center gap-2 mt-3">
-            <div class="max-w-[245px]">
-              <img :src="imageSrc1" class="w-full" />
-            </div>
-            <div class="max-w-[245px]">
-              <img :src="imageSrc2" class="w-full" />
-            </div>
-            <div class="max-w-[245px]">
-              <img :src="imageSrc3" class="w-full" />
-            </div>
-          </div> -->
-
           <!-- Swiper -->
           <div ref="el">
             <Swiper
@@ -39,7 +14,6 @@
                 SwiperThumbs,
               ]"
               :slides-per-view="1"
-              :loop="enableLoop"
               :effect="'creative'"
               centered-slides
               :thumbs="{ swiper: thumbsSwiper }"
@@ -63,13 +37,12 @@
                   <img
                     :src="slide.image"
                     alt="image"
-                    class="w-full h-full aspect-video min-h-[350px]"
+                    class="w-full h-full aspect-video md:min-h-[350px]"
                   />
                 </div>
               </SwiperSlide>
 
               <div class="h-full w-full bg-gradient-to-l inset-0 z-10">
-                <SwipperController />
                 <div class="flex-grow"></div>
                 <Swiper
                   :modules="[SwiperThumbs]"
@@ -82,12 +55,12 @@
                   <SwiperSlide
                     v-for="slide in images"
                     :key="slide.id"
-                    class="group overflow-hidden max-h-[127px] mt-5 max-w-[245px]"
+                    class="group overflow-hidden mt-5 max-w-[245px]"
                   >
                     <img
                       :src="slide.image"
                       alt="image"
-                      class="group-hover:scale-125 transition-all w-full duration-300"
+                      class="group-hover:scale-125 transition-all w-full duration-300 object-cover aspect-square"
                     />
                   </SwiperSlide>
                 </Swiper>
@@ -103,10 +76,7 @@
             <!-- Over WERF5 -->
             {{ title }}
           </h1>
-          <div
-            v-html="description"
-            class="text-[12px] md:text-[14px] lg:text-[16px]"
-          ></div>
+          <div v-html="description" class="text-[12px] md:text-[16px]"></div>
         </div>
         <p class="text-[#495057] text-base mt-10 mb-3 ml-5">
           De faciliteiten op de locatie
@@ -142,7 +112,7 @@
           </div>
         </div>
       </div>
-      <div class="w-[50%] sm:w-[40%] block">
+      <div class="col-span-4">
         <ul class="rounded-[8px] bg-[#859C811A] py-4 px-2 md:px-5">
           <li class="py-1 lg:py-2 flex">
             <svg
@@ -331,7 +301,7 @@
           <div class="my-4 flex flex-col gap-3">
             <NuxtLink :to="'tel:085-0290598'" class="flex gap-3">
               <img src="/images/telp-bg-primary.svg" alt="phone-icon" />
-              <p class="text-[#404040] text-[13px] md:text-[15px] mt-2">
+              <p class="text-[#404040] text-[13px] md:text-[16px] mt-2">
                 Tel : <span>085-0290598</span>
               </p>
             </NuxtLink>
@@ -345,18 +315,24 @@
         </div>
 
         <div
-          class="flex flex-col sm:flex-row text-white justify-between mt-5 items-center"
+          class="flex flex-col sm:flex-row text-white justify-between mt-5 items-start md:gap-3"
         >
-          <ButtonLarge
-            buttonTitle="Aanvragen"
-            buttonLink="/voor-verhuurders"
-            class="my-2 rounded-full text-sm"
-          />
-          <ButtonLarge
-            buttonTitle="Contact opnemen"
-            buttonLink="/contact"
-            class="my-2 rounded-full text-sm"
-          />
+          <NuxtLink
+            to="/voor-verhuurders"
+            class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px] mb-3"
+          >
+            <p class="text-[12px] sm:text-lg text-center text-white font-thin">
+              Aanvragen
+            </p>
+          </NuxtLink>
+          <NuxtLink
+            to="/contact"
+            class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px]"
+          >
+            <p class="text-[12px] sm:text-lg text-center text-white font-thin">
+              Contact Opnemen
+            </p>
+          </NuxtLink>
         </div>
         <Map />
       </div>

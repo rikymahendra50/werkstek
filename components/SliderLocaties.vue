@@ -133,9 +133,9 @@ const { data, error } = await useFetch(`/products`, {
 const slidesPerView = ref(3);
 
 const handleResize = () => {
-  if (window.innerWidth <= 768) {
+  if (window.innerWidth <= 468) {
     slidesPerView.value = 2;
-  } else if (window.innerWidth <= 1028) {
+  } else if (window.innerWidth <= 768) {
     slidesPerView.value = 3;
   } else {
     slidesPerView.value = 3.3;
