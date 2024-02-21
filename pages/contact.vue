@@ -1,5 +1,5 @@
 <template>
-  <!-- <StatistiekLocaties
+  <StatistiekLocaties
     image="/images/img-home-1.png"
     title1="Neem contact op"
     title2="Neem contact op met Werkstek"
@@ -15,11 +15,11 @@
     buttonTitle2="Voor verhuurders"
     buttonLink1="/over-werkstek"
     buttonLink2="/voor-verhuurders"
-  /> -->
+  />
 
   <ContactUs class="mb-10" />
 
-  <!-- <MapInteractive :ShowContainerCustom="false" />
+  <MapInteractive :ShowContainerCustom="false" />
 
   <BgBigGreen
     title1="Blijf op de hoogte"
@@ -27,7 +27,7 @@
     title3="Op de hoogte blijven van beschikbare werkplekken? Schrijf je dan nu vrijblijvend in!"
     :backgroundColor="'secondary'"
     :showEmailSection="true"
-  /> -->
+  />
 </template>
 
 <script setup>

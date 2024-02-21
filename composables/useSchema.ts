@@ -8,6 +8,50 @@ export default function () {
    *
    */
 
+  // const InputDataSchema = toTypedSchema(
+  //   object({
+  //     name: string({
+  //       required_error: "Name Data is required",
+  //     })
+  //       .trim()
+  //       .min(1, "Name Data is required"),
+  //     description: string({
+  //       required_error: "Description Data is required",
+  //     })
+  //       .trim()
+  //       .min(1, "Description Data is required"),
+
+  //     price: string({
+  //       required_error: "Price Data is required",
+  //     })
+  //       .trim()
+  //       .min(1, "Price Data is required"),
+
+  //     renttype: string({
+  //       required_error: "Rent Type Data is required",
+  //     })
+  //       .trim()
+  //       .min(1, "Rent Type Data is required"),
+  //     areasize: string({
+  //       required_error: "Area Size Data is required",
+  //     })
+  //       .trim()
+  //       .min(1, "Area Size Data is required"),
+
+  //     saleable: string({
+  //       required_error: "SaleAble Data is required",
+  //     })
+  //       .trim()
+  //       .min(1, "SaleAble Data is required"),
+
+  //     facilities: string({
+  //       required_error: "facilities Data is required",
+  //     })
+  //       .trim()
+  //       .min(1, "facilities Data is required"),
+  //   })
+  // );
+
   const contactSchema = toTypedSchema(
     object({
       name: string({
@@ -15,7 +59,6 @@ export default function () {
       })
         .trim()
         .min(1, "Name is required"),
-
       email: string({
         required_error: "Email is required",
       })

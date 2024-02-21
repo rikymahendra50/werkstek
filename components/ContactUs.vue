@@ -43,7 +43,7 @@
               alt="icon-facebook-black"
             />
           </NuxtLink>
-          <NuxtLink to="instagram.com">
+          <NuxtLink to="https://www.instagram.com/">
             <img
               src="/images/icon-instagram-black.svg"
               alt="icon-instagram-black"
@@ -66,7 +66,6 @@
       <div class="order-1 sm:order-2 md:w-[400px] text-[#777] sm:w-[50%]">
         <VeeForm
           @submit="onSubmit"
-          :validation-schema="contactSchema"
           class="text-[12px] md:text-[16px]"
           v-slot="{ errors }"
         >
@@ -82,10 +81,10 @@
                 type="text"
                 class="input w-full input-sm"
                 placeholder="Name"
-                autocomplete="name"
+                autocomplete="firstname"
               />
               <hr />
-              <VeeErrorMessage name="name" class="text-sm text-error" />
+              <VeeErrorMessage name="first_name" class="text-sm text-error" />
             </div>
             <div class="flex flex-col my-2">
               <div class="flex items-center">
@@ -98,10 +97,10 @@
                 type="text"
                 class="input w-full input-sm"
                 placeholder="Last Name"
-                autocomplete="name"
+                autocomplete="lastname"
               />
               <hr />
-              <VeeErrorMessage name="name" class="text-sm text-error" />
+              <VeeErrorMessage name="last_name" class="text-sm text-error" />
             </div>
             <div class="flex flex-col my-2">
               <div class="flex items-center">
@@ -183,7 +182,6 @@ const dataForm = ref({
   email: undefined,
   subject: undefined,
   message: undefined,
-  // phone: undefined,
 });
 
 async function onSubmit(values, ctx) {
