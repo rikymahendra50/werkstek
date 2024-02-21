@@ -44,8 +44,6 @@
                 Is Active : {{ $user?.is_active }}
               </button>
             </th>
-            <!-- <th>{{ $user?.created_at }}</th>
-            <th>{{ $user?.updated_at }}</th> -->
           </tr>
         </tbody>
       </table>

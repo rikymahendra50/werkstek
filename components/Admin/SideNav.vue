@@ -1,5 +1,5 @@
 <template>
-  <div class="border-r bg-white">
+  <div class="border-r bg-white border-2">
     <div class="flex h-full max-h-screen flex-col gap-4">
       <div class="flex h-[60px] items-center border-b px-6 justify-between">
         <NuxtLink to="/admin" class="flex items-center gap-2 font-semibold">
@@ -22,11 +22,12 @@
           <NuxtLink
             to="/admin"
             :class="{
-              'bg-red-500 text-white': isHomeActive,
-              'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50':
-                !isHomeActive,
+              'bg-transparent text-black hover:text-opacity-25':
+                !isRouteActive('/admin'),
+              'bg-black text-black hover:bg-opacity-30':
+                isRouteActive('/admin'),
             }"
-            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50 border-2"
+            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -45,8 +46,85 @@
             Home
           </NuxtLink>
           <NuxtLink
+            to="/admin/onze-vacaturies"
+            :class="{
+              'bg-transparent text-black hover:text-opacity-25': !isRouteActive(
+                '/admin/onze-vacaturies'
+              ),
+              'bg-black text-black hover:bg-opacity-30': isRouteActive(
+                '/admin/onze-vacaturies'
+              ),
+            }"
+            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+              />
+            </svg>
+            Onze Vacaturies
+          </NuxtLink>
+          <NuxtLink
+            to="/admin/onze-locaties"
+            :class="{
+              'bg-transparent text-black hover:text-opacity-25': !isRouteActive(
+                '/admin/onze-locaties'
+              ),
+              'bg-black text-black hover:bg-opacity-30': isRouteActive(
+                '/admin/onze-locaties'
+              ),
+            }"
+            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+              />
+            </svg>
+            Onze Locaties
+          </NuxtLink>
+
+          <NuxtLink
             to="/admin/location"
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-opacity-25"
+            :class="{
+              'bg-transparent text-black hover:text-opacity-25':
+                !isRouteActive('/admin/location'),
+              'bg-black text-black hover:bg-opacity-30':
+                isRouteActive('/admin/location'),
+            }"
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +151,13 @@
           </NuxtLink>
           <NuxtLink
             to="/admin/contact"
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-opacity-25"
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all"
+            :class="{
+              'bg-transparent text-black hover:text-opacity-25':
+                !isRouteActive('/admin/contact'),
+              'bg-black text-black hover:bg-opacity-30':
+                isRouteActive('/admin/contact'),
+            }"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -100,8 +184,14 @@
             </div>
           </NuxtLink>
           <NuxtLink
-            to="/admin/Category"
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-opacity-25"
+            to="/admin/category"
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all"
+            :class="{
+              'bg-transparent text-black hover:text-opacity-25':
+                !isRouteActive('/admin/category'),
+              'bg-black text-black hover:bg-opacity-30':
+                isRouteActive('/admin/category'),
+            }"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -121,7 +211,13 @@
           </NuxtLink>
           <NuxtLink
             to="/admin/facility"
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-opacity-25"
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all"
+            :class="{
+              'bg-transparent text-black hover:text-opacity-25':
+                !isRouteActive('/admin/facility'),
+              'bg-black text-black hover:bg-opacity-30':
+                isRouteActive('/admin/facility'),
+            }"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -141,7 +237,13 @@
           </NuxtLink>
           <NuxtLink
             to="/admin/article"
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-opacity-25"
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all"
+            :class="{
+              'bg-transparent text-black hover:text-opacity-25':
+                !isRouteActive('/admin/article'),
+              'bg-black text-black hover:bg-opacity-30':
+                isRouteActive('/admin/article'),
+            }"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +263,7 @@
           </NuxtLink>
           <NuxtLink
             to="/"
-            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-opacity-25"
+            class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +293,11 @@ const showDrawer = inject("showTableOrMobileSidebar");
 const { $logout } = useAuth();
 
 const route = useRoute();
-const isHomeActive = route.path === "/";
+
+const isRouteActive = (route: string) => {
+  const currentRoute = useRoute();
+  return currentRoute.path === route;
+};
 </script>
 
 <style scoped></style>

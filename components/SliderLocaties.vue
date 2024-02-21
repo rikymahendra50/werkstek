@@ -2,7 +2,7 @@
   <section class="bg-tertiary relative flex flex-col py-10">
     <div class="grid grid-cols-1 grid-rows-1">
       <div class="grid w-full container-custom">
-        <div class="flex justify-between items-center mb-5">
+        <div class="flex justify-between items-center">
           <div class="flex flex-col w-[60%] lg:w-[40%]">
             <p class="text-[12px] md:text-lg lg:text-[18px] font-bold">
               Locaties

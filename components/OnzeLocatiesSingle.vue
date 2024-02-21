@@ -1,6 +1,6 @@
 <template>
   <section class="container-custom">
-    <TitleHeader2 :title1="title" :title2="subTitle" :title3="thirdTitle" />
+    <TitleHeader2 :title2="title" :title3="thirdTitle" />
     <div class="md:grid grid-cols-12 gap-2 sm:gap-5">
       <div class="col-span-8">
         <div class="flex flex-col md:min-h-[400px]">
@@ -32,7 +32,7 @@
                 },
               }"
             >
-              <SwiperSlide v-for="slide in images" :key="slide.id">
+              <SwiperSlide v-for="slide in imageSrc" :key="slide.id">
                 <div>
                   <img
                     :src="slide.image"
@@ -42,25 +42,24 @@
                 </div>
               </SwiperSlide>
 
-              <div class="h-full w-full bg-gradient-to-l inset-0 z-10">
-                <div class="flex-grow"></div>
+              <div class="h-full w-full bg-gradient-to-l inset-0 z-10 border-2">
                 <Swiper
                   :modules="[SwiperThumbs]"
                   @swiper="setThumbsSwiper"
-                  :slides-per-view="4"
+                  :slides-per-view="3"
                   :spaceBetween="10"
                   :css-mode="true"
                   :watch-slides-progress="true"
                 >
                   <SwiperSlide
-                    v-for="slide in images"
+                    v-for="slide in imageSrc"
                     :key="slide.id"
-                    class="group overflow-hidden mt-5 max-w-[245px]"
+                    class="group overflow-hidden mt-3"
                   >
                     <img
                       :src="slide.image"
                       alt="image"
-                      class="group-hover:scale-125 transition-all w-full duration-300 object-cover aspect-square"
+                      class="group-hover:scale-125 transition-all max-h-[150px] md:max-h-[200px] w-full duration-300 object-cover aspect-square"
                     />
                   </SwiperSlide>
                 </Swiper>
@@ -88,23 +87,19 @@
               <tbody>
                 <tr
                   class="flex justify-between items-center"
-                  v-for="(itemCheckBox, index) in checkBoxData"
-                  :key="itemCheckBox.id"
+                  v-for="(item, index) in facility"
+                  :key="item.id"
                 >
                   <td class="text-[13px] w-[40%] sm:w-[50%]">
-                    {{ itemCheckBox.name }}
+                    {{ item.facility.name }}
                   </td>
                   <td
                     class="w-[60%] sm:w-[50%] flex items-start text-quaternary gap-3"
                   >
-                    <input
-                      type="checkbox"
-                      name="checkbox"
-                      checked
-                      disabled
-                      value="1"
-                    />
-                    <label for="checkbox">Fiture</label>
+                    <img :src="item.facility.icon" alt="checkBox" />
+                    <label :for="'facility-checkbox-' + index">{{
+                      item.facility.name
+                    }}</label>
                   </td>
                 </tr>
               </tbody>
@@ -290,25 +285,26 @@
           <p class="text-[18px] lg:text-[24px] text-[#363636] my-4">
             Adresgegevens
           </p>
-          <ul class="flex flex-col gap-1">
+          <span>{{ privilages }}</span>
+          <!-- <ul class="flex flex-col gap-1">
             <li class="text-[14px] md:text-[16px] text-[#4A4A4A]">
               Oudegracht aan de Werf 5
             </li>
             <li class="text-[12px] md:text-[14px] text-[#4A4A4A]">Postcode</li>
             <li class="text-[12px] md:text-[15px] text-[#4A4A4A]">Utrecht</li>
             <li class="text-[13px] md:text-[15px] text-[#4A4A4A]">Nederland</li>
-          </ul>
+          </ul> -->
           <div class="my-4 flex flex-col gap-3">
-            <NuxtLink :to="'tel:085-0290598'" class="flex gap-3">
+            <NuxtLink :to="`tel:${phoneNumber}`" class="flex gap-3">
               <img src="/images/telp-bg-primary.svg" alt="phone-icon" />
               <p class="text-[#404040] text-[13px] md:text-[16px] mt-2">
-                Tel : <span>085-0290598</span>
+                Tel : <span>{{ phoneNumber }}</span>
               </p>
             </NuxtLink>
-            <NuxtLink :to="'mailto:' + 'info@werkstek.nl'" class="flex gap-3">
+            <NuxtLink :to="`mailto:' + ${email}`" class="flex gap-3">
               <img src="/images/email-bg-primary.svg" alt="phone-icon" />
               <p class="text-[#404040] text-[13px] md:text-[16px]">
-                E-mail: <span>info@werkstek.nl</span>
+                E-mail: <span>{{ email }}</span>
               </p>
             </NuxtLink>
           </div>
@@ -334,7 +330,8 @@
             </p>
           </NuxtLink>
         </div>
-        <Map />
+        <Map :latitudeSpesifik="longitude" :longitudeSpesifik="longitude" />
+        {{ longitude }}
       </div>
     </div>
   </section>
@@ -366,9 +363,6 @@ const images = ref([
 ]);
 
 const props = defineProps({
-  imageBanner: {
-    type: String,
-  },
   title: {
     type: String,
   },
@@ -378,14 +372,8 @@ const props = defineProps({
   thirdTitle: {
     type: String,
   },
-  imageSrc1: {
-    type: String,
-  },
-  imageSrc2: {
-    type: String,
-  },
-  imageSrc3: {
-    type: String,
+  imageSrc: {
+    type: Array,
   },
   location: {
     type: String,
@@ -396,6 +384,16 @@ const props = defineProps({
   description: {
     type: String,
   },
+  phoneNumber: {},
+  email: {},
+  latitude: {},
+  longitude: {},
+  price: {},
+  facility: {
+    type: Array,
+  },
+  location: {},
+  privilages: {},
 });
 
 const checkBoxData = ref([

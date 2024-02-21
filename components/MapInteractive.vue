@@ -53,7 +53,7 @@
                   v-for="(option, idx) in category.options"
                   :key="idx"
                   @click="selectOption(category, option)"
-                  class="pt-1 cursor-pointer hover:bg-secondary transition hover:text-tertiary px-5 md:pb-2"
+                  class="cursor-pointer hover:bg-secondary transition hover:text-tertiary px-3 py-1"
                 >
                   {{ option }}
                 </li>

@@ -38,14 +38,16 @@
           aria-expanded="false"
           data-state="closed"
         >
-          <img
-            :src="$user?.profile_picture"
-            width="32"
-            height="32"
-            alt="Avatar"
-            class="rounded-md object-cover"
-            style="aspect-ratio: 32 / 32; object-fit: cover"
-          /><span class="sr-only">Toggle user menu</span>
+          <NuxtLink to="/admin">
+            <img
+              :src="$user?.profile_picture"
+              width="32"
+              height="32"
+              alt="Avatar"
+              class="rounded-md object-cover"
+              style="aspect-ratio: 32 / 32; object-fit: cover"
+            /><span class="sr-only">Toggle user menu</span>
+          </NuxtLink>
         </button>
       </div>
     </div>

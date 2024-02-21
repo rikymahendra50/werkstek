@@ -165,6 +165,8 @@
           v-for="(item, index) in filteredData.data"
           :key="item.id"
           :name="item.name"
+          :latitude="item.latitude"
+          :longitude="item.longitude"
           :link="`/onze-locaties/${item.slug}`"
           :price="item.price"
           :image="

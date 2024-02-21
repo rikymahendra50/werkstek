@@ -14,6 +14,10 @@
 <script scoped>
 let googleMapsScriptLoaded = false;
 export default {
+  props: {
+    latitude: {},
+    longitude: {},
+  },
   data() {
     return {
       map: null,

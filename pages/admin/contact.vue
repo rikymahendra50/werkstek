@@ -1,8 +1,8 @@
 <template>
   <div class="max-h-[600px] overflow-x-auto">
-    <!-- <pre>
+    <pre>
         {{ data }}
-    </pre> -->
+    </pre>
     <h3 class="text-lg">Contact</h3>
     <div class="overflow-auto">
       <table class="table">

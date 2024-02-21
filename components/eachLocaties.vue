@@ -69,6 +69,8 @@ export default {
     link: {
       type: String,
     },
+    latitude: {},
+    longitude: {},
     opervlakte: {
       type: String,
     },
