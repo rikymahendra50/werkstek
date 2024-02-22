@@ -30,7 +30,7 @@
             type="range"
             class="min-range"
             :min="minPrice"
-            :max="minPrice"
+            :max="maxPrice"
             v-model="localMinRange"
             step="50000"
           />
