@@ -1,37 +1,3 @@
-<script setup lang="ts">
-const props = defineProps({
-  email: String,
-  otp: String,
-});
-
-const emit = defineEmits(["next", "update:otp"]);
-
-const { stateForm, countdown, showPinEmailExpired, secondTime } =
-  useForgotPassword();
-const { otpSchema } = useSchema();
-
-const { loading, message, alertType } = useRequestHelper();
-
-function updateToParent() {
-  emit("update:otp", stateForm.value.otp);
-  emit("next");
-}
-
-function resentEmail() {
-  showPinEmailExpired.value = false;
-  secondTime.value = 60;
-  countdown();
-}
-
-function onSubmit() {
-  updateToParent();
-}
-
-onMounted(async () => {
-  await nextTick();
-  countdown();
-});
-</script>
 <template>
   <VeeForm
     @submit="onSubmit"
@@ -41,15 +7,13 @@ onMounted(async () => {
     <div
       class="grid grid-cols-1 w-[450px] text-left gap-4 p-4 rounded-md shadow"
     >
-      <Alert v-model="message" :type="alertType" />
-      <FormGroup label="OTP" name="opt">
+      <!-- <Alert v-model="message" :type="alertType" /> -->
+      <FormGroup label="OTP" name="otp">
         <div class="hidden">
           <VeeField name="otp" v-model="stateForm.otp" />
         </div>
         <FormInputOTP v-model="stateForm.otp" :is-error="!!errors?.otp" />
-        <TransitionLeftToRight>
-          <VeeErrorMessage name="otp" class="form-error-message" />
-        </TransitionLeftToRight>
+        <VeeErrorMessage name="otp" class="form-error-message" />
       </FormGroup>
       <div v-if="showPinEmailExpired">
         <p class="text-gray-400">
@@ -59,7 +23,6 @@ onMounted(async () => {
           >
         </p>
       </div>
-
       <div>
         <div v-if="secondTime > 0" class="text-gray-400 text-sm">
           We have sent an OTP to your email. Your OTP will expired in
@@ -79,5 +42,80 @@ onMounted(async () => {
     </div>
   </VeeForm>
 </template>
+
+<script setup lang="ts">
+const { requestOptions } = useRequestOptions();
+
+const props = defineProps({
+  email: String,
+  otp: String,
+});
+
+const emit = defineEmits(["next", "update:otp"]);
+
+const { stateForm, countdown, showPinEmailExpired, secondTime } =
+  useForgotPassword();
+const { otpSchema } = useSchema();
+
+const { loading, message, alertType } = useRequestHelper();
+
+function updateToParent() {
+  emit("update:otp", stateForm.value.otp);
+  emit("next");
+}
+
+onMounted(() => {
+  const savedEmail = localStorage.getItem("userEmail");
+  if (savedEmail) {
+    stateForm.value.email = savedEmail;
+  }
+});
+
+function resentEmail() {
+  showPinEmailExpired.value = false;
+  secondTime.value = 60;
+  countdown();
+  console.log(stateForm.value.email);
+
+  useFetch("/admins/resend-email-verification", {
+    method: "POST",
+    body: { email: stateForm.value.email },
+    ...requestOptions,
+  });
+}
+
+async function onSubmit() {
+  loading.value = true;
+  message.value = "hallo";
+  localStorage.setItem("userPin", stateForm.value.otp);
+  // console.log(stateForm.value);
+  // console.log(stateForm.value.otp);
+  // alertType.value = "success";
+
+  await useFetch(
+    "/admins/email-verification/zfwTTw3aw0h0zuf6Cex3edfVhSpbvoh1dvqmV8PQ0FEQedCart9qrOCrUbzxGKyyfgMiWvDctYX21nkBeq1ybPx6iV9oGcu6QAbrC98HH46SqkKjZajeFF5L2HwTEPbzwWKk4H1KTPFEnAtkcWtf974HUCiUHRvxkbbpBj4eCJFWdJxkyluVfRtQYHOiNBAGT3t2Y1EZiqh75Oh7tH0Eue5mJL8dOamRlJYZv6VgSmo7V3n5lUU35WAHVJQ6KDv",
+    {
+      method: "POST",
+      ...requestOptions,
+    }
+  );
+
+  await useFetch("/admins/forget-password/verify-pin", {
+    method: "POST",
+    body: JSON.stringify({
+      email: stateForm.value.email,
+      pin: stateForm.value.otp,
+    }),
+    ...requestOptions,
+  });
+  updateToParent();
+  loading.value = false;
+}
+
+onMounted(async () => {
+  await nextTick();
+  countdown();
+});
+</script>
 
 <style scoped></style>

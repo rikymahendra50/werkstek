@@ -145,7 +145,7 @@
                   </fieldset>
                 </div>
               </div>
-              <Map />
+              <Map :coordinatesAll="coordinates" />
               <div class="flex justify-center md:mt-4">
                 <button
                   @click="showAllData"
@@ -188,6 +188,13 @@ const { data, error } = await useFetch(`/products`, {
   ...requestOptions,
 });
 
+const coordinates = data.value.data.map((item) => {
+  return {
+    latitude: item.latitude,
+    longitude: item.longitude,
+  };
+});
+
 const showFilter = ref();
 const toggleDetail = () => {
   showFilter.value = !showFilter.value;
@@ -220,14 +227,18 @@ const city = ref(name);
 const soortLocatiesRadio = ref([
   {
     id: 1,
-    name: "Stage Plaats",
+    name: "Alles",
   },
   {
     id: 2,
-    name: "Functie 1",
+    name: "Stage Plaats",
   },
   {
     id: 3,
+    name: "Functie 1",
+  },
+  {
+    id: 4,
     name: "Functie 2",
   },
 ]);

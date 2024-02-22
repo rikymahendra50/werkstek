@@ -1,6 +1,6 @@
 <template>
   <div class="overflow-auto">
-    <h3 class="font-bold text-lg">Add New Data Onze Locaties</h3>
+    <h3 class="font-bold text-lg">Edit Onze Locaties</h3>
     <div class="modal-action grid grid-cols-1 gap-3">
       <VeeForm
         @submit="onSubmit"
@@ -214,21 +214,21 @@
               <span>Privileges (data not available)</span>
             </div>
             <!-- <label
-              v-for="item in privileges.data"
-              :key="item.id"
-              class="checkbox-label flex gap-2"
-            >
-              <VeeField
-                :id="`privileges + ${item.id}`"
-                :name="`privileges + ${item.name}`"
-                type="checkbox"
-                :value="item.id"
-                v-model="productsData.product_privileges"
-                placeholder="privileges"
-                autocomplete="privileges"
-              />
-              {{ item.name }}
-            </label> -->
+                  v-for="item in privileges.data"
+                  :key="item.id"
+                  class="checkbox-label flex gap-2"
+                >
+                  <VeeField
+                    :id="`privileges + ${item.id}`"
+                    :name="`privileges + ${item.name}`"
+                    type="checkbox"
+                    :value="item.id"
+                    v-model="productsData.product_privileges"
+                    placeholder="privileges"
+                    autocomplete="privileges"
+                  />
+                  {{ item.name }}
+                </label> -->
           </div>
         </div>
 
@@ -331,6 +331,16 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 
+const route = useRoute();
+const slug = computed(() => {
+  return route.params.slug;
+});
+
+const { data } = await useFetch(`/admins/products/${slug.value}`, {
+  method: "get",
+  ...requestOptions,
+});
+
 const { data: facilities, error } = await useFetch(`/admins/facilities`, {
   method: "get",
   ...requestOptions,
@@ -370,7 +380,7 @@ async function onSubmit(values, ctx) {
   console.log(productsData.value.product_facilities);
   loading.value = true;
 
-  const { data, error } = await useFetch("/admins/products", {
+  const { data, error } = await useFetch(`/admins/products/${slug.value}`, {
     method: "POST",
     body: JSON.stringify(productsData.value),
     ...requestOptions,

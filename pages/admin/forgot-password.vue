@@ -57,7 +57,7 @@ const titleHeader = computed(() => {
 });
 
 function goToHome() {
-  router.push("/");
+  router.push("/admin");
 }
 
 useHead({

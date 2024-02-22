@@ -32,6 +32,19 @@
               Sign In
             </button>
           </div>
+          <div
+            class="mt-2 border-2 border-primary rounded-lg hover:border-secondary"
+          >
+            <NuxtLink
+              to="/admin/registration"
+              :disabled="loading"
+              type="submit"
+              class="p-2 text-center text-primary hover:text-secondary w-full rounded-lg"
+            >
+              Registasion
+            </NuxtLink>
+          </div>
+
           <div class="mt-5">
             <NuxtLink
               to="/admin/forgot-password"

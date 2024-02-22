@@ -9,14 +9,18 @@
       :class="`relative aspect-video lg:h-[219px] z-[-999] mt-5`"
     ></div>
   </section>
+  <!-- <pre>
+    {{ coordinatesAll }}
+  </pre> -->
 </template>
 
 <script scoped>
 let googleMapsScriptLoaded = false;
 export default {
   props: {
-    latitude: {},
-    longitude: {},
+    coordinatesAll: {
+      type: Array,
+    },
   },
   data() {
     return {
@@ -36,55 +40,55 @@ export default {
           price: 230,
           filtered: false,
         },
-        // test
-        {
-          lat: -8.653840910873269,
-          lng: 115.21785198506426,
-          name: "Tolstraat 186-188 H, Amsterdam De Pijp",
-          area: "1104 m2",
-          image: "/images/img-home-1.png",
-          popularity: 100,
-          city: "Rotterdam",
-          type: "Kantoorruimte",
-          price: 750,
-          filtered: false,
-        },
-        {
-          lat: -8.62717144710956,
-          lng: 115.29189271629312,
-          name: "Company C",
-          area: "Deskripsi C",
-          image: "/images/img-home-1.png",
-          popularity: 20,
-          city: "Rotterdam",
-          type: "Andere Optie 2",
-          price: 240,
-          filtered: false,
-        },
-        {
-          lat: -8.641220836289818,
-          lng: 115.17259520426518,
-          name: "Company D",
-          area: "Deskripsi D",
-          image: "/images/img-home-1.png",
-          popularity: 20,
-          city: "Amsterdam",
-          type: "Andere Optie 1",
-          price: 4,
-          filtered: false,
-        },
-        {
-          lat: -8.616146108681335,
-          lng: 115.17967680101556,
-          name: "Company E",
-          area: "Deskripsi E",
-          image: "/images/img-home-1.png",
-          popularity: 20,
-          city: "Rotterdam",
-          type: "Andere Optie 1",
-          price: 710,
-          filtered: false,
-        },
+        // // test
+        // {
+        //   lat: -8.653840910873269,
+        //   lng: 115.21785198506426,
+        //   name: "Tolstraat 186-188 H, Amsterdam De Pijp",
+        //   area: "1104 m2",
+        //   image: "/images/img-home-1.png",
+        //   popularity: 100,
+        //   city: "Rotterdam",
+        //   type: "Kantoorruimte",
+        //   price: 750,
+        //   filtered: false,
+        // },
+        // {
+        //   lat: -8.62717144710956,
+        //   lng: 115.29189271629312,
+        //   name: "Company C",
+        //   area: "Deskripsi C",
+        //   image: "/images/img-home-1.png",
+        //   popularity: 20,
+        //   city: "Rotterdam",
+        //   type: "Andere Optie 2",
+        //   price: 240,
+        //   filtered: false,
+        // },
+        // {
+        //   lat: -8.641220836289818,
+        //   lng: 115.17259520426518,
+        //   name: "Company D",
+        //   area: "Deskripsi D",
+        //   image: "/images/img-home-1.png",
+        //   popularity: 20,
+        //   city: "Amsterdam",
+        //   type: "Andere Optie 1",
+        //   price: 4,
+        //   filtered: false,
+        // },
+        // {
+        //   lat: -8.616146108681335,
+        //   lng: 115.17967680101556,
+        //   name: "Company E",
+        //   area: "Deskripsi E",
+        //   image: "/images/img-home-1.png",
+        //   popularity: 20,
+        //   city: "Rotterdam",
+        //   type: "Andere Optie 1",
+        //   price: 710,
+        //   filtered: false,
+        // },
       ],
     };
   },
@@ -97,13 +101,6 @@ export default {
     }
   },
   methods: {
-    findMarkerByLatLng(lat, lng) {
-      return this.markers.find((marker) => {
-        const position = marker.getPosition();
-        return position.lat() === lat && position.lng() === lng;
-      });
-    },
-
     // Move To Location when search
     moveToLocation(lat, lng) {
       if (this.map) {
@@ -220,6 +217,17 @@ export default {
         mapId: null,
         styles: brightStyle,
       });
+
+      // show all marker
+      this.coordinatesAll.forEach((coordinate) => {
+        const marker = new google.maps.Marker({
+          position: { lat: coordinate.latitude, lng: coordinate.longitude },
+          map: this.map,
+          title: "Marker Title",
+        });
+        this.markers.push(marker);
+      });
+
       const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
 
       const icon = {

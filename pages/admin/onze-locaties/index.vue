@@ -5,12 +5,11 @@
     </NuxtLink>
     <table class="tableAdmin">
       <caption>
-        List Product Vacaturies
+        List Product Locaties
       </caption>
       <thead>
         <tr>
           <th scope="col">Nomor</th>
-          <th scope="col">Image</th>
           <th scope="col">Name</th>
           <th scope="col">Detail Product</th>
           <th scope="col">Modif</th>
@@ -21,10 +20,9 @@
           <td scope="row" data-label="Name">
             {{ index + 1 }}
           </td>
-          <td data-label="Image">test</td>
           <td data-label="Name">{{ item.name }}</td>
           <td data-label="Detail">
-            <NuxtLink :to="`/admin/onze-vacaturies/${item.slug}`">
+            <NuxtLink :to="`/admin/onze-vacaturies/edit/${item.slug}`">
               <button class="btn btn-sm btn-outline btn-info">
                 Details Locatie
               </button>
