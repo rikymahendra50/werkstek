@@ -1,7 +1,4 @@
 <template>
-  <!-- <pre>
-    {{ data?.data?.latitude }}
-  </pre> -->
   <div v-if="data && data.data">
     <OnzeLocatiesSingle
       :title="data.data.name"

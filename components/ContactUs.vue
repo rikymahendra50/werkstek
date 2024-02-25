@@ -120,7 +120,7 @@
             </div>
             <div class="flex flex-col my-2">
               <div class="flex items-center">
-                <label for="subject">Subject</label>
+                <label for="subject">Onderwerp</label>
               </div>
               <VeeField
                 id="subject"

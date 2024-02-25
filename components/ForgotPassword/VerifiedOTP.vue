@@ -45,6 +45,7 @@
 
 <script setup lang="ts">
 const { requestOptions } = useRequestOptions();
+const snackbar = useSnackbar();
 
 const props = defineProps({
   email: String,
@@ -92,15 +93,15 @@ async function onSubmit() {
   // console.log(stateForm.value.otp);
   // alertType.value = "success";
 
-  await useFetch(
-    "/admins/email-verification/zfwTTw3aw0h0zuf6Cex3edfVhSpbvoh1dvqmV8PQ0FEQedCart9qrOCrUbzxGKyyfgMiWvDctYX21nkBeq1ybPx6iV9oGcu6QAbrC98HH46SqkKjZajeFF5L2HwTEPbzwWKk4H1KTPFEnAtkcWtf974HUCiUHRvxkbbpBj4eCJFWdJxkyluVfRtQYHOiNBAGT3t2Y1EZiqh75Oh7tH0Eue5mJL8dOamRlJYZv6VgSmo7V3n5lUU35WAHVJQ6KDv",
-    {
-      method: "POST",
-      ...requestOptions,
-    }
-  );
+  // await useFetch(
+  //   "/admins/email-verification/zfwTTw3aw0h0zuf6Cex3edfVhSpbvoh1dvqmV8PQ0FEQedCart9qrOCrUbzxGKyyfgMiWvDctYX21nkBeq1ybPx6iV9oGcu6QAbrC98HH46SqkKjZajeFF5L2HwTEPbzwWKk4H1KTPFEnAtkcWtf974HUCiUHRvxkbbpBj4eCJFWdJxkyluVfRtQYHOiNBAGT3t2Y1EZiqh75Oh7tH0Eue5mJL8dOamRlJYZv6VgSmo7V3n5lUU35WAHVJQ6KDv",
+  //   {
+  //     method: "POST",
+  //     ...requestOptions,
+  //   }
+  // );
 
-  await useFetch("/admins/forget-password/verify-pin", {
+  const { error } = await useFetch("/admins/forget-password/verify-pin", {
     method: "POST",
     body: JSON.stringify({
       email: stateForm.value.email,
@@ -108,6 +109,19 @@ async function onSubmit() {
     }),
     ...requestOptions,
   });
+
+  if (error.value) {
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
+    });
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Thank you for your message. We will get back to you as soon as possible.",
+    });
+  }
+
   updateToParent();
   loading.value = false;
 }

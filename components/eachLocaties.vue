@@ -38,7 +38,7 @@
         <span class="text-sm">Adres</span>
         <div class="flex justify-between">
           <span class="text-[12px] sm:text-base font-bold"> Opervlakte </span>
-          <span class="text-[12px] sm:text-base">{{ phoneNumber }}</span>
+          <span class="text-[12px] sm:text-base">+{{ phoneNumber }}</span>
         </div>
         <div class="flex justify-between">
           <span class="text-[12px] sm:text-base">€ {{ price }}</span>
@@ -94,7 +94,7 @@ export default {
     },
     phoneNumber: {
       type: String,
-      default: "+31302393838",
+      default: 31302393838,
     },
     price: {},
     detailLinkTitle: {

@@ -378,9 +378,6 @@ const props = defineProps({
   location: {
     type: String,
   },
-  price: {
-    type: String,
-  },
   description: {
     type: String,
   },

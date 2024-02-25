@@ -28,7 +28,7 @@
               </button>
             </NuxtLink>
           </td>
-          <td data-label="Update At" class="flex justify-center gap-4 my-1">
+          <td data-label="Modif" class="flex justify-center gap-4 my-1">
             <NuxtLink
               :to="`/admin/onze-vacaturies/edit/${item.slug}`"
               class="m-2"
@@ -46,7 +46,7 @@
               <div class="modal-box">
                 <h3 class="font-bold text-xl text-red-500">Warning !</h3>
                 <p class="py-4 text-lg">
-                  Are you sure want to delete this called {{ item.slug }}?
+                  Are you sure want to delete this item called {{ item.slug }}?
                 </p>
                 <div class="modal-action">
                   <form method="dialog">

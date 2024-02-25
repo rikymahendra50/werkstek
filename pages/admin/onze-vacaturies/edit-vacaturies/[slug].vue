@@ -1,6 +1,12 @@
 <template>
   <div class="overflow-auto">
     <h3 class="font-bold text-lg">Edit Onze Locaties</h3>
+    <NuxtLink
+      to="/admin/onze-vacaturies"
+      class="btn btn-sm btn-outline btn-warning"
+    >
+      Back
+    </NuxtLink>
     <div class="modal-action grid grid-cols-1 gap-3">
       <VeeForm
         @submit="onSubmit"
@@ -157,13 +163,12 @@
             placeholder="location"
             autocomplete="location"
           >
-            <option disabled selected>Rent Type</option>
+            <option disabled selected>Location</option>
             <option :value="item.id" v-for="item in location.data">
               {{ item.name }}
             </option>
           </VeeField>
         </div>
-
         <div class="flex flex-col my-2 w-full">
           <div class="flex items-center">
             <label for="type">Type</label>
@@ -231,7 +236,6 @@
                 </label> -->
           </div>
         </div>
-
         <div class="flex flex-col my-2 w-full">
           <div class="grid gap-2">
             <div class="flex items-center">
@@ -244,6 +248,7 @@
                 type="radio"
                 value="1"
                 v-model="productsData.is_saleable"
+                :checked="productsData.is_saleable === 1"
                 placeholder="saleable"
                 autocomplete="saleable"
               />
@@ -256,6 +261,7 @@
                 type="radio"
                 value="0"
                 v-model="productsData.is_saleable"
+                :checked="productsData.is_saleable === 0"
                 placeholder="saleable"
                 autocomplete="saleable"
               />
@@ -336,12 +342,16 @@ const slug = computed(() => {
   return route.params.slug;
 });
 
-const { data } = await useFetch(`/admins/products/${slug.value}`, {
+const {
+  data: eachVacaturies,
+  error,
+  pending,
+} = await useFetch(`/products/${slug.value}`, {
   method: "get",
   ...requestOptions,
 });
 
-const { data: facilities, error } = await useFetch(`/admins/facilities`, {
+const { data: facilities } = await useFetch(`/admins/facilities`, {
   method: "get",
   ...requestOptions,
 });
@@ -359,29 +369,28 @@ const { data: category } = await useFetch(`/admins/categories`, {
 });
 
 const productsData = ref({
-  name: undefined,
-  description: undefined,
-  email: undefined,
-  phone_number: undefined,
-  latitude: undefined,
-  longitude: undefined,
-  price: undefined,
-  rent_type: undefined,
-  area_size: undefined,
-  location_id: undefined,
-  type_id: undefined,
-  category_id: undefined,
-  is_saleable: undefined,
+  name: eachVacaturies.value.data.name,
+  description: eachVacaturies.value.data.description,
+  email: eachVacaturies.value.data.email,
+  phone_number: eachVacaturies.value.data.phone_number,
+  latitude: eachVacaturies.value.data.latitude,
+  longitude: eachVacaturies.value.data.longitude,
+  price: eachVacaturies.value.data.price,
+  rent_type: eachVacaturies.value.data.rent_type,
+  area_size: eachVacaturies.value.data.area_size,
+  location_id: eachVacaturies.value.data.location_id,
+  type_id: eachVacaturies.value.data.type_id,
+  category_id: eachVacaturies.value.data.category_id,
+  is_saleable: eachVacaturies.value.data.is_saleable,
   product_facilities: [{ facility_id: 1 }],
   product_privileges: [],
 });
 
 async function onSubmit(values, ctx) {
-  console.log(productsData.value.product_facilities);
   loading.value = true;
 
-  const { data, error } = await useFetch(`/admins/products/${slug.value}`, {
-    method: "POST",
+  const { error } = await useFetch(`/admins/products/${slug.value}`, {
+    method: "PUT",
     body: JSON.stringify(productsData.value),
     ...requestOptions,
   });

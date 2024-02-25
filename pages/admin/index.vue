@@ -1,7 +1,4 @@
 <template>
-  <!-- <div class="alert alert-success alert-sm">
-    <span class="text-white text-lg">Welcome {{ $user?.first_name }}</span>
-  </div> -->
   <table class="tableAdmin">
     <caption>
       Your Profile

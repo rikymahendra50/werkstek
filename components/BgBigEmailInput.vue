@@ -13,6 +13,7 @@
         v-model="dataForm.email"
         class="pl-2 text-sm h-full outline-none box-border text-tertiary bg-quaternary"
         placeholder="Mail@gmail.com"
+        autocomplete
         :style="{ WebkitAppearance: 'none', color: 'white' }"
       />
       <button class="rounded-full bg-tertiary text-tertiary">

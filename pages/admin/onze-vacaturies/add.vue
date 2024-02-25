@@ -1,12 +1,34 @@
 <template>
-  <div class="overflow-auto">
+  <div class="flex gap-2">
+    <NuxtLink
+      to="/admin/onze-vacaturies"
+      class="btn btn-warning btn-outline btn-sm"
+      >Back</NuxtLink
+    >
+    <span class="text-2xl font-bold">Add Vacaturies</span>
+  </div>
+  <div class="h-screen max-h-[450px] overflow-y-auto">
     <h3 class="font-bold text-lg">Add New Data Onze Locaties</h3>
     <div class="modal-action grid grid-cols-1 gap-3">
       <VeeForm
         @submit="onSubmit"
-        class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-10"
+        class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-8"
         v-slot="{ errors }"
       >
+        <!-- <div class="flex flex-col my-2 w-full">
+          <div class="flex items-center">
+            <label for="image">Images</label>
+          </div>
+          <VeeField
+            id="image"
+            name="image"
+            type="file"
+            v-model="productImages"
+            class="file-input file-input-bordered file-input-success w-full max-w-xs"
+            placeholder="Images"
+            autocomplete="Image"
+          />
+        </div> -->
         <div class="flex flex-col my-2 w-full">
           <div class="flex items-center">
             <label for="name">Name</label>
@@ -143,7 +165,6 @@
             autocomplete="areaSize"
           />
         </div>
-
         <div class="flex flex-col my-2 w-full">
           <div class="flex items-center">
             <label for="location">Location</label>
@@ -287,13 +308,8 @@
             </label>
           </div>
         </div>
-
         <div class="flex justify-end">
-          <button
-            type="submit"
-            :disabled="loading"
-            class="mt-4 bg-primary disabled:bg-secondary hover:bg-secondary transition min-w-[120px] sm:min-w-[152px] min-h-[42px] sm:min-h-[52px] rounded-full flex items-center justify-center cursor-pointer"
-          >
+          <button class="btn btn-success" type="submit" :disabled="loading">
             <span
               class="text-[20px] xl:text-lg lg:text-lg text-center text-white"
             >
@@ -306,30 +322,19 @@
   </div>
 </template>
 
-<style scoped>
-.overflow-auto {
-  max-height: 550px;
-  overflow-y: auto;
-  overflow-x: auto;
-}
-
-.overflow-auto::-webkit-scrollbar {
-  display: none;
-}
-
-.description-column {
-  overflow-y: auto;
-}
-
-.description-column::-webkit-scrollbar {
-  display: none;
-}
-</style>
-
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
+
+// function goToVacaturies() {
+//   router.push("/admin/onze-vacaturies");
+// }
+
+// const { data: image } = await useFetch(`admins/products/images`, {
+//   method: "post",
+//   ...requestOptions,
+// });
 
 const { data: facilities, error } = await useFetch(`/admins/facilities`, {
   method: "get",
@@ -347,6 +352,8 @@ const { data: category } = await useFetch(`/admins/categories`, {
   method: "get",
   ...requestOptions,
 });
+
+// const productImages = ref();
 
 const productsData = ref({
   name: undefined,
@@ -367,8 +374,15 @@ const productsData = ref({
 });
 
 async function onSubmit(values, ctx) {
-  console.log(productsData.value.product_facilities);
   loading.value = true;
+
+  console.log(productsData.value.latitude);
+
+  // await useFetch("/admins/products/images", {
+  //   method: "POST",
+  //   body: productImages,
+  //   ...requestOptions,
+  // });
 
   const { data, error } = await useFetch("/admins/products", {
     method: "POST",
@@ -404,3 +418,23 @@ definePageMeta({
   middleware: ["auth", "admin"],
 });
 </script>
+
+<style scoped>
+.overflow-auto {
+  max-height: 550px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.overflow-auto::-webkit-scrollbar {
+  display: none;
+}
+
+.description-column {
+  overflow-y: auto;
+}
+
+.description-column::-webkit-scrollbar {
+  display: none;
+}
+</style>
