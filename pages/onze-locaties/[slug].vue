@@ -1,7 +1,9 @@
 <template>
   <div v-if="data && data.data">
     <OnzeLocatiesSingle
-      :title="data.data.name"
+      :title="data?.data?.name"
+      :location="data?.data?.location?.name"
+      :category="data?.data?.category_id"
       :description="data?.data?.description"
       :imageSrc="data?.data?.images"
       :email="data?.data?.email"

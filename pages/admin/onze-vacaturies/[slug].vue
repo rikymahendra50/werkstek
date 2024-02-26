@@ -16,6 +16,18 @@
             </td>
           </tr>
           <tr>
+            <td>Phone Number</td>
+            <td>
+              <div v-html="data?.data?.phone_number"></div>
+            </td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>
+              <div v-html="data?.data?.email"></div>
+            </td>
+          </tr>
+          <tr>
             <td>Latitude</td>
             <td>{{ data?.data?.latitude }}</td>
           </tr>
@@ -26,6 +38,18 @@
           <tr>
             <td>Price</td>
             <td>€ {{ data?.data?.price }}</td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td>{{ data?.data?.type_id }}</td>
+          </tr>
+          <tr>
+            <td>Area Size</td>
+            <td>{{ data?.data?.area_size }}</td>
+          </tr>
+          <tr>
+            <td>Privilages</td>
+            <td>{{ data?.data?.privilages?.privilages?.name }}</td>
           </tr>
           <tr>
             <td>Location</td>
@@ -53,6 +77,10 @@
             <td v-else>No</td>
           </tr>
           <tr>
+            <td>Facility</td>
+            <td>{{ data?.data?.facility[0]?.facility?.name }}</td>
+          </tr>
+          <tr>
             <td>Images</td>
             <td>
               <button
@@ -66,7 +94,7 @@
                   <!-- <h3 class="font-bold text-lg">Hello!</h3> -->
                   <table class="table">
                     <thead>
-                      <th class="col-1">Nomor</th>
+                      <th>Nomor</th>
                       <th>Images</th>
                     </thead>
                     <tbody v-for="(item, index) in data.data.images">
@@ -97,20 +125,6 @@
     <button class="btn btn-sm btn-outline btn-warning">Back</button>
   </NuxtLink>
 </template>
-
-<style>
-.col1 {
-  width: 20%;
-}
-
-.col2 {
-  width: 30%;
-}
-
-.col3 {
-  width: 50%;
-}
-</style>
 
 <script setup>
 const route = useRoute();

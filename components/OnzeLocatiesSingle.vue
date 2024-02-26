@@ -1,6 +1,6 @@
 <template>
   <section class="container-custom">
-    <TitleHeader2 :title2="title" :title3="thirdTitle" />
+    <TitleHeader2 :title1="location" :title2="title" />
     <div class="md:grid grid-cols-12 gap-2 sm:gap-5">
       <div class="col-span-8">
         <div class="flex flex-col md:min-h-[400px]">
@@ -142,7 +142,7 @@
             </svg>
             <span class="pl-2 text-[12px] md:text-[15px]">Kleinschalig</span>
           </li>
-          <li class="py-1 lg:py-2 flex">
+          <!-- <li class="py-1 lg:py-2 flex">
             <svg
               width="24"
               height="23"
@@ -279,7 +279,7 @@
             <span class="pl-2 text-[12px] md:text-[15px]"
               >Internationale groep mensen lore</span
             >
-          </li>
+          </li> -->
         </ul>
         <div class="ml-1 md:ml-3">
           <p class="text-[18px] lg:text-[24px] text-[#363636] my-4">
@@ -330,8 +330,7 @@
             </p>
           </NuxtLink>
         </div>
-        <Map :latitudeSpesifik="longitude" :longitudeSpesifik="longitude" />
-        {{ longitude }}
+        <!-- <Map :latitudeSpesifik="longitude" :longitudeSpesifik="longitude" /> -->
       </div>
     </div>
   </section>
@@ -364,6 +363,9 @@ const images = ref([
 
 const props = defineProps({
   title: {
+    type: String,
+  },
+  location: {
     type: String,
   },
   subTitle: {

@@ -79,21 +79,15 @@ export default {
       default: "/images/img-each-locatie-3.jpg",
     },
     rating: {
-      type: Number,
       default: "Rating",
     },
-    type: {
-      type: String,
-    },
-    name: {
-      type: String,
-    },
+    type: {},
+    name: {},
     email: {
       type: String,
       default: "Mail Adres",
     },
     phoneNumber: {
-      type: String,
       default: 31302393838,
     },
     price: {},

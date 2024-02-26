@@ -145,7 +145,7 @@
                   </fieldset>
                 </div>
               </div>
-              <Map :coordinatesAll="coordinates" />
+              <!-- <Map :coordinatesAll="coordinates" /> -->
               <div class="flex justify-center md:mt-4">
                 <button
                   @click="showAllData"
