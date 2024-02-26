@@ -38,9 +38,15 @@
                 <td>
                   <NuxtLink
                     :to="`/admin/onze-vacaturies/${item.slug}`"
-                    class="btn btn-sm btn-outline"
+                    class="btn btn-sm btn-outline mr-2"
                   >
                     Detail
+                  </NuxtLink>
+                  <NuxtLink
+                    :to="`/admin/onze-vacaturies/add-image/${item.slug}`"
+                    class="btn btn-sm btn-outline"
+                  >
+                    Add Images
                   </NuxtLink>
                 </td>
                 <td class="flex items-center">

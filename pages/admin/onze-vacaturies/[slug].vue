@@ -1,8 +1,8 @@
 <template>
   <div v-if="pending">Loading...</div>
   <div v-if="data && data?.data" class="overflow-y-auto max-h-[70%]">
+    {{ images }}
     <h3 class="font-bold my-2">Detail Data {{ data.data.name }}</h3>
-    {{}}
     <div class="max-h-[500px]">
       <table class="table">
         <tbody>
@@ -136,6 +136,15 @@ const slug = computed(() => {
 });
 
 const { requestOptions } = useRequestOptions();
+
+const { data: images } = await useFetch(
+  `/admins/products/${slug.value}/images`,
+  {
+    method: "get",
+    ...requestOptions,
+  }
+);
+
 const { data, error, pending } = await useFetch(
   `/admins/products/${slug.value}`,
   {

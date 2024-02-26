@@ -26,34 +26,6 @@
       </tr>
     </tbody>
   </table>
-
-  <!-- <table class="tableAdmin">
-    <caption>
-      Admin List
-    </caption>
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Position</th>
-        <th scope="col">Email</th>
-        <th scope="col">Active</th>
-        <th scope="col">Created at</th>
-        <th scope="col">Update at</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(item, index) in data?.data" :key="index">
-        <td scope="row" data-label="Name">
-          {{ item.first_name }}
-        </td>
-        <td data-label="Position">{{ item.last_name }}</td>
-        <td data-label="Email">{{ item.email }}</td>
-        <td data-label="Active">{{ item.is_active }}</td>
-        <td data-label="Created At">{{ item.created_at }}</td>
-        <td data-label="Update At">{{ item.updated_at }}</td>
-      </tr>
-    </tbody>
-  </table> -->
 </template>
 
 <style scoped>

@@ -84,7 +84,6 @@
           </div>
         </div>
       </div>
-      {{ imageDetail }}
       <div class="flex justify-end mt-5">
         <button type="submit" :disabled="loading" class="btn btn-success">
           Add Image
@@ -92,6 +91,9 @@
       </div>
     </VeeForm>
   </section>
+  <NuxtLink to="/admin/onze-vacaturies">
+    <button class="btn btn-sm btn-outline btn-warning">Back</button>
+  </NuxtLink>
 </template>
 
 <script setup>
@@ -103,8 +105,7 @@ const route = useRoute();
 const slug = computed(() => {
   return route.params.slug;
 });
-
-const { data: imageDetail } = await useFetch(
+const { data, error, pending } = await useFetch(
   `/admins/products/${slug.value}/images`,
   {
     method: "get",
@@ -145,9 +146,11 @@ async function onSubmit(values, ctx) {
     formData.append("image[]", image);
   });
 
+  const image = ref(formData);
+
   const { error } = await useFetch(`/admins/products/${slug.value}/images`, {
     method: "POST",
-    body: formData,
+    body: image.value,
     ...requestOptions,
   });
 
@@ -172,6 +175,14 @@ async function onSubmit(values, ctx) {
 const deleteImage = (index) => {
   images.value.splice(index, 1);
 };
+
+useHead({
+  title: data.value?.data?.name,
+});
+
+useHead({
+  title: data.value?.data?.name,
+});
 
 definePageMeta({
   layout: "admin",

@@ -140,7 +140,6 @@
             </svg>
             Onze Locaties
           </NuxtLink>
-
           <NuxtLink
             to="/admin/location"
             :class="{
@@ -173,6 +172,33 @@
               />
             </svg>
             Location (not yet update,edit, delete)
+          </NuxtLink>
+          <NuxtLink
+            to="/admin/level-type"
+            :class="{
+              'bg-transparent text-black hover:text-opacity-25':
+                !isRouteActive('/admin/level-type'),
+              'bg-black text-black hover:bg-opacity-30':
+                isRouteActive('/admin/level-type'),
+            }"
+            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4"
+            >
+              <path d="M3 3v18h18"></path>
+              <path d="m19 9-5 5-4-4-3 3"></path>
+            </svg>
+            Level Type
           </NuxtLink>
           <NuxtLink
             to="/admin/contact"
