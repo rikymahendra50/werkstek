@@ -96,7 +96,7 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 
-const { data: Vacaturies, error } = await useFetch(`/admins/product-list`, {
+const { data: Vacaturies, error } = await useFetch(`/admins/products`, {
   method: "get",
   ...requestOptions,
 });

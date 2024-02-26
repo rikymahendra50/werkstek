@@ -15,20 +15,6 @@
         class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-8"
         v-slot="{ errors }"
       >
-        <!-- <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="image">Images</label>
-          </div>
-          <VeeField
-            id="image"
-            name="image"
-            type="file"
-            v-model="productImages"
-            class="file-input file-input-bordered file-input-success w-full max-w-xs"
-            placeholder="Images"
-            autocomplete="Image"
-          />
-        </div> -->
         <div class="flex flex-col my-2 w-full">
           <div class="flex items-center">
             <label for="name">Name</label>
@@ -178,7 +164,7 @@
             placeholder="location"
             autocomplete="location"
           >
-            <option disabled selected>Rent Type</option>
+            <option disabled selected>Location</option>
             <option :value="item.id" v-for="item in location.data">
               {{ item.name }}
             </option>
@@ -187,19 +173,19 @@
 
         <div class="flex flex-col my-2 w-full">
           <div class="flex items-center">
-            <label for="type">Type</label>
+            <label for="type">Level Type</label>
           </div>
           <VeeField
             id="type"
             name="type"
             as="select"
-            v-model="productsData.type_id"
+            v-model="productsData.level_type_id"
             class="select select-bordered w-full"
             placeholder="type"
             autocomplete="type"
           >
             <option disabled selected>Type</option>
-            <option :value="item.id" v-for="item in type.data">
+            <option :value="item.id" v-for="item in levelType.data">
               {{ item.name }}
             </option>
           </VeeField>
@@ -228,14 +214,13 @@
             </label>
           </div>
         </div>
-
         <div class="flex flex-col my-2 w-full">
           <div class="grid gap-2">
             <div class="flex items-center">
-              <span>Privileges (data not available)</span>
+              <span>Privileges</span>
             </div>
-            <!-- <label
-              v-for="item in privileges.data"
+            <label
+              v-for="item in dataPrivilages"
               :key="item.id"
               class="checkbox-label flex gap-2"
             >
@@ -243,13 +228,13 @@
                 :id="`privileges + ${item.id}`"
                 :name="`privileges + ${item.name}`"
                 type="checkbox"
-                :value="item.id"
+                :value="{ privilege: item.name }"
                 v-model="productsData.product_privileges"
                 placeholder="privileges"
                 autocomplete="privileges"
               />
               {{ item.name }}
-            </label> -->
+            </label>
           </div>
         </div>
 
@@ -288,7 +273,7 @@
         <div class="flex flex-col my-2 w-full">
           <div class="grid gap-2">
             <div class="flex items-center">
-              <span>Category (data not available)</span>
+              <span>Category</span>
             </div>
             <label
               class="radio-label flex gap-2"
@@ -327,14 +312,20 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 
-// function goToVacaturies() {
-//   router.push("/admin/onze-vacaturies");
-// }
-
-// const { data: image } = await useFetch(`admins/products/images`, {
-//   method: "post",
-//   ...requestOptions,
-// });
+const dataPrivilages = ref([
+  {
+    id: 1,
+    name: "Near the beach",
+  },
+  {
+    id: 2,
+    name: "Near the mall",
+  },
+  {
+    id: 3,
+    name: "Get a good view",
+  },
+]);
 
 const { data: facilities, error } = await useFetch(`/admins/facilities`, {
   method: "get",
@@ -344,7 +335,7 @@ const { data: location } = await useFetch(`/admins/locations`, {
   method: "get",
   ...requestOptions,
 });
-const { data: type } = await useFetch(`/admins/types`, {
+const { data: levelType } = await useFetch(`/admins/level-types`, {
   method: "get",
   ...requestOptions,
 });
@@ -352,8 +343,6 @@ const { data: category } = await useFetch(`/admins/categories`, {
   method: "get",
   ...requestOptions,
 });
-
-// const productImages = ref();
 
 const productsData = ref({
   name: undefined,
@@ -366,11 +355,11 @@ const productsData = ref({
   rent_type: undefined,
   area_size: undefined,
   location_id: undefined,
-  type_id: undefined,
+  level_type_id: undefined,
   category_id: undefined,
   is_saleable: undefined,
   product_facilities: [{ facility_id: 1 }],
-  product_privileges: [],
+  product_privileges: [{ privilege: "Near the beach" }],
 });
 
 async function onSubmit(values, ctx) {
@@ -418,23 +407,3 @@ definePageMeta({
   middleware: ["auth", "admin"],
 });
 </script>
-
-<style scoped>
-.overflow-auto {
-  max-height: 550px;
-  overflow-y: auto;
-  overflow-x: auto;
-}
-
-.overflow-auto::-webkit-scrollbar {
-  display: none;
-}
-
-.description-column {
-  overflow-y: auto;
-}
-
-.description-column::-webkit-scrollbar {
-  display: none;
-}
-</style>

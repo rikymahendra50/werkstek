@@ -6,6 +6,7 @@
       'w-full': !ShowContainerCustom,
     }"
   >
+    <!-- {{ data.data[0].name }} -->
     <div
       id="map"
       :class="`relative w-full h-[420px] lg:h-[619px] z-[-999]`"

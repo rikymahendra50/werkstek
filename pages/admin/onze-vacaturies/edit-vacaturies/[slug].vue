@@ -100,7 +100,6 @@
             autocomplete="longitude"
           />
         </div>
-
         <div class="flex flex-col my-2 w-full">
           <div class="flex items-center">
             <label for="price">Price</label>
@@ -188,7 +187,6 @@
             </option>
           </VeeField>
         </div>
-
         <div class="flex flex-col my-2 w-full">
           <div class="grid gap-2">
             <div class="flex items-center">

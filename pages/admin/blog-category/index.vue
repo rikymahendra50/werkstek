@@ -5,14 +5,14 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Community</div>
+          <div class="text-xl md:text-3xl font-bold">Blog</div>
         </div>
         <div>
           <NuxtLink
-            to="`/admin/community/add`"
+            to="`/admin/blog/add`"
             class="btn btn-sm h-11 btn-neutral normal-case"
           >
-            Add New Community
+            Add new Blog
           </NuxtLink>
         </div>
       </div>
@@ -21,58 +21,28 @@
           <table class="table table-xs md:table-md w-full rounded-t-xl">
             <thead class="h-12">
               <tr>
-                <th class="font-medium">Image</th>
-                <th class="font-medium">Title</th>
-                <th class="font-medium">Meta</th>
-                <th class="font-medium">Category</th>
+                <th class="font-medium">Name</th>
+                <th class="font-medium">Detail</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <!-- <tr
+              <tr
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
-                v-for="(item, index) in community?.data"
+                v-for="(item, index) in categoryBlog?.data"
               >
-                <td class="max-w-[100px]">
-                  <label
-                    :for="`modal-${item.id}`"
-                    class="btn btn-sm btn-outline modal-button"
-                    >Images</label
-                  >
-                  <input
-                    type="checkbox"
-                    :id="`modal-${item.id}`"
-                    class="modal-toggle"
-                  />
-                  <div class="modal">
-                    <div class="modal-box">
-                      <h3 class="font-bold text-lg">Images</h3>
-                      <img :src="item.image" :alt="index" />
-                      <div class="modal-action">
-                        <label :for="`modal-${item.id}`" class="btn"
-                          >Close</label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-gray-500 text-sm font-normal !py-2">
-                  {{ item.title }}
-                </td>
-                <td class="font-medium max-w-[200px]">{{ item.meta }}</td>
-                <td class="font-medium">
+                <td class="max-w-[100px]">{{ item.name }}</td>
+                <td>
                   <NuxtLink
-                    :to="`/admin/community/${item.slug}`"
-                    class="btn btn-sm btn-outline text-[12px]"
-                    >Item Category</NuxtLink
+                    :to="`/admin/onze-vacaturies/${item.slug}`"
+                    class="btn btn-sm btn-outline"
                   >
+                    Detail
+                  </NuxtLink>
                 </td>
                 <td>
                   <div class="flex justify-center items-center gap-4 my-1">
-                    <NuxtLink
-                      :to="`/admin/community/edit/${item.slug}`"
-                      class="m-2"
-                    >
+                    <NuxtLink :to="`/admin/blog/edit/${item.slug}`" class="m-2">
                       <icon
                         name="i-heroicons-pencil-square"
                         class="cursor-pointer mr-1"
@@ -87,13 +57,13 @@
                           Warning !
                         </h3>
                         <p class="py-4 text-lg">
-                          Are you sure want to delete this called
+                          Are you sure want to delete this category blog
                           {{ item.name }}?
                         </p>
                         <div class="modal-action">
                           <form method="dialog">
                             <button
-                              @click="deleteBlog(item.slug)"
+                              @click="deleteCategoryBlog(item.slug)"
                               class="btn btn-outline btn-error mr-3"
                             >
                               Delete
@@ -105,12 +75,6 @@
                     </dialog>
                   </div>
                 </td>
-              </tr> -->
-              <tr>
-                <td>test</td>
-                <td>test</td>
-                <td>Test</td>
-                <td>Test</td>
               </tr>
             </tbody>
           </table>
@@ -123,22 +87,17 @@
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const { data: community, error } = await useFetch(`/admins/articles-copy`, {
-  method: "get",
-  ...requestOptions,
-});
-
-const showModal = (index) => {
-  const modalId = `my_modal_${index}`;
-  const modal = document.getElementById(modalId);
-  if (modal) {
-    modal.showModal();
+const { data: categoryBlog, error } = await useFetch(
+  `/admins/article-categories`,
+  {
+    method: "get",
+    ...requestOptions,
   }
-};
+);
 
-const deleteBlog = async (slug) => {
+const deleteCategoryBlog = async (slug) => {
   loading.value = true;
-  await useFetch(`/admins/articles-copy/${slug}`, {
+  await useFetch(`/admins/article-categories/${slug}`, {
     method: "DELETE",
     ...requestOptions,
   });
@@ -152,14 +111,14 @@ const deleteBlog = async (slug) => {
   } else {
     snackbar.add({
       type: "success",
-      text: "Delete Blog Success",
+      text: "Delete Category Success",
     });
   }
   loading.value = false;
 };
 
 useHead({
-  title: "Community",
+  title: "Blog",
 });
 
 definePageMeta({
@@ -168,14 +127,3 @@ definePageMeta({
   middleware: ["auth", "admin"],
 });
 </script>
-
-<style scoped>
-.overflow-auto {
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.overflow-auto::-webkit-scrollbar {
-  display: none;
-}
-</style>

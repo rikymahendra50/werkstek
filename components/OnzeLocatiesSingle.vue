@@ -68,6 +68,8 @@
           </div>
           <!-- end swiper -->
         </div>
+        <span>Rent Type = {{ rentType }}</span> <br />
+        <span>Price = {{ price }}</span>
         <div class="mt-2 sm:mt-10 md:mt-16 w-[100%] text-justify">
           <h1
             class="text-[#363636] text-[20px] md:text-[25px] font-semibold my-3"
@@ -77,7 +79,7 @@
           </h1>
           <div v-html="description" class="text-[12px] md:text-[16px]"></div>
         </div>
-        <p class="text-[#495057] text-base mt-10 mb-3 ml-5">
+        <p class="text-[#495057] text-base mt-10 mb-1 ml-2">
           De faciliteiten op de locatie
         </p>
         <div class="w-[95%] min-w-[70px] relative">
@@ -94,9 +96,9 @@
                     {{ item.facility.name }}
                   </td>
                   <td
-                    class="w-[60%] sm:w-[50%] flex items-start text-quaternary gap-3"
+                    class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
                   >
-                    <img :src="item.facility.icon" alt="checkBox" />
+                    <img src="/images/checkbox_checked.svg" alt="checkBox" />
                     <label :for="'facility-checkbox-' + index">{{
                       item.facility.name
                     }}</label>
@@ -109,7 +111,7 @@
       </div>
       <div class="col-span-4">
         <ul class="rounded-[8px] bg-[#859C811A] py-4 px-2 md:px-5">
-          <li class="py-1 lg:py-2 flex">
+          <li class="py-1 lg:py-2 flex" v-for="item in special">
             <svg
               width="24"
               height="23"
@@ -140,7 +142,9 @@
                 </clipPath>
               </defs>
             </svg>
-            <span class="pl-2 text-[12px] md:text-[15px]">Kleinschalig</span>
+            <span class="pl-2 text-[12px] md:text-[15px]">{{
+              item.privilege
+            }}</span>
           </li>
           <!-- <li class="py-1 lg:py-2 flex">
             <svg
@@ -285,15 +289,16 @@
           <p class="text-[18px] lg:text-[24px] text-[#363636] my-4">
             Adresgegevens
           </p>
-          <span>{{ privilages }}</span>
-          <!-- <ul class="flex flex-col gap-1">
+          <ul class="flex flex-col gap-1">
             <li class="text-[14px] md:text-[16px] text-[#4A4A4A]">
               Oudegracht aan de Werf 5
             </li>
             <li class="text-[12px] md:text-[14px] text-[#4A4A4A]">Postcode</li>
-            <li class="text-[12px] md:text-[15px] text-[#4A4A4A]">Utrecht</li>
+            <li class="text-[12px] md:text-[15px] text-[#4A4A4A]">
+              {{ location }}
+            </li>
             <li class="text-[13px] md:text-[15px] text-[#4A4A4A]">Nederland</li>
-          </ul> -->
+          </ul>
           <div class="my-4 flex flex-col gap-3">
             <NuxtLink :to="`tel:${phoneNumber}`" class="flex gap-3">
               <img src="/images/telp-bg-primary.svg" alt="phone-icon" />
@@ -365,6 +370,9 @@ const props = defineProps({
   title: {
     type: String,
   },
+  rentType: {
+    type: String,
+  },
   location: {
     type: String,
   },
@@ -392,7 +400,9 @@ const props = defineProps({
     type: Array,
   },
   location: {},
-  privilages: {},
+  special: {
+    type: Array,
+  },
 });
 
 const checkBoxData = ref([

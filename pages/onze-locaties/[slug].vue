@@ -3,16 +3,17 @@
     <OnzeLocatiesSingle
       :title="data?.data?.name"
       :location="data?.data?.location?.name"
+      :rentType="data?.data?.rent_type"
       :category="data?.data?.category_id"
       :description="data?.data?.description"
       :imageSrc="data?.data?.images"
       :email="data?.data?.email"
-      :phoneNumber="data?.data?.phoneNumber"
+      :phoneNumber="data?.data?.phone_number"
       :latitude="data?.data?.latitude"
       :longitude="data?.data?.longitude"
       :price="data?.data?.price"
       :facility="data?.data?.facility"
-      :privilages="data?.data?.privilages"
+      :special="data?.data?.privileges"
     />
   </div>
   <SliderLocaties class="my-10 py-10" />

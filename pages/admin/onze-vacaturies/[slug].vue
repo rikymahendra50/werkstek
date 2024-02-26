@@ -2,6 +2,7 @@
   <div v-if="pending">Loading...</div>
   <div v-if="data && data?.data" class="overflow-y-auto max-h-[70%]">
     <h3 class="font-bold my-2">Detail Data {{ data.data.name }}</h3>
+    {{}}
     <div class="max-h-[500px]">
       <table class="table">
         <tbody>
@@ -40,8 +41,12 @@
             <td>€ {{ data?.data?.price }}</td>
           </tr>
           <tr>
-            <td>Type</td>
-            <td>{{ data?.data?.type_id }}</td>
+            <td>Level Type</td>
+            <td>{{ data?.data?.level_type?.name }}</td>
+          </tr>
+          <tr>
+            <td>Rent Type</td>
+            <td>{{ data?.data?.rent_type }}</td>
           </tr>
           <tr>
             <td>Area Size</td>
@@ -49,11 +54,10 @@
           </tr>
           <tr>
             <td>Privilages</td>
-            <td>{{ data?.data?.privilages?.privilages?.name }}</td>
+            <td>{{ data?.data?.privileges[0].privilege }}</td>
           </tr>
           <tr>
             <td>Location</td>
-            <!-- <td>{{ data?.data?.location }}</td> -->
             <td class="flex gap-4 items-center">
               {{ data?.data?.location.name }}
               <label for="modal-1" class="btn btn-sm btn-outline modal-button"
@@ -91,7 +95,6 @@
               </button>
               <dialog id="my_modal_2" class="modal">
                 <div class="modal-box">
-                  <!-- <h3 class="font-bold text-lg">Hello!</h3> -->
                   <table class="table">
                     <thead>
                       <th>Nomor</th>
@@ -133,10 +136,13 @@ const slug = computed(() => {
 });
 
 const { requestOptions } = useRequestOptions();
-const { data, error, pending } = await useFetch(`/products/${slug.value}`, {
-  method: "get",
-  ...requestOptions,
-});
+const { data, error, pending } = await useFetch(
+  `/admins/products/${slug.value}`,
+  {
+    method: "get",
+    ...requestOptions,
+  }
+);
 
 if (error.value) {
   console.error("Error fetching data:", error);
