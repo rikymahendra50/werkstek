@@ -9,7 +9,7 @@
         </div>
         <div>
           <NuxtLink
-            to="`/admin/blog/add`"
+            to="/admin/blog/add"
             class="btn btn-sm h-11 btn-neutral normal-case"
           >
             Add new Blog
@@ -62,6 +62,12 @@
                 </td>
                 <td class="font-medium max-w-[200px]">{{ item.meta }}</td>
                 <td class="font-medium">
+                  <NuxtLink
+                    :to="`/admin/blog/${item.slug}`"
+                    class="btn btn-sm btn-outline mr-2"
+                  >
+                    Detail
+                  </NuxtLink>
                   <NuxtLink
                     :to="`/admin/blog/${item.slug}`"
                     class="btn btn-sm btn-outline text-[12px]"

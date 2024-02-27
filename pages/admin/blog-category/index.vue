@@ -5,11 +5,11 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Blog</div>
+          <div class="text-xl md:text-3xl font-bold">Category Blog</div>
         </div>
         <div>
           <NuxtLink
-            to="`/admin/blog/add`"
+            to="/admin/blog-category/add"
             class="btn btn-sm h-11 btn-neutral normal-case"
           >
             Add new Blog
@@ -42,7 +42,10 @@
                 </td>
                 <td>
                   <div class="flex justify-center items-center gap-4 my-1">
-                    <NuxtLink :to="`/admin/blog/edit/${item.slug}`" class="m-2">
+                    <NuxtLink
+                      :to="`/admin/blog-category/edit/${item.slug}`"
+                      class="m-2"
+                    >
                       <icon
                         name="i-heroicons-pencil-square"
                         class="cursor-pointer mr-1"
@@ -95,6 +98,14 @@ const { data: categoryBlog, error } = await useFetch(
   }
 );
 
+const showModal = (index) => {
+  const modalId = `my_modal_${index}`;
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.showModal();
+  }
+};
+
 const deleteCategoryBlog = async (slug) => {
   loading.value = true;
   await useFetch(`/admins/article-categories/${slug}`, {
@@ -118,7 +129,7 @@ const deleteCategoryBlog = async (slug) => {
 };
 
 useHead({
-  title: "Blog",
+  title: "Blog Category",
 });
 
 definePageMeta({

@@ -1,13 +1,13 @@
 <template>
   <section class="overflow-auto max-h-[500px]">
     <div class="flex gap-4">
-      <NuxtLink to="/admin/blog" class="btn btn-warning btn-outline btn-sm"
+      <NuxtLink to="/admin/community" class="btn btn-warning btn-outline btn-sm"
         >Back</NuxtLink
       >
       <span class="text-2xl font-bold">Add Blog</span>
     </div>
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="flex flex-col mt-10 overflow-auto">
+      <div class="flex flex-col mt-10 overflow-auto px-8">
         <label for="image" class="mb-1">Image</label>
         <input
           id="image"
@@ -65,7 +65,7 @@
       </div>
       <div class="flex justify-end mt-5">
         <button type="submit" :disabled="loading" class="btn btn-success">
-          Add Blog
+          Add Community
         </button>
       </div>
     </VeeForm>
@@ -76,13 +76,20 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
+const route = useRoute();
+const slug = computed(() => route.params.slug);
+
+const { data } = await useFetch(`/admins/community-blogs/${slug.value}`, {
+  method: "get",
+  ...requestOptions,
+});
 
 const formData = ref({
   image: null,
-  title: undefined,
-  body: undefined,
-  category_id: undefined,
-  meta: undefined,
+  title: data.value.data.title,
+  body: data.value.data.body,
+  category_id: data.value.data.category,
+  meta: data.value.data.meta,
 });
 
 const handleImageChange = (event) => {
@@ -95,14 +102,7 @@ async function onSubmit(values, ctx) {
 
   const formDataToSend = new FormData();
 
-  formDataToSend.append("image", formData.value.image);
-
-  formDataToSend.append("title", formData.value.title);
-  formDataToSend.append("body", formData.value.body);
-  formDataToSend.append("categoryId", formData.value.category_id);
-  formDataToSend.append("meta", formData.value.meta);
-
-  const { error } = await useFetch(`/admins/articles`, {
+  const { error } = await useFetch(`/admins/community-blogs`, {
     method: "POST",
     body: formDataToSend,
     ...requestOptions,
@@ -126,7 +126,7 @@ async function onSubmit(values, ctx) {
 }
 
 useHead({
-  title: "Blog",
+  title: "Community",
 });
 
 definePageMeta({

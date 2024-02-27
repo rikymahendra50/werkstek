@@ -180,7 +180,10 @@ const { data, error } = await useFetch(`/products`, {
   ...requestOptions,
 });
 
+const locations = ref(data?.value?.data);
+
 const categoryOptions = data.value.data.map((item) => item.name);
+
 const categories = ref([
   {
     title: "Zoek een Locatie",
@@ -188,12 +191,6 @@ const categories = ref([
     showDropdown: false,
     options: categoryOptions,
   },
-  // {
-  //   title: "Type",
-  //   selectedOption: "Kantoorruimte",
-  //   showDropdown: false,
-  //   options: ["Kantoorruimte", "Andere Optie 1", "Andere Optie 2"],
-  // },
   {
     title: "Zoek op een prijs",
   },
@@ -203,66 +200,19 @@ const titleMap = ref("Waar bent u op zoek naar?");
 let map = ref(null);
 const markers = ref([]);
 const currentInfoWindow = ref(null);
-let locations = [
-  {
-    lat: -8.653840910873269,
-    lng: 115.21785198506426,
-    name: "Tolstraat 186-188 H, Amsterdam De Pijp",
-    area: "1104 m2",
-    image: "/images/img-home-1.png",
-    city: "Rotterdam",
-    type: "Kantoorruimte",
-    price: 230,
-    filtered: false,
-  },
-  {
-    lat: -8.653840910873269,
-    lng: 115.21785198506426,
-    name: "Tolstraat 186-188 H, Amsterdam De Pijp",
-    area: "1104 m2",
-    image: "/images/img-home-1.png",
-    city: "Rotterdam",
-    type: "Kantoorruimte",
-    price: 750,
-    filtered: false,
-  },
-  {
-    lat: -8.62717144710956,
-    lng: 115.29189271629312,
-    name: "Company C",
-    area: "Deskripsi C",
-    image: "/images/img-home-1.png",
-    city: "Rotterdam",
-    type: "Andere Optie 2",
-    price: 240,
-    filtered: false,
-  },
-  {
-    lat: -8.641220836289818,
-    lng: 115.17259520426518,
-    name: "Company D",
-    area: "Deskripsi D",
-    image: "/images/img-home-1.png",
-    city: "Amsterdam",
-    type: "Andere Optie 1",
-    price: 4,
-    filtered: false,
-  },
-  {
-    lat: -8.616146108681335,
-    lng: 115.17967680101556,
-    name: "Company E",
-    area: "Deskripsi E",
-    image: "/images/img-home-1.png",
-    city: "Rotterdam",
-    type: "Andere Optie 1",
-    price: 710,
-    filtered: false,
-  },
-];
 
-const selectedMinPrice = ref();
-const selectedMaxPrice = ref();
+locations.value.forEach((location) => {
+  location.latitude = parseFloat(location.latitude);
+  location.longitude = parseFloat(location.longitude);
+});
+
+locations.value.forEach((location) => {
+  location.price = parseFloat(location.price);
+  location.price = parseFloat(location.price);
+});
+
+const selectedMinPrice = ref(0);
+const selectedMaxPrice = ref(1000000);
 
 function handlePriceChange(priceData) {
   selectedMinPrice.value = priceData.minPrice;
@@ -281,16 +231,17 @@ const toggleDropdown = (category) => {
 const performSearch = () => {
   const selectedOption = categories.value;
   let selectedCityFix = selectedOption[0].selectedOption;
-  // let selectedPriceFix = lastSelectedPrices.value;
 
-  const minPrice = selectedMinPrice.minPrice;
-  const maxPrice = selectedMaxPrice.maxPrice;
+  const minPrice = selectedMinPrice.value;
+  const maxPrice = selectedMaxPrice.value;
+
+  console.log(minPrice, maxPrice);
 
   clearInfoWindows();
 
   let locationsFound = false;
 
-  locations.forEach((location) => {
+  locations.value.forEach((location) => {
     const isLocationInFilter =
       location.city === selectedCityFix &&
       location.price >= minPrice &&
@@ -300,8 +251,8 @@ const performSearch = () => {
 
     if (isLocationInFilter) {
       locationsFound = true;
-      moveToLocation(location.lat, location.lng);
-      showInfoWindow(location.lat, location.lng, location);
+      moveToLocation(location.latitude, location.longitude);
+      showInfoWindow(location.latitude, location.longitude, location);
     }
   });
 
@@ -310,8 +261,8 @@ const performSearch = () => {
   }
 };
 
-const showInfoWindow = (lat, lng, location) => {
-  const marker = findMarkerByLatLng(lat, lng);
+const showInfoWindow = (latitude, longitude, location) => {
+  const marker = findMarkerByLatLng(latitude, longitude);
 
   if (marker) {
     clearInfoWindows();
@@ -345,16 +296,16 @@ const clearInfoWindows = () => {
   }
 };
 
-const findMarkerByLatLng = (lat, lng) => {
+const findMarkerByLatLng = (latitude, longitude) => {
   return markers.value.find((marker) => {
     const position = marker.getPosition();
-    return position.lat() === lat && position.lng() === lng;
+    return position.lat() === latitude && position.lng() === longitude;
   });
 };
 
-const moveToLocation = (lat, lng) => {
+const moveToLocation = (latitude, longitude) => {
   if (map) {
-    map.setCenter({ lat, lng });
+    map.setCenter({ latitude, longitude });
 
     const filteredMarkers = markers.value.filter(
       (marker) => marker.details.filtered
@@ -372,7 +323,7 @@ const moveToLocation = (lat, lng) => {
     map.setZoom(Math.min(Math.max(currentZoom, minZoom), maxZoom));
 
     const matchingMarker = markers.value.find((marker) =>
-      marker.getPosition().equals(new google.maps.LatLng(lat, lng))
+      marker.getPosition().equals(new google.maps.LatLng(latitude, longitude))
     );
 
     if (matchingMarker) {
@@ -434,9 +385,9 @@ const setupMap = () => {
     scaledSize: new google.maps.Size(40, 40),
   };
 
-  locations.forEach((location) => {
+  locations.value.forEach((location) => {
     const marker = new google.maps.Marker({
-      position: { lat: location.lat, lng: location.lng },
+      position: { lat: location.latitude, lng: location.longitude },
       map: map,
       title: location.name,
       icon: icon,

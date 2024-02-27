@@ -145,7 +145,7 @@
                   </fieldset>
                 </div>
               </div>
-              <!-- <Map :coordinatesAll="coordinates" /> -->
+              <Map :filterData="filteredData" />
               <div class="flex justify-center md:mt-4">
                 <button
                   @click="showAllData"
@@ -188,12 +188,12 @@ const { data, error } = await useFetch(`/products`, {
   ...requestOptions,
 });
 
-const coordinates = data.value.data.map((item) => {
-  return {
-    latitude: item.latitude,
-    longitude: item.longitude,
-  };
-});
+// const coordinates = data.value.data.map((item) => {
+//   return {
+//     latitude: item.latitude,
+//     longitude: item.longitude,
+//   };
+// });
 
 const showFilter = ref();
 const toggleDetail = () => {
@@ -286,6 +286,8 @@ const selectedMaxPrice = ref();
 const selectedMeterMin = ref();
 const selectedMeterMax = ref();
 const filteredData = ref([]);
+
+const filteredDataComputed = computed(() => filteredData.value);
 
 const showAllData = () => {
   selectedCity.value = "Locatie";

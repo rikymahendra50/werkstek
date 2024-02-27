@@ -6,7 +6,6 @@
       >
       <span class="text-2xl font-bold">Add Facility</span>
     </div>
-
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
       <div class="grid grid-cols-2 mt-3 gap-3">
         <div class="flex flex-col">
@@ -84,7 +83,6 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Add Facility Success",
     });
-
     ctx.resetForm();
   }
   loading.value = false;

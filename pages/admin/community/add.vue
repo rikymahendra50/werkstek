@@ -1,13 +1,13 @@
 <template>
   <section class="overflow-auto max-h-[500px]">
     <div class="flex gap-4">
-      <NuxtLink to="/admin/blog" class="btn btn-warning btn-outline btn-sm"
+      <NuxtLink to="/admin/community" class="btn btn-warning btn-outline btn-sm"
         >Back</NuxtLink
       >
-      <span class="text-2xl font-bold">Add Blog</span>
+      <span class="text-2xl font-bold">Add Community</span>
     </div>
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="flex flex-col mt-10 overflow-auto">
+      <div class="flex flex-col mt-10 overflow-auto px-8">
         <label for="image" class="mb-1">Image</label>
         <input
           id="image"
@@ -102,7 +102,7 @@ async function onSubmit(values, ctx) {
   formDataToSend.append("categoryId", formData.value.category_id);
   formDataToSend.append("meta", formData.value.meta);
 
-  const { error } = await useFetch(`/admins/articles`, {
+  const { error } = await useFetch(`/admins/community-blogs`, {
     method: "POST",
     body: formDataToSend,
     ...requestOptions,

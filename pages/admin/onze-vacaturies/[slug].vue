@@ -54,7 +54,7 @@
           </tr>
           <tr>
             <td>Privilages</td>
-            <td>{{ data?.data?.privileges[0].privilege }}</td>
+            <td>{{ data?.data?.privileges[0]?.privilege }}</td>
           </tr>
           <tr>
             <td>Location</td>
