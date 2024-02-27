@@ -65,12 +65,12 @@ function updateToParent() {
   emit("next");
 }
 
-onMounted(() => {
-  const savedEmail = localStorage.getItem("userEmail");
-  if (savedEmail) {
-    stateForm.value.email = savedEmail;
-  }
-});
+// onMounted(() => {
+//   const savedEmail = localStorage.getItem("userEmail");
+//   if (savedEmail) {
+//     stateForm.value.email = savedEmail;
+//   }
+// });
 
 function resentEmail() {
   showPinEmailExpired.value = false;
@@ -87,8 +87,8 @@ function resentEmail() {
 
 async function onSubmit() {
   loading.value = true;
-  message.value = "hallo";
-  localStorage.setItem("userPin", stateForm.value.otp);
+  // message.value = "hallo";
+  // localStorage.setItem("userPin", stateForm.value.otp);
   // console.log(stateForm.value);
   // console.log(stateForm.value.otp);
   // alertType.value = "success";
@@ -104,7 +104,7 @@ async function onSubmit() {
   const { error } = await useFetch("/admins/forget-password/verify-pin", {
     method: "POST",
     body: JSON.stringify({
-      email: stateForm.value.email,
+      email: props.email,
       pin: stateForm.value.otp,
     }),
     ...requestOptions,

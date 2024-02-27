@@ -121,34 +121,6 @@ const { data: contacts, error } = await useFetch(`/admins/contacts`, {
   ...requestOptions,
 });
 
-const selectedContactIndex = ref(null);
-const selectedContact = ref(null);
-
-// Show modal method
-const showModalDetail = (index) => {
-  selectedContactIndex.value = index;
-  selectedContact.value = contacts.data[index];
-  const modalId = `detail_modal_${index}`;
-  const modal = document.getElementById(modalId);
-  if (modal) {
-    modal.showModal();
-  }
-};
-
-// Close modal method
-const closeModal = () => {
-  selectedContactIndex.value = null;
-  selectedContact.value = null;
-};
-
-const showModal = (index) => {
-  const modalId = `my_modal_${index}`;
-  const modal = document.getElementById(modalId);
-  if (modal) {
-    modal.showModal();
-  }
-};
-
 const deleteContact = async (contactslug) => {
   loading.value = true;
   try {

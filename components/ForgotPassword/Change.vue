@@ -25,9 +25,10 @@
       <div>
         <p class="text-gray-400">We will send a code to your email</p>
       </div>
-
       <div>
-        <button class="btn btn-success">Submit</button>
+        <button type="submit" :disabled="loading" class="btn btn-success">
+          Submit
+        </button>
       </div>
     </div>
   </VeeForm>
@@ -60,8 +61,8 @@ onMounted(() => {
 
 const resetPassword = computed(() => {
   return {
-    email: stateForm.value.email,
-    pin: stateForm.value.otp,
+    email: props.email,
+    pin: props.otp,
     password: stateForm.value.password,
     confirm_password: stateForm.value.password_confirmation,
   };
@@ -69,8 +70,7 @@ const resetPassword = computed(() => {
 
 async function onSubmit() {
   loading.value = true;
-  message.value = "hallo";
-  console.log(stateForm.value);
+  // message.value = "hallo";
 
   await useFetch("/admins/forget-password/reset-password", {
     method: "POST",

@@ -6,7 +6,6 @@
       >
       <span class="text-2xl font-bold">Add Category</span>
     </div>
-
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
       <div class="grid grid-cols-2 mt-3 gap-3">
         <div class="flex flex-col">

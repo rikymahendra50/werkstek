@@ -56,7 +56,7 @@
                       <div class="modal-action">
                         <form method="dialog">
                           <button
-                            @click="deleteLocatie(item.slug)"
+                            @click="deleteFacility(item.slug)"
                             class="btn btn-outline btn-error mr-3"
                           >
                             Delete
@@ -92,7 +92,7 @@ const showModal = (index) => {
   }
 };
 
-const deleteLocatie = async (facilityslug) => {
+const deleteFacility = async (facilityslug) => {
   loading.value = true;
   try {
     await useFetch(`/admins/facilities/${facilityslug}`, {
