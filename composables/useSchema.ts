@@ -10,16 +10,6 @@ export default function () {
 
   const contactSchema = toTypedSchema(
     object({
-      // firstname: string({
-      //   required_error: "First Name is required",
-      // })
-      //   .trim()
-      //   .min(1, "First Name is required"),
-      // lastname: string({
-      //   required_error: "Last Name is required",
-      // })
-      //   .trim()
-      //   .min(1, "Last Name is required"),
       name: string({
         required_error: "Name is required",
       })

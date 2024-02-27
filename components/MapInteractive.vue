@@ -6,6 +6,7 @@
       'w-full': !ShowContainerCustom,
     }"
   >
+    <!-- {{ data.data[0].name }} -->
     <div
       id="map"
       :class="`relative w-full h-[420px] lg:h-[619px] z-[-999]`"
@@ -47,26 +48,29 @@
               </div>
               <ul
                 v-if="category.showDropdown"
-                class="absolute text-[10px] lg:text-[16px] top-[100%] left-0 bg-[#F7F7F7] rounded-[5px] mt-1 w-full text-quaternary z-20"
+                class="absolute text-[10px] dropdownMap max-h-[200px] overflow-hidden overflow-y-auto lg:text-[16px] top-[100%] left-0 bg-[#F7F7F7] rounded-[5px] mt-1 w-full text-quaternary z-20"
               >
                 <li
                   v-for="(option, idx) in category.options"
                   :key="idx"
                   @click="selectOption(category, option)"
-                  class="pt-1 cursor-pointer hover:bg-secondary transition hover:text-tertiary px-5 md:pb-2"
+                  class="cursor-pointer hover:bg-secondary transition hover:text-tertiary px-3 py-1"
                 >
                   {{ option }}
                 </li>
               </ul>
             </div>
             <div v-else-if="category.title === 'Zoek op een prijs'">
-              <SliderRangeSM
-                :minPrice="250"
-                :maxPrice="850"
-                :minRange="250"
-                :maxRange="850"
-                :priceGap="500"
-                @price-change="updateLastSelectedPrices"
+              <SliderRange
+                :idInputMin="'priceMin'"
+                :idInputMax="'priceMax'"
+                :minPrice="0"
+                :maxPrice="1000000"
+                :minRange="0"
+                :maxRange="1000000"
+                :priceGap="1000000"
+                class="my-2"
+                @price-change="handlePriceChange"
               />
             </div>
           </div>
@@ -104,6 +108,11 @@
 </template>
 
 <style>
+.dropdownMap::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
 .gm-style-cc {
   display: none !important;
 }
@@ -140,376 +149,337 @@
 }
 </style>
 
-<script scoped>
+<script setup>
 let googleMapsScriptLoaded = false;
-export default {
-  props: {
-    ShowContainerCustom: {
-      type: Boolean,
-      default: true,
-      required: false,
-    },
-    searchCustom: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+
+onMounted(() => {
+  if (!googleMapsScriptLoaded) {
+    googleMapsScriptLoaded = true;
+    loadGoogleMapsScript();
+  } else {
+    setupMap();
+  }
+});
+
+const props = defineProps({
+  ShowContainerCustom: {
+    type: Boolean,
+    default: true,
+    required: false,
   },
-  data() {
-    return {
-      titleMap: "Waar bent u op zoek naar?",
-      map: null,
-      markers: [],
-      currentInfoWindow: null,
-      locations: [
-        {
-          lat: -8.653840910873269,
-          lng: 115.21785198506426,
-          name: "Tolstraat 186-188 H, Amsterdam De Pijp",
-          area: "1104 m2",
-          image: "/images/img-home-1.png",
-          popularity: 100,
-          city: "Rotterdam",
-          type: "Kantoorruimte",
-          price: 230,
-          filtered: false,
-        },
-        // test
-        {
-          lat: -8.653840910873269,
-          lng: 115.21785198506426,
-          name: "Tolstraat 186-188 H, Amsterdam De Pijp",
-          area: "1104 m2",
-          image: "/images/img-home-1.png",
-          popularity: 100,
-          city: "Rotterdam",
-          type: "Kantoorruimte",
-          price: 750,
-          filtered: false,
-        },
-        {
-          lat: -8.62717144710956,
-          lng: 115.29189271629312,
-          name: "Company C",
-          area: "Deskripsi C",
-          image: "/images/img-home-1.png",
-          popularity: 20,
-          city: "Rotterdam",
-          type: "Andere Optie 2",
-          price: 240,
-          filtered: false,
-        },
-        {
-          lat: -8.641220836289818,
-          lng: 115.17259520426518,
-          name: "Company D",
-          area: "Deskripsi D",
-          image: "/images/img-home-1.png",
-          popularity: 20,
-          city: "Amsterdam",
-          type: "Andere Optie 1",
-          price: 4,
-          filtered: false,
-        },
-        {
-          lat: -8.616146108681335,
-          lng: 115.17967680101556,
-          name: "Company E",
-          area: "Deskripsi E",
-          image: "/images/img-home-1.png",
-          popularity: 20,
-          city: "Rotterdam",
-          type: "Andere Optie 1",
-          price: 710,
-          filtered: false,
-        },
-      ],
-      lastSelectedPrices: {
-        minPrice: 250,
-        maxPrice: 850,
-      },
-      categories: [
-        {
-          title: "Zoek een Locatie",
-          selectedOption: "Utrecht",
-          showDropdown: false,
-          options: ["Utrecht", "Amsterdam", "Rotterdam", "Den Haag"],
-        },
-        // {
-        //   title: "Type",
-        //   selectedOption: "Kantoorruimte",
-        //   showDropdown: false,
-        //   options: ["Kantoorruimte", "Andere Optie 1", "Andere Optie 2"],
-        // },
-        {
-          title: "Zoek op een prijs",
-        },
-      ],
-    };
+  searchCustom: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
-  mounted() {
-    if (!googleMapsScriptLoaded) {
-      googleMapsScriptLoaded = true;
-      this.loadGoogleMapsScript();
-    } else {
-      this.setupMap();
+});
+
+const { requestOptions } = useRequestOptions();
+const { data, error } = await useFetch(`/products`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const categoryOptions = data.value.data.map((item) => item.name);
+const categories = ref([
+  {
+    title: "Zoek een Locatie",
+    selectedOption: "Utrecht",
+    showDropdown: false,
+    options: categoryOptions,
+  },
+  // {
+  //   title: "Type",
+  //   selectedOption: "Kantoorruimte",
+  //   showDropdown: false,
+  //   options: ["Kantoorruimte", "Andere Optie 1", "Andere Optie 2"],
+  // },
+  {
+    title: "Zoek op een prijs",
+  },
+]);
+
+const titleMap = ref("Waar bent u op zoek naar?");
+let map = ref(null);
+const markers = ref([]);
+const currentInfoWindow = ref(null);
+let locations = [
+  {
+    lat: -8.653840910873269,
+    lng: 115.21785198506426,
+    name: "Tolstraat 186-188 H, Amsterdam De Pijp",
+    area: "1104 m2",
+    image: "/images/img-home-1.png",
+    city: "Rotterdam",
+    type: "Kantoorruimte",
+    price: 230,
+    filtered: false,
+  },
+  {
+    lat: -8.653840910873269,
+    lng: 115.21785198506426,
+    name: "Tolstraat 186-188 H, Amsterdam De Pijp",
+    area: "1104 m2",
+    image: "/images/img-home-1.png",
+    city: "Rotterdam",
+    type: "Kantoorruimte",
+    price: 750,
+    filtered: false,
+  },
+  {
+    lat: -8.62717144710956,
+    lng: 115.29189271629312,
+    name: "Company C",
+    area: "Deskripsi C",
+    image: "/images/img-home-1.png",
+    city: "Rotterdam",
+    type: "Andere Optie 2",
+    price: 240,
+    filtered: false,
+  },
+  {
+    lat: -8.641220836289818,
+    lng: 115.17259520426518,
+    name: "Company D",
+    area: "Deskripsi D",
+    image: "/images/img-home-1.png",
+    city: "Amsterdam",
+    type: "Andere Optie 1",
+    price: 4,
+    filtered: false,
+  },
+  {
+    lat: -8.616146108681335,
+    lng: 115.17967680101556,
+    name: "Company E",
+    area: "Deskripsi E",
+    image: "/images/img-home-1.png",
+    city: "Rotterdam",
+    type: "Andere Optie 1",
+    price: 710,
+    filtered: false,
+  },
+];
+
+const selectedMinPrice = ref();
+const selectedMaxPrice = ref();
+
+function handlePriceChange(priceData) {
+  selectedMinPrice.value = priceData.minPrice;
+  selectedMaxPrice.value = priceData.maxPrice;
+}
+
+const selectOption = (category, option) => {
+  category.selectedOption = option;
+  category.showDropdown = false;
+};
+
+const toggleDropdown = (category) => {
+  category.showDropdown = !category.showDropdown;
+};
+
+const performSearch = () => {
+  const selectedOption = categories.value;
+  let selectedCityFix = selectedOption[0].selectedOption;
+  // let selectedPriceFix = lastSelectedPrices.value;
+
+  const minPrice = selectedMinPrice.minPrice;
+  const maxPrice = selectedMaxPrice.maxPrice;
+
+  clearInfoWindows();
+
+  let locationsFound = false;
+
+  locations.forEach((location) => {
+    const isLocationInFilter =
+      location.city === selectedCityFix &&
+      location.price >= minPrice &&
+      location.price <= maxPrice;
+
+    location.filtered = isLocationInFilter;
+
+    if (isLocationInFilter) {
+      locationsFound = true;
+      moveToLocation(location.lat, location.lng);
+      showInfoWindow(location.lat, location.lng, location);
     }
-  },
-  methods: {
-    updateLastSelectedPrices(prices) {
-      this.lastSelectedPrices = prices;
-      this.clearInfoWindows();
-    },
+  });
 
-    selectOption(category, option) {
-      category.selectedOption = option;
-      category.showDropdown = false;
-    },
+  if (!locationsFound) {
+    alert("Data not found, please adjust your filter");
+  }
+};
 
-    toggleDropdown(category) {
-      category.showDropdown = !category.showDropdown;
-    },
+const showInfoWindow = (lat, lng, location) => {
+  const marker = findMarkerByLatLng(lat, lng);
 
-    // function ketika tombol diklik
-    performSearch() {
-      const selectedOption = this.categories;
-      let selectedCityFix = selectedOption[0].selectedOption;
-      let selectedPriceFix = this.lastSelectedPrices;
+  if (marker) {
+    clearInfoWindows();
 
-      const minPrice = selectedPriceFix.minPrice;
-      const maxPrice = selectedPriceFix.maxPrice;
+    const contentString = buildInfoWindowContent(location);
 
-      this.clearInfoWindows();
+    const infowindow = new google.maps.InfoWindow({
+      content: contentString,
+      closeBoxMargin: "10px 10px 0 0",
+    });
 
-      this.locations.forEach((location) => {
-        const isLocationInFilter =
-          location.city === selectedCityFix &&
-          location.price >= minPrice &&
-          location.price <= maxPrice;
+    infowindow.open(map, marker);
+    currentInfoWindow.value = infowindow;
+  }
+};
 
-        location.filtered = isLocationInFilter;
+const buildInfoWindowContent = (location) => {
+  return `
+    <div class="max-w-[190px] w-full h-full flex flex-col text-end">
+      <img src="${location.image}" alt="${location.name}" class="w-[200px] min-h-[100px]">
+      <h2 class="text-primary mt-2">${location.name}</h2>
+      <p class="text-black text-[10px] my-2">${location.area}</p>
+      <p>Price: $${location.price}</p>
+    </div>
+  `;
+};
 
-        if (isLocationInFilter) {
-          this.moveToLocation(location.lat, location.lng);
-          this.showInfoWindow(location.lat, location.lng, location);
-        }
+const clearInfoWindows = () => {
+  if (currentInfoWindow.value) {
+    currentInfoWindow.value.close();
+  }
+};
+
+const findMarkerByLatLng = (lat, lng) => {
+  return markers.value.find((marker) => {
+    const position = marker.getPosition();
+    return position.lat() === lat && position.lng() === lng;
+  });
+};
+
+const moveToLocation = (lat, lng) => {
+  if (map) {
+    map.setCenter({ lat, lng });
+
+    const filteredMarkers = markers.value.filter(
+      (marker) => marker.details.filtered
+    );
+    const bounds = new google.maps.LatLngBounds();
+    filteredMarkers.forEach((marker) => {
+      bounds.extend(marker.getPosition());
+    });
+
+    map.fitBounds(bounds);
+
+    const maxZoom = 12;
+    const minZoom = 10;
+    const currentZoom = map.getZoom();
+    map.setZoom(Math.min(Math.max(currentZoom, minZoom), maxZoom));
+
+    const matchingMarker = markers.value.find((marker) =>
+      marker.getPosition().equals(new google.maps.LatLng(lat, lng))
+    );
+
+    if (matchingMarker) {
+      matchingMarker.details.filtered = true;
+
+      const infowindow = new google.maps.InfoWindow({
+        content: `
+          <div class="max-w-[190px] w-full h-full flex flex-col text-end">
+            <div class="relative">
+              <img src="${matchingMarker.details.image}" alt="${matchingMarker.details.name}" class="w-full min-h-[100px]">
+              <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
+            </div>
+            <div class="px-2 pb-4">
+              <h2 class="text-primary mt-2">${matchingMarker.details.name}</h2>
+              <p class="text-black text-[10px] my-2">${matchingMarker.details.area}</p>
+              <p>Price: $${matchingMarker.details.price}</p>
+            </div>
+          </div>
+        `,
       });
 
-      // const filteredData = this.locations.filter((location) => {
-      //   return (
-      //     location.city === selectedCityFix &&
-      //     location.price >= minPrice &&
-      //     location.price <= maxPrice
-      //   );
-      // });
+      infowindow.open(map, matchingMarker);
+      currentInfoWindow.value = infowindow;
+    }
+  }
+};
 
-      // if (filteredData.length > 0) {
-      //   console.log("Matching Data:", filteredData);
-      //   filteredData.forEach((location) => {
-      //     this.moveToLocation(location.lat, location.lng);
-      //     this.showInfoWindow(location.lat, location.lng, location);
-      //   });
-      // } else {
-      //   alert("Sorry, the location you selected is not available");
-      // }
-    },
+const loadGoogleMapsScript = () => {
+  if (!window.googleMapsScriptLoaded) {
+    window.googleMapsScriptLoaded = true;
+    window.initMap = setupMap;
+    const googleMapsScript = document.createElement("script");
+    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap&`;
+    googleMapsScript.defer = true;
+    googleMapsScript.async = true;
+    googleMapsScript.onload = () => {
+      googleMapsScriptLoaded = true;
+    };
+    document.head.appendChild(googleMapsScript);
+  } else {
+    setupMap();
+  }
+};
 
-    showInfoWindow(lat, lng, location) {
-      const marker = this.findMarkerByLatLng(lat, lng);
+const setupMap = () => {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -8.653840910873269, lng: 115.21785198506426 },
+    zoom: 13,
+    fullscreenControl: false,
+    zoomControl: false,
+    keyboardShortcuts: false,
+    mapId: null,
+  });
 
-      if (marker) {
-        this.clearInfoWindows();
+  const iconBase = "/images";
 
-        const contentString = this.buildInfoWindowContent(location);
+  const icon = {
+    url: iconBase + "/icon-flag.png",
+    scaledSize: new google.maps.Size(40, 40),
+  };
 
-        const infowindow = new google.maps.InfoWindow({
-          content: contentString,
-          closeBoxMargin: "10px 10px 0 0",
-        });
+  locations.forEach((location) => {
+    const marker = new google.maps.Marker({
+      position: { lat: location.lat, lng: location.lng },
+      map: map,
+      title: location.name,
+      icon: icon,
+      details: location,
+    });
 
-        infowindow.open(this.map, marker);
-        this.currentInfoWindow = infowindow;
-      }
-    },
-
-    buildInfoWindowContent(location) {
-      return `
-        <div class="max-w-[190px] w-full h-full flex flex-col text-end">
-          <img src="${location.image}" alt="${location.name}" class="w-[200px] min-h-[100px]">
+    const contentString = `
+      <div class="max-w-[190px] w-full h-full flex flex-col text-end border-2">
+        <div class="relative">
+          <img src="${location.image}" alt="${location.name}" class="w-full min-h-[100px]">
+          <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
+        </div>
+        <div class="px-2 pb-4">
           <h2 class="text-primary mt-2">${location.name}</h2>
           <p class="text-black text-[10px] my-2">${location.area}</p>
           <p>Price: $${location.price}</p>
         </div>
-      `;
-    },
+      </div>
+    `;
 
-    clearInfoWindows() {
-      // Tutup dan hapus semua InfoWindow
-      if (this.currentInfoWindow) {
-        this.currentInfoWindow.close();
+    const infowindow = new google.maps.InfoWindow({
+      content: contentString,
+      closeBoxMargin: "10px 10px 0 0",
+    });
+
+    marker.addListener("click", () => {
+      if (currentInfoWindow.value) {
+        currentInfoWindow.value.close();
       }
-    },
 
-    findMarkerByLatLng(lat, lng) {
-      return this.markers.find((marker) => {
-        const position = marker.getPosition();
-        return position.lat() === lat && position.lng() === lng;
-      });
-    },
+      infowindow.open(map, marker);
+      currentInfoWindow.value = infowindow;
+    });
 
-    // Move To Location when search
-    moveToLocation(lat, lng) {
-      if (this.map) {
-        // Pindahkan pusat peta ke lokasi yang baru
-        this.map.setCenter({ lat, lng });
+    markers.value.push(marker);
+  });
+};
 
-        // Temukan marker yang difilter
-        const filteredMarkers = this.markers.filter(
-          (marker) => marker.details.filtered
-        );
-
-        // Buat batas (bounds) yang mencakup semua marker yang difilter
-        const bounds = new google.maps.LatLngBounds();
-        filteredMarkers.forEach((marker) => {
-          bounds.extend(marker.getPosition());
-        });
-
-        // Setelah mendapatkan batas, fit peta ke batas tersebut
-        this.map.fitBounds(bounds);
-
-        // Memastikan level zoom tidak terlalu tinggi atau rendah
-        const maxZoom = 12;
-        const minZoom = 10;
-        const currentZoom = this.map.getZoom();
-        this.map.setZoom(Math.min(Math.max(currentZoom, minZoom), maxZoom));
-
-        // Buka info window untuk marker yang sesuai
-        const matchingMarker = this.markers.find((marker) =>
-          marker.getPosition().equals(new google.maps.LatLng(lat, lng))
-        );
-
-        if (matchingMarker) {
-          matchingMarker.details.filtered = true;
-          this.updateMarker();
-
-          const infowindow = new google.maps.InfoWindow({
-            content: `
-              <div style="max-width: 190px;" class="text-end">
-                <img src="${matchingMarker.details.image}" alt="${matchingMarker.details.name}" style="width: 200px; min-height: 100px;">
-                <h2 style="color: #F0912D; margin-top: 2px;" class="border-2 border-red-500">${matchingMarker.details.name}</h2>
-                <p style="color: black; font-size: 10px; margin: 2px 0;">${matchingMarker.details.area}</p>
-                <p style="color: black;">Price: $${matchingMarker.details.price}</p>
-              </div>
-            `,
-          });
-
-          infowindow.open(this.map, matchingMarker);
-          this.currentInfoWindow = infowindow;
-        }
-      }
-    },
-
-    updateMarker() {
-      // const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
-
-      this.markers.forEach((marker, index) => {
-        // const location = this.locations[index];
-        // let iconColor = "/images/logo-wekstek.png";
-
-        // if (location.filtered) {
-        //   iconColor = "/images/person-comment-1.png";
-        // }
-
-        // const iconUrl = iconBase + iconColor;
-
-        marker.setIcon({
-          // url: iconUrl,
-          scaledSize: new google.maps.Size(30, 30),
-        });
-      });
-    },
-
-    // Map Function
-    loadGoogleMapsScript() {
-      if (!window.googleMapsScriptLoaded) {
-        window.googleMapsScriptLoaded = true;
-        window.initMap = this.setupMap;
-        const googleMapsScript = document.createElement("script");
-        googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap&`;
-        googleMapsScript.defer = true;
-        googleMapsScript.async = true;
-        googleMapsScript.onload = () => {
-          this.googleMapsScriptLoaded = true;
-        };
-        document.head.appendChild(googleMapsScript);
-      } else {
-        this.setupMap();
-      }
-    },
-    setupMap() {
-      this.map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: -8.653840910873269, lng: 115.21785198506426 },
-        zoom: 13,
-        fullscreenControl: false,
-        zoomControl: false,
-        keyboardShortcuts: false,
-        mapId: null,
-      });
-
-      const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
-
-      const icon = {
-        url: iconBase + "red-dot.png",
-        scaledSize: new google.maps.Size(40, 40),
-      };
-
-      this.locations.forEach((location) => {
-        const marker = new google.maps.Marker({
-          position: { lat: location.lat, lng: location.lng },
-          map: this.map,
-          title: location.name,
-          icon: icon,
-          details: location,
-        });
-
-        const contentString = `
-        <div class="max-w-[190px] w-full h-full flex flex-col text-end">
-          <div class="relative">
-            <img src="${location.image}" alt="${location.name}" class="w-full min-h-[100px]">
-            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
-          </div>
-          <div class="px-2 pb-4">
-            <h2 class="text-primary mt-2">${location.name}</h2>
-            <p class="text-black text-[10px] my-2">${location.area}</p>
-            <p>Price: $${location.price}</p>
-          </div>
-        </div>
-        `;
-
-        const infowindow = new google.maps.InfoWindow({
-          content: contentString,
-          closeBoxMargin: "10px 10px 0 0",
-        });
-
-        marker.addListener("click", () => {
-          if (this.currentInfoWindow) {
-            this.currentInfoWindow.close();
-          }
-
-          infowindow.open(this.map, marker);
-          this.currentInfoWindow = infowindow;
-        });
-
-        this.markers.push(marker);
-      });
-    },
-    setBoundsForMarkers() {
-      const bounds = new google.maps.LatLngBounds();
-      this.markers.forEach((marker) => {
-        bounds.extend(marker.getPosition());
-      });
-      this.map.fitBounds(bounds);
-    },
-  },
+const setBoundsForMarkers = () => {
+  const bounds = new google.maps.LatLngBounds();
+  markers.value.forEach((marker) => {
+    bounds.extend(marker.getPosition());
+  });
+  map.fitBounds(bounds);
 };
 </script>

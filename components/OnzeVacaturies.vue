@@ -156,6 +156,7 @@
           :name="item.name"
           :link="item.slug"
           :price="item.price"
+          :type="item.type"
           :image="
             item.images.find((image, imageIndex) => imageIndex === index)?.image
           "
@@ -174,15 +175,6 @@ const { data, error } = await useFetch(`/products`, {
   method: "get",
   ...requestOptions,
 });
-
-// const prices = data.value.data.map((product) => product.price);
-// console.log(prices);
-
-// const formattedPrices = prices.map((price) => parseFloat(price) * 100);
-
-// const maxPriceData = Math.max(...formattedPrices);
-
-// console.log(maxPriceData);
 
 const showFilter = ref();
 const toggleDetail = () => {
@@ -216,6 +208,10 @@ const city = ref(name);
 const soortLocatiesRadio = ref([
   {
     id: 1,
+    name: "Alles",
+  },
+  {
+    id: 2,
     name: "Stage Plaats",
   },
   {
@@ -306,7 +302,6 @@ function handlefunctieCheckbox(id) {
     selectedFunctie.value = [...selectedFunctie.value, id];
   }
 }
-
 watch(
   [
     selectedCity,
@@ -319,7 +314,6 @@ watch(
     await new Promise((resolve) => setTimeout(resolve, 900));
     try {
       let params = {};
-
       params["filter[search]"] = selectedCity.value;
       params["filter[type_id]"] = selectedSoortLocatie.value;
       params["filter[productFacility.facility_id]"] = selectedFunctie.value;

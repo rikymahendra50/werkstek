@@ -2,7 +2,7 @@
   <section>
     <div class="grid min-[440px]:grid-cols-12 gap-5">
       <div
-        class="bg-tertiary rounded-r-full min-[440px]:col-span-5 flex justify-center items-center"
+        class="bg-tertiary rounded-r-full min-[440px]:col-span-5 flex justify-center items-center min-h-[100px]"
       >
         <img
           src="/images/logo-werstek-big.svg"
@@ -11,9 +11,9 @@
         />
       </div>
       <div
-        class="min-[440px]:col-span-6 flex-flex-col flex justify-center flex-col gap-4 lg:gap-10 mx-4 min-[420px]:w-[mx-2] md:mx-10"
+        class="min-[440px]:col-span-6 flex-flex-col flex justify-center flex-col gap-4 lg:gap-10 mx-4 min-[420px]:w-[mx-2] md:mx-10 text-[12px] sm:text-sm lg:text-lg"
       >
-        <p class="text-sm lg:text-lg text-justify">
+        <p class="text-justify">
           Werkstek is een bedrijf dat kantoorruimtes verhuurt in verschillende
           indelingen en groottes, variërend van 20m3 voor werkplekken. Wij
           bieden flexibele oplossingen die aansluiten bij de behoeften van
@@ -22,10 +22,10 @@
         </p>
         <NuxtLink to="https://maps.app.goo.gl/B2n6ZjGxupqbL2nt7" class="group">
           <div class="flex items-center gap-3">
-            <span
+            <span class="h-[30px] w-[30px] lg:h-[40px] lg:w-[40px]"
               ><svg
                 width="100%"
-                height="46"
+                height="100%"
                 viewBox="0 0 46 46"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,7 @@
                 />
               </svg>
             </span>
-            <span class="text-black text-[14px] sm:text-sm lg:text-lg"
+            <span class="text-black"
               >Kantoordreef 123, Werkstad, The Netherlands.</span
             >
           </div>

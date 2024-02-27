@@ -86,7 +86,10 @@
           <div v-html="body" class="leading-9 text-[16px]"></div>
           <div
             class="flex mt-10 gap-5 items-center sm:items-start p-2 shadow-md rounded-lg"
-            v-for="(DataComment, index) in comment"
+            v-for="(DataComment, index) in comment.slice(
+              0,
+              visibleCommentCount
+            )"
             :key="DataComment.id"
           >
             <img
@@ -120,14 +123,19 @@
               }}</span>
             </div>
           </div>
-          <!-- <div class="flex justify-center">
+          <div
+            class="flex justify-center"
+            v-if="comment.length > visibleCommentCount"
+          >
             <button
               @click="showMoreFunc"
               class="bg-primary max-w-[300px] mt-10 focus:outline-none rounded-full text-white p-3 hover:bg-secondary transition"
             >
-              {{ showMore ? "Tampilkan lebih sedikit" : "Schrijf een reactie" }}
+              {{
+                showMore ? "Tampilkan Lebih Sedikit" : "Tampilkan Lebih Banyak"
+              }}
             </button>
-          </div> -->
+          </div>
         </div>
         <!-- author -->
         <div class="hidden lg:block lg:w-[30%]">
@@ -175,16 +183,18 @@ export default {
   data() {
     return {
       showMore: false,
-      slice2: 1,
+      visibleCommentCount: 3,
     };
   },
   methods: {
-    // showMoreFunc() {
-    //   this.slice2 += 1;
-    //   if ((this.comment.length = this.slice2)) {
-    //     this.showMore = true;
-    //   }
-    // },
+    showMoreFunc() {
+      this.showMore = !this.showMore;
+      if (this.showMore) {
+        this.visibleCommentCount = this.comment.length;
+      } else {
+        this.visibleCommentCount = 3;
+      }
+    },
     sharePage() {
       if (navigator.share) {
         navigator

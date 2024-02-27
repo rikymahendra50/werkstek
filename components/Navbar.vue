@@ -209,7 +209,7 @@
               </li>
               <li>
                 <NuxtLink to="/onze-vacaturies" @click="isOpen = false">
-                  Westek Vacaturies
+                  Werstek Vacaturies
                 </NuxtLink>
               </li>
               <li>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <NuxtLink
-      :to="`onze-locaties/${link}`"
+      :to="link"
       class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg group hover:shadow-lg transition min-h-[150px] sm:min-h-[170px] md:min-h-[200px]"
       style="box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.05)"
     >
@@ -29,7 +29,7 @@
           <span
             class="bg-primary absolute top-[20%] sm:top-[30%] md:top-[20%] left-0 flex sm:py-1 px-1 sm:px-2 rounded-full ml-2 mt-2 text-[12px] sm:text-sm font-semibold"
           >
-            Regular
+            Level Type
           </span>
         </div>
       </div>
@@ -38,11 +38,11 @@
         <span class="text-sm">Adres</span>
         <div class="flex justify-between">
           <span class="text-[12px] sm:text-base font-bold"> Opervlakte </span>
-          <span class="text-[12px] sm:text-base">phoneNumber</span>
+          <span class="text-[12px] sm:text-base">+{{ phoneNumber }}</span>
         </div>
         <div class="flex justify-between">
           <span class="text-[12px] sm:text-base">€ {{ price }}</span>
-          <span class="text-[12px] sm:text-base">mailAdres</span>
+          <span class="text-[12px] sm:text-base">{{ email }}</span>
         </div>
         <div class="flex justify-end w-full">
           <div class="flex mt-2 sm:mt-0">
@@ -69,6 +69,8 @@ export default {
     link: {
       type: String,
     },
+    latitude: {},
+    longitude: {},
     opervlakte: {
       type: String,
     },
@@ -77,26 +79,18 @@ export default {
       default: "/images/img-each-locatie-3.jpg",
     },
     rating: {
-      type: Number,
+      default: "Rating",
     },
-    type: {
-      type: String,
-    },
-    name: {
-      type: String,
-    },
-    adres: {
+    type: {},
+    name: {},
+    email: {
       type: String,
       default: "Mail Adres",
     },
     phoneNumber: {
-      type: String,
-      default: "+31302393838",
+      default: 31302393838,
     },
     price: {},
-    mailAdres: {
-      type: String,
-    },
     detailLinkTitle: {
       type: String,
       default: "Neem een kijkje",

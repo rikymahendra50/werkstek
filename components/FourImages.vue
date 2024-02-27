@@ -6,7 +6,7 @@
       >
         <NuxtLink
           to="/over-werkstek"
-          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-xl hover:shadow-xl"
+          class="flex flex-wrap max-w-[488px] w-[40%] h-full rounded-xl"
           :class="{ active: isRouteActive('/over-werkstek') }"
           :style="{
             backgroundImage: `url('${Data[0].imageSrc}')`,
