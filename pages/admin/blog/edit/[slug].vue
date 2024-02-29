@@ -1,21 +1,33 @@
 <template>
   <section class="overflow-auto max-h-[500px]">
     <div class="flex gap-4">
-      <NuxtLink to="/admin/blog" class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
+      <NuxtLink to="/admin/blog" class="btn btn-warning btn-outline btn-sm">
+        Back
+      </NuxtLink>
       <span class="text-2xl font-bold">Edit Blog</span>
     </div>
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="flex flex-col mt-10 overflow-auto">
-        <label for="image" class="mb-1">Image</label>
-        <input
-          id="image"
-          name="image"
-          type="file"
-          class="file-input file-input-bordered file-input-accent w-full max-w-xs mb-5"
-          @change="handleImageChange"
-        />
+      <div class="grid mt-10 overflow-auto p-3">
+        <div class="grid grid-cols-2">
+          <div class="flex flex-col">
+            <label for="image" class="mb-1">Image</label>
+            <VeeField
+              id="image"
+              name="image"
+              type="file"
+              class="file-input file-input-md file-input-bordered file-input-accent w-full max-w-xs"
+              @change="handleImageChange"
+            />
+          </div>
+          <div v-if="eachBlog.data.image">
+            <span class="text-sm">Image File Uploaded:</span>
+            <div class="flex flex-col items-center min-w-[500px]">
+              <div class="flex justify-center mb-3">
+                <img :src="eachBlog.data.image" alt="image" class="border-2" />
+              </div>
+            </div>
+          </div>
+        </div>
         <label for="Title">Title</label>
         <VeeField
           id="Title"
@@ -39,16 +51,21 @@
           />
         </div>
         <div class="flex flex-col mt-5">
-          <label for="Category">Category Id</label>
+          <label for="Category">Category</label>
           <VeeField
-            id="Category"
-            as="textarea"
-            name="Category"
-            placeholder="Input Category ID"
-            class="textarea textarea-bordered w-full"
+            id="category"
+            name="category"
+            as="select"
             v-model="formData.category_id"
-            autocomplete="on"
-          />
+            class="select select-bordered w-full"
+            placeholder="category"
+            autocomplete="off"
+          >
+            <option disabled selected>Category</option>
+            <option :value="item.id" v-for="item in categoryBlog.data">
+              {{ item.name }}
+            </option>
+          </VeeField>
         </div>
         <div class="flex flex-col mt-5">
           <label for="Meta">Meta</label>
@@ -74,22 +91,32 @@
 </template>
 
 <script setup>
+import axios from "axios";
+const { axiosRequest } = useAxios();
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 
-const { data: eachBlog, error } = await useFetch(
-  `/admins/articles/${slug.value}`,
+const { data: eachBlog } = await useFetch(`/admins/articles/${slug.value}`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const imageTest = ref(eachBlog.value.data.image);
+
+const { data: categoryBlog, error } = await useFetch(
+  `/admins/article-categories`,
   {
     method: "get",
     ...requestOptions,
   }
 );
 
+// const category = categoryBlog.value.data.map((item) => item.name);
+
 const formData = ref({
-  image: eachBlog.value.data.image,
   title: eachBlog.value.data.title,
   body: eachBlog.value.data.body,
   category_id: eachBlog.value.data.category_id,
@@ -106,24 +133,35 @@ async function onSubmit(values, ctx) {
 
   const formDataToSend = new FormData();
 
-  formDataToSend.append("image", formData.value.image);
-
+  formDataToSend.append("image", imageTest.value);
   formDataToSend.append("title", formData.value.title);
   formDataToSend.append("body", formData.value.body);
-  formDataToSend.append("categoryId", formData.value.categoryId);
+  formDataToSend.append("category_id", formData.value.category_id);
   formDataToSend.append("meta", formData.value.meta);
 
-  const { error } = await useFetch(`/admins/articles/${slug.value}`, {
-    method: "POST",
-    body: formDataToSend,
-    ...requestOptions,
-  });
+  const { error } = await useFetch(
+    `/admins/articles/${slug.value}?_method=PUT`,
+    {
+      method: "post",
+      body: formDataToSend,
+      ...requestOptions,
+    }
+  );
 
-  if (error.value) {
-    ctx.setErrors(transformErrors(error.value?.data));
+  // const { error } = await axiosRequest.get(
+  //   `/admins/articles/${slug.value}?_method=PUT`,
+  //   {
+  //     method: "post",
+  //     body: formDataToSend,
+  //     ...requestOptions,
+  //   }
+  // );
+
+  if (error) {
+    ctx.setErrors(transformErrors(error?.data));
     snackbar.add({
       type: "error",
-      text: error.value?.data?.message ?? "Something went wrong",
+      text: error?.data?.message ?? "Something went wrong",
     });
   } else {
     snackbar.add({
@@ -136,7 +174,7 @@ async function onSubmit(values, ctx) {
 }
 
 useHead({
-  title: "Blog",
+  title: "Edit Blog",
 });
 
 definePageMeta({

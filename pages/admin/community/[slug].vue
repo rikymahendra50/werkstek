@@ -1,7 +1,9 @@
 <template>
   <div v-if="pending">Loading...</div>
   <div v-if="data && data?.data" class="overflow-y-auto max-h-[70%]">
-    <h3 class="font-bold my-2">Detail Blog {{ data?.data?.first_name }}</h3>
+    <h3 class="font-bold my-2">
+      Detail Community {{ data?.data?.first_name }}
+    </h3>
     <table class="table">
       <tbody>
         <tr>
@@ -22,20 +24,11 @@
           <td>Meta</td>
           <td>{{ data?.data?.meta }}</td>
         </tr>
-        <tr>
-          <td>Category</td>
-          <td>
-            <ul>
-              <li>Id : {{ data?.data?.category.id }}</li>
-              <li>Name : {{ data?.data?.category.name }}</li>
-            </ul>
-          </td>
-        </tr>
       </tbody>
     </table>
   </div>
   <NuxtLink
-    to="/admin/blog"
+    to="/admin/community"
     class="btn btn-sm btn-outline btn-warning max-w-[90px]"
   >
     Back
@@ -50,7 +43,7 @@ const slug = computed(() => {
 
 const { requestOptions } = useRequestOptions();
 const { data, error, pending } = await useFetch(
-  `/admins/articles/${slug.value}`,
+  `/admins/community-blogs/${slug.value}`,
   {
     method: "get",
     ...requestOptions,

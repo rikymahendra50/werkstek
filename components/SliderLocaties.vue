@@ -184,7 +184,7 @@ const modules = [Autoplay, Pagination, Navigation];
         </div>
       </div>
       <div
-        class="flex pl-3 sm:pl-6 md:pl-[70px] lg:pl-[80px] xl:pl-[106px] overflow-hidden"
+        class="flex pl-3 sm:pl-6 md:pl-[70px] lg:pl-[80px] xl:pl-[106px] overflow-hidden border-2"
       >
         <swiper
           :slidesPerView="slidesPerView"
@@ -194,7 +194,7 @@ const modules = [Autoplay, Pagination, Navigation];
           loop
         >
           <swiper-slide
-            class="mr-2"
+            class="mr-2 group"
             v-for="(itemSlider, index) in SliderLocaties"
             :key="itemSlider.id"
             :style="{
@@ -207,7 +207,7 @@ const modules = [Autoplay, Pagination, Navigation];
           >
             <NuxtLink
               :to="itemSlider.link"
-              class="h-full flex flex-col justify-center items-center text-white"
+              class="h-full flex-col justify-center items-center text-white hidden group-hover:flex transition ease-in-out delay-150"
             >
               <h2 class="text-3xl pt-20">Hoofddorp</h2>
               <p class="text-sm py-1">Simon Stevinweg 27</p>

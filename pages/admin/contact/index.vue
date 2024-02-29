@@ -121,6 +121,14 @@ const { data: contacts, error } = await useFetch(`/admins/contacts`, {
   ...requestOptions,
 });
 
+const showModal = (index) => {
+  const modalId = `my_modal_${index}`;
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.showModal();
+  }
+};
+
 const deleteContact = async (contactslug) => {
   loading.value = true;
   try {

@@ -25,7 +25,7 @@
       </div>
       <div class="flex justify-end mt-5">
         <button type="submit" :disabled="loading" class="btn btn-success">
-          Add Category Blog
+          Edit Category Blog
         </button>
       </div>
     </VeeForm>

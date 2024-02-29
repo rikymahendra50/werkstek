@@ -1,13 +1,13 @@
 <template>
   <section>
     <div class="flex gap-4">
-      <NuxtLink to="/admin/facility" class="btn btn-warning btn-outline btn-sm"
+      <NuxtLink to="/admin/location" class="btn btn-warning btn-outline btn-sm"
         >Back</NuxtLink
       >
-      <span class="text-2xl font-bold">Edit Facility</span>
+      <span class="text-2xl font-bold">Edit Location</span>
     </div>
-    <VeeForm @submit="onSubmit">
-      <div class="grid grid-cols-2 mt-3 gap-3">
+    <VeeForm @submit="onSubmit" class="max-h-[400px]">
+      <div class="grid grid-cols-1 mt-3 gap-3 min">
         <div class="flex flex-col">
           <label for="Name">Name</label>
           <input
@@ -20,23 +20,29 @@
           />
         </div>
         <div class="flex flex-col">
-          <label for="image">Icon</label>
+          <label for="image">Image</label>
           <input
             id="image"
             type="file"
             name="image"
-            class="file-input file-input-bordered file-input-warning w-full max-w-xs"
+            class="file-input file-input-bordered file-input-warning max-w-xs w-full"
             accept="image/*"
             v-on:change="handleImageChange"
-            @click="selectImage"
             autocomplete="on"
-            required
           />
+          <div v-if="location.data.image" class="mt-5">
+            <span class="text-sm">File Uploaded:</span>
+            <div class="flex flex-col items-center max-w-[500px] max-h-[200px]">
+              <div class="flex justify-center mb-3">
+                <img :src="location.data.image" alt="image" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="flex justify-end mt-5">
         <button type="submit" :disabled="loading" class="btn btn-success">
-          Edit Category
+          Edit Location
         </button>
       </div>
     </VeeForm>
@@ -50,38 +56,45 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 
-const { data: facilities, error } = await useFetch(
-  `/admins/facilities/${slug.value}`,
+const handleImageChange = (event) => {
+  const files = event.target.files;
+  if (files.length > 0) {
+    imageTest.value = files[0];
+  }
+};
+
+// const handleAdditionalImageChange = (event) => {
+//   const files = event.target.files;
+//   if (files.length > 0) {
+//     additionalImageTest.value = files[0];
+//   }
+// };
+
+const { data: location, error } = await useFetch(
+  `/admins/locations/${slug.value}`,
   {
     method: "get",
     ...requestOptions,
   }
 );
 
-const fileInput = ref(null);
-const getImages = ref(facilities.value);
-const imageTest = ref();
+const name = ref(location.value.data.name);
+const imageTest = ref(location.value.data.image);
+const additionalImageTest = ref(null);
 
-// const selectImage = () => {
-//   fileInput.value.click();
-// };
-
-const handleImageChange = (event) => {
-  const files = event.target.files;
-  imageTest.value = files[0];
-};
-
-const name = ref(facilities.value.data.name);
-
-async function onSubmit(values, ctx) {
+const onSubmit = async (values, ctx) => {
   loading.value = true;
 
   const formData = new FormData();
   formData.append("name", name.value);
   formData.append("image", imageTest.value);
 
-  const { error } = await useFetch(`/admins/facilities/${slug.value}`, {
-    method: "post",
+  if (additionalImageTest.value) {
+    formData.append("additionalImage", additionalImageTest.value);
+  }
+
+  const { error } = await useFetch(`/admins/locations/${slug.value}`, {
+    method: "put",
     body: formData,
     ...requestOptions,
   });
@@ -95,17 +108,16 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Edit Facility Success",
+      text: "Edit Location Success",
     });
-    F;
     ctx.resetForm();
   }
 
   loading.value = false;
-}
+};
 
 useHead({
-  title: "Edit Facility",
+  title: "Edit Location",
 });
 
 definePageMeta({

@@ -6,7 +6,7 @@
         class="btn btn-warning btn-outline btn-sm"
         >Back</NuxtLink
       >
-      <span class="text-2xl font-bold">Add Blog</span>
+      <span class="text-2xl font-bold">Add Category Blog</span>
     </div>
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
       <div class="flex flex-col mt-10 overflow-auto">

@@ -5,7 +5,7 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Blog</div>
+          <div class="text-xl md:text-3xl font-bold">Community</div>
         </div>
         <div>
           <NuxtLink
@@ -161,14 +161,6 @@ definePageMeta({
   layout: "admin",
   // @ts-ignore
   middleware: ["auth", "admin"],
-});
-
-const articleData = ref({
-  image: "",
-  title: "",
-  body: "",
-  category: "",
-  meta: "",
 });
 </script>
 

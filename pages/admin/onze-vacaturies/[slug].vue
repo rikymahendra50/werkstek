@@ -1,7 +1,7 @@
 <template>
   <div v-if="pending">Loading...</div>
+  {{ data.data.images }}
   <div v-if="data && data?.data" class="overflow-y-auto max-h-[70%]">
-    {{ images }}
     <h3 class="font-bold my-2">Detail Data {{ data.data.name }}</h3>
     <div class="max-h-[500px]">
       <table class="table">
@@ -54,7 +54,8 @@
           </tr>
           <tr>
             <td>Privilages</td>
-            <td>{{ data?.data?.privileges[0]?.privilege }}</td>
+            <td v-if="privilegesString">{{ privilegesString }}</td>
+            <td v-else></td>
           </tr>
           <tr>
             <td>Location</td>
@@ -82,7 +83,8 @@
           </tr>
           <tr>
             <td>Facility</td>
-            <td>{{ data?.data?.facility[0]?.facility?.name }}</td>
+            <td v-if="facilitiesString">{{ facilitiesString }}</td>
+            <td v-else></td>
           </tr>
           <tr>
             <td>Images</td>
@@ -135,6 +137,9 @@ const slug = computed(() => {
   return route.params.slug;
 });
 
+let facilitiesString = undefined;
+let privilegesString = undefined;
+
 const { requestOptions } = useRequestOptions();
 
 const { data: images } = await useFetch(
@@ -152,6 +157,13 @@ const { data, error, pending } = await useFetch(
     ...requestOptions,
   }
 );
+
+const privileges = data.value.data.privileges.map((item) => item.privilege);
+privilegesString = privileges.join(", ");
+
+const facilityArray = data.value.data.facility;
+const facilityNames = facilityArray.map((item) => item.facility.name);
+facilitiesString = facilityNames.join(", ");
 
 if (error.value) {
   console.error("Error fetching data:", error);

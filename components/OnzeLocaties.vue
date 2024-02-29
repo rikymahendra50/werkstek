@@ -64,14 +64,14 @@
               :idInputMin="'priceMin'"
               :idInputMax="'priceMax'"
               :minPrice="0"
-              :maxPrice="1000000"
+              :maxPrice="highestPrice"
               :minRange="0"
-              :maxRange="1000000"
-              :priceGap="1000000"
+              :maxRange="highestPrice"
+              :priceGap="highestPrice"
               class="my-2"
               @price-change="handlePriceChange"
             />
-            <div class="">
+            <div class="md:w-[90%]">
               <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
               <div class="flex my-2">
                 <div class="relative">
@@ -99,53 +99,37 @@
               </div>
               <p class="my-3">-</p>
               <div class="flex justify-between gap-2 text-sm lg:text-base">
-                <div class="flex flex-col">
-                  <fieldset id="functie" class="flex flex-col gap-2">
-                    <div
-                      class="flex justify-start items-center"
-                      v-for="item in functieCheckbox.slice(0, 4)"
-                      :key="item.id"
-                    >
-                      <input
-                        type="checkbox"
-                        :id="'functie_' + item.id"
-                        :value="item.name"
-                        :name="'functie_' + item.name"
-                        class="mr-2 pt-[0.7px]"
-                        :checked="isSelectedFuncti(item.id)"
-                        @change="handlefunctieCheckbox(item.id)"
-                      />
-                      <label :for="'functie_' + item.id" class="cursor-pointer">
-                        {{ item.name }}
-                      </label>
-                    </div>
-                  </fieldset>
-                </div>
-                <div class="flex flex-col">
-                  <fieldset id="functie" class="flex flex-col gap-2">
-                    <div
-                      class="flex justify-start items-center"
-                      v-for="item in functieCheckbox.slice(4, 8)"
-                      :key="item.id"
-                    >
-                      <input
-                        type="checkbox"
-                        :id="'functie_' + item.id"
-                        :value="item.name"
-                        class="mr-2 pt-[0.7px]"
-                        :checked="isSelectedFuncti(item.id)"
-                        @change="handlefunctieCheckbox(item.id)"
-                      />
-                      <label
-                        :for="'functie_' + item.id"
-                        class="cursor-pointer"
-                        >{{ item.name }}</label
+                <template
+                  v-for="(column, columnIndex) in splitColumns(functieCheckbox)"
+                  :key="columnIndex"
+                >
+                  <div class="flex flex-col">
+                    <fieldset id="functie" class="flex flex-col gap-2">
+                      <div
+                        v-for="item in column"
+                        :key="item.id"
+                        class="flex justify-start items-center"
                       >
-                    </div>
-                  </fieldset>
-                </div>
+                        <input
+                          :id="'functie_' + item.id"
+                          :value="item.name"
+                          :name="'functie_' + item.name"
+                          type="checkbox"
+                          class="mr-2 pt-[0.7px]"
+                          :checked="isSelectedFuncti(item.id)"
+                          @change="handlefunctieCheckbox(item.id)"
+                        />
+                        <label
+                          :for="'functie_' + item.id"
+                          class="cursor-pointer"
+                          >{{ item.name }}</label
+                        >
+                      </div>
+                    </fieldset>
+                  </div>
+                </template>
               </div>
-              <Map :filterData="filteredData" />
+              <Map :AllData="data" :filterData="filteredData.data" />
               <div class="flex justify-center md:mt-4">
                 <button
                   @click="showAllData"
@@ -164,7 +148,7 @@
         <eachLocaties
           v-for="(item, index) in filteredData.data"
           :key="item.id"
-          :name="item.name"
+          :name="item.location.name"
           :latitude="item.latitude"
           :longitude="item.longitude"
           :link="`/onze-locaties/${item.slug}`"
@@ -172,7 +156,7 @@
           :image="
             item.images.find((image, imageIndex) => imageIndex === index)?.image
           "
-          :rating="9.4"
+          :rating="item.rating"
         />
       </div>
     </div>
@@ -188,17 +172,15 @@ const { data, error } = await useFetch(`/products`, {
   ...requestOptions,
 });
 
-// const coordinates = data.value.data.map((item) => {
-//   return {
-//     latitude: item.latitude,
-//     longitude: item.longitude,
-//   };
-// });
-
 const showFilter = ref();
 const toggleDetail = () => {
   showFilter.value = !showFilter.value;
 };
+
+function splitColumns(arr) {
+  const midpoint = Math.ceil(arr.length / 2);
+  return [arr.slice(0, midpoint), arr.slice(midpoint)];
+}
 
 onMounted(() => {
   showAllData();
@@ -221,7 +203,8 @@ onMounted(() => {
   );
 });
 
-const name = data.value.data.map((product) => product.name);
+const name = data.value.data.map((item) => item.location.name);
+
 const city = ref(name);
 
 const soortLocatiesRadio = ref([
@@ -243,40 +226,18 @@ const soortLocatiesRadio = ref([
   },
 ]);
 
-const functieCheckbox = ref([
-  {
-    id: 1,
-    name: "Wifi",
-  },
-  {
-    id: 2,
-    name: "Parkeerplaats",
-  },
-  {
-    id: 3,
-    name: "Receptie",
-  },
-  {
-    id: 4,
-    name: "Koffiebar",
-  },
-  {
-    id: 5,
-    name: "Keuken",
-  },
-  {
-    id: 6,
-    name: "Vlakbij het treinstation",
-  },
-  {
-    id: 7,
-    name: "Loungeplekken",
-  },
-  {
-    id: 8,
-    name: "Vergaderruimtes met videoschermen",
-  },
-]);
+const { data: facility } = await useFetch("/facilities", {
+  method: "get",
+  ...requestOptions,
+});
+
+const functieCheckbox = facility.value.data;
+
+const numericPrices = data.value.data.map((item) => parseFloat(item.price));
+
+const highestPrice = Math.max(...numericPrices);
+
+console.log(highestPrice);
 
 const selectedCity = ref("");
 const selectedSoortLocatie = ref([]);
@@ -300,8 +261,10 @@ const showAllData = () => {
 };
 
 function handlePriceChange(priceData) {
-  selectedMinPrice.value = priceData.minPrice;
-  selectedMaxPrice.value = priceData.maxPrice;
+  setTimeout(() => {
+    selectedMinPrice.value = priceData.minPrice;
+    selectedMaxPrice.value = priceData.maxPrice;
+  }, 900);
 }
 
 function isSelectedSoort(id) {

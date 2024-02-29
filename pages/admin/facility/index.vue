@@ -22,7 +22,7 @@
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Name</th>
-                <th class="font-medium">Icon</th>
+                <!-- <th class="font-medium">Icon</th> -->
               </tr>
             </thead>
             <tbody>
@@ -33,10 +33,10 @@
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.name }}
                 </td>
-                <td class="font-medium">{{ item.icon }}</td>
+                <!-- <td class="font-medium">{{ item.icon }}</td> -->
                 <td class="flex justify-center gap-4 my-1">
                   <NuxtLink
-                    :to="`/admin/facility/edit/${item.slug}`"
+                    :to="`/admin/facility/edit/${item.name}`"
                     class="m-2"
                   >
                     <icon
@@ -56,7 +56,7 @@
                       <div class="modal-action">
                         <form method="dialog">
                           <button
-                            @click="deleteFacility(item.slug)"
+                            @click="deleteFacility(item.id)"
                             class="btn btn-outline btn-error mr-3"
                           >
                             Delete

@@ -9,6 +9,6 @@
 
 <script setup>
 useHead({
-  title: "OnzeVacaturies",
+  title: "Onze Vacatures",
 });
 </script>

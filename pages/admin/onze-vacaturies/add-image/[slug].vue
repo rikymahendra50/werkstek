@@ -42,7 +42,7 @@
               @change="handleImageChange($event, index)"
             />
           </div>
-          <div
+          <!-- <div
             v-for="(image, index) in getImages"
             :key="index"
             class="col-span-1 relative flex flex-col justify-between h-full w-full max-h-[250px] overflow-hidden rounded-lg border-2 border-dashed hover:shadow-md transition-all duration-500"
@@ -52,10 +52,17 @@
                 :src="image"
                 alt="Image"
                 class="w-[150px] h-full object-cover p-3"
-                @click="cobaSaja(index)"
               />
             </div>
-          </div>
+          </div> -->
+        </div>
+        <div v-for="(item, index) in getImages.data" :key="index">
+          <img
+            v-if="item.image"
+            :src="item.image.image"
+            alt="Image"
+            class="w-[150px] h-[150px] object-cover m-2"
+          />
         </div>
       </div>
       <div class="flex justify-end mt-5">
@@ -71,6 +78,8 @@
 </template>
 
 <script setup>
+import { ref, getCurrentInstance } from "vue";
+
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
@@ -87,22 +96,28 @@ const { data: images } = await useFetch(
   }
 );
 
-function cobaSaja(test) {
-  console.log(test);
-}
+const { data: getImages } = await useFetch(
+  `/admins/products/${slug.value}/images`,
+  {
+    method: "get",
+    ...requestOptions,
+  }
+);
 
+const instance = getCurrentInstance();
 const fileInput = ref(null);
-const getImages = ref(images.value);
 
 const imageTest = ref();
 
 const selectImage = () => {
-  fileInput.value.click();
+  fileInput.value.click(); // Akses elemen input file melalui ref
 };
 
 const handleImageChange = (event) => {
   const files = event.target.files;
-  imageTest.value = files[0];
+  if (files.length > 0) {
+    imageTest.value = files[0];
+  }
 };
 
 async function onSubmit(values, ctx) {

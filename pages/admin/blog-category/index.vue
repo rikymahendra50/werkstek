@@ -12,7 +12,7 @@
             to="/admin/blog-category/add"
             class="btn btn-sm h-11 btn-neutral normal-case"
           >
-            Add new Blog
+            Add new Category Blog
           </NuxtLink>
         </div>
       </div>
@@ -22,7 +22,6 @@
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Name</th>
-                <th class="font-medium">Detail</th>
                 <th></th>
               </tr>
             </thead>
@@ -32,14 +31,6 @@
                 v-for="(item, index) in categoryBlog?.data"
               >
                 <td class="max-w-[100px]">{{ item.name }}</td>
-                <td>
-                  <NuxtLink
-                    :to="`/admin/onze-vacaturies/${item.slug}`"
-                    class="btn btn-sm btn-outline"
-                  >
-                    Detail
-                  </NuxtLink>
-                </td>
                 <td>
                   <div class="flex justify-center items-center gap-4 my-1">
                     <NuxtLink
@@ -122,7 +113,7 @@ const deleteCategoryBlog = async (slug) => {
   } else {
     snackbar.add({
       type: "success",
-      text: "Delete Category Success",
+      text: "Delete Blog Category Success",
     });
   }
   loading.value = false;

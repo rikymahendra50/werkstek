@@ -1,6 +1,7 @@
 <template>
   <floating-whatsapp />
-  <StatistiekLocaties
+  <StatistiekLocatiesVideo
+    video="/images/video_test.mp4"
     :image="StatistiekLocatiesData.image"
     :title1="StatistiekLocatiesData.title1"
     :title2="StatistiekLocatiesData.title2"

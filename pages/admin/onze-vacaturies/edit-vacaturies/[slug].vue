@@ -1,12 +1,13 @@
 <template>
-  <div class="overflow-auto">
-    <h3 class="font-bold text-lg">Edit Onze Locaties</h3>
-    <NuxtLink
-      to="/admin/onze-vacaturies"
-      class="btn btn-sm btn-outline btn-warning"
-    >
-      Back
-    </NuxtLink>
+  <div class="overflow-auto max-h-[500px]">
+    <div class="flex gap-2">
+      <NuxtLink
+        to="/admin/onze-vacaturies"
+        class="btn btn-warning btn-outline btn-sm"
+        >Back</NuxtLink
+      >
+      <span class="text-2xl font-bold">Edit Vacatures</span>
+    </div>
     <div class="modal-action grid grid-cols-1 gap-3">
       <VeeForm
         @submit="onSubmit"
@@ -310,7 +311,7 @@
   </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 .overflow-auto {
   max-height: 550px;
   overflow-y: auto;
@@ -328,7 +329,7 @@
 .description-column::-webkit-scrollbar {
   display: none;
 }
-</style>
+</style> -->
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();

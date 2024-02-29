@@ -6,20 +6,19 @@
       >
       <span class="text-2xl font-bold">Add Facility</span>
     </div>
-    <VeeForm @submit="onSubmit" v-slot="{ errors }">
+    <VeeForm @submit="onSubmit">
       <div class="grid grid-cols-2 mt-3 gap-3">
         <div class="flex flex-col">
           <label for="Name">Name</label>
-          <VeeField
+          <input
             id="Name"
             type="text"
-            name="Name"
             placeholder="Input Name"
             class="input input-bordered w-full"
-            v-model="formData.name"
+            v-model="name"
             autocomplete="on"
+            required
           />
-          <VeeErrorMessage name="name" class="text-sm text-error" />
         </div>
         <div class="flex flex-col">
           <label for="image">Icon</label>
@@ -27,12 +26,12 @@
             id="image"
             type="file"
             name="image"
-            class="input input-bordered w-full"
+            class="file-input file-input-bordered file-input-warning w-full max-w-xs"
             accept="image/*"
             v-on:change="handleImageChange"
             autocomplete="on"
+            required
           />
-          <VeeErrorMessage name="shortDesk" class="text-sm text-error" />
         </div>
       </div>
       <div class="flex justify-end mt-5">
@@ -48,27 +47,28 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
+const route = useRoute();
 
-const formData = ref({
-  name: undefined,
-  image: undefined,
-});
+const name = ref();
+const imageTest = ref();
 
 const handleImageChange = (event) => {
-  const file = event.target.files[0];
-  formData.value.image = file;
+  const files = event.target.files;
+  if (files.length > 0) {
+    imageTest.value = files[0];
+  }
 };
 
-async function onSubmit(values, ctx) {
+const onSubmit = async (values, ctx) => {
   loading.value = true;
 
-  const formDataToSend = new FormData();
-  formDataToSend.append("name", formData.value.name);
-  formDataToSend.append("image", formData.value.image);
+  const formData = new FormData();
+  formData.append("name", name.value);
+  formData.append("image", imageTest.value);
 
-  const { error } = await useFetch(`/admins/facilities`, {
-    method: "POST",
-    body: formDataToSend.value,
+  const { error } = await useFetch(`/admins/facility`, {
+    method: "post",
+    body: formData,
     ...requestOptions,
   });
 
@@ -85,8 +85,9 @@ async function onSubmit(values, ctx) {
     });
     ctx.resetForm();
   }
+
   loading.value = false;
-}
+};
 
 useHead({
   title: "Add Facility",
@@ -94,7 +95,6 @@ useHead({
 
 definePageMeta({
   layout: "admin",
-  // @ts-ignore
   middleware: ["auth", "admin"],
 });
 </script>

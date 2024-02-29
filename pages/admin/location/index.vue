@@ -22,7 +22,7 @@
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Name</th>
-                <th class="font-medium">Images</th>
+                <!-- <th class="font-medium">Images</th> -->
                 <th class="font-medium"></th>
               </tr>
             </thead>
@@ -34,10 +34,19 @@
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.name }}
                 </td>
-                <td class="text-gray-500 text-sm font-normal !py-2">
+                <!-- <td class="text-gray-500 text-sm font-normal !py-2">
                   <img :src="item.image" :alt="item.id" class="max-w-[90px]" />
-                </td>
-                <td>
+                </td> -->
+                <td class="flex items-center">
+                  <NuxtLink
+                    :to="`/admin/location/edit/${item.name}`"
+                    class="m-2"
+                  >
+                    <icon
+                      name="i-heroicons-pencil-square"
+                      class="cursor-pointer mr-1"
+                    />
+                  </NuxtLink>
                   <div class="cursor-pointer m-2" @click="showModal(index)">
                     <icon name="i-heroicons-trash" class="mr-1" />
                   </div>
@@ -45,12 +54,13 @@
                     <div class="modal-box">
                       <h3 class="font-bold text-xl text-red-500">Warning !</h3>
                       <p class="py-4 text-lg">
-                        Are you sure want to delete this called {{ item.name }}?
+                        Are you sure want to delete this item called
+                        {{ item.name }}?
                       </p>
                       <div class="modal-action">
                         <form method="dialog">
                           <button
-                            @click="deleteLocatie(item.slug)"
+                            @click="deleteLocation(item.slug)"
                             class="btn btn-outline btn-error mr-3"
                           >
                             Delete
@@ -61,37 +71,6 @@
                     </div>
                   </dialog>
                 </td>
-                <!-- <td class="text-gray-500 text-sm font-normal !py-1.5">
-                  <div
-                    class="v-popper v-popper--theme-menu v-popper--theme-dropdown"
-                    placements="auto"
-                  >
-                    <button
-                      type="button"
-                      class="btn btn-sm normal-case btn-ghost btn-square"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        aria-hidden="true"
-                        role="img"
-                        class="icon"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="1.5"
-                          d="M8.625 12a.375.375 0 1 1-.75 0a.375.375 0 0 1 .75 0m0 0H8.25m4.125 0a.375.375 0 1 1-.75 0a.375.375 0 0 1 .75 0m0 0H12m4.125 0a.375.375 0 1 1-.75 0a.375.375 0 0 1 .75 0m0 0h-.375M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0"
-                        ></path>
-                      </svg>
-                    </button>
-                  </div>
-                </td> -->
               </tr>
             </tbody>
           </table>
@@ -103,9 +82,10 @@
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
-
+const snackbar = useSnackbar();
 const { requestOptions } = useRequestOptions();
-const { data: locations, error } = await useFetch(`/admins/location-list`, {
+
+const { data: locations, error } = await useFetch(`/admins/locations`, {
   method: "get",
   ...requestOptions,
 });
@@ -118,18 +98,26 @@ const showModal = (index) => {
   }
 };
 
-const deleteLocatie = async (locatieSlug) => {
+const deleteLocation = async (slug) => {
   loading.value = true;
-  try {
-    const response = await useFetch(`/admins/locations/${locatieSlug}`, {
-      method: "DELETE",
-      ...requestOptions,
+  await useFetch(`/admins/locations/${slug}`, {
+    method: "DELETE",
+    ...requestOptions,
+  });
+  window.location.reload();
+
+  if (error.value) {
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
     });
-    console.log("Response:", response.data);
-    window.location.reload();
-  } catch (error) {
-    console.error("Error:", error);
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Delete Location Success",
+    });
   }
+  loading.value = false;
 };
 
 useHead({

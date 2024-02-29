@@ -13,18 +13,20 @@
 
 <script setup>
 const props = defineProps({
+  AllData: {},
   filterData: {},
 });
 
 let googleMapsScriptLoaded = false;
 
+// console.log(props.filterData);
+
 let map = ref(null);
 const markers = ref([]);
 const currentInfoWindow = ref(null);
 
-const locations = ref(props.filterData.value);
-
-console.log(locations);
+const locationsTest = ref(props.AllData);
+const locations = locationsTest.value.data;
 
 onMounted(() => {
   if (!googleMapsScriptLoaded) {
@@ -55,7 +57,7 @@ const loadGoogleMapsScript = () => {
 const setupMap = () => {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -8.653840910873269, lng: 115.21785198506426 },
-    zoom: 13,
+    zoom: 4,
     fullscreenControl: false,
     zoomControl: false,
     keyboardShortcuts: false,
@@ -65,19 +67,25 @@ const setupMap = () => {
   const iconBase = "/images";
 
   const icon = {
-    url: iconBase + "/icon-flag.png",
-    scaledSize: new google.maps.Size(40, 40),
+    url: iconBase + "/icon-coordinate.svg",
+    scaledSize: new google.maps.Size(20, 20),
   };
 
-  locations.value.forEach((location) => {
-    // Mengakses nilai aktual dari locations
+  const bounds = new google.maps.LatLngBounds();
+
+  locations.forEach((location) => {
+    const lat = parseFloat(location.latitude);
+    const lng = parseFloat(location.longitude);
+
     const marker = new google.maps.Marker({
-      position: { lat: location.latitude, lng: location.longitude },
+      position: { lat: lat, lng: lng },
       map: map,
       title: location.name,
       icon: icon,
       details: location,
     });
+
+    bounds.extend(new google.maps.LatLng(location.lat, location.longitude));
 
     const contentString = `
       <div class="max-w-[190px] w-full h-full flex flex-col text-end border-2">
@@ -99,6 +107,9 @@ const setupMap = () => {
     });
 
     marker.addListener("click", () => {
+      map.setCenter(marker.getPosition());
+      map.setZoom(10);
+
       if (currentInfoWindow.value) {
         currentInfoWindow.value.close();
       }

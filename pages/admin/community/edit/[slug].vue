@@ -4,10 +4,10 @@
       <NuxtLink to="/admin/community" class="btn btn-warning btn-outline btn-sm"
         >Back</NuxtLink
       >
-      <span class="text-2xl font-bold">Add Blog</span>
+      <span class="text-2xl font-bold">Edit Community</span>
     </div>
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="flex flex-col mt-10 overflow-auto px-8">
+      <div class="flex flex-col mt-4 overflow-auto px-8 py-3">
         <label for="image" class="mb-1">Image</label>
         <input
           id="image"
@@ -16,6 +16,11 @@
           class="file-input file-input-bordered file-input-accent w-full max-w-xs mb-5"
           @change="handleImageChange"
         />
+        <span>Image Uploded: </span>
+        <div class="min-h-[200px] max-h-[200px] min-w-[200px] max-w-[200px]">
+          <img :src="data.data.image" alt="img" class="mb-4 object-cover" />
+        </div>
+
         <label for="Title">Title</label>
         <VeeField
           id="Title"
@@ -39,18 +44,6 @@
           />
         </div>
         <div class="flex flex-col mt-5">
-          <label for="Category">Category Id</label>
-          <VeeField
-            id="Category"
-            as="textarea"
-            name="Category"
-            placeholder="Input Category ID"
-            class="textarea textarea-bordered w-full"
-            v-model="formData.category_id"
-            autocomplete="on"
-          />
-        </div>
-        <div class="flex flex-col mt-5">
           <label for="Meta">Meta</label>
           <VeeField
             id="Meta"
@@ -65,7 +58,7 @@
       </div>
       <div class="flex justify-end mt-5">
         <button type="submit" :disabled="loading" class="btn btn-success">
-          Add Community
+          Edit Community
         </button>
       </div>
     </VeeForm>
@@ -84,26 +77,33 @@ const { data } = await useFetch(`/admins/community-blogs/${slug.value}`, {
   ...requestOptions,
 });
 
-const formData = ref({
-  image: null,
-  title: data.value.data.title,
-  body: data.value.data.body,
-  category_id: data.value.data.category,
-  meta: data.value.data.meta,
-});
+const imageTest = ref(data.value.data.image);
 
 const handleImageChange = (event) => {
-  const file = event.target.files[0];
-  formData.value.image = file;
+  const files = event.target.files;
+  if (files.length > 0) {
+    imageTest.value = files[0];
+  }
 };
+
+const formData = ref({
+  title: data.value.data.title,
+  body: data.value.data.body,
+  meta: data.value.data.meta,
+});
 
 async function onSubmit(values, ctx) {
   loading.value = true;
 
   const formDataToSend = new FormData();
 
-  const { error } = await useFetch(`/admins/community-blogs`, {
-    method: "POST",
+  formDataToSend.append("image", imageTest.value);
+  formDataToSend.append("title", formData.value.title);
+  formDataToSend.append("body", formData.value.body);
+  formDataToSend.append("meta", formData.value.meta);
+
+  const { error } = await useFetch(`/admins/community-blogs/${slug.value}`, {
+    method: "put",
     body: formDataToSend,
     ...requestOptions,
   });
@@ -117,7 +117,7 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Add Blog Success",
+      text: "Edit Community Success",
     });
 
     ctx.resetForm();

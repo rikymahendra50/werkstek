@@ -5,7 +5,7 @@
     ></span>
     <div class="lg:container-custom mx-10 flex flex-col py-10 lg:py-20">
       <h1 class="text-primary text-[18px] sm:text-[20px] md:text-[30px]">
-        Blog
+        {{ typeArticle }}
       </h1>
       <p
         class="text-[#404040] text-xl sm:text-[26px] md:text-[36px] mb-3 lg:mb-10"
@@ -131,9 +131,7 @@
               @click="showMoreFunc"
               class="bg-primary max-w-[300px] mt-10 focus:outline-none rounded-full text-white p-3 hover:bg-secondary transition"
             >
-              {{
-                showMore ? "Tampilkan Lebih Sedikit" : "Tampilkan Lebih Banyak"
-              }}
+              {{ showMore ? "Zie minder" : "Bekijk meer" }}
             </button>
           </div>
         </div>
@@ -212,6 +210,9 @@ export default {
   },
   props: {
     title: {
+      type: String,
+    },
+    typeArticle: {
       type: String,
     },
     imageSrc: {
