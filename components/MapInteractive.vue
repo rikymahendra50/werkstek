@@ -6,10 +6,9 @@
       'w-full': !ShowContainerCustom,
     }"
   >
-    <!-- {{ data.data[0].name }} -->
     <div
       id="map"
-      :class="`relative w-full h-[420px] lg:h-[619px] z-[-999]`"
+      :class="`relative w-full h-[420px] lg:h-[619px] z-[-999] rounded-2xl`"
     ></div>
     <div class="mx-2 sm:mx-10 container-custom">
       <div class="bg-tertiary box-shadow mt-[-100px] z-10 rounded-[40px]">
@@ -65,10 +64,10 @@
                 :idInputMin="'priceMin'"
                 :idInputMax="'priceMax'"
                 :minPrice="0"
-                :maxPrice="1000000"
+                :maxPrice="highestPrice"
                 :minRange="0"
-                :maxRange="1000000"
-                :priceGap="1000000"
+                :maxRange="highestPrice"
+                :priceGap="highestPrice"
                 class="my-2"
                 @price-change="handlePriceChange"
               />
@@ -113,6 +112,10 @@
   background-color: #f5f5f5;
 }
 
+.gm-style-iw-tc {
+  display: none !important;
+}
+
 .gm-style-cc {
   display: none !important;
 }
@@ -150,7 +153,27 @@
 </style>
 
 <script setup>
+import axios from "axios";
+const { axiosRequest } = useAxios();
+
 let googleMapsScriptLoaded = false;
+
+const loadGoogleMapsScript = () => {
+  if (!window.googleMapsScriptLoaded) {
+    window.googleMapsScriptLoaded = true;
+    window.initMap = setupMap;
+    const googleMapsScript = document.createElement("script");
+    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap&`;
+    googleMapsScript.defer = true;
+    googleMapsScript.async = true;
+    googleMapsScript.onload = () => {
+      googleMapsScriptLoaded = true;
+    };
+    document.head.appendChild(googleMapsScript);
+  } else {
+    setupMap();
+  }
+};
 
 onMounted(() => {
   if (!googleMapsScriptLoaded) {
@@ -174,13 +197,23 @@ const props = defineProps({
   },
 });
 
+// data
 const { requestOptions } = useRequestOptions();
 const { data, error } = await useFetch(`/products`, {
   method: "get",
   ...requestOptions,
 });
 
+// const locations = ref(data?.value?.data);
+
 const categoryOptions = data.value.data.map((item) => item.name);
+
+const numericPrices = data.value.data.map((item) => parseFloat(item.price));
+
+const highestPrice = Math.max(...numericPrices);
+
+// const categoryOptions = data.value.data.map((item) => item.location.name);
+
 const categories = ref([
   {
     title: "Zoek een Locatie",
@@ -188,81 +221,26 @@ const categories = ref([
     showDropdown: false,
     options: categoryOptions,
   },
-  // {
-  //   title: "Type",
-  //   selectedOption: "Kantoorruimte",
-  //   showDropdown: false,
-  //   options: ["Kantoorruimte", "Andere Optie 1", "Andere Optie 2"],
-  // },
   {
     title: "Zoek op een prijs",
   },
 ]);
 
+onMounted(() => {
+  // showAllData();
+});
+
 const titleMap = ref("Waar bent u op zoek naar?");
 let map = ref(null);
 const markers = ref([]);
 const currentInfoWindow = ref(null);
-let locations = [
-  {
-    lat: -8.653840910873269,
-    lng: 115.21785198506426,
-    name: "Tolstraat 186-188 H, Amsterdam De Pijp",
-    area: "1104 m2",
-    image: "/images/img-home-1.png",
-    city: "Rotterdam",
-    type: "Kantoorruimte",
-    price: 230,
-    filtered: false,
-  },
-  {
-    lat: -8.653840910873269,
-    lng: 115.21785198506426,
-    name: "Tolstraat 186-188 H, Amsterdam De Pijp",
-    area: "1104 m2",
-    image: "/images/img-home-1.png",
-    city: "Rotterdam",
-    type: "Kantoorruimte",
-    price: 750,
-    filtered: false,
-  },
-  {
-    lat: -8.62717144710956,
-    lng: 115.29189271629312,
-    name: "Company C",
-    area: "Deskripsi C",
-    image: "/images/img-home-1.png",
-    city: "Rotterdam",
-    type: "Andere Optie 2",
-    price: 240,
-    filtered: false,
-  },
-  {
-    lat: -8.641220836289818,
-    lng: 115.17259520426518,
-    name: "Company D",
-    area: "Deskripsi D",
-    image: "/images/img-home-1.png",
-    city: "Amsterdam",
-    type: "Andere Optie 1",
-    price: 4,
-    filtered: false,
-  },
-  {
-    lat: -8.616146108681335,
-    lng: 115.17967680101556,
-    name: "Company E",
-    area: "Deskripsi E",
-    image: "/images/img-home-1.png",
-    city: "Rotterdam",
-    type: "Andere Optie 1",
-    price: 710,
-    filtered: false,
-  },
-];
 
+const locations = data.value.data;
+
+const selectedCity = ref();
 const selectedMinPrice = ref();
 const selectedMaxPrice = ref();
+const filteredData = ref();
 
 function handlePriceChange(priceData) {
   selectedMinPrice.value = priceData.minPrice;
@@ -272,46 +250,54 @@ function handlePriceChange(priceData) {
 const selectOption = (category, option) => {
   category.selectedOption = option;
   category.showDropdown = false;
+  selectedCity.value = option;
 };
 
 const toggleDropdown = (category) => {
   category.showDropdown = !category.showDropdown;
 };
+// end data
 
-const performSearch = () => {
-  const selectedOption = categories.value;
-  let selectedCityFix = selectedOption[0].selectedOption;
-  // let selectedPriceFix = lastSelectedPrices.value;
+// request
+async function performSearch() {
+  try {
+    let params = {};
+    params["filter[search]"] = selectedCity.value;
+    params["filter[min_price]"] = selectedMinPrice.value;
+    params["filter[max_price]"] = selectedMaxPrice.value;
 
-  const minPrice = selectedMinPrice.minPrice;
-  const maxPrice = selectedMaxPrice.maxPrice;
+    await new Promise((resolve) => setTimeout(resolve, 900));
+    const response = await axiosRequest.get("/products", { params: params });
+    filteredData.value = response.data;
+    findMap(filteredData.value);
+  } catch (error) {
+    console.error("Failed to retrieve data from API:", error);
+  }
+}
+
+function findMap(dataFilter) {
+  if (!dataFilter || !dataFilter.data || dataFilter.data.length === 0) {
+    alert("Data Not Found.");
+    return;
+  }
 
   clearInfoWindows();
 
-  let locationsFound = false;
-
-  locations.forEach((location) => {
-    const isLocationInFilter =
-      location.city === selectedCityFix &&
-      location.price >= minPrice &&
-      location.price <= maxPrice;
-
-    location.filtered = isLocationInFilter;
-
-    if (isLocationInFilter) {
-      locationsFound = true;
-      moveToLocation(location.lat, location.lng);
-      showInfoWindow(location.lat, location.lng, location);
-    }
+  const locations = dataFilter.data.map((item) => {
+    return {
+      latitude: parseFloat(item.latitude),
+      longitude: parseFloat(item.longitude),
+    };
   });
 
-  if (!locationsFound) {
-    alert("Data not found, please adjust your filter");
-  }
-};
+  locations.forEach((location) => {
+    moveToLocation(location.latitude, location.longitude);
+    showInfoWindow(location.latitude, location.longitude, dataFilter);
+  });
+}
 
-const showInfoWindow = (lat, lng, location) => {
-  const marker = findMarkerByLatLng(lat, lng);
+const showInfoWindow = (latitude, longitude, location) => {
+  const marker = findMarkerByLatLng(latitude, longitude);
 
   if (marker) {
     clearInfoWindows();
@@ -329,14 +315,30 @@ const showInfoWindow = (lat, lng, location) => {
 };
 
 const buildInfoWindowContent = (location) => {
-  return `
-    <div class="max-w-[190px] w-full h-full flex flex-col text-end">
-      <img src="${location.image}" alt="${location.name}" class="w-[200px] min-h-[100px]">
-      <h2 class="text-primary mt-2">${location.name}</h2>
-      <p class="text-black text-[10px] my-2">${location.area}</p>
-      <p>Price: $${location.price}</p>
-    </div>
-  `;
+  if (Array.isArray(location)) {
+    const locationName = location.map((item) => item.name);
+    const locationImage = location.map((item) => item.location.image);
+    const locationPrice = location.map((item) => item.price);
+    const locationArea = location.map((item) => item.area_size);
+
+    return `
+      <div class="max-w-[190px] w-full h-full flex flex-col text-end">
+        <img src="${locationImage}" alt="${locationName}" class="w-[200px] min-h-[100px]">
+        <h2 class="text-primary mt-2">${locationName}</h2>
+        <p class="text-black text-[10px] my-2">Price: $${locationPrice}</p>
+        <p>${locationArea}<span class="absolute top-3 right-14">m<sup>2</sup></span></p>
+      </div>
+    `;
+  } else {
+    return `
+      <div class="max-w-[190px] w-full h-full flex flex-col text-end">
+        <img src="${location.Image}" alt="${location.Name}" class="w-[200px] min-h-[100px]">
+        <h2 class="text-primary mt-2">${location.Name}</h2>
+        <p class="text-black text-[10px] my-2">Price: $${location.Price}</p>
+        <p>${location.Area}<span class="absolute top-3 right-14">m<sup>2</sup></span></p>
+      </div>
+    `;
+  }
 };
 
 const clearInfoWindows = () => {
@@ -345,10 +347,10 @@ const clearInfoWindows = () => {
   }
 };
 
-const findMarkerByLatLng = (lat, lng) => {
+const findMarkerByLatLng = (latitude, longitude) => {
   return markers.value.find((marker) => {
     const position = marker.getPosition();
-    return position.lat() === lat && position.lng() === lng;
+    return position.lat() === latitude && position.lng() === longitude;
   });
 };
 
@@ -378,42 +380,14 @@ const moveToLocation = (lat, lng) => {
     if (matchingMarker) {
       matchingMarker.details.filtered = true;
 
-      const infowindow = new google.maps.InfoWindow({
-        content: `
-          <div class="max-w-[190px] w-full h-full flex flex-col text-end">
-            <div class="relative">
-              <img src="${matchingMarker.details.image}" alt="${matchingMarker.details.name}" class="w-full min-h-[100px]">
-              <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
-            </div>
-            <div class="px-2 pb-4">
-              <h2 class="text-primary mt-2">${matchingMarker.details.name}</h2>
-              <p class="text-black text-[10px] my-2">${matchingMarker.details.area}</p>
-              <p>Price: $${matchingMarker.details.price}</p>
-            </div>
-          </div>
-        `,
-      });
+      const contentString = buildInfoWindowContent(matchingMarker.details);
 
+      const infowindow = new google.maps.InfoWindow({
+        content: contentString,
+      });
       infowindow.open(map, matchingMarker);
       currentInfoWindow.value = infowindow;
     }
-  }
-};
-
-const loadGoogleMapsScript = () => {
-  if (!window.googleMapsScriptLoaded) {
-    window.googleMapsScriptLoaded = true;
-    window.initMap = setupMap;
-    const googleMapsScript = document.createElement("script");
-    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap&`;
-    googleMapsScript.defer = true;
-    googleMapsScript.async = true;
-    googleMapsScript.onload = () => {
-      googleMapsScriptLoaded = true;
-    };
-    document.head.appendChild(googleMapsScript);
-  } else {
-    setupMap();
   }
 };
 
@@ -435,8 +409,11 @@ const setupMap = () => {
   };
 
   locations.forEach((location) => {
+    const lat = parseFloat(location.latitude);
+    const lng = parseFloat(location.longitude);
+
     const marker = new google.maps.Marker({
-      position: { lat: location.lat, lng: location.lng },
+      position: { lat: lat, lng: lng },
       map: map,
       title: location.name,
       icon: icon,
@@ -444,15 +421,15 @@ const setupMap = () => {
     });
 
     const contentString = `
-      <div class="max-w-[190px] w-full h-full flex flex-col text-end border-2">
+      <div class="max-w-[190px] w-full flex flex-col text-end">
         <div class="relative">
-          <img src="${location.image}" alt="${location.name}" class="w-full min-h-[100px]">
+          <img src="${location.location.image}" alt="${location.name}" class="w-full min-h-[100px]">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
         </div>
-        <div class="px-2 pb-4">
+        <div class="px-2 py-5 pb-3">
           <h2 class="text-primary mt-2">${location.name}</h2>
-          <p class="text-black text-[10px] my-2">${location.area}</p>
-          <p>Price: $${location.price}</p>
+          <p class="text-black text-[10px] my-2">Price: $${location.price}</p>
+          <p>${location.area_size}&nbsp<span>m<sup>2</sup></span></p>
         </div>
       </div>
     `;

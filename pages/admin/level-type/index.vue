@@ -9,7 +9,7 @@
         </div>
         <div>
           <NuxtLink
-            to="/admin/onze-vacaturies/add"
+            to="/admin/level-type/add"
             class="btn btn-sm h-11 btn-neutral normal-case"
           >
             Add New Level Type
@@ -34,13 +34,36 @@
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.name }}
                 </td>
-                <td>
-                  <NuxtLink
-                    :to="`/admin/level-type/${item.id}`"
-                    class="btn btn-sm btn-outline"
-                  >
-                    Edit
+                <td class="flex items-center">
+                  <NuxtLink :to="`/admin/level-type/${item.id}`" class="m-2">
+                    <icon
+                      name="i-heroicons-pencil-square"
+                      class="cursor-pointer mr-1"
+                    />
                   </NuxtLink>
+                  <div class="cursor-pointer m-2" @click="showModal(index)">
+                    <icon name="i-heroicons-trash" class="mr-1" />
+                  </div>
+                  <dialog :id="'my_modal_' + index" class="modal">
+                    <div class="modal-box">
+                      <h3 class="font-bold text-xl text-red-500">Warning !</h3>
+                      <p class="py-4 text-lg">
+                        Are you sure want to delete this item called
+                        {{ item.name }}?
+                      </p>
+                      <div class="modal-action">
+                        <form method="dialog">
+                          <button
+                            @click="deleteLevelType(item.id)"
+                            class="btn btn-outline btn-error mr-3"
+                          >
+                            Delete
+                          </button>
+                          <button class="btn">Close</button>
+                        </form>
+                      </div>
+                    </div>
+                  </dialog>
                 </td>
               </tr>
             </tbody>
@@ -59,6 +82,36 @@ const { data: levelType, error } = await useFetch(`/admins/level-types`, {
   method: "get",
   ...requestOptions,
 });
+
+const showModal = (index) => {
+  const modalId = `my_modal_${index}`;
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.showModal();
+  }
+};
+
+const deleteLevelType = async (slug) => {
+  loading.value = true;
+  await useFetch(`/admins/level-types/${slug}`, {
+    method: "DELETE",
+    ...requestOptions,
+  });
+  window.location.reload();
+
+  if (error.value) {
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
+    });
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Delete Level Type Success",
+    });
+  }
+  loading.value = false;
+};
 
 useHead({
   title: "Admin Level Type",

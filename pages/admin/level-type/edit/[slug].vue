@@ -25,7 +25,7 @@
           :disabled="loading"
           class="mt-4 btn btn-md btn-outline transition flex items-center justify-center cursor-pointer btn-success"
         >
-          Add Data
+          Edit Data
         </button>
       </div>
     </VeeForm>
@@ -57,7 +57,7 @@ async function onSubmit(values, ctx) {
 
   const { error } = await useFetch(`/admins/level-types/${slug.value}`, {
     method: "PUT",
-    body: name.value,
+    body: { name: name.value },
     ...requestOptions,
   });
 
@@ -70,7 +70,7 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Success Edit Data",
+      text: "Success Edit Level Type",
     });
 
     ctx.resetForm();

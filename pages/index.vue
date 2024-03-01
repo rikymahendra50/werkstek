@@ -1,6 +1,7 @@
 <template>
   <floating-whatsapp />
-  <StatistiekLocaties
+  <StatistiekLocatiesVideo
+    video="/images/video_test.mp4"
     :image="StatistiekLocatiesData.image"
     :title1="StatistiekLocatiesData.title1"
     :title2="StatistiekLocatiesData.title2"
@@ -14,7 +15,7 @@
   />
 
   <MapInteractive class="py-10" />
-  <SliderLocaties />
+  <SliderLocaties :data="sliderData.data" />
   <SliderTestimony class="my-20" />
   <FourImages />
   <BgBigGreen
@@ -31,7 +32,14 @@
 </template>
 
 <script setup>
+const { requestOptions } = useRequestOptions();
 const { StatistiekLocatiesData, BgBigGreenData } = useHome();
+
+const { data: sliderData } = useFetch(`/products`, {
+  method: "get",
+  ...requestOptions,
+});
+
 useHead({
   title: "Home",
 });

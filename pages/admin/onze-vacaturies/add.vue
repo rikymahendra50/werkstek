@@ -8,7 +8,7 @@
     <span class="text-2xl font-bold">Add Vacaturies</span>
   </div>
   <div class="h-screen max-h-[450px] overflow-y-auto">
-    <h3 class="font-bold text-lg">Add New Data Onze Locaties</h3>
+    <h3 class="font-bold text-lg">Add New Data Onze Vacatures</h3>
     <div class="modal-action grid grid-cols-1 gap-3">
       <VeeForm
         @submit="onSubmit"
@@ -365,7 +365,7 @@ const productsData = ref({
 async function onSubmit(values, ctx) {
   loading.value = true;
 
-  console.log(productsData.value.latitude);
+  console.log(productsData.value.product_facilities);
 
   // await useFetch("/admins/products/images", {
   //   method: "POST",

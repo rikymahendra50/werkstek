@@ -71,10 +71,10 @@
               :idInputMin="'priceMin'"
               :idInputMax="'priceMax'"
               :minPrice="0"
-              :maxPrice="1000000"
+              :maxPrice="highestPrice"
               :minRange="0"
-              :maxRange="1000000"
-              :priceGap="1000000"
+              :maxRange="highestPrice"
+              :priceGap="highestPrice"
               class="my-2"
               @price-change="handlePriceChange"
             />
@@ -160,7 +160,7 @@
           :image="
             item.images.find((image, imageIndex) => imageIndex === index)?.image
           "
-          :rating="9.4"
+          :rating="item.rating"
         />
       </div>
     </div>
@@ -205,6 +205,12 @@ onMounted(() => {
 const name = data.value.data.map((product) => product.name);
 const city = ref(name);
 
+const numericPrices = data.value.data.map((item) => parseFloat(item.price));
+
+const highestPrice = Math.max(...numericPrices);
+
+console.log(highestPrice);
+
 const soortLocatiesRadio = ref([
   {
     id: 1,
@@ -224,40 +230,12 @@ const soortLocatiesRadio = ref([
   },
 ]);
 
-const opleidings = ref([
-  {
-    id: 1,
-    name: "Wifi",
-  },
-  {
-    id: 2,
-    name: "Parkeerplaats",
-  },
-  {
-    id: 3,
-    name: "Receptie",
-  },
-  {
-    id: 4,
-    name: "Koffiebar",
-  },
-  {
-    id: 5,
-    name: "Keuken",
-  },
-  {
-    id: 6,
-    name: "Vlakbij het treinstation",
-  },
-  {
-    id: 7,
-    name: "Loungeplekken",
-  },
-  {
-    id: 8,
-    name: "Vergaderruimtes met videoschermen",
-  },
-]);
+const { data: facility } = await useFetch("/facilities", {
+  method: "get",
+  ...requestOptions,
+});
+
+const opleidings = facility.value.data;
 
 const selectedCity = ref("");
 const selectedSoortLocatie = ref([]);
@@ -275,8 +253,10 @@ const showAllData = () => {
 };
 
 function handlePriceChange(priceData) {
-  selectedMinPrice.value = priceData.minPrice;
-  selectedMaxPrice.value = priceData.maxPrice;
+  setTimeout(() => {
+    selectedMinPrice.value = priceData.minPrice;
+    selectedMaxPrice.value = priceData.maxPrice;
+  }, 900);
 }
 
 function isSelectedSoort(id) {

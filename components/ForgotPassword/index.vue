@@ -48,17 +48,12 @@ function updateToParent() {
   emit("next");
 }
 
-const email = ref(stateForm.value.email);
-
 async function onSubmit() {
   loading.value = true;
-  // message.value = "hallo";
-  // alertType.value = "success";
-  localStorage.setItem("userEmail", stateForm.value.email);
 
-  const { error } = await useFetch("/admins/forget-password", {
+  const { error } = await useFetch(`/admins/forget-password`, {
     method: "POST",
-    body: email,
+    body: { email: stateForm.value.email },
     ...requestOptions,
   });
 
@@ -70,10 +65,9 @@ async function onSubmit() {
   } else {
     snackbar.add({
       type: "success",
-      text: "Thank you for your message. We will get back to you as soon as possible.",
+      text: "Sending OTP Success, Please check your email",
     });
   }
-
   updateToParent();
   loading.value = false;
 }

@@ -1,142 +1,41 @@
 <template>
   <section class="overflow-auto max-h-[500px]">
     <div class="flex gap-4">
-      <NuxtLink to="/admin/blog" class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
+      <NuxtLink to="/admin/blog" class="btn btn-warning btn-outline btn-sm">
+        Back
+      </NuxtLink>
       <span class="text-2xl font-bold">Edit Blog</span>
     </div>
-    <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="flex flex-col mt-10 overflow-auto">
-        <label for="image" class="mb-1">Image</label>
-        <input
-          id="image"
-          name="image"
-          type="file"
-          class="file-input file-input-bordered file-input-accent w-full max-w-xs mb-5"
-          @change="handleImageChange"
-        />
-        <label for="Title">Title</label>
-        <VeeField
-          id="Title"
-          type="text"
-          name="Title"
-          placeholder="Input Title"
-          class="input input-bordered w-full"
-          v-model="formData.title"
-          autocomplete="on"
-        />
-        <div class="flex flex-col mt-5">
-          <label for="body">Body</label>
-          <VeeField
-            id="body"
-            as="textarea"
-            name="body"
-            placeholder="Input Body"
-            class="textarea textarea-bordered w-full"
-            v-model="formData.body"
-            autocomplete="on"
-          />
-        </div>
-        <div class="flex flex-col mt-5">
-          <label for="Category">Category Id</label>
-          <VeeField
-            id="Category"
-            as="textarea"
-            name="Category"
-            placeholder="Input Category ID"
-            class="textarea textarea-bordered w-full"
-            v-model="formData.category_id"
-            autocomplete="on"
-          />
-        </div>
-        <div class="flex flex-col mt-5">
-          <label for="Meta">Meta</label>
-          <VeeField
-            id="Meta"
-            as="textarea"
-            name="Meta"
-            placeholder="Input Meta"
-            class="textarea textarea-bordered w-full"
-            v-model="formData.meta"
-            autocomplete="on"
-          />
-        </div>
-      </div>
-
-      <div class="flex justify-end mt-5">
-        <button type="submit" :disabled="loading" class="btn btn-success">
-          Edit Blog
-        </button>
-      </div>
-    </VeeForm>
+    <updateAdmin :eachBlog="eachBlog" :categoryBlog="categoryBlog" />
   </section>
 </template>
 
 <script setup>
+import axios from "axios";
+const { axiosRequest } = useAxios();
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 
-const { data: eachBlog, error } = await useFetch(
-  `/admins/articles/${slug.value}`,
+const { data: eachBlog } = await useFetch(`/admins/articles/${slug.value}`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const { data: categoryBlog, error } = await useFetch(
+  `/admins/article-categories`,
   {
     method: "get",
     ...requestOptions,
   }
 );
 
-const formData = ref({
-  image: eachBlog.value.data.image,
-  title: eachBlog.value.data.title,
-  body: eachBlog.value.data.body,
-  category_id: eachBlog.value.data.category_id,
-  meta: eachBlog.value.data.meta,
-});
-
-const handleImageChange = (event) => {
-  const file = event.target.files[0];
-  formData.value.image = file;
-};
-
-async function onSubmit(values, ctx) {
-  loading.value = true;
-
-  const formDataToSend = new FormData();
-
-  formDataToSend.append("image", formData.value.image);
-
-  formDataToSend.append("title", formData.value.title);
-  formDataToSend.append("body", formData.value.body);
-  formDataToSend.append("categoryId", formData.value.categoryId);
-  formDataToSend.append("meta", formData.value.meta);
-
-  const { error } = await useFetch(`/admins/articles/${slug.value}`, {
-    method: "POST",
-    body: formDataToSend,
-    ...requestOptions,
-  });
-
-  if (error.value) {
-    ctx.setErrors(transformErrors(error.value?.data));
-    snackbar.add({
-      type: "error",
-      text: error.value?.data?.message ?? "Something went wrong",
-    });
-  } else {
-    snackbar.add({
-      type: "success",
-      text: "Edit Blog Success",
-    });
-    ctx.resetForm();
-  }
-  loading.value = false;
-}
+// const category = categoryBlog.value.data.map((item) => item.name);
 
 useHead({
-  title: "Blog",
+  title: "Edit Blog",
 });
 
 definePageMeta({

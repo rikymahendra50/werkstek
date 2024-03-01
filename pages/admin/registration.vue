@@ -1,3 +1,126 @@
 <template>
-  <p>test</p>
+  <div class="grid place-items-center items-center h-screen">
+    <div class="w-[500px] p-10 justify-center shadow-lg my-5">
+      <Werkstek class="mb-7" />
+      <VeeForm :validation-schema="registerSchema" @submit="onSubmit">
+        <div class="flex flex-col gap-1">
+          <h4 class="text-lg">First Name</h4>
+          <div>
+            <VeeField
+              name="firstname"
+              class="input input-bordered w-full input-md mb-1"
+              v-model="form.first_name"
+            />
+            <VeeErrorMessage
+              name="first_name"
+              class="text-sm text-error mb-4"
+            />
+          </div>
+          <h4 class="text-lg">Last Name</h4>
+          <div>
+            <VeeField
+              name="lastname"
+              class="input input-bordered w-full input-md mb-1"
+              v-model="form.last_name"
+            />
+            <VeeErrorMessage name="last_name" class="text-sm text-error mb-4" />
+          </div>
+          <h4 class="text-lg">Email</h4>
+          <div>
+            <VeeField
+              name="email"
+              class="input input-bordered w-full input-md mb-1"
+              v-model="form.email"
+            />
+            <VeeErrorMessage name="email" class="text-sm text-error mb-4" />
+          </div>
+          <h4 h4 class="text-lg">Password</h4>
+          <div>
+            <VeeField
+              name="password"
+              v-model="form.password"
+              type="password"
+              class="input input-bordered w-full input-md mb-1"
+            />
+            <VeeErrorMessage name="password" class="text-sm text-error mb-4" />
+          </div>
+          <h4 class="text-lg">Confirm Password</h4>
+          <div>
+            <VeeField
+              name="confirmPassword"
+              v-model="form.confirm_password"
+              type="password"
+              class="input input-bordered w-full input-md mb-1"
+            />
+            <VeeErrorMessage
+              name="confirmPassword"
+              class="text-sm text-error mb-4"
+            />
+          </div>
+          <div class="mt-5">
+            <button
+              :disabled="loading"
+              type="submit"
+              class="btn bg-primary text-white w-full hover:bg-secondary"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </VeeForm>
+    </div>
+  </div>
 </template>
+
+<script setup>
+const { registerSchema } = useSchema();
+const { loading, transformErrors } = useRequestHelper();
+const { requestOptions } = useRequestOptions();
+
+const form = ref({
+  first_name: undefined,
+  last_name: undefined,
+  email: undefined,
+  password: undefined,
+  confirm_password: undefined,
+});
+
+async function onSubmit() {
+  loading.value = true;
+
+  const { error } = await useFetch(`/admins`, {
+    method: "post",
+    body: {
+      first_name: form.value.first_name,
+      last_name: form.value.last_name,
+      email: form.value.email,
+      password: form.value.password,
+      confirm_password: form.value.confirm_password,
+    },
+    ...requestOptions,
+  });
+
+  if (error.value) {
+    loading.value = false;
+    ctx.setErrors(transformErrors(error.value?.data));
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
+    });
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Your data registration is Success, We will confirm soon",
+    });
+    ctx.resetForm();
+  }
+}
+
+useHead({
+  title: "Registration",
+});
+
+definePageMeta({
+  layout: false,
+});
+</script>

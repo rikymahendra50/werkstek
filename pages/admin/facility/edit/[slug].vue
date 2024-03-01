@@ -1,10 +1,10 @@
 <template>
   <section>
     <div class="flex gap-4">
-      <NuxtLink to="/admin/category" class="btn btn-warning btn-outline btn-sm"
+      <NuxtLink to="/admin/facility" class="btn btn-warning btn-outline btn-sm"
         >Back</NuxtLink
       >
-      <span class="text-2xl font-bold">Edit Category</span>
+      <span class="text-2xl font-bold">Edit Facility</span>
     </div>
     <VeeForm @submit="onSubmit">
       <div class="grid grid-cols-2 mt-3 gap-3">
@@ -15,7 +15,7 @@
             type="text"
             placeholder="Input Name"
             class="input input-bordered w-full"
-            v-model="formData.name"
+            v-model="name"
             autocomplete="on"
           />
         </div>
@@ -25,12 +25,13 @@
             id="image"
             type="file"
             name="image"
-            class="input input-bordered w-full"
+            class="file-input file-input-bordered file-input-warning w-full max-w-xs"
             accept="image/*"
             v-on:change="handleImageChange"
+            @click="selectImage"
             autocomplete="on"
+            required
           />
-          <VeeErrorMessage name="shortDesk" class="text-sm text-error" />
         </div>
       </div>
       <div class="flex justify-end mt-5">
@@ -43,38 +44,45 @@
 </template>
 
 <script setup>
-const { categorySchema } = useSchema();
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const route = useRoute();
-const router = useRouter();
 const slug = computed(() => route.params.slug);
 
-function goToHomeCategory() {
-  router.push("/admin/category");
-}
-
-const { data: eachCategory, error } = await useFetch(
-  `/admins/categories/${slug.value}`,
+const { data: facilities, error } = await useFetch(
+  `/admins/facilities/${slug.value}`,
   {
     method: "get",
     ...requestOptions,
   }
 );
 
-const formData = ref({
-  name: eachCategory.value.data.name,
-  short_description: eachCategory.value.data.short_description,
-  full_description: eachCategory.value.data.full_description,
-});
+const fileInput = ref(null);
+const getImages = ref(facilities.value);
+const imageTest = ref();
+
+// const selectImage = () => {
+//   fileInput.value.click();
+// };
+
+const handleImageChange = (event) => {
+  const files = event.target.files;
+  imageTest.value = files[0];
+};
+
+const name = ref(facilities.value.data.name);
 
 async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const { error } = await useFetch(`/admins/categories/${slug.value}`, {
-    method: "put",
-    body: formData.value,
+  const formData = new FormData();
+  formData.append("name", name.value);
+  formData.append("image", imageTest.value);
+
+  const { error } = await useFetch(`/admins/facilities/${slug.value}`, {
+    method: "post",
+    body: formData,
     ...requestOptions,
   });
 
@@ -87,9 +95,9 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Edit Category Success",
+      text: "Edit Facility Success",
     });
-    goToHomeCategory();
+    F;
     ctx.resetForm();
   }
 
@@ -97,7 +105,7 @@ async function onSubmit(values, ctx) {
 }
 
 useHead({
-  title: "Edit Category",
+  title: "Edit Facility",
 });
 
 definePageMeta({

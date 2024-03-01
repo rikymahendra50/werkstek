@@ -1,9 +1,7 @@
 <template>
   <div v-if="pending">Loading...</div>
   <div v-if="data && data?.data" class="overflow-y-auto max-h-[70%]">
-    <h3 class="font-bold my-2">
-      Detail Category Blog {{ data?.data?.first_name }}
-    </h3>
+    <h3 class="font-bold my-2">Detail Blog {{ data?.data?.first_name }}</h3>
     <table class="table">
       <tbody>
         <tr>

@@ -5,7 +5,7 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Admin</div>
+          <div class="text-xl md:text-3xl font-bold">Admin List</div>
         </div>
         <div>
           <NuxtLink

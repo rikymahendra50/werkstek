@@ -9,8 +9,6 @@
         <th scope="col">Position</th>
         <th scope="col">Email</th>
         <th scope="col">Active</th>
-        <th scope="col">Created at</th>
-        <th scope="col">Update at</th>
       </tr>
     </thead>
     <tbody>
@@ -21,8 +19,6 @@
         <td data-label="Position">{{ $user?.last_name }}</td>
         <td data-label="Email">{{ $user?.email }}</td>
         <td data-label="Active">{{ $user?.is_active }}</td>
-        <td data-label="Created At">Created At</td>
-        <td data-label="Update At">Update At</td>
       </tr>
     </tbody>
   </table>

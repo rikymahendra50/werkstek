@@ -7,7 +7,7 @@
       <span class="text-2xl font-bold">Add Blog</span>
     </div>
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="flex flex-col mt-10 overflow-auto">
+      <div class="flex flex-col mt-10 overflow-auto p-3">
         <label for="image" class="mb-1">Image</label>
         <input
           id="image"
@@ -39,16 +39,21 @@
           />
         </div>
         <div class="flex flex-col mt-5">
-          <label for="Category">Category Id</label>
+          <label for="category">Category</label>
           <VeeField
-            id="Category"
-            as="textarea"
-            name="Category"
-            placeholder="Input Category ID"
-            class="textarea textarea-bordered w-full"
+            id="category"
+            name="category"
+            as="select"
             v-model="formData.category_id"
-            autocomplete="on"
-          />
+            class="select select-bordered w-full"
+            placeholder="category"
+            autocomplete="off"
+          >
+            <option disabled selected>Category</option>
+            <option :value="item.id" v-for="item in categoryBlog.data">
+              {{ item.name }}
+            </option>
+          </VeeField>
         </div>
         <div class="flex flex-col mt-5">
           <label for="Meta">Meta</label>
@@ -63,7 +68,6 @@
           />
         </div>
       </div>
-
       <div class="flex justify-end mt-5">
         <button type="submit" :disabled="loading" class="btn btn-success">
           Add Blog
@@ -78,30 +82,42 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 
+const { data: categoryBlog, error } = await useFetch(
+  `/admins/article-categories`,
+  {
+    method: "get",
+    ...requestOptions,
+  }
+);
+
+const imageTest = ref();
+
+const handleImageChange = (event) => {
+  const files = event.target.files;
+  if (files.length > 0) {
+    imageTest.value = files[0];
+  }
+};
+
 const formData = ref({
-  image: null,
   title: undefined,
   body: undefined,
   category_id: undefined,
   meta: undefined,
 });
 
-const handleImageChange = (event) => {
-  const file = event.target.files[0];
-  formData.value.image = file;
-};
-
 async function onSubmit(values, ctx) {
   loading.value = true;
 
   const formDataToSend = new FormData();
 
-  formDataToSend.append("image", formData.value.image);
-
+  formDataToSend.append("image", imageTest.value);
   formDataToSend.append("title", formData.value.title);
   formDataToSend.append("body", formData.value.body);
-  formDataToSend.append("categoryId", formData.value.category_id);
+  formDataToSend.append("category_id", formData.value.category_id);
   formDataToSend.append("meta", formData.value.meta);
+
+  console.log(formDataToSend);
 
   const { error } = await useFetch(`/admins/articles`, {
     method: "POST",
@@ -127,7 +143,7 @@ async function onSubmit(values, ctx) {
 }
 
 useHead({
-  title: "Blog",
+  title: "Add Blog",
 });
 
 definePageMeta({

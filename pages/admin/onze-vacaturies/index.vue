@@ -5,14 +5,14 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Vacaturies</div>
+          <div class="text-xl md:text-3xl font-bold">Vacatures</div>
         </div>
         <div>
           <NuxtLink
             to="/admin/onze-vacaturies/add"
             class="btn btn-sm h-11 btn-neutral normal-case"
           >
-            Add New Vacaturies
+            Add New Vacatures
           </NuxtLink>
         </div>
       </div>
@@ -22,7 +22,7 @@
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Name</th>
-                <th class="font-medium">Detail Vacaturies</th>
+                <th class="font-medium">Detail Vacatures</th>
                 <th class="font-medium"></th>
               </tr>
             </thead>
@@ -130,7 +130,7 @@ const deleteLocatie = async (locatieSlug) => {
 };
 
 useHead({
-  title: "Admin Onze Vacaturies",
+  title: "Admin Onze Vacatures",
 });
 
 definePageMeta({

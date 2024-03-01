@@ -9,7 +9,7 @@
         </div>
         <div>
           <NuxtLink
-            to="`/admin/blog/add`"
+            to="/admin/blog/add"
             class="btn btn-sm h-11 btn-neutral normal-case"
           >
             Add new Blog
@@ -34,7 +34,6 @@
                 v-for="(item, index) in blog?.data"
               >
                 <td class="max-w-[100px]">
-                  <!-- <img :src="item.image" :alt="index" /> -->
                   <label
                     :for="`modal-${item.id}`"
                     class="btn btn-sm btn-outline modal-button"
@@ -64,6 +63,12 @@
                 <td class="font-medium">
                   <NuxtLink
                     :to="`/admin/blog/${item.slug}`"
+                    class="btn btn-sm btn-outline mr-2"
+                  >
+                    Detail
+                  </NuxtLink>
+                  <NuxtLink
+                    :to="`/admin/blog/${item.slug}`"
                     class="btn btn-sm btn-outline text-[12px]"
                     >Item Category</NuxtLink
                   >
@@ -86,7 +91,7 @@
                         </h3>
                         <p class="py-4 text-lg">
                           Are you sure want to delete this called
-                          {{ item.name }}?
+                          {{ item.slug }}?
                         </p>
                         <div class="modal-action">
                           <form method="dialog">

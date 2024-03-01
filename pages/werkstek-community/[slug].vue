@@ -2,6 +2,7 @@
   <div v-if="pending">Loading...</div>
   <div v-if="data && data?.data">
     <EachBlog
+      typeArticle="community"
       :title="data?.data?.title"
       :imageSrc="data.data.image"
       :body="data?.data?.body"

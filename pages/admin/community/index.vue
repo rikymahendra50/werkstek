@@ -9,10 +9,10 @@
         </div>
         <div>
           <NuxtLink
-            to="`/admin/community/add`"
+            to="/admin/community/add"
             class="btn btn-sm h-11 btn-neutral normal-case"
           >
-            Add New Community
+            Add new Community
           </NuxtLink>
         </div>
       </div>
@@ -29,11 +29,12 @@
               </tr>
             </thead>
             <tbody>
-              <!-- <tr
+              <tr
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
                 v-for="(item, index) in community?.data"
               >
                 <td class="max-w-[100px]">
+                  <!-- <img :src="item.image" :alt="index" /> -->
                   <label
                     :for="`modal-${item.id}`"
                     class="btn btn-sm btn-outline modal-button"
@@ -93,7 +94,7 @@
                         <div class="modal-action">
                           <form method="dialog">
                             <button
-                              @click="deleteBlog(item.slug)"
+                              @click="deleteCommunity(item.slug)"
                               class="btn btn-outline btn-error mr-3"
                             >
                               Delete
@@ -105,12 +106,6 @@
                     </dialog>
                   </div>
                 </td>
-              </tr> -->
-              <tr>
-                <td>test</td>
-                <td>test</td>
-                <td>Test</td>
-                <td>Test</td>
               </tr>
             </tbody>
           </table>
@@ -123,7 +118,7 @@
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const { data: community, error } = await useFetch(`/admins/articles-copy`, {
+const { data: community, error } = await useFetch(`/admins/community-blogs`, {
   method: "get",
   ...requestOptions,
 });
@@ -136,9 +131,9 @@ const showModal = (index) => {
   }
 };
 
-const deleteBlog = async (slug) => {
+const deleteCommunity = async (slug) => {
   loading.value = true;
-  await useFetch(`/admins/articles-copy/${slug}`, {
+  await useFetch(`/admins/community-blogs/${slug}`, {
     method: "DELETE",
     ...requestOptions,
   });
@@ -152,7 +147,7 @@ const deleteBlog = async (slug) => {
   } else {
     snackbar.add({
       type: "success",
-      text: "Delete Blog Success",
+      text: "Delete Community Success",
     });
   }
   loading.value = false;
