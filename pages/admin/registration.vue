@@ -1,58 +1,61 @@
 <template>
   <div class="grid place-items-center items-center h-screen">
-    <div class="w-[500px] p-10 justify-center shadow-lg">
-      <Werkstek class="mb-10" />
-      <VeeForm :validation-schema="loginSchema" @submit="onSubmit">
-        <h4 class="pb-1 text-lg">First Name</h4>
-        <div class="flex flex-col space-y-4">
+    <div class="w-[500px] p-10 justify-center shadow-lg my-5">
+      <Werkstek class="mb-7" />
+      <VeeForm :validation-schema="registerSchema" @submit="onSubmit">
+        <div class="flex flex-col gap-1">
+          <h4 class="text-lg">First Name</h4>
           <div>
             <VeeField
               name="firstname"
-              class="input input-bordered w-full"
+              class="input input-bordered w-full input-md mb-1"
               v-model="form.first_name"
             />
-            <!-- <VeeErrorMessage name="email" class="text-sm text-error" /> -->
+            <VeeErrorMessage
+              name="first_name"
+              class="text-sm text-error mb-4"
+            />
           </div>
-          <h4 class="pb-1 text-lg">Last Name</h4>
+          <h4 class="text-lg">Last Name</h4>
           <div>
             <VeeField
               name="lastname"
-              class="input input-bordered w-full"
+              class="input input-bordered w-full input-md mb-1"
               v-model="form.last_name"
             />
-            <!-- <VeeErrorMessage name="email" class="text-sm text-error" /> -->
+            <VeeErrorMessage name="last_name" class="text-sm text-error mb-4" />
           </div>
-          <h4 class="pb-1 text-lg">Email</h4>
+          <h4 class="text-lg">Email</h4>
           <div>
             <VeeField
               name="email"
-              class="input input-bordered w-full"
+              class="input input-bordered w-full input-md mb-1"
               v-model="form.email"
             />
-            <VeeErrorMessage name="email" class="text-sm text-error" />
+            <VeeErrorMessage name="email" class="text-sm text-error mb-4" />
           </div>
-          <h4 h4 class="pb-1 text-lg">Password</h4>
+          <h4 h4 class="text-lg">Password</h4>
           <div>
             <VeeField
               name="password"
               v-model="form.password"
               type="password"
-              class="input input-bordered w-full"
+              class="input input-bordered w-full input-md mb-1"
             />
-            <VeeErrorMessage name="password" class="text-sm text-error" />
+            <VeeErrorMessage name="password" class="text-sm text-error mb-4" />
           </div>
-          <h4 class="pb-1 text-lg">Confirm Password</h4>
+          <h4 class="text-lg">Confirm Password</h4>
           <div>
             <VeeField
               name="confirmPassword"
               v-model="form.confirm_password"
               type="password"
-              class="input input-bordered w-full"
+              class="input input-bordered w-full input-md mb-1"
             />
-            <!-- <VeeErrorMessage
+            <VeeErrorMessage
               name="confirmPassword"
-              class="text-sm text-error"
-            /> -->
+              class="text-sm text-error mb-4"
+            />
           </div>
           <div class="mt-5">
             <button
@@ -70,9 +73,9 @@
 </template>
 
 <script setup>
+const { registerSchema } = useSchema();
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const { loginSchema } = useSchema();
 
 const form = ref({
   first_name: undefined,
@@ -83,8 +86,6 @@ const form = ref({
 });
 
 async function onSubmit() {
-  console.log("test");
-
   loading.value = true;
 
   const { error } = await useFetch(`/admins`, {

@@ -42,19 +42,23 @@
               @change="handleImageChange($event, index)"
             />
           </div>
-          <!-- <div
+          <div
+            class="col-span-1 h-full w-full min-h-[150px] overflow-hidden rounded-lg border-2 border-dashed flex items-center justify-center hover:shadow-md transition-all duration-500"
             v-for="(image, index) in getImages"
             :key="index"
-            class="col-span-1 relative flex flex-col justify-between h-full w-full max-h-[250px] overflow-hidden rounded-lg border-2 border-dashed hover:shadow-md transition-all duration-500"
           >
-            <div class="flex items-center justify-center">
-              <img
-                :src="image"
-                alt="Image"
-                class="w-[150px] h-full object-cover p-3"
-              />
+            <div class="flex flex-col items-center">
+              <div class="flex justify-center mb-3">
+                <div class="flex items-center justify-center">
+                  <img
+                    :src="image"
+                    alt="Image"
+                    class="w-[150px] h-full object-cover p-3"
+                  />
+                </div>
+              </div>
             </div>
-          </div> -->
+          </div>
         </div>
         <div v-for="(item, index) in getImages.data" :key="index">
           <img
@@ -78,8 +82,6 @@
 </template>
 
 <script setup>
-import { ref, getCurrentInstance } from "vue";
-
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
@@ -88,13 +90,6 @@ const route = useRoute();
 const slug = computed(() => {
   return route.params.slug;
 });
-const { data: images } = await useFetch(
-  `/admins/products/${slug.value}/images`,
-  {
-    method: "get",
-    ...requestOptions,
-  }
-);
 
 const { data: getImages } = await useFetch(
   `/admins/products/${slug.value}/images`,
@@ -104,13 +99,12 @@ const { data: getImages } = await useFetch(
   }
 );
 
-const instance = getCurrentInstance();
 const fileInput = ref(null);
 
 const imageTest = ref();
 
 const selectImage = () => {
-  fileInput.value.click(); // Akses elemen input file melalui ref
+  fileInput.value.click();
 };
 
 const handleImageChange = (event) => {

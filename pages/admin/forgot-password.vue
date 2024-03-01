@@ -52,8 +52,6 @@ const stepper = useStepper({
 
 const { stateForm } = useForgotPassword();
 
-console.log(stateForm.value.email);
-
 const titleHeader = computed(() => {
   return stepper.current?.value?.title ?? "Forgot Password";
 });

@@ -4,7 +4,6 @@
       class="flex items-center justify-between w-full relative bg-white container-custom py-5"
     >
       <!-- Header logo -->
-
       <!-- Mobile toggle -->
       <div class="lg:hidden flex">
         <button name="toggle" @click="drawer" label="toggle">

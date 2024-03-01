@@ -96,7 +96,7 @@
 <script setup lang="ts">
 import { useFileDialog } from "@vueuse/core";
 import VuePictureCropper, { cropper } from "vue-picture-cropper";
-const { modal } = useModal();
+// const { modal } = useModal();
 
 const props = defineProps({
   loading: {

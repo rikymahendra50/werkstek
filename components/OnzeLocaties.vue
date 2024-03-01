@@ -1,5 +1,9 @@
 <template>
   <section class="py-20">
+    <!-- <pre>
+      {{ filteredData.data[0].longitude }}
+    </pre> -->
+
     <TitleHeader
       title="Onze locaties"
       secondTitle="Bekijk al onze locaties"
@@ -149,6 +153,7 @@
           v-for="(item, index) in filteredData.data"
           :key="item.id"
           :name="item.location.name"
+          :type="item.level_type"
           :latitude="item.latitude"
           :longitude="item.longitude"
           :link="`/onze-locaties/${item.slug}`"
@@ -203,7 +208,11 @@ onMounted(() => {
   );
 });
 
-const name = data.value.data.map((item) => item.location.name);
+// const name = data.value.data.map((item) => item.location.name);
+
+// const city = ref(name);
+
+const name = data.value.data.map((item) => item.name);
 
 const city = ref(name);
 
@@ -236,8 +245,6 @@ const functieCheckbox = facility.value.data;
 const numericPrices = data.value.data.map((item) => parseFloat(item.price));
 
 const highestPrice = Math.max(...numericPrices);
-
-console.log(highestPrice);
 
 const selectedCity = ref("");
 const selectedSoortLocatie = ref([]);

@@ -53,7 +53,6 @@ const slug = computed(() => route.params.slug);
 const name = ref();
 const imageTest = ref();
 
-// Fungsi untuk menangani perubahan pada input file
 const handleImageChange = (event) => {
   const files = event.target.files;
   if (files.length > 0) {
@@ -61,7 +60,6 @@ const handleImageChange = (event) => {
   }
 };
 
-// Fungsi untuk mengirim data ke API saat formulir disubmit
 const onSubmit = async (values, ctx) => {
   loading.value = true;
 

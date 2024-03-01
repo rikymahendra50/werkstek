@@ -6,7 +6,7 @@
       >
       <span class="text-2xl font-bold">Edit Location</span>
     </div>
-    <VeeForm @submit="onSubmit" class="max-h-[400px]">
+    <form @submit.prevent="onSubmit" class="max-h-[400px]">
       <div class="grid grid-cols-1 mt-3 gap-3 min">
         <div class="flex flex-col">
           <label for="Name">Name</label>
@@ -45,12 +45,14 @@
           Edit Location
         </button>
       </div>
-    </VeeForm>
+    </form>
   </section>
 </template>
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
+const { axiosRequest } = useAxios();
+
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const route = useRoute();
@@ -58,17 +60,8 @@ const slug = computed(() => route.params.slug);
 
 const handleImageChange = (event) => {
   const files = event.target.files;
-  if (files.length > 0) {
-    imageTest.value = files[0];
-  }
+  imageTest.value = files[0];
 };
-
-// const handleAdditionalImageChange = (event) => {
-//   const files = event.target.files;
-//   if (files.length > 0) {
-//     additionalImageTest.value = files[0];
-//   }
-// };
 
 const { data: location, error } = await useFetch(
   `/admins/locations/${slug.value}`,
@@ -80,7 +73,6 @@ const { data: location, error } = await useFetch(
 
 const name = ref(location.value.data.name);
 const imageTest = ref(location.value.data.image);
-const additionalImageTest = ref(null);
 
 const onSubmit = async (values, ctx) => {
   loading.value = true;
@@ -89,21 +81,19 @@ const onSubmit = async (values, ctx) => {
   formData.append("name", name.value);
   formData.append("image", imageTest.value);
 
-  if (additionalImageTest.value) {
-    formData.append("additionalImage", additionalImageTest.value);
-  }
+  const { error } = await axiosRequest.post(
+    `/admins/locations/${slug.value}?_method=PUT`,
+    formData,
+    {
+      ...requestOptions,
+    }
+  );
 
-  const { error } = await useFetch(`/admins/locations/${slug.value}`, {
-    method: "put",
-    body: formData,
-    ...requestOptions,
-  });
-
-  if (error.value) {
-    ctx.setErrors(transformErrors(error.value?.data));
+  if (error) {
+    ctx.setErrors(transformErrors(error?.data));
     snackbar.add({
       type: "error",
-      text: error.value?.data?.message ?? "Something went wrong",
+      text: error?.data?.message ?? "Something went wrong",
     });
   } else {
     snackbar.add({

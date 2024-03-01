@@ -15,7 +15,7 @@
   />
 
   <MapInteractive class="py-10" />
-  <SliderLocaties />
+  <SliderLocaties :data="sliderData.data" />
   <SliderTestimony class="my-20" />
   <FourImages />
   <BgBigGreen
@@ -32,7 +32,14 @@
 </template>
 
 <script setup>
+const { requestOptions } = useRequestOptions();
 const { StatistiekLocatiesData, BgBigGreenData } = useHome();
+
+const { data: sliderData } = useFetch(`/products`, {
+  method: "get",
+  ...requestOptions,
+});
+
 useHead({
   title: "Home",
 });

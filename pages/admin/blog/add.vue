@@ -99,8 +99,6 @@ const handleImageChange = (event) => {
   }
 };
 
-// const category = categoryBlog.value.data.map((item) => item.name);
-
 const formData = ref({
   title: undefined,
   body: undefined,

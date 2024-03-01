@@ -16,7 +16,7 @@
       :special="data?.data?.privileges"
     />
   </div>
-  <SliderLocaties class="my-10 py-10" />
+  <SliderLocaties class="my-10 py-10" :data="sliderData.data" />
   <SliderTestimony />
 </template>
 
@@ -26,6 +26,11 @@ const slug = route.params.slug;
 
 const { requestOptions } = useRequestOptions();
 const { data, error } = await useFetch(`/products/${slug}`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const { data: sliderData } = useFetch(`/products`, {
   method: "get",
   ...requestOptions,
 });

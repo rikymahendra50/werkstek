@@ -33,7 +33,15 @@
               }"
             >
               <SwiperSlide v-for="slide in imageSrc" :key="slide.id">
-                <div>
+                <div class="relative">
+                  <div class="absolute mt-10">
+                    <div
+                      class="bg-primary min-w-[140px] lg:min-w-[232px] text-[14px] md:text-lg text-white py-1 px-2 md:py-2 md:px-4 grid"
+                    >
+                      <span>Prijs :</span>
+                      <span>€ {{ price }} per/{{ rentType }}</span>
+                    </div>
+                  </div>
                   <img
                     :src="slide.image"
                     alt="image"
@@ -41,7 +49,6 @@
                   />
                 </div>
               </SwiperSlide>
-
               <div class="h-full w-full bg-gradient-to-l inset-0 z-10 border-2">
                 <Swiper
                   :modules="[SwiperThumbs]"
@@ -68,8 +75,6 @@
           </div>
           <!-- end swiper -->
         </div>
-        <span>Rent Type = {{ rentType }}</span> <br />
-        <span>Price = {{ price }}</span>
         <div class="mt-2 sm:mt-10 md:mt-16 w-[100%] text-justify">
           <h1
             class="text-[#363636] text-[20px] md:text-[25px] font-semibold my-3"
@@ -99,9 +104,7 @@
                     class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
                   >
                     <img src="/images/checkbox_checked.svg" alt="checkBox" />
-                    <label :for="'facility-checkbox-' + index">{{
-                      item.facility.name
-                    }}</label>
+                    <span>{{ item.facility.name }}</span>
                   </td>
                 </tr>
               </tbody>
@@ -335,7 +338,7 @@
             </p>
           </NuxtLink>
         </div>
-        <!-- <Map :latitudeSpesifik="longitude" :longitudeSpesifik="longitude" /> -->
+        <MapMini :latitude="latitude" :longitude="longitude" />
       </div>
     </div>
   </section>
@@ -384,9 +387,6 @@ const props = defineProps({
   },
   imageSrc: {
     type: Array,
-  },
-  location: {
-    type: String,
   },
   description: {
     type: String,
@@ -442,14 +442,6 @@ const checkBoxData = ref([
     checkBoxTitle: "Lorem Epsum",
   },
 ]);
-
-// const imageGalleries = computed(() => {
-//   return props.images;
-// });
-
-// const enableLoop = computed(() => {
-//   return imageGalleries.value.length > 1;
-// });
 </script>
 
 <style lang="scss" scoped></style>

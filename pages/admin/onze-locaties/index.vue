@@ -36,15 +36,15 @@
                   {{ item.name }}
                 </td>
                 <td>
-                  <NuxtLink
+                  <!-- <NuxtLink
                     :to="`/admin/onze-locaties/${item.slug}`"
                     class="btn btn-sm btn-outline"
                   >
                     Detail
-                  </NuxtLink>
+                  </NuxtLink> -->
                 </td>
                 <td class="flex items-center">
-                  <NuxtLink
+                  <!-- <NuxtLink
                     :to="`/admin/onze-locaties/edit-locaties/${item.slug}`"
                     class="m-2"
                   >
@@ -52,7 +52,7 @@
                       name="i-heroicons-pencil-square"
                       class="cursor-pointer mr-1"
                     />
-                  </NuxtLink>
+                  </NuxtLink> -->
                   <div class="cursor-pointer m-2" @click="showModal(index)">
                     <icon name="i-heroicons-trash" class="mr-1" />
                   </div>
@@ -60,7 +60,7 @@
                     <div class="modal-box">
                       <h3 class="font-bold text-xl text-red-500">Warning !</h3>
                       <p class="py-4 text-lg">
-                        Are you sure want to delete this called
+                        Are you sure want to delete this item called
                         {{ item.name }}?
                       </p>
                       <div class="modal-action">
