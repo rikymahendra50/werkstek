@@ -26,3 +26,18 @@
     </div>
   </section>
 </template>
+
+<script setup>
+const route = useRoute();
+const slug = route.params.slug;
+
+const { requestOptions } = useRequestOptions();
+const { data, error } = await useFetch(`/products/${slug}`, {
+  method: "get",
+  ...requestOptions,
+});
+
+if (error.value) {
+  console.error("Error fetching data:", error);
+}
+</script>

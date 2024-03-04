@@ -13,7 +13,6 @@
             />
             <!-- <VeeErrorMessage name="firstName" class="text-sm text-error" /> -->
           </div>
-
           <h4 class="pb-1 text-lg">Last Name</h4>
           <div>
             <VeeField
@@ -23,7 +22,6 @@
             />
             <!-- <VeeErrorMessage name="lastname" class="text-sm text-error" /> -->
           </div>
-
           <h4 class="pb-1 text-lg">Email</h4>
           <div>
             <VeeField
@@ -33,7 +31,6 @@
             />
             <!-- <VeeErrorMessage name="email" class="text-sm text-error" /> -->
           </div>
-
           <div class="mt-10">
             <button
               :disabled="loading"
@@ -90,10 +87,8 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Success Adding Data",
     });
-
     ctx.resetForm();
   }
-
   loading.value = false;
 }
 

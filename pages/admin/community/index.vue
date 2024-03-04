@@ -24,7 +24,7 @@
                 <th class="font-medium">Image</th>
                 <th class="font-medium">Title</th>
                 <th class="font-medium">Meta</th>
-                <th class="font-medium">Category</th>
+                <th class="font-medium">Item Detail</th>
                 <th></th>
               </tr>
             </thead>
@@ -65,7 +65,7 @@
                   <NuxtLink
                     :to="`/admin/community/${item.slug}`"
                     class="btn btn-sm btn-outline text-[12px]"
-                    >Item Category</NuxtLink
+                    >Item Detail</NuxtLink
                   >
                 </td>
                 <td>

@@ -67,11 +67,6 @@
                   >
                     Detail
                   </NuxtLink>
-                  <NuxtLink
-                    :to="`/admin/blog/${item.slug}`"
-                    class="btn btn-sm btn-outline text-[12px]"
-                    >Item Category</NuxtLink
-                  >
                 </td>
                 <td>
                   <div class="flex justify-center items-center gap-4 my-1">

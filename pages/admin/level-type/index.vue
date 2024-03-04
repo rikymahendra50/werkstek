@@ -35,7 +35,10 @@
                   {{ item.name }}
                 </td>
                 <td class="flex items-center">
-                  <NuxtLink :to="`/admin/level-type/${item.id}`" class="m-2">
+                  <NuxtLink
+                    :to="`/admin/level-type/edit/${item.id}`"
+                    class="m-2"
+                  >
                     <icon
                       name="i-heroicons-pencil-square"
                       class="cursor-pointer mr-1"

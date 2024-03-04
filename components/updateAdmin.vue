@@ -10,7 +10,7 @@
             ref="fileInput"
             type="file"
             class="file-input file-input-md file-input-bordered file-input-accent w-full max-w-xs"
-            @input="saveToPreviewImage"
+            @v-on:change="saveToPreviewImage"
           />
         </div>
         <div v-if="eachBlog.data.image">
