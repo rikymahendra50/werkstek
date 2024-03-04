@@ -27,10 +27,33 @@
             <button
               :disabled="loading"
               type="submit"
-              class="btn btn-primary w-full"
+              class="btn bg-[#F0912D] text-white w-full hover:bg-secondary"
             >
               Sign In
             </button>
+          </div>
+          <div
+            class="mt-2 border-2 border-primary rounded-lg hover:border-secondary"
+          >
+            <NuxtLink
+              to="/admin/registration"
+              :disabled="loading"
+              type="submit"
+              class="p-2 text-center text-primary hover:text-secondary w-full rounded-lg"
+            >
+              Registasion
+            </NuxtLink>
+          </div>
+
+          <div class="mt-5">
+            <NuxtLink
+              to="/admin/forgot-password"
+              :disabled="loading"
+              type="submit"
+              class="p-2 text-center text-primary hover:text-secondary w-full rounded-lg hover:border-secondary"
+            >
+              Forgot Password?
+            </NuxtLink>
           </div>
         </div>
       </VeeForm>
@@ -81,6 +104,14 @@ async function onSubmit(values: any, ctx: any) {
 
   loading.value = false;
 }
+
+useHead({
+  title: "Login",
+});
+
+definePageMeta({
+  layout: false,
+});
 </script>
 
 <style></style>

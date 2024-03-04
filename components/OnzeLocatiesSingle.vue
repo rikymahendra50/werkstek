@@ -1,33 +1,79 @@
 <template>
   <section class="container-custom">
-    <TitleHeader2 :title1="title" :title2="subTitle" :title3="thirdTitle" />
-    <div class="flex gap-2 sm:gap-5">
-      <div class="flex flex-col w-[50%] sm:w-[60%] max-w-[727px]">
+    <TitleHeader2 :title1="location" :title2="title" />
+    <div class="md:grid grid-cols-12 gap-2 sm:gap-5">
+      <div class="col-span-8">
         <div class="flex flex-col md:min-h-[400px]">
-          <div
-            class="min-h-[200px] md:min-h-[400px] bg-no-repeat bg-cover relative"
-            :style="{ backgroundImage: 'url(' + imageBanner + ')' }"
-          >
-            <div
-              class="bg-primary absolute top-5 text-white p-1 md:p-3 md:w-[30%]"
+          <!-- Swiper -->
+          <div ref="el">
+            <Swiper
+              :modules="[
+                SwiperAutoplay,
+                SwiperEffectCreative,
+                SwiperNavigation,
+                SwiperThumbs,
+              ]"
+              :slides-per-view="1"
+              :effect="'creative'"
+              centered-slides
+              :thumbs="{ swiper: thumbsSwiper }"
+              class="overflow-hidden relative"
+              :autoplay="{
+                delay: 8000,
+                disableOnInteraction: true,
+              }"
+              :creative-effect="{
+                prev: {
+                  shadow: false,
+                  translate: ['-20%', 0, -1],
+                },
+                next: {
+                  translate: ['100%', 0, 0],
+                },
+              }"
             >
-              <span class="text-sm md:text-lg">Prijs :</span> <br />
-              <span class="text-sm md:text-lg font-semibold"
-                >€ {{ price }} per/maand</span
-              >
-            </div>
+              <SwiperSlide v-for="slide in imageSrc" :key="slide.id">
+                <div class="relative">
+                  <div class="absolute mt-10">
+                    <div
+                      class="bg-primary min-w-[140px] lg:min-w-[232px] text-[14px] md:text-lg text-white py-1 px-2 md:py-2 md:px-4 grid"
+                    >
+                      <span>Prijs :</span>
+                      <span>€ {{ price }} per/{{ rentType }}</span>
+                    </div>
+                  </div>
+                  <img
+                    :src="slide.image"
+                    alt="image"
+                    class="w-full h-full aspect-video md:min-h-[350px]"
+                  />
+                </div>
+              </SwiperSlide>
+              <div class="h-full w-full bg-gradient-to-l inset-0 z-10 border-2">
+                <Swiper
+                  :modules="[SwiperThumbs]"
+                  @swiper="setThumbsSwiper"
+                  :slides-per-view="3"
+                  :spaceBetween="10"
+                  :css-mode="true"
+                  :watch-slides-progress="true"
+                >
+                  <SwiperSlide
+                    v-for="slide in imageSrc"
+                    :key="slide.id"
+                    class="group overflow-hidden mt-3"
+                  >
+                    <img
+                      :src="slide.image"
+                      alt="image"
+                      class="group-hover:scale-125 transition-all max-h-[150px] md:max-h-[200px] w-full duration-300 object-cover aspect-square"
+                    />
+                  </SwiperSlide>
+                </Swiper>
+              </div>
+            </Swiper>
           </div>
-          <div class="grid grid-cols-3 items-center gap-2 mt-3">
-            <div class="max-w-[245px]">
-              <img :src="imageSrc1" class="w-full" />
-            </div>
-            <div class="max-w-[245px]">
-              <img :src="imageSrc2" class="w-full" />
-            </div>
-            <div class="max-w-[245px]">
-              <img :src="imageSrc3" class="w-full" />
-            </div>
-          </div>
+          <!-- end swiper -->
         </div>
         <div class="mt-2 sm:mt-10 md:mt-16 w-[100%] text-justify">
           <h1
@@ -36,38 +82,29 @@
             <!-- Over WERF5 -->
             {{ title }}
           </h1>
-          <div
-            v-html="description"
-            class="text-[12px] md:text-[14px] lg:text-[16px]"
-          ></div>
+          <div v-html="description" class="text-[12px] md:text-[16px]"></div>
         </div>
-        <p class="text-[#495057] text-base mt-10 mb-3 ml-5">
+        <p class="text-[#495057] text-base mt-10 mb-1 ml-2">
           De faciliteiten op de locatie
         </p>
-        <div class="border w-[95%] min-w-[70px] relative">
+        <div class="w-[95%] min-w-[70px] relative">
           <span class="absolute top-[-39px] text-primary text-4xl">____</span>
           <div class="overflow-x-auto sm:px-3">
             <table class="table">
               <tbody>
                 <tr
                   class="flex justify-between items-center"
-                  v-for="(itemCheckBox, index) in checkBoxData"
-                  :key="itemCheckBox.id"
+                  v-for="(item, index) in facility"
+                  :key="item.id"
                 >
                   <td class="text-[13px] w-[40%] sm:w-[50%]">
-                    {{ itemCheckBox.name }}
+                    {{ item.facility.name }}
                   </td>
                   <td
-                    class="w-[60%] sm:w-[50%] flex items-start text-quaternary gap-3"
+                    class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
                   >
-                    <input
-                      type="checkbox"
-                      name="checkbox"
-                      checked
-                      disabled
-                      value="1"
-                    />
-                    <label for="checkbox">Fiture</label>
+                    <img src="/images/checkbox_checked.svg" alt="checkBox" />
+                    <span>{{ item.facility.name }}</span>
                   </td>
                 </tr>
               </tbody>
@@ -75,9 +112,9 @@
           </div>
         </div>
       </div>
-      <div class="w-[50%] sm:w-[40%] block">
+      <div class="col-span-4">
         <ul class="rounded-[8px] bg-[#859C811A] py-4 px-2 md:px-5">
-          <li class="py-1 lg:py-2 flex">
+          <li class="py-1 lg:py-2 flex" v-for="item in special">
             <svg
               width="24"
               height="23"
@@ -108,9 +145,11 @@
                 </clipPath>
               </defs>
             </svg>
-            <span class="pl-2 text-[12px] md:text-[15px]">Kleinschalig</span>
+            <span class="pl-2 text-[12px] md:text-[15px]">{{
+              item.privilege
+            }}</span>
           </li>
-          <li class="py-1 lg:py-2 flex">
+          <!-- <li class="py-1 lg:py-2 flex">
             <svg
               width="24"
               height="23"
@@ -247,7 +286,7 @@
             <span class="pl-2 text-[12px] md:text-[15px]"
               >Internationale groep mensen lore</span
             >
-          </li>
+          </li> -->
         </ul>
         <div class="ml-1 md:ml-3">
           <p class="text-[18px] lg:text-[24px] text-[#363636] my-4">
@@ -258,120 +297,151 @@
               Oudegracht aan de Werf 5
             </li>
             <li class="text-[12px] md:text-[14px] text-[#4A4A4A]">Postcode</li>
-            <li class="text-[12px] md:text-[15px] text-[#4A4A4A]">Utrecht</li>
+            <li class="text-[12px] md:text-[15px] text-[#4A4A4A]">
+              {{ location }}
+            </li>
             <li class="text-[13px] md:text-[15px] text-[#4A4A4A]">Nederland</li>
           </ul>
           <div class="my-4 flex flex-col gap-3">
-            <NuxtLink :to="'tel:085-0290598'" class="flex gap-3">
+            <NuxtLink :to="`tel:${phoneNumber}`" class="flex gap-3">
               <img src="/images/telp-bg-primary.svg" alt="phone-icon" />
-              <p class="text-[#404040] text-[13px] md:text-[15px] mt-2">
-                Tel : <span>085-0290598</span>
+              <p class="text-[#404040] text-[13px] md:text-[16px] mt-2">
+                Tel : <span>{{ phoneNumber }}</span>
               </p>
             </NuxtLink>
-            <NuxtLink :to="'mailto:' + 'info@werkstek.nl'" class="flex gap-3">
+            <NuxtLink :to="`mailto:' + ${email}`" class="flex gap-3">
               <img src="/images/email-bg-primary.svg" alt="phone-icon" />
               <p class="text-[#404040] text-[13px] md:text-[16px]">
-                E-mail: <span>info@werkstek.nl</span>
+                E-mail: <span>{{ email }}</span>
               </p>
             </NuxtLink>
           </div>
         </div>
 
         <div
-          class="flex flex-col sm:flex-row text-white justify-between mt-5 items-center"
+          class="flex flex-col sm:flex-row text-white justify-between mt-5 items-start md:gap-3"
         >
-          <ButtonLarge
-            buttonTitle="Aanvragen"
-            buttonLink="/voor-verhuurders"
-            class="my-2 rounded-full text-sm"
-          />
-          <ButtonLarge
-            buttonTitle="Contact opnemen"
-            buttonLink="/contact"
-            class="my-2 rounded-full text-sm"
-          />
+          <NuxtLink
+            to="/voor-verhuurders"
+            class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px] mb-3"
+          >
+            <p class="text-[12px] sm:text-lg text-center text-white font-thin">
+              Aanvragen
+            </p>
+          </NuxtLink>
+          <NuxtLink
+            to="/contact"
+            class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px]"
+          >
+            <p class="text-[12px] sm:text-lg text-center text-white font-thin">
+              Contact Opnemen
+            </p>
+          </NuxtLink>
         </div>
-        <Map />
+        <MapMini :latitude="latitude" :longitude="longitude" />
       </div>
     </div>
   </section>
 </template>
 
-<script>
-export default {
-  props: {
-    imageBanner: {
-      type: String,
-    },
-    title: {
-      type: String,
-    },
-    subTitle: {
-      type: String,
-    },
-    thirdTitle: {
-      type: String,
-    },
-    imageSrc1: {
-      type: String,
-    },
-    imageSrc2: {
-      type: String,
-    },
-    imageSrc3: {
-      type: String,
-    },
-    location: {
-      type: String,
-    },
-    price: {
-      type: String,
-    },
-    description: {
-      type: String,
-    },
-  },
-  data() {
-    return {
-      dataLocatiesSingle: {},
-      checkBoxData: [
-        {
-          id: 1,
-          name: "Wifi",
-          checkBoxTitle: "Lorem Epsum",
-        },
-        {
-          id: 2,
-          name: "Parkeerplaats",
-          checkBoxTitle: "Lorem Epsum",
-        },
-        {
-          id: 3,
-          name: "Receptie",
-          checkBoxTitle: "Lorem Epsum",
-        },
-        {
-          id: 4,
-          name: "Koffiebar",
-          checkBoxTitle: "Lorem Epsum",
-        },
-        {
-          id: 5,
-          name: "Vlakbij het treinstation",
-          checkBoxTitle: "Lorem Epsum",
-        },
-        {
-          id: 6,
-          name: "Loungeplekken",
-          checkBoxTitle: "Lorem Epsum",
-        },
-        {
-          id: 7,
-          name: "Vergaderruimtes met videoschermenn",
-          checkBoxTitle: "Lorem Epsum",
-        },
-      ],
-    };
-  },
+<script setup>
+const thumbsSwiper = ref(null);
+const setThumbsSwiper = (swiper) => {
+  thumbsSwiper.value = swiper;
 };
+
+const images = ref([
+  {
+    id: 1,
+    image: "/images/65b7628bc99a6.jpg",
+  },
+  {
+    id: 2,
+    image: "/images/img-slider-home-2.png",
+  },
+  {
+    id: 3,
+    image: "/images/65b7628bc99a6.jpg",
+  },
+  {
+    id: 4,
+    image: "/images/65b7628bc99a6.jpg",
+  },
+]);
+
+const props = defineProps({
+  title: {
+    type: String,
+  },
+  rentType: {
+    type: String,
+  },
+  location: {
+    type: String,
+  },
+  subTitle: {
+    type: String,
+  },
+  thirdTitle: {
+    type: String,
+  },
+  imageSrc: {
+    type: Array,
+  },
+  description: {
+    type: String,
+  },
+  phoneNumber: {},
+  email: {},
+  latitude: {},
+  longitude: {},
+  price: {},
+  facility: {
+    type: Array,
+  },
+  location: {},
+  special: {
+    type: Array,
+  },
+});
+
+const checkBoxData = ref([
+  {
+    id: 1,
+    name: "Wifi",
+    checkBoxTitle: "Lorem Epsum",
+  },
+  {
+    id: 2,
+    name: "Parkeerplaats",
+    checkBoxTitle: "Lorem Epsum",
+  },
+  {
+    id: 3,
+    name: "Receptie",
+    checkBoxTitle: "Lorem Epsum",
+  },
+  {
+    id: 4,
+    name: "Koffiebar",
+    checkBoxTitle: "Lorem Epsum",
+  },
+  {
+    id: 5,
+    name: "Vlakbij het treinstation",
+    checkBoxTitle: "Lorem Epsum",
+  },
+  {
+    id: 6,
+    name: "Loungeplekken",
+    checkBoxTitle: "Lorem Epsum",
+  },
+  {
+    id: 7,
+    name: "Vergaderruimtes met videoschermenn",
+    checkBoxTitle: "Lorem Epsum",
+  },
+]);
 </script>
+
+<style lang="scss" scoped></style>

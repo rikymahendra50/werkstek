@@ -3,15 +3,14 @@
     <NuxtLink
       :to="`onze-vacaturies/${link}`"
       class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg group hover:shadow-lg transition min-h-[150px] sm:min-h-[170px] md:min-h-[200px]"
-      style="box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.05)"
     >
       <div
         class="grid col-span-4 md:col-span-5 md:min-h-[210px] h-full bg-no-repeat bg-cover rounded-lg relative text-white"
         :style="{
-          backgroundImage: `url('${image}')`,
-          background: `linear-gradient(90deg, rgba(251,249,249,0) 39%, rgba(255,255,255,1) 100%), url('${image}')`,
+          // backgroundImage: `url('${image}')`,
+          background: `linear-gradient(90deg, rgba(250,249,249,0) 39%, rgba(255,255,255,1) 100%), url('${image}')`,
           backgroundPosition: 'center center',
-          backgroundRepeat: 'no-repeat',
+          // backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
         }"
       >
@@ -29,7 +28,7 @@
           <span
             class="bg-primary absolute top-[20%] sm:top-[30%] md:top-[20%] left-0 flex sm:py-1 px-1 sm:px-2 rounded-full ml-2 mt-2 text-[12px] sm:text-sm font-semibold"
           >
-            Regular
+            {{ type }}
           </span>
         </div>
       </div>
@@ -81,6 +80,7 @@ export default {
     },
     type: {
       type: String,
+      default: "Type",
     },
     name: {
       type: String,

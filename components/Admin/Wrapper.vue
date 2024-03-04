@@ -1,21 +1,13 @@
 <template>
   <div class="relative">
     <!-- md and below sidebar -->
-    <Transition
-      enter-active-class="transition-transform ease-in opacity-0  duration-700"
-      leave-active-class="transition ease-out -translate-x-full duration-700"
-    >
-      <div
-        v-if="showTableOrMobileSidebar"
-        class="absolute block lg:hidden z-50 max-w-[280px] bg-white"
-        ref="sideNav"
-      >
+    <Transition enter-active-class="transition-transform ease-in opacity-0  duration-700"
+      leave-active-class="transition ease-out -translate-x-full duration-700">
+      <div v-if="showTableOrMobileSidebar" class="absolute block lg:hidden z-50 max-w-[280px] bg-white" ref="sideNav">
         <slot name="mbAndSmSidebar" />
       </div>
     </Transition>
-    <div
-      class="grid h-screen min-h-screen w-full overflow-hidden lg:grid-cols-[280px_1fr]"
-    >
+    <div class="grid h-screen min-h-screen w-full  lg:grid-cols-[280px_1fr]">
       <!-- sidebar for large and above screen -->
       <slot name="sidebar" />
 

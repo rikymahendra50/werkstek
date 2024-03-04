@@ -6,353 +6,119 @@
   >
     <div
       id="map"
-      :class="`relative w-[85%] h-[420px] lg:h-[219px] z-[-999] mt-5`"
+      :class="`relative aspect-video lg:h-[219px] z-[-999] mt-5`"
     ></div>
   </section>
 </template>
 
-<script scoped>
+<script setup>
+const props = defineProps({
+  AllData: {},
+  filterData: {},
+});
+
 let googleMapsScriptLoaded = false;
-export default {
-  // props: {
-  //   ShowContainerCustom: {
-  //     type: Boolean,
-  //     default: true,
-  //     required: false,
-  //   },
-  //   searchCustom: {
-  //     type: Boolean,
-  //     required: false,
-  //     default: false,
-  //   },
-  // },
-  data() {
-    return {
-      // titleMap: "Waar bent u op zoek naar?",
-      map: null,
-      markers: [],
-      currentInfoWindow: null,
-      locations: [
-        {
-          lat: -8.653840910873269,
-          lng: 115.21785198506426,
-          name: "Tolstraat 186-188 H, Amsterdam De Pijp",
-          area: "1104 m2",
-          image: "/images/img-home-1.png",
-          popularity: 100,
-          city: "Rotterdam",
-          type: "Kantoorruimte",
-          price: 230,
-          filtered: false,
-        },
-        // test
-        {
-          lat: -8.653840910873269,
-          lng: 115.21785198506426,
-          name: "Tolstraat 186-188 H, Amsterdam De Pijp",
-          area: "1104 m2",
-          image: "/images/img-home-1.png",
-          popularity: 100,
-          city: "Rotterdam",
-          type: "Kantoorruimte",
-          price: 750,
-          filtered: false,
-        },
-        {
-          lat: -8.62717144710956,
-          lng: 115.29189271629312,
-          name: "Company C",
-          area: "Deskripsi C",
-          image: "/images/img-home-1.png",
-          popularity: 20,
-          city: "Rotterdam",
-          type: "Andere Optie 2",
-          price: 240,
-          filtered: false,
-        },
-        {
-          lat: -8.641220836289818,
-          lng: 115.17259520426518,
-          name: "Company D",
-          area: "Deskripsi D",
-          image: "/images/img-home-1.png",
-          popularity: 20,
-          city: "Amsterdam",
-          type: "Andere Optie 1",
-          price: 4,
-          filtered: false,
-        },
-        {
-          lat: -8.616146108681335,
-          lng: 115.17967680101556,
-          name: "Company E",
-          area: "Deskripsi E",
-          image: "/images/img-home-1.png",
-          popularity: 20,
-          city: "Rotterdam",
-          type: "Andere Optie 1",
-          price: 710,
-          filtered: false,
-        },
-      ],
-    };
-  },
-  mounted() {
-    if (!googleMapsScriptLoaded) {
+
+// console.log(props.filterData);
+
+let map = ref(null);
+const markers = ref([]);
+const currentInfoWindow = ref(null);
+
+const locationsTest = ref(props.AllData);
+const locations = locationsTest.value.data;
+
+onMounted(() => {
+  if (!googleMapsScriptLoaded) {
+    googleMapsScriptLoaded = true;
+    loadGoogleMapsScript();
+  } else {
+    setupMap();
+  }
+});
+
+const loadGoogleMapsScript = () => {
+  if (!window.googleMapsScriptLoaded) {
+    window.googleMapsScriptLoaded = true;
+    window.initMap = setupMap;
+    const googleMapsScript = document.createElement("script");
+    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap&`;
+    googleMapsScript.defer = true;
+    googleMapsScript.async = true;
+    googleMapsScript.onload = () => {
       googleMapsScriptLoaded = true;
-      this.loadGoogleMapsScript();
-    } else {
-      this.setupMap();
-    }
-  },
-  methods: {
-    // updateLastSelectedPrices(prices) {
-    //   this.lastSelectedPrices = prices;
-    //   this.clearInfoWindows();
-    // },
-    // selectOption(category, option) {
-    //   category.selectedOption = option;
-    //   category.showDropdown = false;
-    // },
-    // toggleDropdown(category) {
-    //   category.showDropdown = !category.showDropdown;
-    // },
+    };
+    document.head.appendChild(googleMapsScript);
+  } else {
+    setupMap();
+  }
+};
 
-    // function ketika tombol diklik
-    // performSearch() {
-    //   const selectedOption = this.categories;
-    //   let selectedCityFix = selectedOption[0].selectedOption;
-    //   let selectedPriceFix = this.lastSelectedPrices;
+const setupMap = () => {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -8.653840910873269, lng: 115.21785198506426 },
+    zoom: 4,
+    fullscreenControl: false,
+    zoomControl: false,
+    keyboardShortcuts: false,
+    mapId: null,
+  });
 
-    //   const minPrice = selectedPriceFix.minPrice;
-    //   const maxPrice = selectedPriceFix.maxPrice;
+  const iconBase = "/images";
 
-    //   this.clearInfoWindows();
+  const icon = {
+    url: iconBase + "/icon-coordinate.svg",
+    scaledSize: new google.maps.Size(20, 20),
+  };
 
-    //   this.locations.forEach((location) => {
-    //     const isLocationInFilter =
-    //       location.city === selectedCityFix &&
-    //       location.price >= minPrice &&
-    //       location.price <= maxPrice;
+  const bounds = new google.maps.LatLngBounds();
 
-    //     location.filtered = isLocationInFilter;
+  locations.forEach((location) => {
+    const lat = parseFloat(location.latitude);
+    const lng = parseFloat(location.longitude);
 
-    //     if (isLocationInFilter) {
-    //       this.moveToLocation(location.lat, location.lng);
-    //       this.showInfoWindow(location.lat, location.lng, location);
-    //     }
-    //   });
+    const marker = new google.maps.Marker({
+      position: { lat: lat, lng: lng },
+      map: map,
+      title: location.name,
+      icon: icon,
+      details: location,
+    });
 
-    //   const filteredData = this.locations.filter((location) => {
-    //     return (
-    //       location.city === selectedCityFix &&
-    //       location.price >= minPrice &&
-    //       location.price <= maxPrice
-    //     );
-    //   });
+    bounds.extend(new google.maps.LatLng(location.lat, location.longitude));
 
-    //   if (filteredData.length > 0) {
-    //     console.log("Matching Data:", filteredData);
-    //     filteredData.forEach((location) => {
-    //       this.moveToLocation(location.lat, location.lng);
-    //       this.showInfoWindow(location.lat, location.lng, location);
-    //     });
-    //   } else {
-    //     alert("Sorry, the location you selected is not available");
-    //   }
-    // },
+    const contentString = `
+      <div class="max-w-[190px] w-full h-full flex flex-col text-end border-2">
+        <div class="relative">
+          <img src="${location.image}" alt="${location.name}" class="w-full min-h-[100px]">
+          <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
+        </div>
+        <div class="px-2 pb-4">
+          <h2 class="text-primary mt-2">${location.name}</h2>
+          <p class="text-black text-[10px] my-2">${location.area}</p>
+          <p>Price: $${location.price}</p>
+        </div>
+      </div>
+    `;
 
-    // showInfoWindow(lat, lng, location) {
-    //   const marker = this.findMarkerByLatLng(lat, lng);
+    const infowindow = new google.maps.InfoWindow({
+      content: contentString,
+      closeBoxMargin: "10px 10px 0 0",
+    });
 
-    //   if (marker) {
-    //     this.clearInfoWindows();
+    marker.addListener("click", () => {
+      map.setCenter(marker.getPosition());
+      map.setZoom(10);
 
-    //     const contentString = this.buildInfoWindowContent(location);
-
-    //     const infowindow = new google.maps.InfoWindow({
-    //       content: contentString,
-    //       closeBoxMargin: "10px 10px 0 0",
-    //     });
-
-    //     infowindow.open(this.map, marker);
-    //     this.currentInfoWindow = infowindow;
-    //   }
-    // },
-
-    // buildInfoWindowContent(location) {
-    //   return `
-    //     <div class="max-w-[190px] w-full h-full flex flex-col text-end">
-    //       <img src="${location.image}" alt="${location.name}" class="w-[200px] min-h-[100px]">
-    //       <h2 class="text-primary mt-2">${location.name}</h2>
-    //       <p class="text-black text-[10px] my-2">${location.area}</p>
-    //       <p>Price: $${location.price}</p>
-    //     </div>
-    //   `;
-    // },
-
-    // clearInfoWindows() {
-    //   // Tutup dan hapus semua InfoWindow
-    //   if (this.currentInfoWindow) {
-    //     this.currentInfoWindow.close();
-    //   }
-    // },
-
-    findMarkerByLatLng(lat, lng) {
-      return this.markers.find((marker) => {
-        const position = marker.getPosition();
-        return position.lat() === lat && position.lng() === lng;
-      });
-    },
-
-    // Move To Location when search
-    moveToLocation(lat, lng) {
-      if (this.map) {
-        // Pindahkan pusat peta ke lokasi yang baru
-        this.map.setCenter({ lat, lng });
-
-        // Temukan marker yang difilter
-        const filteredMarkers = this.markers.filter(
-          (marker) => marker.details.filtered
-        );
-
-        // Buat batas (bounds) yang mencakup semua marker yang difilter
-        const bounds = new google.maps.LatLngBounds();
-        filteredMarkers.forEach((marker) => {
-          bounds.extend(marker.getPosition());
-        });
-
-        // Setelah mendapatkan batas, fit peta ke batas tersebut
-        this.map.fitBounds(bounds);
-
-        // Memastikan level zoom tidak terlalu tinggi atau rendah
-        const maxZoom = 12;
-        const minZoom = 10;
-        const currentZoom = this.map.getZoom();
-        this.map.setZoom(Math.min(Math.max(currentZoom, minZoom), maxZoom));
-
-        // Buka info window untuk marker yang sesuai
-        const matchingMarker = this.markers.find((marker) =>
-          marker.getPosition().equals(new google.maps.LatLng(lat, lng))
-        );
-
-        if (matchingMarker) {
-          matchingMarker.details.filtered = true;
-          // this.updateMarker();
-
-          const infowindow = new google.maps.InfoWindow({
-            content: `
-              <div style="max-width: 190px;" class="text-end">
-                <img src="${matchingMarker.details.image}" alt="${matchingMarker.details.name}" style="width: 200px; min-height: 100px;">
-                <div style="padding: 10px; border:1px solid red">
-                  <h2 style="color: #F0912D; margin-top: 2px;">${matchingMarker.details.name}</h2>
-                  <p style="color: black; font-size: 10px; margin: 2px 0;">${matchingMarker.details.area}</p>
-                  <p style="color: black;">Price: $${matchingMarker.details.price}</p>
-                </div>
-              </div>
-            `,
-          });
-
-          infowindow.open(this.map, matchingMarker);
-          this.currentInfoWindow = infowindow;
-        }
+      if (currentInfoWindow.value) {
+        currentInfoWindow.value.close();
       }
-    },
 
-    // updateMarker() {
-    //   // const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
+      infowindow.open(map, marker);
+      currentInfoWindow.value = infowindow;
+    });
 
-    //   this.markers.forEach((marker, index) => {
-    //     // const location = this.locations[index];
-    //     // let iconColor = "/images/logo-wekstek.png";
-
-    //     // if (location.filtered) {
-    //     //   iconColor = "/images/person-comment-1.png";
-    //     // }
-
-    //     // const iconUrl = iconBase + iconColor;
-
-    //     marker.setIcon({
-    //       // url: iconUrl,
-    //       scaledSize: new google.maps.Size(30, 30),
-    //     });
-    //   });
-    // },
-
-    // Map Function
-    loadGoogleMapsScript() {
-      if (!window.googleMapsScriptLoaded) {
-        window.googleMapsScriptLoaded = true;
-        window.initMap = this.setupMap;
-        const googleMapsScript = document.createElement("script");
-        googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap&`;
-        googleMapsScript.defer = true;
-        googleMapsScript.async = true;
-        googleMapsScript.onload = () => {
-          this.googleMapsScriptLoaded = true;
-        };
-        document.head.appendChild(googleMapsScript);
-      } else {
-        this.setupMap();
-      }
-    },
-    setupMap() {
-      this.map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: -8.653840910873269, lng: 115.21785198506426 },
-        zoom: 1,
-        fullscreenControl: false,
-        zoomControl: false,
-        keyboardShortcuts: false,
-        mapId: null,
-      });
-      const iconBase = "http://maps.google.com/mapfiles/ms/icons/";
-
-      const icon = {
-        url: iconBase + "red-dot.png",
-        scaledSize: new google.maps.Size(15, 15),
-      };
-      this.locations.forEach((location) => {
-        const marker = new google.maps.Marker({
-          position: { lat: location.lat, lng: location.lng },
-          map: this.map,
-          title: location.name,
-          icon: icon,
-          details: location,
-        });
-        const contentString = `
-          <div class="w-full flex flex-col text-start">
-            <img src="${location.image}" alt="${location.name}" class="w-full max-h-[100px]">
-            <div class="px-2 pb-4">
-              <h2 class="text-primary mt-2 text-[14px]">${location.name}</h2>
-              <p class="text-black text-[10px] my-2">${location.area}</p>
-              <p class="text-[10px]">Price: $${location.price}</p>
-            </div>
-          </div>
-        `;
-        const infowindow = new google.maps.InfoWindow({
-          content: contentString,
-          closeBoxMargin: "10px 10px 0 0",
-        });
-
-        marker.addListener("click", () => {
-          if (this.currentInfoWindow) {
-            this.currentInfoWindow.close();
-          }
-
-          infowindow.open(this.map, marker);
-          this.currentInfoWindow = infowindow;
-        });
-
-        this.markers.push(marker);
-      });
-    },
-    setBoundsForMarkers() {
-      const bounds = new google.maps.LatLngBounds();
-      this.markers.forEach((marker) => {
-        bounds.extend(marker.getPosition());
-      });
-      this.map.fitBounds(bounds);
-    },
-  },
+    markers.value.push(marker);
+  });
 };
 </script>

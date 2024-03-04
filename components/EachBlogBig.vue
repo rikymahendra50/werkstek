@@ -3,7 +3,11 @@
     class="overflow-hidden mx-1 sm:mr-2 max-w-[366px] w-[50%] hover:shadow-md transition flex flex-col p-1 sm:p-4 group cursor-pointer relative"
   >
     <NuxtLink :to="link" class="card h-full">
-      <img :src="imageSrc" alt="imageBlog" class="w-full max-h-[296px]" />
+      <img
+        :src="imageSrc"
+        alt="imageBlog"
+        class="w-full min-h-[190px] md:max-h-[296px] object-cover"
+      />
       <span
         class="text-[14px] sm:text-[18px] md:text-[20px] font-semibold line-clamp-1 sm:line-clamp-none my-1"
       >

@@ -201,3 +201,81 @@ input[type="checkbox"]:checked {
 input[type="checkbox"]:checked:after {
   display: block;
 }
+
+.tableAdmin {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+  max-height: 500px;
+}
+
+.tableAdmin caption {
+  font-size: 1.5em;
+  margin: 0.5em 0 0.75em;
+}
+
+.tableAdmin tr {
+  background-color: transparent;
+  border: 1px solid #ddd;
+  padding: 0.35em;
+}
+
+.tableAdmin th,
+.tableAdmin td {
+  padding: 0.625em;
+  text-align: center;
+}
+
+.tableAdmin th {
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+  .tableAdmin {
+    border: 0;
+  }
+
+  .tableAdmin caption {
+    font-size: 1.3em;
+  }
+
+  .tableAdmin thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .tableAdmin tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: 0.625em;
+  }
+
+  .tableAdmin td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 0.8em;
+    text-align: right;
+  }
+
+  .tableAdmin td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .tableAdmin td:last-child {
+    border-bottom: 0;
+  }
+}

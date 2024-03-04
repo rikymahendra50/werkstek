@@ -7,8 +7,8 @@
           <div
             class="price-slider"
             :style="{
-              left: `${(localMinPrice / 1000000) * 100}%`,
-              right: `${100 - (localMaxPrice / 1000000) * 100}%`,
+              left: `${(localMinPrice / maxPrice) * 100}%`,
+              right: `${100 - (localMaxPrice / maxPrice) * 100}%`,
             }"
           ></div>
         </div>
@@ -30,9 +30,9 @@
             type="range"
             class="min-range"
             :min="minPrice"
-            :max="minPrice"
+            :max="maxPrice"
             v-model="localMinRange"
-            step="50000"
+            step="10"
           />
         </label>
         <label :for="idInputMax">
@@ -43,7 +43,7 @@
             :min="minPrice"
             :max="maxPrice"
             v-model="localMaxRange"
-            step="50000"
+            step="10"
           />
         </label>
       </div>
@@ -110,9 +110,12 @@ export default {
     updateRange() {
       const rangeSlider = document.querySelector(".price-slider");
       const value1 = rangeSlider.parentNode.offsetWidth;
-      rangeSlider.style.left = `${(this.localMinPrice / 10000) * value1}px`;
+      const maxValue = this.maxPrice;
+      const calculatedMaxPrice = Math.min(maxValue, this.localMaxPrice);
+
+      rangeSlider.style.left = `${(this.localMinPrice / maxValue) * value1}px`;
       rangeSlider.style.right = `${
-        (1 - this.localMaxPrice / 10000) * value1
+        (1 - calculatedMaxPrice / maxValue) * value1
       }px`;
     },
     updatePrice() {

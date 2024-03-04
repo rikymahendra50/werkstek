@@ -1,12 +1,16 @@
 <template>
   <section class="py-20">
+    <!-- <pre>
+      {{ filteredData.data[0].longitude }}
+    </pre> -->
+
     <TitleHeader
       title="Onze locaties"
       secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-    <div class="md:grid md:grid-cols-12 container-custom">
-      <div class="md:col-span-4 max-w-[500px]">
+    <div class="md:grid md:grid-cols-12 container-custom gap-2">
+      <div class="md:col-span-4">
         <div class="mt-5">
           <button
             @click="toggleDetail"
@@ -21,7 +25,6 @@
           </button>
         </div>
         <div v-if="showFilter">
-          <!-- city -->
           <span class="text-base mt-3 opacity-50">Kies een locatie</span>
           <div class="flex-col form-control max-w-xs mt-2">
             <select
@@ -40,9 +43,7 @@
               </option>
             </select>
           </div>
-          <!-- end city -->
           <div class="flex flex-col">
-            <!-- soort Locatie -->
             <p class="text-base mt-3 opacity-50 pb-3">Soort locatie</p>
             <fieldset id="soortLocatie" class="grid grid-cols-2 gap-2">
               <div
@@ -67,16 +68,16 @@
               :idInputMin="'priceMin'"
               :idInputMax="'priceMax'"
               :minPrice="0"
-              :maxPrice="1000000"
+              :maxPrice="highestPrice"
               :minRange="0"
-              :maxRange="1000000"
-              :priceGap="1000000"
+              :maxRange="highestPrice"
+              :priceGap="highestPrice"
               class="my-2"
               @price-change="handlePriceChange"
             />
-            <div class="w-full">
+            <div class="md:w-[90%]">
               <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
-              <div class="flex my-2 max-w-[300px]">
+              <div class="flex my-2">
                 <div class="relative">
                   <input
                     type="number"
@@ -101,57 +102,39 @@
                 </div>
               </div>
               <p class="my-3">-</p>
-              <div
-                class="flex justify-between gap-2 text-sm sm:text-base w-[95%]"
-              >
-                <div class="flex flex-col">
-                  <fieldset id="functie" class="flex flex-col gap-2">
-                    <div
-                      class="flex justify-start items-center"
-                      v-for="item in functieCheckbox.slice(0, 4)"
-                      :key="item.id"
-                    >
-                      <input
-                        type="checkbox"
-                        :id="'functie_' + item.id"
-                        :value="item.name"
-                        :name="'functie_' + item.name"
-                        class="mr-2 pt-[0.7px]"
-                        :checked="isSelectedFuncti(item.id)"
-                        @change="handlefunctieCheckbox(item.id)"
-                      />
-                      <label :for="'functie_' + item.id" class="cursor-pointer">
-                        {{ item.name }}
-                      </label>
-                    </div>
-                  </fieldset>
-                </div>
-                <div class="flex flex-col">
-                  <fieldset id="functie" class="flex flex-col gap-2">
-                    <div
-                      class="flex justify-start items-center"
-                      v-for="item in functieCheckbox.slice(4, 8)"
-                      :key="item.id"
-                    >
-                      <input
-                        type="checkbox"
-                        :id="'functie_' + item.id"
-                        :value="item.name"
-                        class="mr-2 pt-[0.7px]"
-                        :checked="isSelectedFuncti(item.id)"
-                        @change="handlefunctieCheckbox(item.id)"
-                      />
-                      <label
-                        :for="'functie_' + item.id"
-                        class="cursor-pointer"
-                        >{{ item.name }}</label
+              <div class="flex justify-between gap-2 text-sm lg:text-base">
+                <template
+                  v-for="(column, columnIndex) in splitColumns(functieCheckbox)"
+                  :key="columnIndex"
+                >
+                  <div class="flex flex-col">
+                    <fieldset id="functie" class="flex flex-col gap-2">
+                      <div
+                        v-for="item in column"
+                        :key="item.id"
+                        class="flex justify-start items-center"
                       >
-                    </div>
-                  </fieldset>
-                </div>
+                        <input
+                          :id="'functie_' + item.id"
+                          :value="item.name"
+                          :name="'functie_' + item.name"
+                          type="checkbox"
+                          class="mr-2 pt-[0.7px]"
+                          :checked="isSelectedFuncti(item.id)"
+                          @change="handlefunctieCheckbox(item.id)"
+                        />
+                        <label
+                          :for="'functie_' + item.id"
+                          class="cursor-pointer"
+                          >{{ item.name }}</label
+                        >
+                      </div>
+                    </fieldset>
+                  </div>
+                </template>
               </div>
-              <Map />
-              <div class="flex justify-center md:mt-4 xl:w-[80%]">
+              <Map :AllData="data" :filterData="filteredData.data" />
+              <div class="flex justify-center md:mt-4">
                 <button
                   @click="showAllData"
                   class="btn btn-outline btn-orange btn-sm mt-3"
@@ -169,13 +152,16 @@
         <eachLocaties
           v-for="(item, index) in filteredData.data"
           :key="item.id"
-          :name="item.name"
-          :link="item.slug"
+          :name="item.location.name"
+          :type="item.level_type"
+          :latitude="item.latitude"
+          :longitude="item.longitude"
+          :link="`/onze-locaties/${item.slug}`"
           :price="item.price"
           :image="
             item.images.find((image, imageIndex) => imageIndex === index)?.image
           "
-          :rating="9.4"
+          :rating="item.rating"
         />
       </div>
     </div>
@@ -195,6 +181,11 @@ const showFilter = ref();
 const toggleDetail = () => {
   showFilter.value = !showFilter.value;
 };
+
+function splitColumns(arr) {
+  const midpoint = Math.ceil(arr.length / 2);
+  return [arr.slice(0, midpoint), arr.slice(midpoint)];
+}
 
 onMounted(() => {
   showAllData();
@@ -217,58 +208,43 @@ onMounted(() => {
   );
 });
 
-const name = data.value.data.map((product) => product.name);
+// const name = data.value.data.map((item) => item.location.name);
+
+// const city = ref(name);
+
+const name = data.value.data.map((item) => item.name);
+
 const city = ref(name);
 
 const soortLocatiesRadio = ref([
   {
     id: 1,
-    name: "Stage Plaats",
+    name: "Alles",
   },
   {
     id: 2,
-    name: "Functie 1",
+    name: "Stage Plaats",
   },
   {
     id: 3,
+    name: "Functie 1",
+  },
+  {
+    id: 4,
     name: "Functie 2",
   },
 ]);
 
-const functieCheckbox = ref([
-  {
-    id: 1,
-    name: "Wifi",
-  },
-  {
-    id: 2,
-    name: "Parkeerplaats",
-  },
-  {
-    id: 3,
-    name: "Receptie",
-  },
-  {
-    id: 4,
-    name: "Koffiebar",
-  },
-  {
-    id: 5,
-    name: "Keuken",
-  },
-  {
-    id: 6,
-    name: "Vlakbij het treinstation",
-  },
-  {
-    id: 7,
-    name: "Loungeplekken",
-  },
-  {
-    id: 8,
-    name: "Vergaderruimtes met videoschermen",
-  },
-]);
+const { data: facility } = await useFetch("/facilities", {
+  method: "get",
+  ...requestOptions,
+});
+
+const functieCheckbox = facility.value.data;
+
+const numericPrices = data.value.data.map((item) => parseFloat(item.price));
+
+const highestPrice = Math.max(...numericPrices);
 
 const selectedCity = ref("");
 const selectedSoortLocatie = ref([]);
@@ -278,6 +254,8 @@ const selectedMaxPrice = ref();
 const selectedMeterMin = ref();
 const selectedMeterMax = ref();
 const filteredData = ref([]);
+
+const filteredDataComputed = computed(() => filteredData.value);
 
 const showAllData = () => {
   selectedCity.value = "Locatie";
@@ -290,8 +268,10 @@ const showAllData = () => {
 };
 
 function handlePriceChange(priceData) {
-  selectedMinPrice.value = priceData.minPrice;
-  selectedMaxPrice.value = priceData.maxPrice;
+  setTimeout(() => {
+    selectedMinPrice.value = priceData.minPrice;
+    selectedMaxPrice.value = priceData.maxPrice;
+  }, 900);
 }
 
 function isSelectedSoort(id) {

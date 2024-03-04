@@ -33,35 +33,37 @@
           :slidesPerView="slidesPerView"
           :navigation="true"
           :modules="modules"
-          class="mySwiper h-[458px]"
+          :slides-per-view="3"
+          :spaceBetween="10"
+          :css-mode="true"
+          :watch-slides-progress="true"
+          class="mySwiper h-full"
           loop
         >
           <swiper-slide
-            class="mr-2"
-            v-for="(itemSlider, index) in data?.data"
+            class="mr-2 group group-hover:scale-125 transition-all duration-300 group overflow-hidden"
+            v-for="(itemSlider, index) in data"
             :key="itemSlider.id"
-            :style="{
-              backgroundImage: itemSlider.images[index]?.image
-                ? `url('${itemSlider.images[index]?.image}')`
-                : `url('/images/img-each-locatie-1.png')`,
-              background: itemSlider.images[index]?.image
-                ? `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${itemSlider.images[index]?.image}')`
-                : `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/img-each-locatie-1.png')`,
-              backgroundPosition: 'center center',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
-            }"
           >
-            <NuxtLink
-              :to="`/onze-locaties/${itemSlider.slug}`"
-              class="h-full flex flex-col justify-center items-center text-white"
-            >
-              <h2 class="text-3xl pt-20">Hoofddorp</h2>
-              <p class="text-sm py-1">{{ itemSlider.name }}</p>
-              <h4 class="text-lg font-semibold">Opervlakte</h4>
-              <p class="text-sm py-1">€ {{ itemSlider.price }} p/maand</p>
-              <p class="text-sm">Neem een kijkje ></p>
-            </NuxtLink>
+            <div class="relative">
+              <img
+                src="/images/img-slider-home-1.png"
+                alt="image"
+                class="group-hover:scale-125 transition-all w-full duration-300 object-cover min-h-[240px] md:min-h-[350px] hover-gradient"
+              />
+              <NuxtLink
+                :to="`/onze-locaties/${itemSlider.slug}`"
+                class="absolute inset-0 flex flex-col justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50"
+              >
+                <h2 class="text-3xl">{{ itemSlider.location.name }}</h2>
+                <p class="text-sm py-1">{{ itemSlider.location.name }}</p>
+                <h4 class="text-lg font-semibold">Opervlakte</h4>
+                <p class="text-sm py-1">
+                  € {{ itemSlider.price }} p/{{ itemSlider.rent_type }}
+                </p>
+                <p class="text-sm">Neem een kijkje ></p>
+              </NuxtLink>
+            </div>
           </swiper-slide>
         </swiper>
       </div>
@@ -113,8 +115,8 @@
 }
 </style>
 
-<script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+<script>
+import { ref } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 
 import "swiper/css";
@@ -124,32 +126,42 @@ import "swiper/css/navigation";
 
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
-const { requestOptions } = useRequestOptions();
-const { data, error } = await useFetch(`/products`, {
-  method: "get",
-  ...requestOptions,
-});
+export default {
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+  props: {
+    data: {
+      type: Array,
+    },
+  },
+  setup() {
+    const slidesPerView = ref(3);
 
-const slidesPerView = ref(3);
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        slidesPerView.value = 2;
+      } else if (window.innerWidth <= 1028) {
+        slidesPerView.value = 3;
+      } else {
+        slidesPerView.value = 3.3;
+      }
+    };
 
-const handleResize = () => {
-  if (window.innerWidth <= 768) {
-    slidesPerView.value = 2;
-  } else if (window.innerWidth <= 1028) {
-    slidesPerView.value = 3;
-  } else {
-    slidesPerView.value = 3.3;
-  }
+    onMounted(() => {
+      handleResize();
+      window.addEventListener("resize", handleResize);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("resize", handleResize);
+    });
+
+    return {
+      slidesPerView,
+      modules: [Autoplay, Pagination, Navigation],
+    };
+  },
 };
-
-onMounted(() => {
-  handleResize();
-  window.addEventListener("resize", handleResize);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener("resize", handleResize);
-});
-
-const modules = [Autoplay, Pagination, Navigation];
 </script>

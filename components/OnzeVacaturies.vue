@@ -71,10 +71,10 @@
               :idInputMin="'priceMin'"
               :idInputMax="'priceMax'"
               :minPrice="0"
-              :maxPrice="1000000"
+              :maxPrice="highestPrice"
               :minRange="0"
-              :maxRange="1000000"
-              :priceGap="1000000"
+              :maxRange="highestPrice"
+              :priceGap="highestPrice"
               class="my-2"
               @price-change="handlePriceChange"
             />
@@ -156,10 +156,11 @@
           :name="item.name"
           :link="item.slug"
           :price="item.price"
+          :type="item.type"
           :image="
             item.images.find((image, imageIndex) => imageIndex === index)?.image
           "
-          :rating="9.4"
+          :rating="item.rating"
         />
       </div>
     </div>
@@ -174,15 +175,6 @@ const { data, error } = await useFetch(`/products`, {
   method: "get",
   ...requestOptions,
 });
-
-// const prices = data.value.data.map((product) => product.price);
-// console.log(prices);
-
-// const formattedPrices = prices.map((price) => parseFloat(price) * 100);
-
-// const maxPriceData = Math.max(...formattedPrices);
-
-// console.log(maxPriceData);
 
 const showFilter = ref();
 const toggleDetail = () => {
@@ -213,9 +205,19 @@ onMounted(() => {
 const name = data.value.data.map((product) => product.name);
 const city = ref(name);
 
+const numericPrices = data.value.data.map((item) => parseFloat(item.price));
+
+const highestPrice = Math.max(...numericPrices);
+
+console.log(highestPrice);
+
 const soortLocatiesRadio = ref([
   {
     id: 1,
+    name: "Alles",
+  },
+  {
+    id: 2,
     name: "Stage Plaats",
   },
   {
@@ -228,40 +230,12 @@ const soortLocatiesRadio = ref([
   },
 ]);
 
-const opleidings = ref([
-  {
-    id: 1,
-    name: "Wifi",
-  },
-  {
-    id: 2,
-    name: "Parkeerplaats",
-  },
-  {
-    id: 3,
-    name: "Receptie",
-  },
-  {
-    id: 4,
-    name: "Koffiebar",
-  },
-  {
-    id: 5,
-    name: "Keuken",
-  },
-  {
-    id: 6,
-    name: "Vlakbij het treinstation",
-  },
-  {
-    id: 7,
-    name: "Loungeplekken",
-  },
-  {
-    id: 8,
-    name: "Vergaderruimtes met videoschermen",
-  },
-]);
+const { data: facility } = await useFetch("/facilities", {
+  method: "get",
+  ...requestOptions,
+});
+
+const opleidings = facility.value.data;
 
 const selectedCity = ref("");
 const selectedSoortLocatie = ref([]);
@@ -279,8 +253,10 @@ const showAllData = () => {
 };
 
 function handlePriceChange(priceData) {
-  selectedMinPrice.value = priceData.minPrice;
-  selectedMaxPrice.value = priceData.maxPrice;
+  setTimeout(() => {
+    selectedMinPrice.value = priceData.minPrice;
+    selectedMaxPrice.value = priceData.maxPrice;
+  }, 900);
 }
 
 function isSelectedSoort(id) {
@@ -306,7 +282,6 @@ function handlefunctieCheckbox(id) {
     selectedFunctie.value = [...selectedFunctie.value, id];
   }
 }
-
 watch(
   [
     selectedCity,
@@ -319,7 +294,6 @@ watch(
     await new Promise((resolve) => setTimeout(resolve, 900));
     try {
       let params = {};
-
       params["filter[search]"] = selectedCity.value;
       params["filter[type_id]"] = selectedSoortLocatie.value;
       params["filter[productFacility.facility_id]"] = selectedFunctie.value;
