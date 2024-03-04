@@ -152,18 +152,20 @@ async function onSubmit(values, ctx) {
   //   }
   // );
 
-  if (error) {
-    ctx.setErrors(transformErrors(error?.data));
+  if (error.value) {
+    ctx.setErrors(transformErrors(error.value?.data));
     snackbar.add({
       type: "error",
-      text: error?.data?.message ?? "Something went wrong",
+      text: error.value?.data?.message ?? "Something went wrong",
     });
   } else {
     snackbar.add({
       type: "success",
       text: "Edit Blog Success",
     });
+    ctx.resetForm();
   }
+
   loading.value = false;
 }
 

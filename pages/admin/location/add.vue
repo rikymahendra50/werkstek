@@ -8,7 +8,7 @@
     </div>
     <VeeForm @submit="onSubmit">
       <div class="grid grid-cols-2 mt-3 gap-3">
-        <div class="flex flex-col">
+        <div class="flex flex-col gap-2">
           <label for="Name">Name</label>
           <input
             id="Name"
@@ -20,8 +20,8 @@
             required
           />
         </div>
-        <div class="flex flex-col">
-          <label for="image">Icon</label>
+        <div class="flex flex-col gap-2">
+          <label for="image">Image</label>
           <input
             id="image"
             type="file"
@@ -32,6 +32,17 @@
             autocomplete="on"
             required
           />
+        </div>
+        <!-- Preview Image -->
+        <div class="grid grid-cols-2 gap-2 mt-3">
+          <div
+            class="col-span-1 h-full w-full min-h-[150px] overflow-hidden rounded-lg flex items-center justify-center hover:shadow-md transition-all duration-500"
+            role="button"
+          >
+            <div class="flex flex-col items-center" v-if="previewImage">
+              <img :src="previewImage" alt="test" />
+            </div>
+          </div>
         </div>
       </div>
       <div class="flex justify-end mt-5">
@@ -50,14 +61,19 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 
-const name = ref();
-const imageTest = ref();
+const name = ref("");
+const imageTest = ref(null);
+const previewImage = ref("");
 
 const handleImageChange = (event) => {
   const files = event.target.files;
+
   if (files.length > 0) {
+    previewImage.value = URL.createObjectURL(files[0]);
     imageTest.value = files[0];
   }
+
+  console.log(previewImage.value);
 };
 
 const onSubmit = async (values, ctx) => {

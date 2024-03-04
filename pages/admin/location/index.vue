@@ -39,7 +39,7 @@
                 </td> -->
                 <td class="flex items-center">
                   <NuxtLink
-                    :to="`/admin/location/edit/${item.name}`"
+                    :to="`/admin/location/edit/${item.slug}`"
                     class="m-2"
                   >
                     <icon
