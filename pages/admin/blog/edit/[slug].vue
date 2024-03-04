@@ -1,12 +1,12 @@
 <template>
-  <section class="overflow-auto max-h-[500px]">
+  <section>
     <div class="flex gap-4">
       <NuxtLink to="/admin/blog" class="btn btn-warning btn-outline btn-sm">
         Back
       </NuxtLink>
       <span class="text-2xl font-bold">Edit Blog</span>
     </div>
-    <updateAdmin :eachBlog="eachBlog" :categoryBlog="categoryBlog" />
+    <updateAdmin :eachBlog="eachBlog?.data" :categoryBlog="categoryBlog?.data" />
   </section>
 </template>
 
@@ -19,12 +19,12 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 
-const { data: eachBlog } = await useFetch(`/admins/articles/${slug.value}`, {
+const { data: eachBlog, pending: eachBlogPending } = await useFetch(`/admins/articles/${slug.value}`, {
   method: "get",
   ...requestOptions,
 });
 
-const { data: categoryBlog, error } = await useFetch(
+const { data: categoryBlog, pending: categoryBlogPending } = await useFetch(
   `/admins/article-categories`,
   {
     method: "get",

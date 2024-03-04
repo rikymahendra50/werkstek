@@ -1,23 +1,19 @@
 <template>
   <VeeForm @submit="onSubmit" v-slot="{ errors }">
-    <div class="grid mt-10 overflow-auto p-3">
+    {{ props.eachBlog?.category_id }}
+    <div class="grid mt-10  p-3 ">
       <div class="grid grid-cols-2">
         <div class="flex flex-col">
           <label for="image" class="mb-1">Image</label>
-          <VeeField
-            id="image"
-            name="image"
-            ref="fileInput"
-            type="file"
+          <VeeField id="image" name="image" ref="fileInput" type="file"
             class="file-input file-input-md file-input-bordered file-input-accent w-full max-w-xs"
-            @input="saveToPreviewImage"
-          />
+            @input="saveToPreviewImage" />
         </div>
-        <div v-if="eachBlog.data.image">
+        <div v-if="eachBlog?.image">
           <span class="text-sm">Image File Uploaded:</span>
           <div class="flex flex-col items-center min-w-[200px]">
             <div class="flex justify-center mb-3">
-              <img :src="eachBlog.data.image" alt="image" class="border-2" />
+              <img :src="eachBlog.image" alt="image" class="border-2" />
             </div>
           </div>
         </div>
@@ -31,55 +27,27 @@
         </div>
       </div>
       <label for="Title">Title</label>
-      <VeeField
-        id="Title"
-        type="text"
-        name="Title"
-        placeholder="Input Title"
-        class="input input-bordered w-full"
-        v-model="formData.title"
-        autocomplete="off"
-      />
+      <VeeField id="Title" type="text" name="Title" placeholder="Input Title" class="input input-bordered w-full"
+        v-model="formData.title" autocomplete="off" />
       <div class="flex flex-col mt-5">
         <label for="body">Body</label>
-        <VeeField
-          id="body"
-          as="textarea"
-          name="body"
-          placeholder="Input Body"
-          class="textarea textarea-bordered w-full"
-          v-model="formData.body"
-          autocomplete="off"
-        />
+        <VeeField id="body" as="textarea" name="body" placeholder="Input Body" class="textarea textarea-bordered w-full"
+          v-model="formData.body" autocomplete="off" />
       </div>
       <div class="flex flex-col mt-5">
         <label for="Category">Category</label>
-        <VeeField
-          id="category"
-          name="category"
-          as="select"
-          v-model="formData.category_id"
-          class="select select-bordered w-full"
-          placeholder="category"
-          autocomplete="off"
-        >
+        <VeeField id="category" name="category" as="select" v-model="formData.category_id"
+          class="select select-bordered w-full" placeholder="category" autocomplete="off">
           <option disabled selected>Category</option>
-          <option :value="item.id" v-for="item in categoryBlog.data">
+          <option :value="item.id" v-for="item in categoryBlog">
             {{ item.name }}
           </option>
         </VeeField>
       </div>
       <div class="flex flex-col mt-5">
         <label for="Meta">Meta</label>
-        <VeeField
-          id="Meta"
-          as="textarea"
-          name="Meta"
-          placeholder="Input Meta"
-          class="textarea textarea-bordered w-full"
-          v-model="formData.meta"
-          autocomplete="off"
-        />
+        <VeeField id="Meta" as="textarea" name="Meta" placeholder="Input Meta" class="textarea textarea-bordered w-full"
+          v-model="formData.meta" autocomplete="off" />
       </div>
     </div>
     <div class="flex justify-end mt-5">
@@ -90,7 +58,7 @@
   </VeeForm>
 </template>
 
-<script setup>
+<script setup >
 import axios from "axios";
 const { axiosRequest } = useAxios();
 const { loading, transformErrors } = useRequestHelper();
@@ -111,54 +79,54 @@ const props = defineProps({
 // const category = categoryBlog.value.data.map((item) => item.name);
 
 const formData = ref({
-  title: props.eachBlog.title,
-  body: props.eachBlog.body,
-  category_id: props.eachBlog.category_id,
-  meta: props.eachBlog.meta,
+  title: props.eachBlog?.title,
+  body: props.eachBlog?.body,
+  category_id: props.eachBlog?.category?.id,
+  meta: props.eachBlog?.meta,
 });
 
-const imagePreview = null;
-const selectedImage = null;
+const imagePreview = ref();
+const selectedImage = ref();
 
 function saveToPreviewImage(event) {
-  imagePreview = URL.createObjectURL(event.target.files[0]);
-  selectedImage = event.target.files[0];
+  imagePreview.value = URL.createObjectURL(event.target.files[0]);
+  selectedImage.value = event.target.files[0];
 }
 
 async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const formDataToSend = new FormData();
-  formDataToSend.append("image", selectedImage);
-  formDataToSend.append("title", formData.value.title);
-  formDataToSend.append("body", formData.value.body);
-  formDataToSend.append("category_id", formData.value.category_id);
-  formDataToSend.append("meta", formData.value.meta);
+  const object = { ...formData.value }
 
-  const { error } = await useFetch(
+  console.log(object);
+  const formDataT = new FormData()
+
+  for (const item in object) {
+    // @ts-ignore
+    const objectItem = object[item];
+    formDataT.append(item, objectItem);
+  }
+  if (selectedImage.value) {
+    formDataT.append("image", selectedImage.value);
+  }
+
+
+  const { error, data } = await useFetch(
     `/admins/articles/${slug.value}?_method=PUT`,
     {
-      method: "post",
-      body: formDataToSend,
+      method: "POST",
+      body: formDataT,
       ...requestOptions,
     }
   );
 
-  // const { error } = await axiosRequest.post(
-  //   `/admins/articles/${slug.value}?_method=PUT`,
-  //   {
-  //     body: formDataToSend,
-  //     ...requestOptions,
-  //   }
-  // );
-
-  if (error) {
+  if (error.value) {
     ctx.setErrors(transformErrors(error?.data));
     snackbar.add({
       type: "error",
       text: error?.data?.message ?? "Something went wrong",
     });
-  } else {
+  } else if (data.value) {
     snackbar.add({
       type: "success",
       text: "Edit Blog Success",
@@ -167,13 +135,6 @@ async function onSubmit(values, ctx) {
   loading.value = false;
 }
 
-useHead({
-  title: "Edit Blog",
-});
 
-definePageMeta({
-  layout: "admin",
-  // @ts-ignore
-  middleware: ["auth", "admin"],
-});
+
 </script>
