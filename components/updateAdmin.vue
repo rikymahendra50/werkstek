@@ -1,30 +1,10 @@
 <template>
   <VeeForm @submit="onSubmit" v-slot="{ errors }">
     {{ props.eachBlog?.category_id }}
-    <div class="grid mt-10  p-3 ">
-      <div class="grid grid-cols-2">
-        <div class="flex flex-col">
-          <label for="image" class="mb-1">Image</label>
-          <VeeField id="image" name="image" ref="fileInput" type="file"
-            class="file-input file-input-md file-input-bordered file-input-accent w-full max-w-xs"
-            @input="saveToPreviewImage" />
-        </div>
-        <div v-if="eachBlog?.image">
-          <span class="text-sm">Image File Uploaded:</span>
-          <div class="flex flex-col items-center min-w-[200px]">
-            <div class="flex justify-center mb-3">
-              <img :src="eachBlog.image" alt="image" class="border-2" />
-            </div>
-          </div>
-        </div>
-        <div v-else-if="imagePreview">
-          <span class="text-sm">Image File Uploaded:</span>
-          <div class="flex flex-col items-center min-w-[200px]">
-            <div class="flex justify-center mb-3">
-              <img :src="imagePreview" alt="image" class="border-2" />
-            </div>
-          </div>
-        </div>
+    <div class="grid mt-10  p-3 gap-4 ">
+      <div>
+        <BlogImageCrop :loading="loading" :existingimage="props.eachBlog?.image" v-model="selectedImage" />
+
       </div>
       <label for="Title">Title</label>
       <VeeField id="Title" type="text" name="Title" placeholder="Input Title" class="input input-bordered w-full"
@@ -60,8 +40,6 @@
 </template>
 
 <script setup >
-import axios from "axios";
-const { axiosRequest } = useAxios();
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
@@ -93,6 +71,10 @@ function saveToPreviewImage(event) {
   imagePreview.value = URL.createObjectURL(event.target.files[0]);
   selectedImage.value = event.target.files[0];
 }
+
+const onUpload = (image) => {
+  selectedImage.value = image;
+};
 
 async function onSubmit(values, ctx) {
   loading.value = true;
