@@ -1,8 +1,11 @@
 <template>
   <div v-if="pending">Loading...</div>
-  <div v-if="data && data?.data" class="overflow-y-auto max-h-[70%]">
-    <h3 class="font-bold my-2">Detail Blog {{ data?.data?.first_name }}</h3>
-    <table class="table">
+  <div v-if="data && data?.data">
+    <CompAdminBackButton
+      link="blog"
+      :linkTitle="`Detail Blog ${data?.data?.title}`"
+    />
+    <table class="table mt-10">
       <tbody>
         <tr>
           <td>Images</td>
@@ -34,12 +37,6 @@
       </tbody>
     </table>
   </div>
-  <NuxtLink
-    to="/admin/blog"
-    class="btn btn-sm btn-outline btn-warning max-w-[90px]"
-  >
-    Back
-  </NuxtLink>
 </template>
 
 <script setup>

@@ -1,20 +1,60 @@
 <template>
   <VeeForm @submit="onSubmit" v-slot="{ errors }">
     {{ props.eachBlog?.category_id }}
-    <div class="grid mt-10 p-3">
-      <div class="grid grid-cols-2">
+    <div class="grid mt-10 p-3 gap-3">
+      <div class="grid grid-cols-3">
         <div class="flex flex-col">
-          <label for="image" class="mb-1">Image</label>
-          <VeeField
+          <label for="image" class="mb-3">Image</label>
+          <!-- <VeeField
             id="image"
             name="image"
             ref="fileInput"
             type="file"
             class="file-input file-input-md file-input-bordered file-input-accent w-full max-w-xs"
             @input="saveToPreviewImage"
-          />
+          /> -->
+          <div
+            class="col-span-1 h-full w-full min-h-[150px] overflow-hidden rounded-lg border-2 border-dashed flex items-center justify-center hover:shadow-md transition-all duration-500"
+            role="button"
+            @click="selectImage"
+          >
+            <div class="flex flex-col items-center">
+              <div class="flex justify-center mb-3">
+                <svg
+                  data-v-9c34c54e=""
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true"
+                  role="img"
+                  class="icon h-24 w-24 stroke-0 fill-none opacity-90"
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M12 4.5v15m7.5-7.5h-15"
+                  ></path>
+                </svg>
+              </div>
+              <span>Add Image </span>
+            </div>
+            <input
+              type="file"
+              name="image"
+              ref="fileInput"
+              accept="image/*"
+              style="display: none"
+              class="file-input file-input-md file-input-bordered file-input-accent w-full max-w-xs"
+              @input="saveToPreviewImage"
+            />
+          </div>
         </div>
-        <div v-if="eachBlog?.image">
+        <!-- <div v-if="eachBlog?.image">
           <span class="text-sm">Image File Uploaded:</span>
           <div class="flex flex-col items-center min-w-[200px]">
             <div class="flex justify-center mb-3">
@@ -29,7 +69,7 @@
               <img :src="imagePreview" alt="image" class="border-2" />
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <label for="Title">Title</label>
       <VeeField
@@ -101,6 +141,12 @@ const props = defineProps({
     type: Array,
   },
 });
+
+const fileInput = ref(null);
+
+const selectImage = () => {
+  fileInput.value.click();
+};
 
 // const category = categoryBlog.value.data.map((item) => item.name);
 
