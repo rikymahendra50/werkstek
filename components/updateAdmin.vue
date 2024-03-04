@@ -31,8 +31,9 @@
         v-model="formData.title" autocomplete="off" />
       <div class="flex flex-col mt-5">
         <label for="body">Body</label>
-        <VeeField id="body" as="textarea" name="body" placeholder="Input Body" class="textarea textarea-bordered w-full"
-          v-model="formData.body" autocomplete="off" />
+        <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
+        <VeeErrorMessage name="body" />
+
       </div>
       <div class="flex flex-col mt-5">
         <label for="Category">Category</label>
