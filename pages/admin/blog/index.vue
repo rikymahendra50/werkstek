@@ -16,7 +16,11 @@
           </NuxtLink>
         </div>
       </div>
-      <div>
+      <div class="space-y-4">
+        <div class="max-w-sm">
+          <Search v-model="search" placeholder="search" />
+        </div>
+
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
           <table class="table table-xs md:table-md w-full rounded-t-xl">
             <thead class="h-12">
@@ -25,7 +29,7 @@
                 <th class="font-medium">Title</th>
                 <th class="font-medium">Meta</th>
                 <th class="font-medium">Category</th>
-                <th></th>
+                <th class="font-medium">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -67,6 +71,11 @@
                   >
                     Detail
                   </NuxtLink>
+                  <NuxtLink
+                    :to="`/admin/blog/${item.slug}`"
+                    class="btn btn-sm btn-outline text-[12px]"
+                    >Item Category
+                  </NuxtLink>
                 </td>
                 <td>
                   <div class="flex justify-center items-center gap-4 my-1">
@@ -107,18 +116,42 @@
             </tbody>
           </table>
         </div>
+
+        <Pagination
+          v-model="page"
+          :total="blog?.meta?.total"
+          :per-page="blog?.meta?.per_page"
+        />
       </div>
     </div>
   </main>
 </template>
 
 <script setup>
-const { loading, transformErrors } = useRequestHelper();
+const { loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const { data: blog, error } = await useFetch(`/admins/articles`, {
-  method: "get",
-  ...requestOptions,
-});
+import { useTimeoutFn } from "@vueuse/core";
+
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+const search = ref("");
+
+const {
+  data: blog,
+  error,
+  refresh,
+} = await useAsyncData("blog", () =>
+  $fetch(`/admins/articles?page=${page.value}&filter[search]=${search.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
 
 const showModal = (index) => {
   const modalId = `my_modal_${index}`;
@@ -128,13 +161,36 @@ const showModal = (index) => {
   }
 };
 
+watch(
+  () => page.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      start();
+    }
+  }
+);
+
+watch(
+  () => search.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+function replaceWindow() {
+  router.replace(`/admin/blog?page=${page.value}&search=${search.value}`);
+  refresh();
+}
+
 const deleteBlog = async (slug) => {
   loading.value = true;
   await useFetch(`/admins/articles/${slug}`, {
     method: "DELETE",
     ...requestOptions,
   });
-  window.location.reload();
 
   if (error.value) {
     snackbar.add({
@@ -146,9 +202,21 @@ const deleteBlog = async (slug) => {
       type: "success",
       text: "Delete Blog Success",
     });
+    start();
   }
   loading.value = false;
 };
+
+onMounted(() => {
+  stop();
+  if (route.query.page) {
+    page.value = route.query.page ?? 1;
+  }
+
+  if (route.query.search) {
+    search.value = route.query?.search ?? "";
+  }
+});
 
 useHead({
   title: "Blog",
@@ -158,14 +226,6 @@ definePageMeta({
   layout: "admin",
   // @ts-ignore
   middleware: ["auth", "admin"],
-});
-
-const articleData = ref({
-  image: "",
-  title: "",
-  body: "",
-  category: "",
-  meta: "",
 });
 </script>
 
