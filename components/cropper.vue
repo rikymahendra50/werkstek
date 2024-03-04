@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <ModalBase v-model="modal" class="p-0 rounded-lg w-10/12 max-w-3xl">
+    <modal v-model="modalInput" class="p-0 rounded-lg w-10/12 max-w-3xl">
       <div class="card card-compact border rounded-lg">
         <div class="card-body space-y-4">
           <div class="flex justify-between items-center">
@@ -10,39 +10,32 @@
             <div></div>
           </div>
 
-          <p>{{ $t("max_2mb_note_image_txt") }}</p>
+          <p>
+            Max image size is 2MB
+          </p>
 
           <template v-if="imageUrl">
-            <VuePictureCropper
-              :boxStyle="{
-                width: '100%',
-                height: '100%',
-                backgroundColor: '#f8f8f8',
-                margin: 'auto',
-              }"
-              :img="imageUrl"
-              :options="{
-                viewMode: 1,
-                dragMode: 'move',
-                aspectRatio: 4 / 3,
-                cropBoxResizable: false,
-                imageSmoothingEnabled: true,
-                imageSmoothingQuality: 'high',
-                zoomable: false,
-              }"
-              :presetMode="{
-                width: 1000,
-                height: 750,
-                mode: 'fixedSize',
-              }"
-            />
+            <VuePictureCropper :boxStyle="{
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#f8f8f8',
+              margin: 'auto',
+            }" :img="imageUrl" :options="{
+  viewMode: 1,
+  dragMode: 'move',
+  aspectRatio: 4 / 3,
+  cropBoxResizable: false,
+  imageSmoothingEnabled: true,
+  imageSmoothingQuality: 'high',
+  zoomable: false,
+}" :presetMode="{
+  width: 1000,
+  height: 750,
+  mode: 'fixedSize',
+}" />
           </template>
           <div v-if="imageReviewUrl">
-            <img
-              class="h-full w-full aspect-square"
-              :src="imageReviewUrl"
-              alt="review"
-            />
+            <img class="h-full w-full aspect-square" :src="imageReviewUrl" alt="review" />
           </div>
           <progress v-if="props.loading" class="progress w-100"></progress>
           <span v-if="imageFileSizeMsg" class="text-error text-sm my-2">
@@ -50,44 +43,28 @@
           </span>
           <div class="flex justify-between">
             <div>
-              <button
-                :disabled="loading"
-                class="btn btn-neutral"
-                type="button"
-                @click="cancelCrop"
-              >
-                {{ $t("cancel_txt") }}
+              <button :disabled="loading" class="btn btn-neutral" type="button" @click="cancelCrop">
+                Cancel
               </button>
             </div>
             <div>
-              <button
-                :disabled="loading"
-                class="btn btn-success"
-                type="button"
-                @click="crop"
-              >
-                {{ $t("crop_txt") }}
+              <button :disabled="loading" class="btn btn-success" type="button" @click="crop">
+                Crop
               </button>
             </div>
           </div>
         </div>
       </div>
-    </ModalBase>
+    </modal>
     <div
       class="h-full w-full min-h-[150px] overflow-hidden rounded-lg border border-dashed flex items-center justify-center hover:shadow-md transition-all duration-500"
-      role="button"
-      @click="open()"
-      v-if="!image"
-    >
+      role="button" @click="open()" v-if="!image">
       <div class="flex flex-col">
         <div class="flex justify-center">
-          <Icon
-            name="i-heroicons-plus"
-            class="h-24 w-24 stroke-0 fill-none opacity-90"
-          />
+          <Icon name="i-heroicons-plus" class="h-24 w-24 stroke-0 fill-none opacity-90" />
         </div>
 
-        <span> {{ $t("add_images") }} </span>
+        <span> Add Image </span>
       </div>
     </div>
   </ClientOnly>
@@ -96,7 +73,7 @@
 <script setup lang="ts">
 import { useFileDialog } from "@vueuse/core";
 import VuePictureCropper, { cropper } from "vue-picture-cropper";
-// const { modal } = useModal();
+
 
 const props = defineProps({
   loading: {
@@ -106,6 +83,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:image", "upload"]);
+
+const modalInput = ref(false);
 
 const image = ref<File | null>(null);
 
@@ -132,7 +111,7 @@ onChange((files) => {
   // @ts-ignore
   image.value = files[0];
   reset();
-  modal.value = true;
+  modalInput.value = true;
 });
 
 async function crop() {
@@ -168,13 +147,13 @@ async function crop() {
     return;
   }
 
-  // imageReview.value = file
+  imageReview.value = file
 
   emit("upload", file);
 }
 
 watch(
-  () => modal.value,
+  () => modalInput.value,
   (value) => {
     if (!value) {
       image.value = null;
@@ -183,11 +162,11 @@ watch(
 );
 
 function cancelCrop() {
-  modal.value = false;
+  modalInput.value = false;
 }
 
 defineExpose({
-  modal,
+  modalInput,
 });
 </script>
 
