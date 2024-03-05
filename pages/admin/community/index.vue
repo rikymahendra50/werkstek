@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[500px]">
+  <main class="flex-grow overflow-y-auto">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -16,16 +16,18 @@
           </NuxtLink>
         </div>
       </div>
-      <div>
+      <div class="space-y-4">
+        <!-- <div class="max-w-sm">
+          <Search v-model="search" placeholder="search" />
+        </div> -->
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
           <table class="table table-xs md:table-md w-full rounded-t-xl">
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Image</th>
-                <th class="font-medium">Title</th>
+                <th class="font-medium">Name</th>
                 <th class="font-medium">Meta</th>
-                <th class="font-medium">Item Detail</th>
-                <th></th>
+                <th class="font-medium">Detail</th>
               </tr>
             </thead>
             <tbody>
@@ -34,27 +36,12 @@
                 v-for="(item, index) in community?.data"
               >
                 <td class="max-w-[100px]">
-                  <!-- <img :src="item.image" :alt="index" /> -->
-                  <label
-                    :for="`modal-${item.id}`"
-                    class="btn btn-sm btn-outline modal-button"
-                    >Images</label
-                  >
-                  <input
-                    type="checkbox"
-                    :id="`modal-${item.id}`"
-                    class="modal-toggle"
-                  />
-                  <div class="modal">
-                    <div class="modal-box">
-                      <h3 class="font-bold text-lg">Images</h3>
-                      <img :src="item.image" :alt="index" />
-                      <div class="modal-action">
-                        <label :for="`modal-${item.id}`" class="btn"
-                          >Close</label
-                        >
-                      </div>
-                    </div>
+                  <div class="max-w-[100px] max-h-[100px] overflow-hidden">
+                    <img
+                      :src="item.image"
+                      :alt="`item` + index"
+                      class="object-cover"
+                    />
                   </div>
                 </td>
                 <td class="text-gray-500 text-sm font-normal !py-2">
@@ -63,24 +50,29 @@
                 <td class="font-medium max-w-[200px]">{{ item.meta }}</td>
                 <td class="font-medium">
                   <NuxtLink
-                    :to="`/admin/community/${item.slug}`"
-                    class="btn btn-sm btn-outline text-[12px]"
-                    >Item Detail</NuxtLink
+                    :to="`/werkstek-community/${item.slug}`"
+                    class="btn mr-2 btn-sm normal-case btn-ghost btn-square"
+                    target="_blank"
                   >
+                    <icon name="i-heroicons-eye" class="cursor-pointer" />
+                  </NuxtLink>
                 </td>
                 <td>
                   <div class="flex justify-center items-center gap-4 my-1">
                     <NuxtLink
                       :to="`/admin/community/edit/${item.slug}`"
-                      class="m-2"
+                      class="btn mr-2 btn-sm normal-case btn-ghost btn-square"
                     >
                       <icon
                         name="i-heroicons-pencil-square"
-                        class="cursor-pointer mr-1"
+                        class="cursor-pointer"
                       />
                     </NuxtLink>
-                    <div class="cursor-pointer m-2" @click="showModal(index)">
-                      <icon name="i-heroicons-trash" class="mr-1" />
+                    <div
+                      class="cursor-pointer m-2 btn mr-2 btn-sm normal-case btn-ghost btn-square"
+                      @click="showModal(index)"
+                    >
+                      <icon name="i-heroicons-trash" />
                     </div>
                     <dialog :id="'my_modal_' + index" class="modal">
                       <div class="modal-box">
@@ -89,12 +81,12 @@
                         </h3>
                         <p class="py-4 text-lg">
                           Are you sure want to delete this called
-                          {{ item.name }}?
+                          {{ item.slug }}?
                         </p>
                         <div class="modal-action">
                           <form method="dialog">
                             <button
-                              @click="deleteCommunity(item.slug)"
+                              @click="deleteBlog(item.slug)"
                               class="btn btn-outline btn-error mr-3"
                             >
                               Delete
@@ -110,18 +102,44 @@
             </tbody>
           </table>
         </div>
+        <Pagination
+          v-model="page"
+          :total="community?.meta?.total"
+          :per-page="community?.meta?.per_page"
+        />
       </div>
     </div>
   </main>
 </template>
 
 <script setup>
-const { loading, transformErrors } = useRequestHelper();
+const { loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const { data: community, error } = await useFetch(`/admins/community-blogs`, {
-  method: "get",
-  ...requestOptions,
-});
+import { useTimeoutFn } from "@vueuse/core";
+
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+const search = ref("");
+
+const {
+  data: community,
+  error,
+  refresh,
+} = await useAsyncData("community", () =>
+  $fetch(
+    `/admins/community-blogs?page=${page.value}&filter[search]=${search.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
+);
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
 
 const showModal = (index) => {
   const modalId = `my_modal_${index}`;
@@ -131,13 +149,36 @@ const showModal = (index) => {
   }
 };
 
-const deleteCommunity = async (slug) => {
+watch(
+  () => page.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      start();
+    }
+  }
+);
+
+watch(
+  () => search.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+function replaceWindow() {
+  router.replace(`/admin/blog?page=${page.value}&search=${search.value}`);
+  refresh();
+}
+
+const deleteBlog = async (slug) => {
   loading.value = true;
-  await useFetch(`/admins/community-blogs/${slug}`, {
+  await useFetch(`/admins/articles/${slug}`, {
     method: "DELETE",
     ...requestOptions,
   });
-  window.location.reload();
 
   if (error.value) {
     snackbar.add({
@@ -149,9 +190,21 @@ const deleteCommunity = async (slug) => {
       type: "success",
       text: "Delete Community Success",
     });
+    start();
   }
   loading.value = false;
 };
+
+onMounted(() => {
+  stop();
+  if (route.query.page) {
+    page.value = route.query.page ?? 1;
+  }
+
+  if (route.query.search) {
+    search.value = route.query?.search ?? "";
+  }
+});
 
 useHead({
   title: "Community",

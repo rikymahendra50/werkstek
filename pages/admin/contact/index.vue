@@ -8,7 +8,10 @@
           <div class="text-xl md:text-3xl font-bold">Contact</div>
         </div>
       </div>
-      <div>
+      <div class="space-y-4">
+        <div class="max-w-sm">
+          <Search v-model="search" placeholder="search" />
+        </div>
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
           <table class="table table-xs md:table-md w-full rounded-t-xl">
             <thead class="h-12">

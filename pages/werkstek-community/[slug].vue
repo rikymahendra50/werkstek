@@ -2,7 +2,7 @@
   <div v-if="pending">Loading...</div>
   <div v-if="data && data?.data">
     <EachBlog
-      typeArticle="community"
+      typeArticle="Community"
       :title="data?.data?.title"
       :imageSrc="data.data.image"
       :body="data?.data?.body"
@@ -20,10 +20,13 @@ const slug = computed(() => {
 
 const { requestOptions } = useRequestOptions();
 
-const { data, error, pending } = await useFetch(`/articles/${slug.value}`, {
-  method: "get",
-  ...requestOptions,
-});
+const { data, error, pending } = await useFetch(
+  `/community-blogs/${slug.value}`,
+  {
+    method: "get",
+    ...requestOptions,
+  }
+);
 
 if (error.value) {
   console.error("Error fetching data:", error);

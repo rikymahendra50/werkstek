@@ -84,7 +84,7 @@
                 </td>
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   <NuxtLink
-                    :to="`/onze-vacaturies/${item.slug}`"
+                    :to="`/onze-locaties/${item.slug}`"
                     class="btn btn-sm normal-case btn-ghost btn-square"
                     target="_blank"
                   >

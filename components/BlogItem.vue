@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <NuxtLink :to="`/blog/${link}`">
+    <NuxtLink :to="link">
       <div
         class="overflow-hidden p-1.5 transition-shadow hover:shadow-md duration-500 rounded-md"
       >

@@ -1,6 +1,6 @@
 <template>
   <VeeForm @submit="onSubmit" v-slot="{ errors }">
-    {{ props.eachBlog?.category_id }}
+    <!-- {{ props.eachBlog?.category_id }} -->
     <div class="grid mt-10 p-3 gap-4">
       <div>
         <BlogImageCrop
@@ -68,6 +68,7 @@ const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
+const router = useRouter();
 
 const props = defineProps({
   eachBlog: {
@@ -110,7 +111,7 @@ async function onSubmit(values, ctx) {
 
   const object = { ...formData.value };
 
-  console.log(object);
+  // console.log(object);
   const formDataT = new FormData();
 
   for (const item in object) {
@@ -118,6 +119,9 @@ async function onSubmit(values, ctx) {
     const objectItem = object[item];
     formDataT.append(item, objectItem);
   }
+
+  // console.log(selectedImage.value);
+
   if (selectedImage.value) {
     formDataT.append("image", selectedImage.value);
   }
@@ -142,7 +146,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Edit Blog Success",
     });
-    ctx.resetForm();
+    router.push("/admin/blog");
   }
 
   loading.value = false;

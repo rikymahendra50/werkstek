@@ -105,7 +105,7 @@
             </svg>
             Onze Vacatures
           </NuxtLink>
-          <NuxtLink
+          <!-- <NuxtLink
             to="/admin/onze-locaties"
             :class="{
               'bg-transparent text-black hover:text-opacity-25': !isRouteActive(
@@ -139,7 +139,7 @@
               />
             </svg>
             Onze Locaties
-          </NuxtLink>
+          </NuxtLink> -->
           <NuxtLink
             to="/admin/location"
             :class="{

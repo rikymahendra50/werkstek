@@ -81,6 +81,7 @@ async function onSubmit(values, ctx) {
     const objectItem = object[item];
     formDataT.append(item, objectItem);
   }
+
   if (selectedImage.value) {
     formDataT.append("image", selectedImage.value);
   }

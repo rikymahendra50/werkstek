@@ -1,14 +1,6 @@
 <template>
-  <div class="flex gap-2">
-    <NuxtLink
-      to="/admin/onze-vacaturies"
-      class="btn btn-warning btn-outline btn-sm"
-      >Back</NuxtLink
-    >
-    <span class="text-2xl font-bold">Add Vacaturies</span>
-  </div>
+  <CompAdminBackButton link="onze-vacaturies" linkTitle="Add Vacatures" />
   <div class="h-screen max-h-[450px] overflow-y-auto">
-    <h3 class="font-bold text-lg">Add New Data Onze Vacatures</h3>
     <div class="modal-action grid grid-cols-1 gap-3">
       <VeeForm
         @submit="onSubmit"

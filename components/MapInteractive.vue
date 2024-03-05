@@ -106,90 +106,6 @@
   </section>
 </template>
 
-<style>
-.dropdownMap::-webkit-scrollbar {
-  width: 6px;
-  background-color: #f5f5f5;
-}
-
-.custom-marker {
-  transition: transform 0.3s ease;
-}
-
-.custom-marker:hover {
-  transform: scale(1.2);
-}
-
-.gm-style-iw {
-  transition: opacity 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-.gm-style-iw.fade-in {
-  animation: fadeIn 0.3s ease-in-out forwards;
-}
-
-.gm-style-iw.fade-out {
-  animation: fadeOut 0.3s ease-in-out forwards;
-}
-
-.gm-style-iw-tc {
-  display: none !important;
-}
-
-.gm-style-cc {
-  display: none !important;
-}
-
-.gm-style-iw-d {
-  overflow-y: auto !important;
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
-}
-
-.gm-ui-hover-effect {
-  background-color: white !important;
-  position: absolute !important;
-  border-radius: 50%;
-  top: 5px !important;
-  right: 5px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.gm-ui-hover-effect:span {
-  width: 200px;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.gm-style-iw-c {
-  padding: 0 !important;
-}
-
-.gm-style-cc a {
-  display: none !important;
-}
-</style>
-
 <script setup>
 import axios from "axios";
 const { axiosRequest } = useAxios();
@@ -247,6 +163,8 @@ const { data, error } = await useFetch(`/products`, {
 const categoryOptions = data.value.data.map((item) => item.name);
 
 const numericPrices = data.value.data.map((item) => parseFloat(item.price));
+
+// console.log(numericPrices);
 
 const highestPrice = Math.max(...numericPrices);
 
@@ -569,3 +487,87 @@ const setBoundsForMarkers = () => {
   map.fitBounds(bounds);
 };
 </script>
+
+<style>
+.dropdownMap::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
+.custom-marker {
+  transition: transform 0.3s ease;
+}
+
+.custom-marker:hover {
+  transform: scale(1.2);
+}
+
+.gm-style-iw {
+  transition: opacity 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.gm-style-iw.fade-in {
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.gm-style-iw.fade-out {
+  animation: fadeOut 0.3s ease-in-out forwards;
+}
+
+.gm-style-iw-tc {
+  display: none !important;
+}
+
+.gm-style-cc {
+  display: none !important;
+}
+
+.gm-style-iw-d {
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.gm-ui-hover-effect {
+  background-color: white !important;
+  position: absolute !important;
+  border-radius: 50%;
+  top: 5px !important;
+  right: 5px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.gm-ui-hover-effect:span {
+  width: 200px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.gm-style-iw-c {
+  padding: 0 !important;
+}
+
+.gm-style-cc a {
+  display: none !important;
+}
+</style>

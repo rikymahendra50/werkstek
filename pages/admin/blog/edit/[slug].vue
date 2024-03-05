@@ -9,11 +9,7 @@
 </template>
 
 <script setup>
-import axios from "axios";
-const { axiosRequest } = useAxios();
-const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 
