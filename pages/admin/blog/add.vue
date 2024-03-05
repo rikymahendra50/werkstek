@@ -1,11 +1,6 @@
 <template>
   <section class="overflow-auto max-h-[500px]">
-    <div class="flex gap-4">
-      <NuxtLink to="/admin/blog" class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
-      <span class="text-2xl font-bold">Add Blog</span>
-    </div>
+    <CompAdminBackButton link="blog" linkTitle="Add Blog" />
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
       <div class="flex flex-col mt-10 overflow-auto p-3">
         <label for="image" class="mb-1">Image</label>

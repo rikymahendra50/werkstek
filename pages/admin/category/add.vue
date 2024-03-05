@@ -1,13 +1,8 @@
 <template>
   <section>
-    <div class="flex gap-4">
-      <NuxtLink to="/admin/category" class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
-      <span class="text-2xl font-bold">Add Category</span>
-    </div>
+    <CompAdminBackButton link="category" linkTitle="Add Category" />
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="grid grid-cols-2 mt-3 gap-3">
+      <div class="grid grid-cols-2 gap-3">
         <div class="flex flex-col">
           <label for="Name">Name</label>
           <VeeField

@@ -1,9 +1,5 @@
 <template>
   <section class="py-20">
-    <!-- <pre>
-      {{ filteredData.data[0].longitude }}
-    </pre> -->
-
     <TitleHeader
       title="Onze locaties"
       secondTitle="Bekijk al onze locaties"
@@ -146,10 +142,12 @@
           </div>
         </div>
       </div>
+
       <div
         class="md:col-span-8 py-5 overflow-auto max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
       >
         <eachLocaties
+          v-if="filteredData.data"
           v-for="(item, index) in filteredData.data"
           :key="item.id"
           :name="item.location.name"
@@ -189,7 +187,7 @@ function splitColumns(arr) {
 
 onMounted(() => {
   showAllData();
-  selectedCity.value = "Locatie";
+
   if (window.innerWidth > 768) {
     showFilter.value = true;
   } else {
@@ -255,16 +253,17 @@ const selectedMeterMin = ref();
 const selectedMeterMax = ref();
 const filteredData = ref([]);
 
+selectedCity.value = "Locatie";
+
 const filteredDataComputed = computed(() => filteredData.value);
 
-const showAllData = () => {
-  selectedCity.value = "Locatie";
-  selectedSoortLocatie.value = "";
-  selectedFunctie.value = [];
-  selectedMeterMin.value = null;
-  selectedMeterMax.value = null;
-  selectedMinPrice.value = null;
-  selectedMaxPrice.value = null;
+const showAllData = async () => {
+  try {
+    const response = await axiosRequest.get("/products");
+    filteredData.value = response.data;
+  } catch (error) {
+    console.error("Failed to retrieve data from API:", error);
+  }
 };
 
 function handlePriceChange(priceData) {

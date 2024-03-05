@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="`/admin/${link}`"
-    class="cursor-pointer flex gap-2 hover:scale-x-95 transition-all"
+    class="cursor-pointer flex gap-2 hover:scale-x-95 transition-all mb-7"
   >
     <Icon
       name="i-heroicons-arrow-left"

@@ -6,7 +6,7 @@
   >
     <div
       id="map"
-      :class="`relative aspect-video lg:h-[219px] z-[-999] mt-5`"
+      :class="`relative aspect-video lg:h-[219px] z-[-999] mt-5 w-full`"
     ></div>
   </section>
 </template>
@@ -27,6 +27,8 @@ const currentInfoWindow = ref(null);
 
 const locationsTest = ref(props.AllData);
 const locations = locationsTest.value.data;
+
+// console.log(locations);
 
 onMounted(() => {
   if (!googleMapsScriptLoaded) {
@@ -57,7 +59,7 @@ const loadGoogleMapsScript = () => {
 const setupMap = () => {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -8.653840910873269, lng: 115.21785198506426 },
-    zoom: 4,
+    zoom: 1,
     fullscreenControl: false,
     zoomControl: false,
     keyboardShortcuts: false,

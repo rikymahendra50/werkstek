@@ -1,15 +1,14 @@
 <template>
-  <div class="overflow-auto max-h-[500px]">
-    <div class="flex gap-2">
-      <NuxtLink
-        to="/admin/onze-vacaturies"
-        class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
-      <span class="text-2xl font-bold">Edit Vacatures</span>
-    </div>
-    <div class="modal-action grid grid-cols-1 gap-3">
-      <VeeForm
+  <CompAdminBackButton link="onze-vacaturies" linkTitle="Edit Property" />
+  <div class="modal-action grid grid-cols-1 gap-3">
+    <Update&AddProduct
+      :eachData="eachVacaturies"
+      :type="type.data"
+      :location="location.data"
+      :facilities="facilities.data"
+    />
+
+    <!-- <VeeForm
         @submit="onSubmit"
         class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-10"
         v-slot="{ errors }"
@@ -217,22 +216,22 @@
             <div class="flex items-center">
               <span>Privileges (data not available)</span>
             </div>
-            <!-- <label
-                  v-for="item in privileges.data"
-                  :key="item.id"
-                  class="checkbox-label flex gap-2"
-                >
-                  <VeeField
-                    :id="`privileges + ${item.id}`"
-                    :name="`privileges + ${item.name}`"
-                    type="checkbox"
-                    :value="item.id"
-                    v-model="productsData.product_privileges"
-                    placeholder="privileges"
-                    autocomplete="privileges"
-                  />
-                  {{ item.name }}
-                </label> -->
+            <label
+              v-for="item in privileges.data"
+              :key="item.id"
+              class="checkbox-label flex gap-2"
+            >
+              <VeeField
+                :id="`privileges + ${item.id}`"
+                :name="`privileges + ${item.name}`"
+                type="checkbox"
+                :value="item.id"
+                v-model="productsData.product_privileges"
+                placeholder="privileges"
+                autocomplete="privileges"
+              />
+              {{ item.name }}
+            </label>
           </div>
         </div>
         <div class="flex flex-col my-2 w-full">
@@ -306,30 +305,9 @@
             </span>
           </button>
         </div>
-      </VeeForm>
-    </div>
+      </VeeForm> -->
   </div>
 </template>
-
-<!-- <style scoped>
-.overflow-auto {
-  max-height: 550px;
-  overflow-y: auto;
-  overflow-x: auto;
-}
-
-.overflow-auto::-webkit-scrollbar {
-  display: none;
-}
-
-.description-column {
-  overflow-y: auto;
-}
-
-.description-column::-webkit-scrollbar {
-  display: none;
-}
-</style> -->
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
@@ -344,7 +322,7 @@ const slug = computed(() => {
 const {
   data: eachVacaturies,
   error,
-  pending,
+  pending: eachVacaturiesPending,
 } = await useFetch(`/products/${slug.value}`, {
   method: "get",
   ...requestOptions,
@@ -413,7 +391,7 @@ async function onSubmit(values, ctx) {
 }
 
 useHead({
-  title: "Add Vacaturies",
+  title: "Edit Vacaturies",
 });
 
 definePageMeta({

@@ -22,8 +22,8 @@
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Name</th>
-                <th class="font-medium">Detail Vacatures</th>
-                <th class="font-medium"></th>
+                <th class="font-medium">Modification</th>
+                <th class="font-medium">Detail</th>
               </tr>
             </thead>
             <tbody>
@@ -35,32 +35,31 @@
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.name }}
                 </td>
-                <td>
-                  <NuxtLink
-                    :to="`/admin/onze-vacaturies/${item.slug}`"
-                    class="btn btn-sm btn-outline mr-2"
-                  >
-                    Detail
-                  </NuxtLink>
+                <td class="flex items-center gap-3">
                   <NuxtLink
                     :to="`/admin/onze-vacaturies/add-image/${item.slug}`"
-                    class="btn btn-sm btn-outline"
+                    class="btn btn-sm normal-case btn-ghost btn-square"
                   >
-                    Add Images
+                    <img
+                      src="/images/add-image-admin.svg"
+                      alt="add-image-admin"
+                      class="w-4"
+                    />
                   </NuxtLink>
-                </td>
-                <td class="flex items-center">
                   <NuxtLink
                     :to="`/admin/onze-vacaturies/edit-vacaturies/${item.slug}`"
-                    class="m-2"
+                    class="btn btn-sm normal-case btn-ghost btn-square"
                   >
                     <icon
                       name="i-heroicons-pencil-square"
-                      class="cursor-pointer mr-1"
+                      class="cursor-pointer"
                     />
                   </NuxtLink>
-                  <div class="cursor-pointer m-2" @click="showModal(index)">
-                    <icon name="i-heroicons-trash" class="mr-1" />
+                  <div
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
+                    @click="showModal(index)"
+                  >
+                    <icon name="i-heroicons-trash" />
                   </div>
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">
@@ -73,7 +72,7 @@
                         <form method="dialog">
                           <button
                             @click="deleteLocatie(item.slug)"
-                            class="btn btn-outline btn-error mr-3"
+                            class="btn btn-outline btn-error"
                           >
                             Delete
                           </button>
@@ -82,6 +81,15 @@
                       </div>
                     </div>
                   </dialog>
+                </td>
+                <td class="text-gray-500 text-sm font-normal !py-2">
+                  <NuxtLink
+                    :to="`/onze-vacaturies/${item.slug}`"
+                    class="btn btn-sm normal-case btn-ghost btn-square"
+                    target="_blank"
+                  >
+                    <icon name="i-heroicons-eye" class="cursor-pointer" />
+                  </NuxtLink>
                 </td>
               </tr>
             </tbody>

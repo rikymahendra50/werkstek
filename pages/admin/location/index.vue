@@ -22,7 +22,6 @@
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Name</th>
-                <!-- <th class="font-medium">Images</th> -->
                 <th class="font-medium"></th>
               </tr>
             </thead>
@@ -31,12 +30,12 @@
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
                 v-for="(item, index) in locations?.data"
               >
-                <td class="text-gray-500 text-sm font-normal !py-2">
-                  {{ item.name }}
-                </td>
                 <!-- <td class="text-gray-500 text-sm font-normal !py-2">
                   <img :src="item.image" :alt="item.id" class="max-w-[90px]" />
                 </td> -->
+                <td class="text-gray-500 text-sm font-normal !py-2">
+                  {{ item.name }}
+                </td>
                 <td class="flex items-center">
                   <NuxtLink
                     :to="`/admin/location/edit/${item.slug}`"

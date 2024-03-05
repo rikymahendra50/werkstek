@@ -1,13 +1,10 @@
 <template>
   <section>
-    <div class="flex gap-4">
-      <NuxtLink to="/admin/facility" class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
-      <span class="text-2xl font-bold">Add Facility</span>
-    </div>
+    <CompAdminBackButton link="facility" linkTitle="Add Facility" />
     <VeeForm @submit="onSubmit">
-      <div class="grid grid-cols-2 mt-3 gap-3">
+      <div class="grid grid-cols-1 mt-8 gap-3">
+        <span>Image</span>
+        <BlogImageCrop :loading="loading" v-model="selectedImage" />
         <div class="flex flex-col">
           <label for="Name">Name</label>
           <input
@@ -16,19 +13,6 @@
             placeholder="Input Name"
             class="input input-bordered w-full"
             v-model="name"
-            autocomplete="on"
-            required
-          />
-        </div>
-        <div class="flex flex-col">
-          <label for="image">Icon</label>
-          <input
-            id="image"
-            type="file"
-            name="image"
-            class="file-input file-input-bordered file-input-warning w-full max-w-xs"
-            accept="image/*"
-            v-on:change="handleImageChange"
             autocomplete="on"
             required
           />
@@ -49,45 +33,97 @@ const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const route = useRoute();
 
-const name = ref();
-const imageTest = ref();
+const formData = ref({
+  name: undefined,
+});
 
-const handleImageChange = (event) => {
-  const files = event.target.files;
-  if (files.length > 0) {
-    imageTest.value = files[0];
-  }
+const fileInput = ref(null);
+
+const selectImage = () => {
+  fileInput.value.click();
 };
 
-const onSubmit = async (values, ctx) => {
+const imagePreview = ref();
+const selectedImage = ref();
+
+function saveToPreviewImage(event) {
+  imagePreview.value = URL.createObjectURL(event.target.files[0]);
+  selectedImage.value = event.target.files[0];
+}
+
+const onUpload = (image) => {
+  selectedImage.value = image;
+};
+
+async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const formData = new FormData();
-  formData.append("name", name.value);
-  formData.append("image", imageTest.value);
+  const object = { ...formData.value };
 
-  const { error } = await useFetch(`/admins/facility`, {
-    method: "post",
-    body: formData,
+  console.log(object);
+  const formDataT = new FormData();
+
+  for (const item in object) {
+    // @ts-ignore
+    const objectItem = object[item];
+    formDataT.append(item, objectItem);
+  }
+  if (selectedImage.value) {
+    formDataT.append("image", selectedImage.value);
+  }
+
+  const { error, data } = await useFetch(`/admins/facility/`, {
+    method: "POST",
+    body: formDataT,
     ...requestOptions,
   });
 
   if (error.value) {
-    ctx.setErrors(transformErrors(error.value?.data));
+    ctx.setErrors(transformErrors(error?.data));
     snackbar.add({
       type: "error",
       text: error.value?.data?.message ?? "Something went wrong",
     });
-  } else {
+  } else if (data.value) {
     snackbar.add({
       type: "success",
-      text: "Add Facility Success",
+      text: "Edit Blog Success",
     });
     ctx.resetForm();
   }
 
   loading.value = false;
-};
+}
+
+// const onSubmit = async (values, ctx) => {
+//   loading.value = true;
+
+//   const formData = new FormData();
+//   formData.append("name", name.value);
+//   formData.append("image", imageTest.value);
+
+//   const { error } = await useFetch(`/admins/facility`, {
+//     method: "post",
+//     body: formData,
+//     ...requestOptions,
+//   });
+
+//   if (error.value) {
+//     ctx.setErrors(transformErrors(error.value?.data));
+//     snackbar.add({
+//       type: "error",
+//       text: error.value?.data?.message ?? "Something went wrong",
+//     });
+//   } else {
+//     snackbar.add({
+//       type: "success",
+//       text: "Add Facility Success",
+//     });
+//     ctx.resetForm();
+//   }
+
+//   loading.value = false;
+// };
 
 useHead({
   title: "Add Facility",

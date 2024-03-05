@@ -1,5 +1,5 @@
 <template>
-  <div class="border-r bg-white border-2">
+  <div class="border-r bg-white">
     <div class="flex h-full max-h-screen flex-col gap-4">
       <div class="flex h-[60px] items-center border-b px-6 justify-between">
         <NuxtLink to="/admin" class="flex items-center gap-2 font-semibold">
@@ -16,7 +16,7 @@
           </button>
         </div>
       </div>
-      <div class="flex-1 overflow-auto py-2">
+      <div class="flex-1 py-2">
         <nav class="grid items-start px-4 text-sm font-medium">
           <!-- Home -->
           <NuxtLink
