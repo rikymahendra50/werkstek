@@ -34,9 +34,9 @@
                 class="text-sm flex items-center p-5"
                 v-for="(item, index) in city"
                 :key="index"
-                :value="item"
+                :value="item.id"
               >
-                {{ item }}
+                {{ item.name }}
               </option>
             </select>
           </div>
@@ -130,44 +130,48 @@
                   </div>
                 </template>
               </div>
-              <Map :AllData="data" :filterData="filteredData.data" />
-              <div class="flex justify-center md:mt-4">
+              <!-- <Map :AllData="data" :filterData="filteredData.data" /> -->
+              <!--  <div class="flex justify-center md:mt-4">
                 <button
                   @click="showAllData"
                   class="btn btn-outline btn-orange btn-sm mt-3"
                 >
                   Show All Data
                 </button>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
       </div>
-      <div
-        class="md:col-span-8 py-5 overflow-auto max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
-      >
-        <eachLocaties
-          v-if="filteredData.data"
-          v-for="(item, index) in filteredData.data"
-          :key="item.id"
-          :name="item.location.name"
-          :type="item.level_type"
-          :latitude="item.latitude"
-          :longitude="item.longitude"
-          :link="`/onze-locaties/${item.slug}`"
-          :price="item.price"
-          :image="
-            item.images.find((image, imageIndex) => imageIndex === index)?.image
-          "
-          :rating="item.rating"
+
+      <div class="md:col-span-8 py-5 overflow-auto">
+        <div
+          class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
+        >
+          <eachLocaties
+            v-if="dataProduct.data"
+            v-for="(item, index) in dataProduct.data"
+            :key="item.id"
+            :name="item?.location?.name"
+            :type="item?.level_type?.name"
+            :latitude="item?.latitude"
+            :longitude="item?.longitude"
+            :link="`/onze-locaties/${item.slug}`"
+            :price="item?.price"
+            :image="
+              item.images.find((image, imageIndex) => imageIndex === index)
+                ?.image
+            "
+            :rating="item?.rating"
+          />
+        </div>
+        <Pagination
+          v-model="page"
+          :total="dataProduct?.meta?.total"
+          :per-page="dataProduct?.meta?.per_page"
+          class="flex justify-center mt-10"
         />
       </div>
-      <Pagination
-        v-model="page"
-        :total="product?.meta?.total"
-        :per-page="product?.meta?.per_page"
-        class="flex justify-center"
-      />
     </div>
   </section>
 </template>
@@ -175,24 +179,30 @@
 <script setup>
 import axios from "axios";
 const { axiosRequest } = useAxios();
-const { requestOptions } = useRequestOptions();
-const { data, error } = await useFetch(`/products`, {
-  method: "get",
-  ...requestOptions,
-});
 
+const { loading } = useRequestHelper();
+const { requestOptions } = useRequestOptions();
+import { useTimeoutFn } from "@vueuse/core";
 const router = useRouter();
 const route = useRoute();
 
 const page = ref(1);
 const search = ref("");
 
-const { data: product, refresh } = await useAsyncData("product", () =>
-  $fetch(`/products?page=${page.value}&filter[search]=${search.value}`, {
-    method: "get",
-    ...requestOptions,
-  })
-);
+const { data: dataForFilter } = await useFetch("/products", {
+  method: "get",
+  ...requestOptions,
+});
+
+const { data: type } = await useFetch("/types", {
+  method: "get",
+  ...requestOptions,
+});
+
+const { data: facility } = await useFetch("/facilities", {
+  method: "get",
+  ...requestOptions,
+});
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
@@ -217,37 +227,28 @@ watch(
   }
 );
 
+const {
+  data: dataProduct,
+  error,
+  refresh,
+} = await useAsyncData("dataProduct", () =>
+  $fetch(`/products?page=${page.value}&filter[search]=${search.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
 function replaceWindow() {
-  router.replace(
-    `/onze-locaties/products?page=${page.value}&search=${search.value}`
-  );
+  router.replace(`/onze-locaties?page=${page.value}&search=${search.value}`);
   refresh();
 }
-
-onMounted(() => {
-  stop();
-  if (route.query.page) {
-    page.value = route.query.page ?? 1;
-  }
-
-  if (route.query.search) {
-    search.value = route.query?.search ?? "";
-  }
-});
 
 const showFilter = ref();
 const toggleDetail = () => {
   showFilter.value = !showFilter.value;
 };
 
-function splitColumns(arr) {
-  const midpoint = Math.ceil(arr.length / 2);
-  return [arr.slice(0, midpoint), arr.slice(midpoint)];
-}
-
 onMounted(() => {
-  showAllData();
-
   if (window.innerWidth > 768) {
     showFilter.value = true;
   } else {
@@ -266,55 +267,43 @@ onMounted(() => {
   );
 });
 
-// const name = data.value.data.map((item) => item.location.name);
+function splitColumns(arr) {
+  const midpoint = Math.ceil(arr.length / 2);
+  return [arr.slice(0, midpoint), arr.slice(midpoint)];
+}
 
+// const name = dataProduct?.value?.data?.map((item) => item.name);
 // const city = ref(name);
 
-const name = data.value.data.map((item) => item.name);
+const arrayLocation = dataProduct?.value?.data?.map((item) => item.location);
 
-const city = ref(name);
+let city = ref([]);
+let citySet = {};
 
-const { data: facility } = await useFetch("/facilities", {
-  method: "get",
-  ...requestOptions,
+arrayLocation.forEach((element) => {
+  const cityName = element.name;
+  const cityId = element.id;
+  if (!citySet[cityName]) {
+    // console.log(cityName, cityId);
+    citySet[cityName] = cityId;
+    city.value.push({ name: cityName, id: cityId });
+  }
 });
-
-const { data: type } = await useFetch("/types", {
-  method: "get",
-  ...requestOptions,
-});
-
-// console.log(type.value.data[0]);
 
 const soortLocatiesRadio = type.value.data;
-
 const functieCheckbox = facility.value.data;
-
-const numericPrices = data.value.data.map((item) => parseFloat(item.price));
-
+const numericPrices = dataForFilter.value.data.map((item) =>
+  parseFloat(item.price)
+);
 const highestPrice = Math.max(...numericPrices);
 
-const selectedCity = ref("");
-const selectedSoortLocatie = ref([]);
-const selectedFunctie = ref([]);
-const selectedMinPrice = ref();
-const selectedMaxPrice = ref();
-const selectedMeterMin = ref();
-const selectedMeterMax = ref();
-const filteredData = ref([]);
+function isSelectedSoort(id) {
+  return selectedSoortLocatie.value.includes(id);
+}
 
-selectedCity.value = "Locatie";
-
-const filteredDataComputed = computed(() => filteredData.value);
-
-const showAllData = async () => {
-  try {
-    const response = await axiosRequest.get("/products");
-    filteredData.value = response.data;
-  } catch (error) {
-    console.error("Failed to retrieve data from API:", error);
-  }
-};
+function isSelectedFuncti(id) {
+  return selectedFunctie.value.includes(id);
+}
 
 function handlePriceChange(priceData) {
   setTimeout(() => {
@@ -323,9 +312,6 @@ function handlePriceChange(priceData) {
   }, 900);
 }
 
-function isSelectedSoort(id) {
-  return selectedSoortLocatie.value.includes(id);
-}
 function handleSoortLocatieChange(id) {
   if (selectedSoortLocatie.value.includes(id)) {
     selectedSoortLocatie.value = selectedSoortLocatie.value.filter(
@@ -336,47 +322,44 @@ function handleSoortLocatieChange(id) {
   }
 }
 
-function isSelectedFuncti(id) {
-  return selectedFunctie.value.includes(id);
-}
+const selectedCity = ref("Locatie");
+const selectedSoortLocatie = ref([]);
+const selectedFunctie = ref([]);
+const selectedMinPrice = ref();
+const selectedMaxPrice = ref();
+const selectedMeterMin = ref();
+const selectedMeterMax = ref();
+
+// selectedCity.value = "Locatie";
+const selectedFacilitiesString = ref("");
 function handlefunctieCheckbox(id) {
-  if (selectedFunctie.value.includes(id)) {
-    selectedFunctie.value = selectedFunctie.value.filter((item) => item !== id);
+  if (selectedFunctie.value[id]) {
+    delete selectedFunctie.value[id];
   } else {
-    selectedFunctie.value = [...selectedFunctie.value, id];
+    selectedFunctie.value[id] = true;
   }
+
+  selectedFacilitiesString.value = Object.keys(selectedFunctie.value).join(",");
 }
 
-watch(
-  [
-    selectedCity,
-    selectedSoortLocatie,
-    selectedFunctie,
-    selectedMeterMin,
-    selectedMeterMax,
-    selectedMinPrice,
-    selectedMaxPrice,
-  ],
-  async () => {
-    await new Promise((resolve) => setTimeout(resolve, 900));
-    try {
-      let params = {};
+watchEffect(() => {
+  fetchData();
+});
 
-      params["filter[search]"] = selectedCity.value;
-      params["filter[type_id]"] = selectedSoortLocatie.value;
-      params["filter[productFacility.facility_id]"] = selectedFunctie.value;
-      params["filter[min_price]"] = selectedMinPrice.value;
-      params["filter[max_price]"] = selectedMaxPrice.value;
-      params["filter[min_area]"] = selectedMeterMin.value;
-      params["filter[max_area]"] = selectedMeterMax.value;
-
-      const response = await axiosRequest.get("/products", { params: params });
-      filteredData.value = response.data;
-    } catch (error) {
-      console.error("Failed to retrieve data from API:", error);
-    }
-  }
-);
+async function fetchData() {
+  const response = await axiosRequest.get(`/products`, {
+    params: {
+      "filter[min_price]": selectedMinPrice.value,
+      "filter[max_price]": selectedMaxPrice.value,
+      "filter[min_area]": selectedMeterMin.value,
+      "filter[max_area]": selectedMeterMax.value,
+      "filter[type_id]": selectedSoortLocatie.value,
+      "filter[location_id]": selectedCity.value,
+      "filter[productFacility.facility_id]": selectedFacilitiesString,
+    },
+  });
+  dataProduct.value = response.data;
+}
 </script>
 
 <style scoped>
