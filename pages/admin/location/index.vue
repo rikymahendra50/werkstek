@@ -36,18 +36,18 @@
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.name }}
                 </td>
-                <td class="flex items-center">
+                <td class="flex items-center gap-2">
                   <NuxtLink
                     :to="`/admin/location/edit/${item.slug}`"
-                    class="m-2"
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
                   >
-                    <icon
-                      name="i-heroicons-pencil-square"
-                      class="cursor-pointer mr-1"
-                    />
+                    <icon name="i-heroicons-pencil-square" />
                   </NuxtLink>
-                  <div class="cursor-pointer m-2" @click="showModal(index)">
-                    <icon name="i-heroicons-trash" class="mr-1" />
+                  <div
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
+                    @click="showModal(index)"
+                  >
+                    <icon name="i-heroicons-trash" />
                   </div>
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">

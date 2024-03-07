@@ -40,13 +40,24 @@
         >
           <NuxtLink to="/admin">
             <img
+              v-if="$user?.profile_picture"
               :src="$user?.profile_picture"
               width="32"
               height="32"
               alt="Avatar"
               class="rounded-md object-cover"
               style="aspect-ratio: 32 / 32; object-fit: cover"
-            /><span class="sr-only">Toggle user menu</span>
+            />
+            <img
+              v-else
+              src="/images/icon-profile.svg"
+              width="32"
+              height="32"
+              alt="Avatar"
+              class="rounded-md object-cover"
+              style="aspect-ratio: 32 / 32; object-fit: cover"
+            />
+            <span class="sr-only">Toggle user menu</span>
           </NuxtLink>
         </button>
       </div>

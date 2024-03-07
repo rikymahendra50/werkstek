@@ -98,7 +98,7 @@ async function onSubmit(values, ctx) {
       text: "Edit Facility Success",
     });
     F;
-    ctx.resetForm();
+    router.push("/admin/facility");
   }
 
   loading.value = false;

@@ -5,6 +5,7 @@
       secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
+
     <div class="md:grid md:grid-cols-12 container-custom gap-2">
       <div class="md:col-span-4">
         <div class="mt-5">
@@ -142,7 +143,6 @@
           </div>
         </div>
       </div>
-
       <div
         class="md:col-span-8 py-5 overflow-auto max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
       >
@@ -162,6 +162,12 @@
           :rating="item.rating"
         />
       </div>
+      <Pagination
+        v-model="page"
+        :total="product?.meta?.total"
+        :per-page="product?.meta?.per_page"
+        class="flex justify-center"
+      />
     </div>
   </section>
 </template>
@@ -173,6 +179,60 @@ const { requestOptions } = useRequestOptions();
 const { data, error } = await useFetch(`/products`, {
   method: "get",
   ...requestOptions,
+});
+
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+const search = ref("");
+
+const { data: product, refresh } = await useAsyncData("product", () =>
+  $fetch(`/products?page=${page.value}&filter[search]=${search.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(
+  () => page.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      start();
+    }
+  }
+);
+
+watch(
+  () => search.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+function replaceWindow() {
+  router.replace(
+    `/onze-locaties/products?page=${page.value}&search=${search.value}`
+  );
+  refresh();
+}
+
+onMounted(() => {
+  stop();
+  if (route.query.page) {
+    page.value = route.query.page ?? 1;
+  }
+
+  if (route.query.search) {
+    search.value = route.query?.search ?? "";
+  }
 });
 
 const showFilter = ref();
@@ -214,29 +274,19 @@ const name = data.value.data.map((item) => item.name);
 
 const city = ref(name);
 
-const soortLocatiesRadio = ref([
-  {
-    id: 1,
-    name: "Alles",
-  },
-  {
-    id: 2,
-    name: "Stage Plaats",
-  },
-  {
-    id: 3,
-    name: "Functie 1",
-  },
-  {
-    id: 4,
-    name: "Functie 2",
-  },
-]);
-
 const { data: facility } = await useFetch("/facilities", {
   method: "get",
   ...requestOptions,
 });
+
+const { data: type } = await useFetch("/types", {
+  method: "get",
+  ...requestOptions,
+});
+
+// console.log(type.value.data[0]);
+
+const soortLocatiesRadio = type.value.data;
 
 const functieCheckbox = facility.value.data;
 

@@ -1,18 +1,18 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[500px]">
+  <main class="flex-grow overflow-y-auto max-h-[470px]">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Vacatures</div>
+          <div class="text-xl md:text-3xl font-bold">Property</div>
         </div>
         <div>
           <NuxtLink
             to="/admin/onze-vacaturies/add"
             class="btn btn-sm h-11 btn-neutral normal-case"
           >
-            Add New Vacatures
+            Add New Property
           </NuxtLink>
         </div>
       </div>
@@ -29,7 +29,7 @@
             <tbody>
               <tr
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
-                v-for="(item, index) in Vacaturies?.data"
+                v-for="(item, index) in property?.data"
                 :key="item.id"
               >
                 <td class="text-gray-500 text-sm font-normal !py-2">
@@ -98,6 +98,12 @@
       </div>
     </div>
   </main>
+  <Pagination
+    v-model="page"
+    :total="property?.meta?.total"
+    :per-page="property?.meta?.per_page"
+    class="flex justify-center"
+  />
 </template>
 
 <style>
@@ -110,9 +116,67 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 
-const { data: Vacaturies, error } = await useFetch(`/admins/products`, {
-  method: "get",
-  ...requestOptions,
+// const { data: Vacaturies } = await useFetch(`/admins/products`, {
+//   method: "get",
+//   ...requestOptions,
+// });
+
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+const search = ref("");
+
+const {
+  data: property,
+  error,
+  refresh,
+} = await useAsyncData("property", () =>
+  $fetch(`/admins/products?page=${page.value}&filter[search]=${search.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(
+  () => page.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      start();
+    }
+  }
+);
+
+watch(
+  () => search.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+function replaceWindow() {
+  router.replace(
+    `/admin/onze-vacaturies?page=${page.value}&search=${search.value}`
+  );
+  refresh();
+}
+
+onMounted(() => {
+  stop();
+  if (route.query.page) {
+    page.value = route.query.page ?? 1;
+  }
+
+  if (route.query.search) {
+    search.value = route.query?.search ?? "";
+  }
 });
 
 const showModal = (index) => {
@@ -123,22 +187,30 @@ const showModal = (index) => {
   }
 };
 
-const deleteLocatie = async (locatieSlug) => {
+const deleteLocatie = async (slug) => {
   loading.value = true;
-  try {
-    const response = await useFetch(`/admins/products/${locatieSlug}`, {
-      method: "DELETE",
-      ...requestOptions,
+  await useFetch(`/admins/products/${slug}`, {
+    method: "DELETE",
+    ...requestOptions,
+  });
+
+  if (error.value) {
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
     });
-    console.log("Response:", response.data);
-    window.location.reload();
-  } catch (error) {
-    console.error("Error:", error);
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Delete Blog Success",
+    });
+    start();
   }
+  loading.value = false;
 };
 
 useHead({
-  title: "Admin Onze Vacatures",
+  title: "Admin Property",
 });
 
 definePageMeta({

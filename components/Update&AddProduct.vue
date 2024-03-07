@@ -1,15 +1,8 @@
 <template>
   <!-- {{ props.eachData?.data.location }} -->
   <VeeForm @submit="onSubmit" v-slot="{ errors }">
-    <!-- {{ props.eachData?.category_id }} -->
+    <!-- {{ props.eachData }} -->
     <div class="grid p-3 gap-4">
-      <!-- <div>
-        <BlogImageCrop
-          :loading="loading"
-          :existingimage="props.eachData?.image"
-          v-model="selectedImage"
-        />
-      </div> -->
       <label for="Name">Name</label>
       <VeeField
         id="Name"
@@ -32,7 +25,7 @@
         autocomplete="off"
       />
 
-      <label for="Phone Number">Phone Number</label>
+      <label for="PhoneNumber">Phone Number</label>
       <VeeField
         id="PhoneNumber"
         type="number"
@@ -104,6 +97,17 @@
         placeholder="Input Area Size"
         class="input input-bordered w-full"
         v-model="formData.area_size"
+        autocomplete="off"
+      />
+
+      <label for="rating">Rating</label>
+      <VeeField
+        id="rating"
+        type="number"
+        name="rating"
+        placeholder="Input Rating"
+        class="input input-bordered w-full"
+        v-model="formData.rating"
         autocomplete="off"
       />
 
@@ -204,10 +208,10 @@
       </div>
 
       <div class="flex flex-col mt-5">
-        <label for="description">Description</label>
+        <label for="body">Description</label>
         <FormTextEditor
           v-model="formData.description"
-          :is-error="!!errors.description"
+          :is-error="!!errors.body"
         />
       </div>
     </div>
@@ -292,6 +296,7 @@ const formData = {
   product_privileges: privilegesArray.map((privilege) => ({
     privilege: privilege,
   })),
+  rating: props.eachData?.data.rating,
 };
 
 // console.log(formData.description);
@@ -312,20 +317,6 @@ const onUpload = (image) => {
 
 async function onSubmit(values, ctx) {
   loading.value = true;
-
-  // const object = { ...formData.value };
-
-  // console.log(object);
-  // const formDataT = new FormData();
-
-  // for (const item in object) {
-  //   // @ts-ignore
-  //   const objectItem = object[item];
-  //   formDataT.append(item, objectItem);
-  // }
-  // if (selectedImage.value) {
-  //   formDataT.append("image", selectedImage.value);
-  // }
 
   const { error, data } = await useFetch(
     `/admins/products/${slug.value}?_method=PUT`,

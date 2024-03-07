@@ -91,7 +91,7 @@
         <div class="w-[95%] min-w-[70px] relative">
           <span class="absolute top-[-39px] text-primary text-4xl">____</span>
           <div class="overflow-x-auto sm:px-3">
-            <table class="table">
+            <table class="table md:mt-4">
               <tbody>
                 <tr
                   class="flex justify-between items-center"
@@ -105,14 +105,13 @@
                     class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
                   >
                     <img
-                      src="/images/checkbox_checked.svg"
-                      alt="checkBox"
-                      v-if="
+                      :src="
                         facilitySlugName[index] &&
                         item.name === facilitySlugName[index].facility.name
-                          ? true
-                          : false
+                          ? '/images/checkbox_checked.svg'
+                          : '/images/minus-square.png'
                       "
+                      alt="checkBox"
                     />
                     <!-- <span>{{ item.name }}</span> -->
                   </td>

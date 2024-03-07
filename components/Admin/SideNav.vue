@@ -2,8 +2,11 @@
   <div class="border-r bg-white">
     <div class="flex h-full max-h-screen flex-col gap-4">
       <div class="flex h-[60px] items-center border-b px-6 justify-between">
-        <NuxtLink to="/admin" class="flex items-center gap-2 font-semibold">
-          <Werkstek />
+        <NuxtLink
+          to="/admin"
+          class="flex items-center justify-center gap-2 font-semibold"
+        >
+          <Werkstek class="w-[70%]" />
         </NuxtLink>
         <div class="block lg:hidden">
           <button
@@ -38,7 +41,7 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="h-4 w-4"
+              class="h-5 w-5"
             >
               <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -60,7 +63,7 @@
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-4 h-4"
+              class="w-5 h-5"
             >
               <path
                 stroke-linecap="round"
@@ -84,26 +87,19 @@
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="2"
+              stroke-width="1.5"
               stroke="currentColor"
-              class="w-4 h-4"
+              class="w-5 h-5"
             >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-              />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+                d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819"
               />
             </svg>
-            Onze Vacatures
+            Property
           </NuxtLink>
           <!-- <NuxtLink
             to="/admin/onze-locaties"
@@ -158,7 +154,7 @@
               viewBox="0 0 24 24"
               stroke-width="2"
               stroke="currentColor"
-              class="w-4 h-4"
+              class="w-5 h-5"
             >
               <path
                 stroke-linecap="round"
@@ -193,7 +189,7 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="h-4 w-4"
+              class="h-5 w-5"
             >
               <path d="M3 3v18h18"></path>
               <path d="m19 9-5 5-4-4-3 3"></path>
@@ -220,7 +216,7 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="h-4 w-4"
+              class="h-5 w-5"
             >
               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
               <circle cx="9" cy="7" r="4"></circle>
@@ -234,7 +230,7 @@
               6
             </div> -->
           </NuxtLink>
-          <NuxtLink
+          <!-- <NuxtLink
             to="/admin/category"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
             :class="{
@@ -253,13 +249,41 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="h-4 w-4"
+              class="h-5 w-5"
             >
               <path d="M3 3v18h18"></path>
               <path d="m19 9-5 5-4-4-3 3"></path>
             </svg>
             Category
+          </NuxtLink> -->
+
+          <NuxtLink
+            to="/admin/type"
+            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
+            :class="{
+              'bg-transparent text-black hover:text-opacity-25':
+                !isRouteActive('/admin/type'),
+              'bg-black text-black hover:bg-opacity-30':
+                isRouteActive('/admin/type'),
+            }"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-5 w-5"
+            >
+              <path d="M3 3v18h18"></path>
+              <path d="m19 9-5 5-4-4-3 3"></path>
+            </svg>
+            Type
           </NuxtLink>
+
           <NuxtLink
             to="/admin/facility"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
@@ -276,7 +300,7 @@
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-6 h-6"
+              class="w-5 h-5"
             >
               <path
                 stroke-linecap="round"
@@ -302,7 +326,7 @@
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-6 h-6"
+              class="w-5 h-5"
             >
               <path
                 stroke-linecap="round"
@@ -331,7 +355,7 @@
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-6 h-6"
+              class="w-5 h-5"
             >
               <path
                 stroke-linecap="round"
@@ -358,7 +382,7 @@
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-6 h-6"
+              class="w-5 h-5"
             >
               <path
                 stroke-linecap="round"

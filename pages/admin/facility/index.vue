@@ -37,15 +37,15 @@
                 <td class="flex justify-center gap-4 my-1">
                   <NuxtLink
                     :to="`/admin/facility/edit/${item.name}`"
-                    class="m-2"
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
                   >
-                    <icon
-                      name="i-heroicons-pencil-square"
-                      class="cursor-pointer mr-1"
-                    />
+                    <icon name="i-heroicons-pencil-square" />
                   </NuxtLink>
-                  <div class="cursor-pointer m-2" @click="showModal(index)">
-                    <icon name="i-heroicons-trash" class="mr-1" />
+                  <div
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
+                    @click="showModal(index)"
+                  >
+                    <icon name="i-heroicons-trash" />
                   </div>
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">

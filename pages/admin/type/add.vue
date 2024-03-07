@@ -1,31 +1,25 @@
 <template>
-  <section class="overflow-auto max-h-[500px]">
-    <div class="flex gap-4">
-      <NuxtLink
-        to="/admin/blog-category"
-        class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
-      <span class="text-2xl font-bold">Edit Blog Category</span>
-    </div>
+  <section>
+    <CompAdminBackButton link="type" linkTitle="Add Type" />
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="flex flex-col mt-10 overflow-auto">
-        <div class="flex flex-col p-3 px-8">
+      <div class="grid grid-cols-2 gap-3">
+        <div class="flex flex-col">
           <label for="Name">Name</label>
           <VeeField
             id="Name"
             type="text"
             name="Name"
             placeholder="Input Name"
-            class="textarea textarea-bordered w-full"
-            v-model="name"
+            class="input input-bordered w-full"
+            v-model="formData.name"
             autocomplete="on"
           />
+          <VeeErrorMessage name="name" class="text-sm text-error" />
         </div>
       </div>
       <div class="flex justify-end mt-5">
         <button type="submit" :disabled="loading" class="btn btn-success">
-          Edit Category Blog
+          Add Type
         </button>
       </div>
     </VeeForm>
@@ -37,27 +31,16 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 
-const route = useRoute();
-const slug = computed(() => {
-  return route.params.slug;
+const formData = ref({
+  name: undefined,
 });
-
-const { data: category } = await useFetch(
-  `/admins/article-categories/${slug.value}`,
-  {
-    method: "get",
-    ...requestOptions,
-  }
-);
-
-const name = ref(category.value.data.name);
 
 async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const { error } = await useFetch(`/admins/article-categories/${slug.value}`, {
-    method: "put",
-    body: { name: name.value },
+  const { error } = await useFetch(`/admins/types`, {
+    method: "POST",
+    body: formData.value,
     ...requestOptions,
   });
 
@@ -70,15 +53,16 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Edit Category Blog Success",
+      text: "Add Type Success",
     });
-    router.push("/admin/blog-category");
+
+    ctx.resetForm();
   }
   loading.value = false;
 }
 
 useHead({
-  title: "Edit Category Blog",
+  title: "Type",
 });
 
 definePageMeta({

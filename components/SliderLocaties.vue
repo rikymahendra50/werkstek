@@ -41,29 +41,35 @@
           loop
         >
           <swiper-slide
-            class="mr-2 group group-hover:scale-125 transition-all duration-300 group overflow-hidden"
+            class="mr-2 group group-hover:scale-125 transition-all duration-300 group overflow-hidden min-h-[200px] max-h-[600px]"
             v-for="(itemSlider, index) in data"
             :key="itemSlider.id"
           >
-            <div class="relative">
-              <img
-                src="/images/img-slider-home-1.png"
-                alt="image"
-                class="group-hover:scale-125 transition-all w-full duration-300 object-cover min-h-[240px] md:min-h-[350px] hover-gradient"
-              />
-              <NuxtLink
-                :to="`/onze-locaties/${itemSlider.slug}`"
-                class="absolute inset-0 flex flex-col justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50"
-              >
-                <h2 class="text-3xl">{{ itemSlider.location.name }}</h2>
-                <p class="text-sm py-1">{{ itemSlider.location.name }}</p>
-                <h4 class="text-lg font-semibold">Opervlakte</h4>
-                <p class="text-sm py-1">
-                  € {{ itemSlider.price }} p/{{ itemSlider.rent_type }}
-                </p>
-                <p class="text-sm">Neem een kijkje ></p>
-              </NuxtLink>
-            </div>
+            <!-- {{ itemSlider.images[0].image }} -->
+            <img
+              :src="
+                itemSlider.images[0]?.image ||
+                itemSlider.images[1]?.image ||
+                itemSlider.images[2]?.image ||
+                itemSlider.images[3]?.image
+                  ? itemSlider.images[0].image
+                  : '/images/empty-property-default.png'
+              "
+              :alt="`image ` + index"
+              class="group-hover:scale-125 transition-all w-full duration-300 h-full object-cover hover-gradient"
+            />
+            <NuxtLink
+              :to="`/onze-locaties/${itemSlider.slug}`"
+              class="absolute inset-0 flex flex-col justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50"
+            >
+              <h2 class="text-3xl">{{ itemSlider.location.name }}</h2>
+              <p class="text-sm py-1">{{ itemSlider.location.name }}</p>
+              <h4 class="text-lg font-semibold">Opervlakte</h4>
+              <p class="text-sm py-1">
+                € {{ itemSlider.price }} p/{{ itemSlider.rent_type }}
+              </p>
+              <p class="text-sm">Neem een kijkje ></p>
+            </NuxtLink>
           </swiper-slide>
         </swiper>
       </div>

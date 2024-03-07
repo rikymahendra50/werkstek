@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto">
+  <main class="flex-grow overflow-y-auto max-h-[470px]">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -102,14 +102,15 @@
             </tbody>
           </table>
         </div>
-        <Pagination
-          v-model="page"
-          :total="blog?.meta?.total"
-          :per-page="blog?.meta?.per_page"
-        />
       </div>
     </div>
   </main>
+  <Pagination
+    v-model="page"
+    :total="blog?.meta?.total"
+    :per-page="blog?.meta?.per_page"
+    class="flex justify-center"
+  />
 </template>
 
 <script setup>

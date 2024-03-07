@@ -41,6 +41,7 @@ const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 
 const route = useRoute();
+const router = useRouter();
 const slug = computed(() => {
   return route.params.slug;
 });
@@ -72,8 +73,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Success Edit Level Type",
     });
-
-    ctx.resetForm();
+    router.push("/admin/level-type");
   }
 
   loading.value = false;

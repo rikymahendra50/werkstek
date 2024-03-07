@@ -1,11 +1,10 @@
 <template>
   <section>
     <CompAdminBackButton link="onze-vacaturies" linkTitle="Add Or Edit Image" />
-    <!-- {{ getImages?.data }} -->
     <VeeForm @submit="onSubmit">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div
-          class="overflow-hidden rounded-lg relative h-full w-full draggable border-2 border-red-500"
+          class="overflow-hidden rounded-lg relative h-full w-full draggable"
           data-draggable="true"
           v-for="(item, index) in imagePreview"
           :key="index"
@@ -92,15 +91,15 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-end mt-5">
-        <button class="btn btn-success" type="submit" :disabled="loading">
-          <span
-            class="text-[20px] xl:text-lg lg:text-lg text-center text-white"
-          >
-            Add Data
-          </span>
-        </button>
-      </div>
+      <div class="flex justify-end mt-5"></div>
+      <span class="block mb-3"
+        >If you made some changes to your images. please save them.</span
+      >
+      <button class="btn btn-success btn-md" type="submit" :disabled="loading">
+        <span class="text-[20px] xl:text-lg lg:text-lg text-center text-white">
+          Save Image
+        </span>
+      </button>
     </VeeForm>
   </section>
 </template>
@@ -121,46 +120,64 @@ const clickUpload = () => {
   fileInput.value.click();
 };
 
-const { data: getImages } = await useFetch(
-  `/admins/products/${slug.value}/images`,
-  {
-    method: "get",
-    ...requestOptions,
-  }
-);
+const { data } = await useFetch(`/admins/products/${slug.value}/images`, {
+  method: "get",
+  ...requestOptions,
+});
 
 const selectedImage = ref();
-
 const selectedImages = ref([]);
 const imagePreview = ref([]);
 
+// console.log(data.value.data);
+
+data.value.data.forEach((item) => {
+  selectedImages.value.push(item.id);
+  imagePreview.value.push(item.image);
+});
+
+const MAX_FILE_SIZE_MB = 2;
 const saveToPreviewImage = (event) => {
   const files = event.target.files;
 
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    imagePreview.value.push(URL.createObjectURL(file));
 
-    selectedImage.value = file;
+    if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+      alert(
+        `File ${file.name} terlalu besar. Harap pilih file dengan ukuran maksimum ${MAX_FILE_SIZE_MB} MB.`
+      );
+      return;
+    } else {
+      imagePreview.value.push(URL.createObjectURL(file));
+      selectedImage.value = file;
+      StoreProduct();
+    }
 
-    StoreProduct();
-
-    selectedImages.value.push(file);
+    // selectedImages.value.push(file);
   }
-  // console.log(selectedImage.value);
 };
 
 async function StoreProduct() {
   loading.value = true;
 
   const formData = new FormData();
-  formData.append("image", selectedImage.value);
 
-  await useFetch(`/admins/products/${slug.value}/images`, {
+  // console.log(selectedImage.value);
+
+  if (selectedImage.value) {
+    formData.append("image", selectedImage.value);
+  }
+
+  const { data } = await useFetch(`/admins/products/${slug.value}/images`, {
     method: "post",
     body: formData,
     ...requestOptions,
   });
+
+  selectedImages.value.push(data.value.data.id);
+
+  // console.log(selectedImages.value);
 
   loading.value = false;
 }
@@ -170,28 +187,23 @@ const deleteImage = (index) => {
   imagePreview.value.splice(index, 1);
 };
 
-async function onSubmit(ctx) {
+async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const formDataArray = new FormData();
-  for (let i = 0; i < selectedImages.value.length; i++) {
-    formDataArray.append("image[]", selectedImages.value[i]);
-  }
-
-  const { error } = await useFetch(
+  const { error, data } = await useFetch(
     `/admins/products/${slug.value}/save-images`,
     {
       method: "POST",
-      body: formDataArray,
+      body: { images: selectedImages.value },
       ...requestOptions,
     }
   );
 
   if (error.value) {
-    ctx.setErrors(transformErrors(error?.data));
+    ctx.setErrors(transformErrors(error?.value.data));
     snackbar.add({
       type: "error",
-      text: error.value?.data?.message ?? "Something went wrong",
+      text: error?.value.data?.message ?? "Something went wrong",
     });
   } else if (data.value) {
     snackbar.add({
@@ -199,11 +211,12 @@ async function onSubmit(ctx) {
       text: "Add or Edit Image Success",
     });
   }
+
   loading.value = false;
 }
 
 useHead({
-  title: "Add Image",
+  title: "Add or Edit Image",
 });
 
 definePageMeta({

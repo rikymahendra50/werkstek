@@ -317,7 +317,7 @@ const buildInfoWindowContent = (location) => {
     return `
       <a href="/" class="max-w-[190px] w-full flex flex-col text-end">
         <div class="relative">
-          <img src="${location.Image}" alt="${location.Name}" class="w-full min-h-[100px]">
+          <img src="${location.location.Image}" alt="${location.Name}" class="w-full min-h-[100px]">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
         </div>
         <div class="px-2 py-5 pb-3">
@@ -385,7 +385,7 @@ let hoverInfoWindow = null;
 const setupMap = () => {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -8.653840910873269, lng: 115.21785198506426 },
-    zoom: 13,
+    zoom: 2,
     fullscreenControl: false,
     zoomControl: false,
     keyboardShortcuts: false,
@@ -413,14 +413,15 @@ const setupMap = () => {
 
     const contentString = `
       <a href="/" class="max-w-[190px] w-full flex flex-col text-end">
-        <div class="relative">
+        <div class="relative"> 
           <img src="${location.location.image}" alt="${location.name}" class="w-full min-h-[100px]">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
         </div>
-        <div class="px-2 py-5 pb-3">
-          <h2 class="text-primary mt-2">${location.name}</h2>
+        <div class="px-2 py-5 pb-3 relative">
+          <h2 class="text-primary mt-4">${location.name}</h2>
           <p class="text-black text-[10px] my-2">Price: $${location.price}</p>
           <p>${location.area_size}&nbsp<span>m<sup>2</sup></span></p>
+          <img src="/images/icon-werstek.svg" alt="icon-werstek" class="absolute right-3 top-[-5px]" />
         </div>
       </a>
     `;

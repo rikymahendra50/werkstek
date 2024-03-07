@@ -11,7 +11,6 @@
               class="input input-bordered w-full"
               v-model="form.first_name"
             />
-            <!-- <VeeErrorMessage name="firstName" class="text-sm text-error" /> -->
           </div>
           <h4 class="pb-1 text-lg">Last Name</h4>
           <div>
@@ -20,7 +19,6 @@
               class="input input-bordered w-full"
               v-model="form.last_name"
             />
-            <!-- <VeeErrorMessage name="lastname" class="text-sm text-error" /> -->
           </div>
           <h4 class="pb-1 text-lg">Email</h4>
           <div>
@@ -29,7 +27,6 @@
               class="input input-bordered w-full"
               v-model="form.email"
             />
-            <!-- <VeeErrorMessage name="email" class="text-sm text-error" /> -->
           </div>
           <div class="mt-10">
             <button

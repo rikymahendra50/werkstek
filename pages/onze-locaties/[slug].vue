@@ -17,6 +17,7 @@
     />
   </div>
   <SliderLocaties class="my-10 py-10" :data="sliderData.data" />
+
   <SliderTestimony />
 </template>
 
@@ -30,9 +31,9 @@ const { data, error } = await useFetch(`/products/${slug}`, {
   ...requestOptions,
 });
 
-const OnzeLocatiesData = data.value.data;
+const OnzeLocatiesData = data?.value?.data;
 
-const { data: sliderData } = useFetch(`/products`, {
+const { data: sliderData } = await useFetch(`/products`, {
   method: "get",
   ...requestOptions,
 });
@@ -40,4 +41,8 @@ const { data: sliderData } = useFetch(`/products`, {
 if (error.value) {
   console.error("Error fetching data:", error);
 }
+
+useHead({
+  title: data.value?.data?.name,
+});
 </script>

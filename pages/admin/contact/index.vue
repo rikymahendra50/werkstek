@@ -9,9 +9,9 @@
         </div>
       </div>
       <div class="space-y-4">
-        <div class="max-w-sm">
+        <!-- <div class="max-w-sm">
           <Search v-model="search" placeholder="search" />
-        </div>
+        </div> -->
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
           <table class="table table-xs md:table-md w-full rounded-t-xl">
             <thead class="h-12">
@@ -48,10 +48,7 @@
                       type="button"
                       class="btn btn-sm normal-case btn-ghost btn-square"
                     >
-                      <icon
-                        name="i-heroicons-chat-bubble-oval-left-ellipsis"
-                        class="mr-1"
-                      />
+                      <icon name="i-heroicons-chat-bubble-oval-left-ellipsis" />
                     </button>
                   </NuxtLink>
                   <span class="text-gray-500 text-sm font-normal !py-1.5">
@@ -84,8 +81,11 @@
                       </div>
                     </NuxtLink>
                   </span>
-                  <div class="cursor-pointer m-2" @click="showModal(index)">
-                    <icon name="i-heroicons-trash" class="mr-1" />
+                  <div
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
+                    @click="showModal(index)"
+                  >
+                    <icon name="i-heroicons-trash" />
                   </div>
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">
