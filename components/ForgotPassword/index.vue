@@ -53,7 +53,7 @@ function updateToParent() {
 async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const { error } = await useFetch(`/admins/forget-password`, {
+  const { data, error } = await useFetch(`/admins/forget-password`, {
     method: "POST",
     body: { email: stateForm.value.email },
     ...requestOptions,
@@ -70,8 +70,9 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Sending OTP Success, Please check your email",
     });
+    updateToParent();
   }
-  updateToParent();
+
   loading.value = false;
 }
 </script>

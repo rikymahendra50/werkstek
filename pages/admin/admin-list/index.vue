@@ -7,14 +7,7 @@
         <div>
           <div class="text-xl md:text-3xl font-bold">Admin List</div>
         </div>
-        <div>
-          <NuxtLink
-            to="/admin/admin-list/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add New Admin
-          </NuxtLink>
-        </div>
+        <CompAdminButtonAddIndex name="Admin" link="admin-list" />
       </div>
       <div>
         <div class="overflow-x-auto !py-2 border rounded-t-lg">

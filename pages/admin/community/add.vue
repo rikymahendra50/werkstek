@@ -35,9 +35,10 @@
         </div>
       </div>
       <div class="flex justify-end mt-5">
-        <button type="submit" :disabled="loading" class="btn btn-success">
-          Add Community
-        </button>
+        <CompAdminButtonAddForm
+          buttonName="Add Community"
+          :isLoading="loading"
+        />
       </div>
     </VeeForm>
   </section>

@@ -36,7 +36,7 @@
               Sign In
             </button>
           </div>
-          <div
+          <!-- <div
             class="mt-2 border-2 border-primary rounded-lg hover:border-secondary"
           >
             <NuxtLink
@@ -47,7 +47,7 @@
             >
               Registasion
             </NuxtLink>
-          </div>
+          </div> -->
 
           <div class="mt-5">
             <NuxtLink

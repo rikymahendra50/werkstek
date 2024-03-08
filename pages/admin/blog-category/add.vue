@@ -1,13 +1,6 @@
 <template>
   <section class="overflow-auto max-h-[500px]">
-    <div class="flex gap-4">
-      <NuxtLink
-        to="/admin/blog-category"
-        class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
-      <span class="text-2xl font-bold">Add Category Blog</span>
-    </div>
+    <CompAdminBackButton link="blog-category" linkTitle="Add Blog Category" />
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
       <div class="flex flex-col mt-10 overflow-auto">
         <div class="flex flex-col p-3 px-8">
@@ -24,9 +17,10 @@
         </div>
       </div>
       <div class="flex justify-end mt-5">
-        <button type="submit" :disabled="loading" class="btn btn-success">
-          Add Category Blog
-        </button>
+        <CompAdminButtonAddForm
+          buttonName="Add Blog Category"
+          :isLoading="loading"
+        />
       </div>
     </VeeForm>
   </section>

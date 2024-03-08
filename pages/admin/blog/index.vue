@@ -7,14 +7,7 @@
         <div>
           <div class="text-xl md:text-3xl font-bold">Blog</div>
         </div>
-        <div>
-          <NuxtLink
-            to="/admin/blog/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add new Blog
-          </NuxtLink>
-        </div>
+        <CompAdminButtonAddIndex name="Blog" link="blog" />
       </div>
       <div class="space-y-4">
         <!-- <div class="max-w-sm">

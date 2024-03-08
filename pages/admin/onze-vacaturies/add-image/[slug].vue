@@ -95,11 +95,7 @@
       <span class="block mb-3"
         >If you made some changes to your images. please save them.</span
       >
-      <button class="btn btn-success btn-md" type="submit" :disabled="loading">
-        <span class="text-[20px] xl:text-lg lg:text-lg text-center text-white">
-          Save Image
-        </span>
-      </button>
+      <CompAdminButtonAddForm buttonName="Save Images" :isLoading="loading" />
     </VeeForm>
   </section>
 </template>

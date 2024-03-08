@@ -7,14 +7,7 @@
         <div>
           <div class="text-xl md:text-3xl font-bold">Category Blog</div>
         </div>
-        <div>
-          <NuxtLink
-            to="/admin/blog-category/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add new Category Blog
-          </NuxtLink>
-        </div>
+        <CompAdminButtonAddIndex name="Category Blog" link="blog-category" />
       </div>
       <div>
         <div class="overflow-x-auto !py-2 border rounded-t-lg">

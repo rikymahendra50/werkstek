@@ -7,14 +7,7 @@
         <div>
           <div class="text-xl md:text-3xl font-bold">Community</div>
         </div>
-        <div>
-          <NuxtLink
-            to="/admin/community/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add new Community
-          </NuxtLink>
-        </div>
+        <CompAdminButtonAddIndex name="Community" link="community" />
       </div>
       <div class="space-y-4">
         <!-- <div class="max-w-sm">

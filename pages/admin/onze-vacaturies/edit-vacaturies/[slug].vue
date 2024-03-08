@@ -1,6 +1,5 @@
 <template>
-  <CompAdminBackButton link="onze-vacaturies" linkTitle="Edit Vacatures" />
-
+  <CompAdminBackButton link="onze-vacaturies" linkTitle="Edit Property" />
   <div class="h-screen max-h-[450px] overflow-y-auto">
     <VeeForm
       @submit="onSubmit"
@@ -290,15 +289,11 @@
           </label>
         </div>
       </div>
-
-      <div class="flex justify-end">
-        <button class="btn btn-success" type="submit" :disabled="loading">
-          <span
-            class="text-[20px] xl:text-lg lg:text-lg text-center text-white"
-          >
-            Edit Property
-          </span>
-        </button>
+      <div class="w-full flex justify-end">
+        <CompAdminButtonAddForm
+          buttonName="Edit Property"
+          :isLoading="loading"
+        />
       </div>
     </VeeForm>
   </div>

@@ -19,9 +19,10 @@
         </div>
       </div>
       <div class="flex justify-end mt-5">
-        <button type="submit" :disabled="loading" class="btn btn-success">
-          Add Facility
-        </button>
+        <CompAdminButtonAddForm
+          buttonName="Add Facility"
+          :isLoading="loading"
+        />
       </div>
     </VeeForm>
   </section>

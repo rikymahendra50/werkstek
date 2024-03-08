@@ -7,14 +7,7 @@
         <div>
           <div class="text-xl md:text-3xl font-bold">Facility</div>
         </div>
-        <div>
-          <NuxtLink
-            to="/admin/facility/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add New Facility
-          </NuxtLink>
-        </div>
+        <CompAdminButtonAddIndex name="Facility" link="facility" />
       </div>
       <div>
         <div class="overflow-x-auto !py-2 border rounded-t-lg">

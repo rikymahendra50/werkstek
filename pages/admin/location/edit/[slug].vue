@@ -22,9 +22,10 @@
         />
       </div>
       <div class="flex justify-end mt-5">
-        <button type="submit" :disabled="loading" class="btn btn-success">
-          Edit Location
-        </button>
+        <CompAdminButtonAddForm
+          buttonName="Edit Location"
+          :isLoading="loading"
+        />
       </div>
     </form>
   </section>

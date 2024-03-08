@@ -18,13 +18,7 @@
       </tbody>
     </table>
     <div class="flex justify-end">
-      <button
-        type="submit"
-        :disabled="loading"
-        class="mt-4 btn btn-md btn-outline transition flex items-center justify-center cursor-pointer btn-success"
-      >
-        Edit Data
-      </button>
+      <CompAdminButtonAddForm buttonName="Edit Type" :isLoading="loading" />
     </div>
   </VeeForm>
 </template>

@@ -7,14 +7,7 @@
         <div>
           <div class="text-xl md:text-3xl font-bold">Property</div>
         </div>
-        <div>
-          <NuxtLink
-            to="/admin/onze-vacaturies/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add New Property
-          </NuxtLink>
-        </div>
+        <CompAdminButtonAddIndex name="Property" link="onze-vacaturies" />
       </div>
       <div>
         <div class="overflow-x-auto !py-2 border rounded-t-lg">

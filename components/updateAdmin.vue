@@ -55,9 +55,7 @@
       </div>
     </div>
     <div class="flex justify-end mt-5">
-      <button type="submit" :disabled="loading" class="btn btn-success">
-        Edit Blog
-      </button>
+      <CompAdminButtonAddForm buttonName="Edit Blog" :isLoading="loading" />
     </div>
   </VeeForm>
 </template>
