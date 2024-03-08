@@ -3,23 +3,27 @@
     <div class="w-[500px] p-10 justify-center shadow-lg">
       <Werkstek class="mb-10" />
       <VeeForm :validation-schema="loginSchema" @submit="onSubmit">
-        <h4 class="pb-1 text-lg">Email</h4>
+        <label for="email" class="pb-1 text-lg">Email</label>
         <div class="flex flex-col space-y-4">
           <div>
             <VeeField
+              id="email"
               name="email"
               class="input input-bordered w-full"
               v-model="form.email"
+              autocomplete="off"
             />
             <VeeErrorMessage name="email" class="text-sm text-error" />
           </div>
           <div>
-            <h4 class="pb-1 text-lg">Password</h4>
+            <label for="password" class="pb-1 text-lg">Password</label>
             <VeeField
+              id="password"
               name="password"
               v-model="form.password"
               type="password"
               class="input input-bordered w-full"
+              autocomplete="off"
             />
             <VeeErrorMessage name="password" class="text-sm text-error" />
           </div>

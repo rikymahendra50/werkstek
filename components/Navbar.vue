@@ -57,7 +57,6 @@
               >Over werkstek</NuxtLink
             >
           </li>
-          <!-- ini -->
           <li class="dropdown">
             <span
               tabindex="0"

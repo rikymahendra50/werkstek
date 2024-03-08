@@ -301,7 +301,7 @@ const buildInfoWindowContent = (location) => {
     const locationArea = location.map((item) => item.area_size);
 
     return `
-      <a href="/" class="max-w-[190px] w-full flex flex-col text-end">
+      <a href="/" class="max-w-[190px] w-full flex flex-col text-end border-2 border-red-500">
         <div class="relative">
           <img src="${locationImage}" alt="${locationName}" class="w-full min-h-[100px]">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>

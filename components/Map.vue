@@ -14,7 +14,6 @@
 <script setup>
 const props = defineProps({
   AllData: {},
-  filterData: {},
 });
 
 let googleMapsScriptLoaded = false;
@@ -56,6 +55,15 @@ const loadGoogleMapsScript = () => {
   }
 };
 
+const dataProduct = props.AllData;
+let latitudeFilter = ref([]);
+let longitudeFilter = ref([]);
+
+dataProduct.map((item) => {
+  latitudeFilter?.value?.push(item.latitude);
+  longitudeFilter?.value?.push(item.longitude);
+});
+
 const setupMap = () => {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -8.653840910873269, lng: 115.21785198506426 },
@@ -75,7 +83,7 @@ const setupMap = () => {
 
   const bounds = new google.maps.LatLngBounds();
 
-  locations.forEach((location) => {
+  dataProduct.forEach((location) => {
     const lat = parseFloat(location.latitude);
     const lng = parseFloat(location.longitude);
 

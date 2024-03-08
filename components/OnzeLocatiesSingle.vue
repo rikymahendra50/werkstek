@@ -113,82 +113,11 @@
                       "
                       alt="checkBox"
                     />
-                    <!-- <span>{{ item.name }}</span> -->
+                    <span>lorem Ipsum</span>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <!-- <table class="table">
-              <tbody>
-                <tr class="flex justify-between items-center">
-                  <td class="text-[13px] w-[40%] sm:w-[50%]">Wifi</td>
-                  <td
-                    class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
-                  >
-                    <img src="/images/checkbox_checked.svg" alt="checkBox" />
-                    <span>Lorem</span>
-                  </td>
-                </tr>
-                <tr class="flex justify-between items-center">
-                  <td class="text-[13px] w-[40%] sm:w-[50%]">Parkeerplaats</td>
-                  <td
-                    class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
-                  >
-                    <img src="/images/checkbox_checked.svg" alt="checkBox" />
-                    <span>Lorem</span>
-                  </td>
-                </tr>
-                <tr class="flex justify-between items-center">
-                  <td class="text-[13px] w-[40%] sm:w-[50%]">Receptie</td>
-                  <td
-                    class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
-                  >
-                    <img src="/images/checkbox_checked.svg" alt="checkBox" />
-                    <span>Lorem</span>
-                  </td>
-                </tr>
-                <tr class="flex justify-between items-center">
-                  <td class="text-[13px] w-[40%] sm:w-[50%]">Koffiebar</td>
-                  <td
-                    class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
-                  >
-                    <img src="/images/checkbox_checked.svg" alt="checkBox" />
-                    <span>Lorem</span>
-                  </td>
-                </tr>
-                <tr class="flex justify-between items-center">
-                  <td class="text-[13px] w-[40%] sm:w-[50%]">
-                    Vlakbij het treinstation
-                  </td>
-                  <td
-                    class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
-                  >
-                    <img src="/images/checkbox_checked.svg" alt="checkBox" />
-                    <span>Lorem</span>
-                  </td>
-                </tr>
-                <tr class="flex justify-between items-center">
-                  <td class="text-[13px] w-[40%] sm:w-[50%]">Loungeplekken</td>
-                  <td
-                    class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
-                  >
-                    <img src="/images/checkbox_checked.svg" alt="checkBox" />
-                    <span>Lorem</span>
-                  </td>
-                </tr>
-                <tr class="flex justify-between items-center">
-                  <td class="text-[13px] w-[40%] sm:w-[50%]">
-                    Vergaderruimtes met videoschermen
-                  </td>
-                  <td
-                    class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
-                  >
-                    <img src="/images/checkbox_checked.svg" alt="checkBox" />
-                    <span>Lorem</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table> -->
           </div>
         </div>
       </div>
@@ -302,28 +231,6 @@ const { data, error } = await useFetch("/facilities", {
 });
 
 const facilitySlugName = props.facility;
-// console.log(facilitySlugName[0].facility.name);
-
-// console.log(facilitySlugName[0].id);
-
-// const images = ref([
-//   {
-//     id: 1,
-//     image: "/images/65b7628bc99a6.jpg",
-//   },
-//   {
-//     id: 2,
-//     image: "/images/img-slider-home-2.png",
-//   },
-//   {
-//     id: 3,
-//     image: "/images/65b7628bc99a6.jpg",
-//   },
-//   {
-//     id: 4,
-//     image: "/images/65b7628bc99a6.jpg",
-//   },
-// ]);
 
 const props = defineProps({
   title: {

@@ -72,7 +72,7 @@
                         <form method="dialog">
                           <button
                             @click="deleteLocatie(item.slug)"
-                            class="btn btn-outline btn-error"
+                            class="btn btn-outline btn-error mr-3"
                           >
                             Delete
                           </button>

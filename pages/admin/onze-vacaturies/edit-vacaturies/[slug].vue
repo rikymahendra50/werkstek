@@ -1,5 +1,6 @@
 <template>
   <CompAdminBackButton link="onze-vacaturies" linkTitle="Edit Vacatures" />
+
   <div class="h-screen max-h-[450px] overflow-y-auto">
     <VeeForm
       @submit="onSubmit"
@@ -362,19 +363,19 @@ const facilityArray = AllDataSlug?.value.facility.map(
 );
 
 const formData = ref({
-  name: AllDataSlug.value.name,
-  description: AllDataSlug.value.description,
-  email: AllDataSlug.value.email,
-  phone_number: AllDataSlug.value.email,
-  latitude: AllDataSlug.value.latitude,
-  longitude: AllDataSlug.value.longitude,
-  price: AllDataSlug.value.price,
-  rent_type: AllDataSlug.value.rent_type,
-  area_size: AllDataSlug.value.area_size,
-  location_id: AllDataSlug.value.location.id,
-  type_id: AllDataSlug.value.type.id,
-  level_type_id: AllDataSlug.value.level_type.id,
-  is_saleable: AllDataSlug.value.is_saleable,
+  name: AllDataSlug?.value?.name,
+  description: AllDataSlug?.value?.description,
+  email: AllDataSlug?.value?.email,
+  phone_number: AllDataSlug?.value?.email,
+  latitude: AllDataSlug?.value?.latitude,
+  longitude: AllDataSlug?.value?.longitude,
+  price: AllDataSlug?.value?.price,
+  rent_type: AllDataSlug?.value?.rent_type,
+  area_size: AllDataSlug?.value?.area_size,
+  location_id: AllDataSlug?.value?.location?.id,
+  type_id: AllDataSlug?.value?.type?.id,
+  level_type_id: AllDataSlug?.value?.level_type?.id,
+  is_saleable: AllDataSlug?.value?.is_saleable,
   product_facilities: facilityArray.map((facility) => ({
     facility_id: facility,
   })),

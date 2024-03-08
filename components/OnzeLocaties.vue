@@ -98,39 +98,26 @@
                   <span class="absolute top-3 right-14">m<sup>2</sup></span>
                 </div>
               </div>
-              <p class="my-3">-</p>
-              <div class="flex justify-between gap-2 text-sm lg:text-base">
-                <template
-                  v-for="(column, columnIndex) in splitColumns(functieCheckbox)"
-                  :key="columnIndex"
+              <p class="text-base mt-3 opacity-50 pb-3">Facility</p>
+              <fieldset id="facility" class="grid grid-cols-2 gap-2">
+                <div
+                  class="flex items-center gap-2 cursor-pointer"
+                  v-for="item in functieCheckbox"
                 >
-                  <div class="flex flex-col">
-                    <fieldset id="functie" class="flex flex-col gap-2">
-                      <div
-                        v-for="item in column"
-                        :key="item.id"
-                        class="flex justify-start items-center"
-                      >
-                        <input
-                          :id="'functie_' + item.id"
-                          :value="item.name"
-                          :name="'functie_' + item.name"
-                          type="checkbox"
-                          class="mr-2 pt-[0.7px]"
-                          :checked="isSelectedFuncti(item.id)"
-                          @change="handlefunctieCheckbox(item.id)"
-                        />
-                        <label
-                          :for="'functie_' + item.id"
-                          class="cursor-pointer"
-                          >{{ item.name }}</label
-                        >
-                      </div>
-                    </fieldset>
-                  </div>
-                </template>
-              </div>
-              <!-- <Map :AllData="data" :filterData="filteredData.data" /> -->
+                  <input
+                    :id="`facility-${item.id}`"
+                    :value="item.name"
+                    type="checkbox"
+                    @change="handlefunctieCheckbox(item.id)"
+                    name="facility"
+                    :checked="isSelectedFuncti(item.id)"
+                  />
+                  <label :for="`facility-${item.id}`" class="cursor-pointer">
+                    {{ item.name }}
+                  </label>
+                </div>
+              </fieldset>
+              <Map :AllData="dataProduct.data" />
               <!--  <div class="flex justify-center md:mt-4">
                 <button
                   @click="showAllData"
@@ -272,9 +259,6 @@ function splitColumns(arr) {
   return [arr.slice(0, midpoint), arr.slice(midpoint)];
 }
 
-// const name = dataProduct?.value?.data?.map((item) => item.name);
-// const city = ref(name);
-
 const arrayLocation = dataProduct?.value?.data?.map((item) => item.location);
 
 let city = ref([]);
@@ -322,7 +306,15 @@ function handleSoortLocatieChange(id) {
   }
 }
 
-const selectedCity = ref("Locatie");
+function handlefunctieCheckbox(id) {
+  if (selectedFunctie.value.includes(id)) {
+    selectedFunctie.value = selectedFunctie.value.filter((item) => item !== id);
+  } else {
+    selectedFunctie.value = [...selectedFunctie.value, id];
+  }
+}
+
+const selectedCity = ref();
 const selectedSoortLocatie = ref([]);
 const selectedFunctie = ref([]);
 const selectedMinPrice = ref();
@@ -331,16 +323,6 @@ const selectedMeterMin = ref();
 const selectedMeterMax = ref();
 
 // selectedCity.value = "Locatie";
-const selectedFacilitiesString = ref("");
-function handlefunctieCheckbox(id) {
-  if (selectedFunctie.value[id]) {
-    delete selectedFunctie.value[id];
-  } else {
-    selectedFunctie.value[id] = true;
-  }
-
-  selectedFacilitiesString.value = Object.keys(selectedFunctie.value).join(",");
-}
 
 watchEffect(() => {
   fetchData();
@@ -355,7 +337,7 @@ async function fetchData() {
       "filter[max_area]": selectedMeterMax.value,
       "filter[type_id]": selectedSoortLocatie.value,
       "filter[location_id]": selectedCity.value,
-      "filter[productFacility.facility_id]": selectedFacilitiesString,
+      "filter[productFacility.facility_id]": selectedFunctie.value,
     },
   });
   dataProduct.value = response.data;
