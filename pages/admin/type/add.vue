@@ -1,26 +1,32 @@
 <template>
   <section>
     <CompAdminBackButton link="type" linkTitle="Add Type" />
-    <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="grid grid-cols-2 gap-3">
-        <div class="flex flex-col">
-          <label for="Name">Name</label>
-          <VeeField
-            id="Name"
-            type="text"
-            name="Name"
-            placeholder="Input Name"
-            class="input input-bordered w-full"
-            v-model="formData.name"
-            autocomplete="on"
-          />
-          <VeeErrorMessage name="name" class="text-sm text-error" />
+    <div class="flex justify-center">
+      <VeeForm
+        @submit="onSubmit"
+        v-slot="{ errors }"
+        class="min-w-[400px] lg:min-w-[800px] shadow-md p-5"
+      >
+        <div class="grid grid-cols-1 gap-3">
+          <div class="flex flex-col">
+            <label for="Name" class="mb-3">Type Name</label>
+            <VeeField
+              id="Name"
+              type="text"
+              name="Name"
+              placeholder="Input Type Name"
+              class="input input-bordered w-full"
+              v-model="formData.name"
+              autocomplete="off"
+            />
+            <VeeErrorMessage name="name" class="text-sm text-error" />
+          </div>
         </div>
-      </div>
-      <div class="flex justify-end mt-5">
-        <CompAdminButtonAddForm buttonName="Add Type" :isLoading="loading" />
-      </div>
-    </VeeForm>
+        <div class="flex justify-end mt-5">
+          <CompAdminButtonAddForm buttonName="Add Type" :isLoading="loading" />
+        </div>
+      </VeeForm>
+    </div>
   </section>
 </template>
 

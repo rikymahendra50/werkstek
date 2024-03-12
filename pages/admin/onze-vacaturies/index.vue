@@ -195,9 +195,9 @@ const deleteLocatie = async (slug) => {
   } else {
     snackbar.add({
       type: "success",
-      text: "Delete Blog Success",
+      text: "Delete Property Success",
     });
-    start();
+    window.location.reload();
   }
   loading.value = false;
 };

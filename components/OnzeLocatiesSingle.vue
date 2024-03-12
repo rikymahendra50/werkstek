@@ -113,7 +113,15 @@
                       "
                       alt="checkBox"
                     />
-                    <span>lorem Ipsum</span>
+                    <span>
+                      {{ item.name }}
+                      {{
+                        facilitySlugName[index] &&
+                        item.name === facilitySlugName[index].facility.name
+                          ? "Available"
+                          : "Unavailable"
+                      }}
+                    </span>
                   </td>
                 </tr>
               </tbody>
@@ -196,7 +204,7 @@
         >
           <NuxtLink
             to="/voor-verhuurders"
-            class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px] mb-3"
+            class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px] mb-3 hover:bg-secondary transition"
           >
             <p class="text-[12px] sm:text-lg text-center text-white font-thin">
               Aanvragen
@@ -204,7 +212,7 @@
           </NuxtLink>
           <NuxtLink
             to="/contact"
-            class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px]"
+            class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px] hover:bg-secondary transition"
           >
             <p class="text-[12px] sm:text-lg text-center text-white font-thin">
               Contact Opnemen

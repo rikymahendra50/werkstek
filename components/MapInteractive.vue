@@ -50,12 +50,12 @@
                 class="absolute text-[10px] dropdownMap max-h-[200px] overflow-hidden overflow-y-auto lg:text-[16px] top-[100%] left-0 bg-[#F7F7F7] rounded-[5px] mt-1 w-full text-quaternary z-20"
               >
                 <li
-                  v-for="(option, idx) in category.options"
-                  :key="idx"
-                  @click="selectOption(category, option)"
+                  v-for="(item, index) in city"
+                  :key="index"
+                  @click="selectOption(category, item.name, item.id)"
                   class="cursor-pointer hover:bg-secondary transition hover:text-tertiary px-3 py-1"
                 >
-                  {{ option }}
+                  {{ item.name }}
                 </li>
               </ul>
             </div>
@@ -158,26 +158,32 @@ const { data, error } = await useFetch(`/products`, {
   ...requestOptions,
 });
 
-// const locations = ref(data?.value?.data);
-
-const categoryOptions = data.value.data.map((item) => item.name);
-
+const arrayLocation = data?.value?.data?.map((item) => item.location);
 const numericPrices = data.value.data.map((item) => parseFloat(item.price));
-
-// console.log(numericPrices);
 
 const highestPrice = Math.max(...numericPrices);
 
 let infoWindowTimeout;
 
-// const categoryOptions = data.value.data.map((item) => item.location.name);
+let city = ref([]);
+let citySet = {};
+
+arrayLocation.forEach((element) => {
+  const cityName = element.name;
+  const cityId = element.id;
+  if (!citySet[cityName]) {
+    // console.log(cityName, cityId);
+    citySet[cityName] = cityId;
+    city.value.push({ name: cityName, id: cityId });
+  }
+});
 
 const categories = ref([
   {
     title: "Zoek een Locatie",
     selectedOption: "Utrecht",
     showDropdown: false,
-    options: categoryOptions,
+    options: city,
   },
   {
     title: "Zoek op een prijs",
@@ -205,10 +211,10 @@ function handlePriceChange(priceData) {
   selectedMaxPrice.value = priceData.maxPrice;
 }
 
-const selectOption = (category, option) => {
+const selectOption = (category, option, id) => {
   category.selectedOption = option;
   category.showDropdown = false;
-  selectedCity.value = option;
+  selectedCity.value = id;
 };
 
 const toggleDropdown = (category) => {
@@ -220,7 +226,7 @@ const toggleDropdown = (category) => {
 async function performSearch() {
   try {
     let params = {};
-    params["filter[search]"] = selectedCity.value;
+    params["filter[location_id]"] = selectedCity.value;
     params["filter[min_price]"] = selectedMinPrice.value;
     params["filter[max_price]"] = selectedMaxPrice.value;
 
@@ -282,6 +288,8 @@ const showInfoWindow = (latitude, longitude, location) => {
 
     const contentString = buildInfoWindowContent(location);
 
+    console.log(location);
+
     const infowindow = new google.maps.InfoWindow({
       content: contentString,
       closeBoxMargin: "10px 10px 0 0",
@@ -294,11 +302,11 @@ const showInfoWindow = (latitude, longitude, location) => {
 
 const buildInfoWindowContent = (location) => {
   if (Array.isArray(location)) {
-    const locationName = location.map((item) => item.name);
-    const locationSlug = location.map((item) => item.slug);
-    const locationImage = location.map((item) => item.location.image);
-    const locationPrice = location.map((item) => item.price);
-    const locationArea = location.map((item) => item.area_size);
+    const locationName = location.map((item) => item?.name);
+    const locationSlug = location.map((item) => item?.slug);
+    const locationImage = location.map((item) => item?.location?.image);
+    const locationPrice = location.map((item) => item?.price);
+    const locationArea = location.map((item) => item?.area_size);
 
     return `
       <a href="/" class="max-w-[190px] w-full flex flex-col text-end border-2 border-red-500">

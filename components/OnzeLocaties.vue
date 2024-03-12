@@ -5,7 +5,6 @@
       secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-
     <div class="md:grid md:grid-cols-12 container-custom gap-2">
       <div class="md:col-span-4">
         <div class="mt-5">
@@ -130,7 +129,6 @@
           </div>
         </div>
       </div>
-
       <div class="md:col-span-8 py-5 overflow-auto">
         <div
           class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
@@ -138,17 +136,14 @@
           <eachLocaties
             v-if="dataProduct.data"
             v-for="(item, index) in dataProduct.data"
-            :key="item.id"
+            :key="item?.id"
             :name="item?.location?.name"
             :type="item?.level_type?.name"
             :latitude="item?.latitude"
             :longitude="item?.longitude"
             :link="`/onze-locaties/${item.slug}`"
             :price="item?.price"
-            :image="
-              item.images.find((image, imageIndex) => imageIndex === index)
-                ?.image
-            "
+            :image="item?.images[0]?.image"
             :rating="item?.rating"
           />
         </div>

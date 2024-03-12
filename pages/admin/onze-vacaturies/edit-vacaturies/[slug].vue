@@ -289,6 +289,7 @@
           </label>
         </div>
       </div>
+
       <div class="w-full flex justify-end">
         <CompAdminButtonAddForm
           buttonName="Edit Property"
@@ -398,7 +399,7 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Success Adding Data",
+      text: "Success Edit Data",
     });
     router.push("/admin/onze-vacaturies");
   }

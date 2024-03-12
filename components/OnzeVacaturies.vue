@@ -119,12 +119,9 @@
             :type="item?.level_type?.name"
             :latitude="item?.latitude"
             :longitude="item?.longitude"
-            :link="`/onze-locaties/${item.slug}`"
+            :link="`/onze-vacaturies/${item.slug}`"
             :price="item?.price"
-            :image="
-              item.images.find((image, imageIndex) => imageIndex === index)
-                ?.image
-            "
+            :image="item?.images[0]?.image"
             :rating="item?.rating"
           />
         </div>

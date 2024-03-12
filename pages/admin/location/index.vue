@@ -70,16 +70,76 @@
       </div>
     </div>
   </main>
+  <Pagination
+    v-model="page"
+    :total="locations?.total"
+    :per-page="locations?.per_page"
+    class="flex justify-center"
+  />
 </template>
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
-const snackbar = useSnackbar();
 const { requestOptions } = useRequestOptions();
+import { useTimeoutFn } from "@vueuse/core";
 
-const { data: locations, error } = await useFetch(`/admins/locations`, {
-  method: "get",
-  ...requestOptions,
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+const search = ref("");
+
+const {
+  data: locations,
+  error,
+  refresh,
+} = await useAsyncData("locations", () =>
+  $fetch(
+    `/admins/locations?page=${page.value}&filter[search]=${search.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
+);
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(
+  () => page.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      start();
+    }
+  }
+);
+
+watch(
+  () => search.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+function replaceWindow() {
+  router.replace(`/admin/location?page=${page.value}&search=${search.value}`);
+  refresh();
+}
+
+onMounted(() => {
+  stop();
+  if (route.query.page) {
+    page.value = route.query.page ?? 1;
+  }
+
+  if (route.query.search) {
+    search.value = route.query?.search ?? "";
+  }
 });
 
 const showModal = (index) => {

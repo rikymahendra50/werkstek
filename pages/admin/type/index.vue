@@ -8,12 +8,7 @@
           <div class="text-xl md:text-3xl font-bold">Type</div>
         </div>
         <div>
-          <NuxtLink
-            to="/admin/type/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add new Type
-          </NuxtLink>
+          <CompAdminButtonAddIndex name="Type" link="type" />
         </div>
       </div>
       <div>
