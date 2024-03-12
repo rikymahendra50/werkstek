@@ -1,11 +1,6 @@
 <template>
   <section>
-    <div class="flex gap-4">
-      <NuxtLink to="/admin/category" class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
-      <span class="text-2xl font-bold">Edit Category</span>
-    </div>
+    <CompAdminBackButton link="category" linkTitle="Edit Category" />
     <VeeForm @submit="onSubmit">
       <div class="grid grid-cols-2 mt-3 gap-3">
         <div class="flex flex-col">
@@ -43,9 +38,10 @@
         />
       </div>
       <div class="flex justify-end mt-5">
-        <button type="submit" :disabled="loading" class="btn btn-success">
-          Edit Category
-        </button>
+        <CompAdminButtonAddForm
+          buttonName="Edit Category"
+          :isLoading="loading"
+        />
       </div>
     </VeeForm>
   </section>

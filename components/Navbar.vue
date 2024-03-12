@@ -57,7 +57,6 @@
               >Over werkstek</NuxtLink
             >
           </li>
-          <!-- ini -->
           <li class="dropdown">
             <span
               tabindex="0"
@@ -83,7 +82,7 @@
                   to="/onze-vacaturies"
                   :class="{ active: isRouteActive('/onze-vacaturies') }"
                 >
-                  Westek Vacaturies
+                  Westek Vacatures
                 </NuxtLink>
               </li>
               <li>
@@ -208,7 +207,7 @@
               </li>
               <li>
                 <NuxtLink to="/onze-vacaturies" @click="isOpen = false">
-                  Werstek Vacaturies
+                  Werstek Vacatures
                 </NuxtLink>
               </li>
               <li>

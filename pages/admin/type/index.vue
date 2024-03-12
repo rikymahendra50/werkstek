@@ -5,15 +5,10 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Locaties</div>
+          <div class="text-xl md:text-3xl font-bold">Type</div>
         </div>
         <div>
-          <NuxtLink
-            to="/admin/onze-locaties/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add New Locaties
-          </NuxtLink>
+          <CompAdminButtonAddIndex name="Type" link="type" />
         </div>
       </div>
       <div>
@@ -22,39 +17,29 @@
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Name</th>
-                <th class="font-medium">Detail Locaties</th>
                 <th class="font-medium"></th>
               </tr>
             </thead>
             <tbody>
               <tr
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
-                v-for="(item, index) in Locaties?.data"
-                :key="item.id"
+                v-for="(item, index) in type"
               >
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.name }}
                 </td>
-                <td>
-                  <!-- <NuxtLink
-                    :to="`/admin/onze-locaties/${item.slug}`"
-                    class="btn btn-sm btn-outline"
+                <td class="flex justify-center gap-4 my-1">
+                  <NuxtLink
+                    :to="`/admin/type/edit/${item.id}`"
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
                   >
-                    Detail
-                  </NuxtLink> -->
-                </td>
-                <td class="flex items-center">
-                  <!-- <NuxtLink
-                    :to="`/admin/onze-locaties/edit-locaties/${item.slug}`"
-                    class="m-2"
+                    <icon name="i-heroicons-pencil-square" />
+                  </NuxtLink>
+                  <div
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
+                    @click="showModal(index)"
                   >
-                    <icon
-                      name="i-heroicons-pencil-square"
-                      class="cursor-pointer mr-1"
-                    />
-                  </NuxtLink> -->
-                  <div class="cursor-pointer m-2" @click="showModal(index)">
-                    <icon name="i-heroicons-trash" class="mr-1" />
+                    <icon name="i-heroicons-trash" />
                   </div>
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">
@@ -66,7 +51,7 @@
                       <div class="modal-action">
                         <form method="dialog">
                           <button
-                            @click="deleteLocatie(item.slug)"
+                            @click="deleteType(item.id)"
                             class="btn btn-outline btn-error mr-3"
                           >
                             Delete
@@ -89,8 +74,7 @@
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-
-const { data: Locaties, error } = await useFetch(`/admins/product-list`, {
+const { data: type, error } = await useFetch(`/admins/type-list`, {
   method: "get",
   ...requestOptions,
 });
@@ -103,22 +87,22 @@ const showModal = (index) => {
   }
 };
 
-const deleteLocatie = async (locatieSlug) => {
+const deleteType = async (categoryslug) => {
   loading.value = true;
   try {
-    const response = await useFetch(`/admins/products/${locatieSlug}`, {
+    await useFetch(`/admins/types/${categoryslug}`, {
       method: "DELETE",
       ...requestOptions,
     });
-    console.log("Response:", response.data);
     window.location.reload();
   } catch (error) {
     console.error("Error:", error);
   }
+  loading.value = true;
 };
 
 useHead({
-  title: "Admin Onze Locaties",
+  title: "Type",
 });
 
 definePageMeta({

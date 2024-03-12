@@ -50,12 +50,12 @@
                 class="absolute text-[10px] dropdownMap max-h-[200px] overflow-hidden overflow-y-auto lg:text-[16px] top-[100%] left-0 bg-[#F7F7F7] rounded-[5px] mt-1 w-full text-quaternary z-20"
               >
                 <li
-                  v-for="(option, idx) in category.options"
-                  :key="idx"
-                  @click="selectOption(category, option)"
+                  v-for="(item, index) in city"
+                  :key="index"
+                  @click="selectOption(category, item.name, item.id)"
                   class="cursor-pointer hover:bg-secondary transition hover:text-tertiary px-3 py-1"
                 >
-                  {{ option }}
+                  {{ item.name }}
                 </li>
               </ul>
             </div>
@@ -105,52 +105,6 @@
     </div>
   </section>
 </template>
-
-<style>
-.dropdownMap::-webkit-scrollbar {
-  width: 6px;
-  background-color: #f5f5f5;
-}
-
-.gm-style-iw-tc {
-  display: none !important;
-}
-
-.gm-style-cc {
-  display: none !important;
-}
-
-.gm-style-iw-d {
-  overflow-y: auto !important;
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
-}
-
-.gm-ui-hover-effect {
-  background-color: white !important;
-  position: absolute !important;
-  border-radius: 50%;
-  top: 5px !important;
-  right: 5px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.gm-ui-hover-effect:span {
-  width: 200px;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.gm-style-iw-c {
-  padding: 0 !important;
-}
-
-.gm-style-cc a {
-  display: none !important;
-}
-</style>
 
 <script setup>
 import axios from "axios";
@@ -204,22 +158,32 @@ const { data, error } = await useFetch(`/products`, {
   ...requestOptions,
 });
 
-// const locations = ref(data?.value?.data);
-
-const categoryOptions = data.value.data.map((item) => item.name);
-
+const arrayLocation = data?.value?.data?.map((item) => item.location);
 const numericPrices = data.value.data.map((item) => parseFloat(item.price));
 
 const highestPrice = Math.max(...numericPrices);
 
-// const categoryOptions = data.value.data.map((item) => item.location.name);
+let infoWindowTimeout;
+
+let city = ref([]);
+let citySet = {};
+
+arrayLocation.forEach((element) => {
+  const cityName = element.name;
+  const cityId = element.id;
+  if (!citySet[cityName]) {
+    // console.log(cityName, cityId);
+    citySet[cityName] = cityId;
+    city.value.push({ name: cityName, id: cityId });
+  }
+});
 
 const categories = ref([
   {
     title: "Zoek een Locatie",
     selectedOption: "Utrecht",
     showDropdown: false,
-    options: categoryOptions,
+    options: city,
   },
   {
     title: "Zoek op een prijs",
@@ -247,10 +211,10 @@ function handlePriceChange(priceData) {
   selectedMaxPrice.value = priceData.maxPrice;
 }
 
-const selectOption = (category, option) => {
+const selectOption = (category, option, id) => {
   category.selectedOption = option;
   category.showDropdown = false;
-  selectedCity.value = option;
+  selectedCity.value = id;
 };
 
 const toggleDropdown = (category) => {
@@ -262,7 +226,7 @@ const toggleDropdown = (category) => {
 async function performSearch() {
   try {
     let params = {};
-    params["filter[search]"] = selectedCity.value;
+    params["filter[location_id]"] = selectedCity.value;
     params["filter[min_price]"] = selectedMinPrice.value;
     params["filter[max_price]"] = selectedMaxPrice.value;
 
@@ -270,10 +234,30 @@ async function performSearch() {
     const response = await axiosRequest.get("/products", { params: params });
     filteredData.value = response.data;
     findMap(filteredData.value);
+    recenterMap();
   } catch (error) {
     console.error("Failed to retrieve data from API:", error);
   }
 }
+
+const recenterMap = () => {
+  if (
+    filteredData.value &&
+    filteredData.value.data &&
+    filteredData.value.data.length > 0
+  ) {
+    const bounds = new google.maps.LatLngBounds();
+    filteredData.value.data.forEach((item) => {
+      bounds.extend(
+        new google.maps.LatLng(
+          parseFloat(item.latitude),
+          parseFloat(item.longitude)
+        )
+      );
+    });
+    map.fitBounds(bounds);
+  }
+};
 
 function findMap(dataFilter) {
   if (!dataFilter || !dataFilter.data || dataFilter.data.length === 0) {
@@ -304,6 +288,8 @@ const showInfoWindow = (latitude, longitude, location) => {
 
     const contentString = buildInfoWindowContent(location);
 
+    console.log(location);
+
     const infowindow = new google.maps.InfoWindow({
       content: contentString,
       closeBoxMargin: "10px 10px 0 0",
@@ -316,31 +302,41 @@ const showInfoWindow = (latitude, longitude, location) => {
 
 const buildInfoWindowContent = (location) => {
   if (Array.isArray(location)) {
-    const locationName = location.map((item) => item.name);
-    const locationImage = location.map((item) => item.location.image);
-    const locationPrice = location.map((item) => item.price);
-    const locationArea = location.map((item) => item.area_size);
+    const locationName = location.map((item) => item?.name);
+    const locationSlug = location.map((item) => item?.slug);
+    const locationImage = location.map((item) => item?.location?.image);
+    const locationPrice = location.map((item) => item?.price);
+    const locationArea = location.map((item) => item?.area_size);
 
     return `
-      <div class="max-w-[190px] w-full h-full flex flex-col text-end">
-        <img src="${locationImage}" alt="${locationName}" class="w-[200px] min-h-[100px]">
-        <h2 class="text-primary mt-2">${locationName}</h2>
-        <p class="text-black text-[10px] my-2">Price: $${locationPrice}</p>
-        <p>${locationArea}<span class="absolute top-3 right-14">m<sup>2</sup></span></p>
-      </div>
+      <a href="/" class="max-w-[190px] w-full flex flex-col text-end border-2 border-red-500">
+        <div class="relative">
+          <img src="${locationImage}" alt="${locationName}" class="w-full min-h-[100px]">
+          <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
+        </div>
+        <div class="px-2 py-5 pb-3">
+          <h2 class="text-primary mt-2">${locationName}</h2>
+          <p class="text-black text-[10px] my-2">Price: $${location.Price}</p>
+          <p>${locationArea}&nbsp<span>m<sup>2</sup></span></p>
+        </div>
+      </a>
     `;
   } else {
     return `
-      <div class="max-w-[190px] w-full h-full flex flex-col text-end">
-        <img src="${location.Image}" alt="${location.Name}" class="w-[200px] min-h-[100px]">
-        <h2 class="text-primary mt-2">${location.Name}</h2>
-        <p class="text-black text-[10px] my-2">Price: $${location.Price}</p>
-        <p>${location.Area}<span class="absolute top-3 right-14">m<sup>2</sup></span></p>
-      </div>
+      <a href="/" class="max-w-[190px] w-full flex flex-col text-end">
+        <div class="relative">
+          <img src="${location.location.Image}" alt="${location.Name}" class="w-full min-h-[100px]">
+          <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
+        </div>
+        <div class="px-2 py-5 pb-3">
+          <h2 class="text-primary mt-2">${location.Name}</h2>
+          <p class="text-black text-[10px] my-2">Price: $${location.Price}</p>
+          <p>${location.Area}&nbsp<span>m<sup>2</sup></span></p>
+        </div>
+      </a>
     `;
   }
 };
-
 const clearInfoWindows = () => {
   if (currentInfoWindow.value) {
     currentInfoWindow.value.close();
@@ -391,10 +387,13 @@ const moveToLocation = (lat, lng) => {
   }
 };
 
+let currentHoveredMarker = null;
+let hoverInfoWindow = null;
+
 const setupMap = () => {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -8.653840910873269, lng: 115.21785198506426 },
-    zoom: 13,
+    zoom: 2,
     fullscreenControl: false,
     zoomControl: false,
     keyboardShortcuts: false,
@@ -421,17 +420,18 @@ const setupMap = () => {
     });
 
     const contentString = `
-      <div class="max-w-[190px] w-full flex flex-col text-end">
-        <div class="relative">
+      <a href="/" class="max-w-[190px] w-full flex flex-col text-end">
+        <div class="relative"> 
           <img src="${location.location.image}" alt="${location.name}" class="w-full min-h-[100px]">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
         </div>
-        <div class="px-2 py-5 pb-3">
-          <h2 class="text-primary mt-2">${location.name}</h2>
+        <div class="px-2 py-5 pb-3 relative">
+          <h2 class="text-primary mt-4">${location.name}</h2>
           <p class="text-black text-[10px] my-2">Price: $${location.price}</p>
           <p>${location.area_size}&nbsp<span>m<sup>2</sup></span></p>
+          <img src="/images/icon-werstek.svg" alt="icon-werstek" class="absolute right-3 top-[-5px]" />
         </div>
-      </div>
+      </a>
     `;
 
     const infowindow = new google.maps.InfoWindow({
@@ -439,13 +439,49 @@ const setupMap = () => {
       closeBoxMargin: "10px 10px 0 0",
     });
 
-    marker.addListener("click", () => {
+    marker.addListener("mouseover", () => {
+      clearTimeout(infoWindowTimeout);
+
       if (currentInfoWindow.value) {
         currentInfoWindow.value.close();
       }
 
+      if (currentHoveredMarker && currentHoveredMarker !== marker) {
+        hoverInfoWindow.close();
+      }
+
+      marker.setIcon({
+        url: icon.url,
+        scaledSize: new google.maps.Size(60, 60),
+      });
+
+      hoverInfoWindow = new google.maps.InfoWindow({
+        content: contentString,
+        closeBoxMargin: "10px 10px 0 0",
+      });
+
+      hoverInfoWindow.open(map, marker);
+      currentHoveredMarker = marker;
       infowindow.open(map, marker);
       currentInfoWindow.value = infowindow;
+    });
+
+    marker.addListener("mouseout", () => {
+      infoWindowTimeout = setTimeout(() => {
+        if (currentInfoWindow.value) {
+          currentInfoWindow.value.close();
+        }
+
+        if (currentHoveredMarker === marker) {
+          hoverInfoWindow.close();
+          currentHoveredMarker = null;
+        }
+
+        marker.setIcon({
+          url: icon.url,
+          scaledSize: new google.maps.Size(40, 40),
+        });
+      }, 1000);
     });
 
     markers.value.push(marker);
@@ -460,3 +496,87 @@ const setBoundsForMarkers = () => {
   map.fitBounds(bounds);
 };
 </script>
+
+<style>
+.dropdownMap::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
+.custom-marker {
+  transition: transform 0.3s ease;
+}
+
+.custom-marker:hover {
+  transform: scale(1.2);
+}
+
+.gm-style-iw {
+  transition: opacity 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.gm-style-iw.fade-in {
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.gm-style-iw.fade-out {
+  animation: fadeOut 0.3s ease-in-out forwards;
+}
+
+.gm-style-iw-tc {
+  display: none !important;
+}
+
+.gm-style-cc {
+  display: none !important;
+}
+
+.gm-style-iw-d {
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.gm-ui-hover-effect {
+  background-color: white !important;
+  position: absolute !important;
+  border-radius: 50%;
+  top: 5px !important;
+  right: 5px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.gm-ui-hover-effect:span {
+  width: 200px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.gm-style-iw-c {
+  padding: 0 !important;
+}
+
+.gm-style-cc a {
+  display: none !important;
+}
+</style>

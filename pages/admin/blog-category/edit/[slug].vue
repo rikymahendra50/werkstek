@@ -72,7 +72,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Edit Category Blog Success",
     });
-    ctx.resetForm();
+    router.push("/admin/blog-category");
   }
   loading.value = false;
 }

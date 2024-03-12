@@ -1,5 +1,5 @@
 <template>
-  <div class="group hover:shadow-xl p-2 cursor-pointer">
+  <div class="group hover:shadow-xl transition p-2 cursor-pointer">
     <NuxtLink :to="link" class="flex">
       <img
         :src="imageSrc"

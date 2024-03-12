@@ -10,10 +10,12 @@
       <!-- <Alert v-model="message" :type="alertType" /> -->
       <FormGroup label="Email" name="email">
         <FormTextField
+          id="email"
           name="email"
           v-model="stateForm.email"
           placeholder="ex:myemail@gmail.com"
           class="input-bordered"
+          autocomplete="on"
           v-slot="{ errors }"
         />
       </FormGroup>
@@ -48,16 +50,17 @@ function updateToParent() {
   emit("next");
 }
 
-async function onSubmit() {
+async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const { error } = await useFetch(`/admins/forget-password`, {
+  const { data, error } = await useFetch(`/admins/forget-password`, {
     method: "POST",
     body: { email: stateForm.value.email },
     ...requestOptions,
   });
 
   if (error.value) {
+    ctx.setErrors(transformErrors(error.value?.data));
     snackbar.add({
       type: "error",
       text: error.value?.data?.message ?? "Something went wrong",
@@ -67,8 +70,9 @@ async function onSubmit() {
       type: "success",
       text: "Sending OTP Success, Please check your email",
     });
+    updateToParent();
   }
-  updateToParent();
+
   loading.value = false;
 }
 </script>

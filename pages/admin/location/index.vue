@@ -7,14 +7,7 @@
         <div>
           <div class="text-xl md:text-3xl font-bold">Location</div>
         </div>
-        <div>
-          <NuxtLink
-            to="/admin/location/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add new Location
-          </NuxtLink>
-        </div>
+        <CompAdminButtonAddIndex name="Location" link="location" />
       </div>
       <div>
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
@@ -22,7 +15,6 @@
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Name</th>
-                <!-- <th class="font-medium">Images</th> -->
                 <th class="font-medium"></th>
               </tr>
             </thead>
@@ -31,24 +23,24 @@
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
                 v-for="(item, index) in locations?.data"
               >
-                <td class="text-gray-500 text-sm font-normal !py-2">
-                  {{ item.name }}
-                </td>
                 <!-- <td class="text-gray-500 text-sm font-normal !py-2">
                   <img :src="item.image" :alt="item.id" class="max-w-[90px]" />
                 </td> -->
-                <td class="flex items-center">
+                <td class="text-gray-500 text-sm font-normal !py-2">
+                  {{ item.name }}
+                </td>
+                <td class="flex items-center gap-2">
                   <NuxtLink
-                    :to="`/admin/location/edit/${item.name}`"
-                    class="m-2"
+                    :to="`/admin/location/edit/${item.slug}`"
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
                   >
-                    <icon
-                      name="i-heroicons-pencil-square"
-                      class="cursor-pointer mr-1"
-                    />
+                    <icon name="i-heroicons-pencil-square" />
                   </NuxtLink>
-                  <div class="cursor-pointer m-2" @click="showModal(index)">
-                    <icon name="i-heroicons-trash" class="mr-1" />
+                  <div
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
+                    @click="showModal(index)"
+                  >
+                    <icon name="i-heroicons-trash" />
                   </div>
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">
@@ -78,16 +70,76 @@
       </div>
     </div>
   </main>
+  <Pagination
+    v-model="page"
+    :total="locations?.total"
+    :per-page="locations?.per_page"
+    class="flex justify-center"
+  />
 </template>
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
-const snackbar = useSnackbar();
 const { requestOptions } = useRequestOptions();
+import { useTimeoutFn } from "@vueuse/core";
 
-const { data: locations, error } = await useFetch(`/admins/locations`, {
-  method: "get",
-  ...requestOptions,
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+const search = ref("");
+
+const {
+  data: locations,
+  error,
+  refresh,
+} = await useAsyncData("locations", () =>
+  $fetch(
+    `/admins/locations?page=${page.value}&filter[search]=${search.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
+);
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(
+  () => page.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      start();
+    }
+  }
+);
+
+watch(
+  () => search.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+function replaceWindow() {
+  router.replace(`/admin/location?page=${page.value}&search=${search.value}`);
+  refresh();
+}
+
+onMounted(() => {
+  stop();
+  if (route.query.page) {
+    page.value = route.query.page ?? 1;
+  }
+
+  if (route.query.search) {
+    search.value = route.query?.search ?? "";
+  }
 });
 
 const showModal = (index) => {

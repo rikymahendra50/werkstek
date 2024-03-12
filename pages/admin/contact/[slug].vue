@@ -1,39 +1,32 @@
 <template>
+  <CompAdminBackButton link="contact" linkTitle="Detail Contact" />
   <div v-if="pending">Loading...</div>
   <div v-if="data && data?.data" class="overflow-y-auto max-h-[70%]">
-    <h3 class="font-bold my-2">
-      Detail Contact by {{ data?.data?.first_name }}
-    </h3>
-    <div class="">
-      <table class="table">
-        <tbody>
-          <tr>
-            <td>First Name</td>
-            <td>{{ data?.data?.first_name }}</td>
-          </tr>
-          <tr>
-            <td>Last Name</td>
-            <td>{{ data?.data?.last_name }}</td>
-          </tr>
-          <tr>
-            <td>Email</td>
-            <td>{{ data?.data?.email }}</td>
-          </tr>
-          <tr>
-            <td>Subject</td>
-            <td>{{ data?.data?.subject }}</td>
-          </tr>
-          <tr>
-            <td>Message</td>
-            <td>{{ data?.data?.message }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>First Name</td>
+          <td>{{ data?.data?.first_name }}</td>
+        </tr>
+        <tr>
+          <td>Last Name</td>
+          <td>{{ data?.data?.last_name }}</td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td>{{ data?.data?.email }}</td>
+        </tr>
+        <tr>
+          <td>Subject</td>
+          <td>{{ data?.data?.subject }}</td>
+        </tr>
+        <tr>
+          <td>Message</td>
+          <td>{{ data?.data?.message }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <NuxtLink to="/admin/contact">
-    <button class="btn btn-sm btn-outline btn-warning">Back</button>
-  </NuxtLink>
 </template>
 
 <style>

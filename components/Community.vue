@@ -46,7 +46,7 @@
 
 <script setup>
 const { requestOptions } = useRequestOptions();
-const { data, error } = await useFetch(`/articles`, {
+const { data, error } = await useFetch(`/community-blogs`, {
   method: "get",
   ...requestOptions,
 });

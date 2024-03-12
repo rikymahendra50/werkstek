@@ -1,6 +1,6 @@
 <template>
   <div class="overflow-y-auto max-h-[70%]">
-    <h3 class="font-bold my-2">Add Level Type</h3>
+    <CompAdminBackButton link="level-type" linkTitle="Add Level Type" />
     <VeeForm @submit="onSubmit">
       <table class="table">
         <tbody>
@@ -19,19 +19,16 @@
         </tbody>
       </table>
       <div class="flex justify-end">
-        <button
-          type="submit"
-          :disabled="loading"
-          class="mt-4 btn btn-md btn-outline transition flex items-center justify-center cursor-pointer btn-success"
-        >
-          Add Data
-        </button>
+        <CompAdminButtonAddForm
+          buttonName="Add Level Type"
+          :isLoading="loading"
+        />
       </div>
     </VeeForm>
   </div>
-  <NuxtLink to="/admin/level-type">
+  <!-- <NuxtLink to="/admin/level-type">
     <button class="btn btn-sm btn-outline btn-warning">Back</button>
-  </NuxtLink>
+  </NuxtLink> -->
 </template>
 
 <script setup>

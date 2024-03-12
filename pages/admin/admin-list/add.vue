@@ -1,112 +1,79 @@
 <template>
-  <div class="flex gap-2">
-    <NuxtLink to="/admin/admin-list" class="btn btn-warning btn-outline btn-sm"
-      >Back</NuxtLink
-    >
-    <span class="text-2xl font-bold">Add Admin</span>
-  </div>
-  <div class="h-screen max-h-[450px] overflow-y-auto">
-    <h3 class="font-bold text-lg">Add New Admin</h3>
-    <div class="modal-action grid grid-cols-1 gap-3">
-      <VeeForm
-        @submit="onSubmit"
-        class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-8"
-        :validation-schema="registerSchema"
-        v-slot="{ errors }"
-      >
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="firstName">First Name</label>
-          </div>
-          <VeeField
-            id="firstName"
-            name="firstName"
-            type="text"
-            v-model="adminData.first_name"
-            class="input input-bordered w-full input-md"
-            placeholder="First Name"
-            autocomplete="First Name"
-          />
-          <VeeErrorMessage name="first_name" class="text-sm text-error" />
-        </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="lastName">Last Name</label>
-          </div>
-          <VeeField
-            id="lastName"
-            name="lastName"
-            type="text"
-            v-model="adminData.last_name"
-            class="input input-bordered w-full input-md"
-            placeholder="Last Name"
-            autocomplete="First Name"
-          />
-          <VeeErrorMessage name="last_name" class="text-sm text-error" />
-        </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="email">Email</label>
-          </div>
-          <VeeField
-            id="email"
-            name="email"
-            type="text"
-            v-model="adminData.email"
-            class="input input-bordered w-full input-md"
-            placeholder="Email"
-            autocomplete="Email"
-          />
-          <VeeErrorMessage name="email" class="text-sm text-error" />
-        </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="password">Password</label>
-          </div>
-          <VeeField
-            id="password"
-            name="password"
-            type="text"
-            v-model="adminData.password"
-            class="input input-bordered w-full input-md"
-            placeholder="Password"
-            autocomplete="Password"
-          />
-          <VeeErrorMessage
-            name="passwordAndConfirm"
-            class="text-sm text-error"
-          />
-        </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="confirm">Confirm Password</label>
-          </div>
-          <VeeField
-            id="confirm"
-            name="confirm"
-            type="text"
-            v-model="adminData.confirm_password"
-            class="input input-bordered w-full input-md"
-            placeholder="Confirm"
-            autocomplete="Confirm"
-          />
-          <VeeErrorMessage
-            name="passwordAndConfirm"
-            class="text-sm text-error"
-          />
-        </div>
-        <div class="flex justify-end mt-5">
-          <button
-            class="btn btn-md btn-success"
-            type="submit"
-            :disabled="loading"
-          >
-            <span
-              class="text-[20px] xl:text-lg lg:text-lg text-center text-white"
+  <div class="grid place-items-center items-center">
+    <div class="w-full p-4 justify-center">
+      <CompAdminBackButton link="admin-list" linkTitle="Register Admin" />
+      <VeeForm @submit="onSubmit" v-slot="{ errors }">
+        <div class="grid grid-cols-1 text-left gap-4 rounded-md">
+          <FormGroup label="First Name" name="firstname">
+            <FormTextField
+              id="firstname"
+              name="firstname"
+              v-model="form.first_name"
+              placeholder="First Name"
+              class="input-bordered"
+              autocomplete="on"
+              v-slot="{ errors }"
+            />
+          </FormGroup>
+
+          <FormGroup label="Last Name" name="lastname">
+            <FormTextField
+              id="lastname"
+              name="lastname"
+              v-model="form.last_name"
+              placeholder="Last Name"
+              class="input-bordered"
+              autocomplete="on"
+              v-slot="{ errors }"
+            />
+          </FormGroup>
+
+          <FormGroup label="Email" name="email">
+            <FormTextField
+              id="email"
+              name="email"
+              v-model="form.email"
+              placeholder="ex:myemail@gmail.com"
+              class="input-bordered"
+              autocomplete="on"
+              v-slot="{ errors }"
+            />
+          </FormGroup>
+
+          <FormGroup label="Password" name="password">
+            <FormTextField
+              id="password"
+              name="password"
+              type="password"
+              v-model="form.password"
+              placeholder="Password"
+              class="input-bordered"
+              autocomplete="on"
+              v-slot="{ errors }"
+            />
+          </FormGroup>
+
+          <FormGroup label="Confirm Password" name="confirmPassword">
+            <FormTextField
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              v-model="form.confirm_password"
+              placeholder="Confirm Password"
+              class="input-bordered"
+              autocomplete="on"
+              v-slot="{ errors }"
+            />
+          </FormGroup>
+          <div class="flex justify-end">
+            <button
+              class="btn bg-primary text-white"
+              type="submit"
+              :disabled="loading"
             >
-              Add New Admin
-            </span>
-          </button>
+              Submit
+            </button>
+          </div>
         </div>
       </VeeForm>
     </div>
@@ -116,45 +83,50 @@
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const snackbar = useSnackbar();
-
 const { registerSchema } = useSchema();
+const { stateForm } = useForgotPassword();
+const { snackbar } = useSnackbar();
 
-const adminData = ref({
+const form = ref({
   first_name: undefined,
   last_name: undefined,
+  email: undefined,
   password: undefined,
   confirm_password: undefined,
-  email: undefined,
 });
 
-async function onSubmit(values, ctx) {
+async function onSubmit() {
   loading.value = true;
 
-  const { data, error } = await useFetch("/admins", {
-    method: "POST",
-    body: JSON.stringify(adminData.value),
+  const { data, error } = await useFetch(`/admins`, {
+    method: "post",
+    body: {
+      first_name: form.value.first_name,
+      last_name: form.value.last_name,
+      email: form.value.email,
+      password: form.value.password,
+      confirm_password: form.value.confirm_password,
+    },
     ...requestOptions,
   });
 
   if (error.value) {
-    ctx.setErrors(transformErrors(error.value?.data));
+    ctx.setErrors(transformErrors(error?.data));
     snackbar.add({
       type: "error",
       text: error.value?.data?.message ?? "Something went wrong",
     });
-  } else {
+  } else if (data.value) {
     snackbar.add({
       type: "success",
-      text: "Success Adding Data",
+      text: "Your data registration is Success, We will confirm soon",
     });
-    ctx.resetForm();
+    router.push("/admin/admin-list");
   }
-
-  loading.value = false;
 }
+
 useHead({
-  title: "Add admin",
+  title: "Register admin",
 });
 
 definePageMeta({

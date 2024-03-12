@@ -7,14 +7,7 @@
         <div>
           <div class="text-xl md:text-3xl font-bold">Admin List</div>
         </div>
-        <div>
-          <NuxtLink
-            to="/admin/admin-list/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add New Admin
-          </NuxtLink>
-        </div>
+        <CompAdminButtonAddIndex name="Admin" link="admin-list" />
       </div>
       <div>
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
@@ -29,7 +22,7 @@
             <tbody>
               <tr
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
-                v-for="(item, index) in adminList?.data"
+                v-for="(item, index) in admins?.data"
                 :key="item.id"
               >
                 <td class="text-gray-500 text-sm font-normal !py-2">
@@ -46,15 +39,78 @@
       </div>
     </div>
   </main>
+  <Pagination
+    v-model="page"
+    :total="admins?.meta?.total"
+    :per-page="admins?.meta?.per_page"
+    class="flex justify-center"
+  />
 </template>
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+import { useTimeoutFn } from "@vueuse/core";
 
-const { data: adminList, error } = await useFetch(`/admins`, {
-  method: "get",
-  ...requestOptions,
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+const search = ref("");
+
+// const { data } = await useFetch(`/admins`, {
+//   method: "get",
+//   ...requestOptions,
+// });
+
+const {
+  data: admins,
+  error,
+  refresh,
+} = await useAsyncData("admins", () =>
+  $fetch(`/admins?page=${page.value}&filter[search]=${search.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(
+  () => page.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      start();
+    }
+  }
+);
+
+watch(
+  () => search.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+function replaceWindow() {
+  router.replace(`/admin/admins?page=${page.value}&search=${search.value}`);
+  refresh();
+}
+
+onMounted(() => {
+  stop();
+  if (route.query.page) {
+    page.value = route.query.page ?? 1;
+  }
+
+  if (route.query.search) {
+    search.value = route.query?.search ?? "";
+  }
 });
 
 // const showModal = (index) => {
