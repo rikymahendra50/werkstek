@@ -16,16 +16,18 @@
         }"
       >
         <div class="flex flex-col">
-          <span
+          <div
             class="bg-primary absolute flex items-center sm:py-1 px-1 sm:px-2 gap-1 md:gap-2 rounded-full ml-2 mt-2 text-[12px] sm:text-sm"
           >
-            <img
-              src="/images/icon-rating-white.svg"
-              alt="page2"
-              class="w-[14px]"
-            />
-            <span>{{ rating }}</span>
-          </span>
+            <div class="flex items-center gap-2 px-1">
+              <img
+                src="/images/icon-rating-white.svg"
+                alt="page2"
+                class="w-[14px]"
+              />
+              <span class="pt-[2px]">{{ rating }}</span>
+            </div>
+          </div>
           <span
             class="bg-primary absolute top-[20%] sm:top-[30%] md:top-[20%] left-0 flex sm:py-1 px-1 sm:px-2 rounded-full ml-2 mt-2 text-[12px] sm:text-sm font-semibold"
           >

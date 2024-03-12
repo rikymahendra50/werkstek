@@ -7,14 +7,7 @@
         <div>
           <div class="text-xl md:text-3xl font-bold">Category Blog</div>
         </div>
-        <div>
-          <NuxtLink
-            to="/admin/blog-category/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add new Category Blog
-          </NuxtLink>
-        </div>
+        <CompAdminButtonAddIndex name="Category Blog" link="blog-category" />
       </div>
       <div>
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
@@ -76,18 +69,78 @@
       </div>
     </div>
   </main>
+  <Pagination
+    v-model="page"
+    :total="categoryBlog?.meta?.total"
+    :per-page="categoryBlog?.meta?.per_page"
+    class="flex justify-center"
+  />
 </template>
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const { data: categoryBlog, error } = await useFetch(
-  `/admins/article-categories`,
-  {
-    method: "get",
-    ...requestOptions,
+
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+const search = ref("");
+
+const {
+  data: categoryBlog,
+  error,
+  refresh,
+} = await useAsyncData("categoryBlog", () =>
+  $fetch(
+    `/admins/article-categories?page=${page.value}&filter[search]=${search.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
+);
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(
+  () => page.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      start();
+    }
   }
 );
+
+watch(
+  () => search.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+function replaceWindow() {
+  router.replace(
+    `/admin/blog-category?page=${page.value}&search=${search.value}`
+  );
+  refresh();
+}
+
+onMounted(() => {
+  stop();
+  if (route.query.page) {
+    page.value = route.query.page ?? 1;
+  }
+
+  if (route.query.search) {
+    search.value = route.query?.search ?? "";
+  }
+});
 
 const showModal = (index) => {
   const modalId = `my_modal_${index}`;

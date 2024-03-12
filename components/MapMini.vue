@@ -50,8 +50,11 @@ const loadGoogleMapsScript = () => {
 };
 
 const setupMap = () => {
+  const lat = parseFloat(props.latitude);
+  const lng = parseFloat(props.longitude);
+
   map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -8.653840910873269, lng: 115.21785198506426 },
+    center: { lat: lat, lng: lng },
     zoom: 4,
     fullscreenControl: false,
     zoomControl: false,
@@ -63,11 +66,8 @@ const setupMap = () => {
 
   const icon = {
     url: iconBase + "/marker-red.svg",
-    scaledSize: new google.maps.Size(20, 20),
+    scaledSize: new google.maps.Size(40, 40),
   };
-
-  const lat = parseFloat(props.latitude);
-  const lng = parseFloat(props.longitude);
 
   const marker = new google.maps.Marker({
     position: { lat: lat, lng: lng },

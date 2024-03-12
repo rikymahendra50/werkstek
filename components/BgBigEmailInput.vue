@@ -11,7 +11,7 @@
           type="text"
           class="input w-full input-sm"
           placeholder="First Name"
-          autocomplete="firstname"
+          autocomplete="off"
         />
         <VeeField
           id="lastName"
@@ -20,7 +20,7 @@
           type="text"
           class="input w-full input-sm"
           placeholder="Last Name"
-          autocomplete="lastname"
+          autocomplete="off"
         />
         <VeeField
           id="subject"
@@ -29,7 +29,7 @@
           type="text"
           class="input w-full input-sm"
           placeholder="Subject"
-          autocomplete="subject"
+          autocomplete="off"
         />
         <VeeField
           id="message"
@@ -38,7 +38,7 @@
           type="text"
           class="input w-full input-sm"
           placeholder="Message"
-          autocomplete="Message"
+          autocomplete="off"
         />
       </div>
 
@@ -123,7 +123,7 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Thank for input your email. We will get back to you as soon as possible.",
+      text: "Thanks for input your email. We will get back to you as soon as possible.",
     });
 
     dataForm.value = { ...initialValues };

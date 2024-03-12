@@ -1,20 +1,13 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[500px]">
+  <main class="flex-grow overflow-y-auto max-h-[470px]">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Vacatures</div>
+          <div class="text-xl md:text-3xl font-bold">Property</div>
         </div>
-        <div>
-          <NuxtLink
-            to="/admin/onze-vacaturies/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add New Vacatures
-          </NuxtLink>
-        </div>
+        <CompAdminButtonAddIndex name="Property" link="onze-vacaturies" />
       </div>
       <div>
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
@@ -22,45 +15,44 @@
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Name</th>
-                <th class="font-medium">Detail Vacatures</th>
-                <th class="font-medium"></th>
+                <th class="font-medium">Modification</th>
+                <th class="font-medium">Detail</th>
               </tr>
             </thead>
             <tbody>
               <tr
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
-                v-for="(item, index) in Vacaturies?.data"
+                v-for="(item, index) in property?.data"
                 :key="item.id"
               >
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.name }}
                 </td>
-                <td>
-                  <NuxtLink
-                    :to="`/admin/onze-vacaturies/${item.slug}`"
-                    class="btn btn-sm btn-outline mr-2"
-                  >
-                    Detail
-                  </NuxtLink>
+                <td class="flex items-center gap-3">
                   <NuxtLink
                     :to="`/admin/onze-vacaturies/add-image/${item.slug}`"
-                    class="btn btn-sm btn-outline"
+                    class="btn btn-sm normal-case btn-ghost btn-square"
                   >
-                    Add Images
+                    <img
+                      src="/images/add-image-admin.svg"
+                      alt="add-image-admin"
+                      class="w-4"
+                    />
                   </NuxtLink>
-                </td>
-                <td class="flex items-center">
                   <NuxtLink
                     :to="`/admin/onze-vacaturies/edit-vacaturies/${item.slug}`"
-                    class="m-2"
+                    class="btn btn-sm normal-case btn-ghost btn-square"
                   >
                     <icon
                       name="i-heroicons-pencil-square"
-                      class="cursor-pointer mr-1"
+                      class="cursor-pointer"
                     />
                   </NuxtLink>
-                  <div class="cursor-pointer m-2" @click="showModal(index)">
-                    <icon name="i-heroicons-trash" class="mr-1" />
+                  <div
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
+                    @click="showModal(index)"
+                  >
+                    <icon name="i-heroicons-trash" />
                   </div>
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">
@@ -83,6 +75,15 @@
                     </div>
                   </dialog>
                 </td>
+                <td class="text-gray-500 text-sm font-normal !py-2">
+                  <NuxtLink
+                    :to="`/onze-locaties/${item.slug}`"
+                    class="btn btn-sm normal-case btn-ghost btn-square"
+                    target="_blank"
+                  >
+                    <icon name="i-heroicons-eye" class="cursor-pointer" />
+                  </NuxtLink>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -90,6 +91,12 @@
       </div>
     </div>
   </main>
+  <Pagination
+    v-model="page"
+    :total="property?.meta?.total"
+    :per-page="property?.meta?.per_page"
+    class="flex justify-center"
+  />
 </template>
 
 <style>
@@ -102,9 +109,67 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 
-const { data: Vacaturies, error } = await useFetch(`/admins/products`, {
-  method: "get",
-  ...requestOptions,
+// const { data: Vacaturies } = await useFetch(`/admins/products`, {
+//   method: "get",
+//   ...requestOptions,
+// });
+
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+const search = ref("");
+
+const {
+  data: property,
+  error,
+  refresh,
+} = await useAsyncData("property", () =>
+  $fetch(`/admins/products?page=${page.value}&filter[search]=${search.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(
+  () => page.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      start();
+    }
+  }
+);
+
+watch(
+  () => search.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+function replaceWindow() {
+  router.replace(
+    `/admin/onze-vacaturies?page=${page.value}&search=${search.value}`
+  );
+  refresh();
+}
+
+onMounted(() => {
+  stop();
+  if (route.query.page) {
+    page.value = route.query.page ?? 1;
+  }
+
+  if (route.query.search) {
+    search.value = route.query?.search ?? "";
+  }
 });
 
 const showModal = (index) => {
@@ -115,22 +180,30 @@ const showModal = (index) => {
   }
 };
 
-const deleteLocatie = async (locatieSlug) => {
+const deleteLocatie = async (slug) => {
   loading.value = true;
-  try {
-    const response = await useFetch(`/admins/products/${locatieSlug}`, {
-      method: "DELETE",
-      ...requestOptions,
+  await useFetch(`/admins/products/${slug}`, {
+    method: "DELETE",
+    ...requestOptions,
+  });
+
+  if (error.value) {
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
     });
-    console.log("Response:", response.data);
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Delete Property Success",
+    });
     window.location.reload();
-  } catch (error) {
-    console.error("Error:", error);
   }
+  loading.value = false;
 };
 
 useHead({
-  title: "Admin Onze Vacatures",
+  title: "Admin Property",
 });
 
 definePageMeta({

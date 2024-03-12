@@ -2,66 +2,75 @@
   <div class="grid place-items-center items-center h-screen">
     <div class="w-[500px] p-10 justify-center shadow-lg my-5">
       <Werkstek class="mb-7" />
-      <VeeForm :validation-schema="registerSchema" @submit="onSubmit">
-        <div class="flex flex-col gap-1">
-          <h4 class="text-lg">First Name</h4>
-          <div>
-            <VeeField
+      <VeeForm @submit="onSubmit" v-slot="{ errors }">
+        <div class="grid grid-cols-1 text-left gap-4 rounded-md">
+          <FormGroup label="First Name" name="firstname">
+            <FormTextField
+              id="firstname"
               name="firstname"
-              class="input input-bordered w-full input-md mb-1"
               v-model="form.first_name"
+              placeholder="First Name"
+              class="input-bordered"
+              autocomplete="on"
+              v-slot="{ errors }"
             />
-            <VeeErrorMessage
-              name="first_name"
-              class="text-sm text-error mb-4"
-            />
-          </div>
-          <h4 class="text-lg">Last Name</h4>
-          <div>
-            <VeeField
+          </FormGroup>
+
+          <FormGroup label="Last Name" name="lastname">
+            <FormTextField
+              id="lastname"
               name="lastname"
-              class="input input-bordered w-full input-md mb-1"
               v-model="form.last_name"
+              placeholder="Last Name"
+              class="input-bordered"
+              autocomplete="on"
+              v-slot="{ errors }"
             />
-            <VeeErrorMessage name="last_name" class="text-sm text-error mb-4" />
-          </div>
-          <h4 class="text-lg">Email</h4>
-          <div>
-            <VeeField
+          </FormGroup>
+
+          <FormGroup label="Email" name="email">
+            <FormTextField
+              id="email"
               name="email"
-              class="input input-bordered w-full input-md mb-1"
               v-model="form.email"
+              placeholder="ex:myemail@gmail.com"
+              class="input-bordered"
+              autocomplete="on"
+              v-slot="{ errors }"
             />
-            <VeeErrorMessage name="email" class="text-sm text-error mb-4" />
-          </div>
-          <h4 h4 class="text-lg">Password</h4>
-          <div>
-            <VeeField
+          </FormGroup>
+
+          <FormGroup label="Password" name="password">
+            <FormTextField
+              id="password"
               name="password"
+              type="password"
               v-model="form.password"
-              type="password"
-              class="input input-bordered w-full input-md mb-1"
+              placeholder="Password"
+              class="input-bordered"
+              autocomplete="on"
+              v-slot="{ errors }"
             />
-            <VeeErrorMessage name="password" class="text-sm text-error mb-4" />
-          </div>
-          <h4 class="text-lg">Confirm Password</h4>
-          <div>
-            <VeeField
+          </FormGroup>
+
+          <FormGroup label="Confirm Password" name="confirmPassword">
+            <FormTextField
+              id="confirmPassword"
               name="confirmPassword"
+              type="password"
               v-model="form.confirm_password"
-              type="password"
-              class="input input-bordered w-full input-md mb-1"
+              placeholder="Confirm Password"
+              class="input-bordered"
+              autocomplete="on"
+              v-slot="{ errors }"
             />
-            <VeeErrorMessage
-              name="confirmPassword"
-              class="text-sm text-error mb-4"
-            />
-          </div>
-          <div class="mt-5">
+          </FormGroup>
+
+          <div>
             <button
-              :disabled="loading"
+              class="btn bg-primary text-white"
               type="submit"
-              class="btn bg-primary text-white w-full hover:bg-secondary"
+              :disabled="loading"
             >
               Submit
             </button>
@@ -73,9 +82,10 @@
 </template>
 
 <script setup>
-const { registerSchema } = useSchema();
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const { registerSchema } = useSchema();
+const { stateForm } = useForgotPassword();
 
 const form = ref({
   first_name: undefined,
@@ -112,7 +122,6 @@ async function onSubmit() {
       type: "success",
       text: "Your data registration is Success, We will confirm soon",
     });
-    ctx.resetForm();
   }
 }
 

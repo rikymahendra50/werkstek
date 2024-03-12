@@ -7,14 +7,7 @@
         <div>
           <div class="text-xl md:text-3xl font-bold">Level Type</div>
         </div>
-        <div>
-          <NuxtLink
-            to="/admin/level-type/add"
-            class="btn btn-sm h-11 btn-neutral normal-case"
-          >
-            Add New Level Type
-          </NuxtLink>
-        </div>
+        <CompAdminButtonAddIndex name="Level Type" link="level-type" />
       </div>
       <div>
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
@@ -35,14 +28,17 @@
                   {{ item.name }}
                 </td>
                 <td class="flex items-center">
-                  <NuxtLink :to="`/admin/level-type/${item.id}`" class="m-2">
-                    <icon
-                      name="i-heroicons-pencil-square"
-                      class="cursor-pointer mr-1"
-                    />
+                  <NuxtLink
+                    :to="`/admin/level-type/edit/${item.id}`"
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
+                  >
+                    <icon name="i-heroicons-pencil-square" />
                   </NuxtLink>
-                  <div class="cursor-pointer m-2" @click="showModal(index)">
-                    <icon name="i-heroicons-trash" class="mr-1" />
+                  <div
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
+                    @click="showModal(index)"
+                  >
+                    <icon name="i-heroicons-trash" />
                   </div>
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">

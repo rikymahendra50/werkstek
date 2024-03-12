@@ -5,7 +5,6 @@
         <h1 class="text-4xl font-bold mb-6">
           {{ stepper.current.value.title }}
         </h1>
-
         <ForgotPassword
           v-model:email="stateForm.email"
           v-if="stepper.isCurrent('forgot-password')"

@@ -1,396 +1,392 @@
 <template>
-  <div class="overflow-auto max-h-[500px]">
-    <div class="flex gap-2">
-      <NuxtLink
-        to="/admin/onze-vacaturies"
-        class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
-      <span class="text-2xl font-bold">Edit Vacatures</span>
-    </div>
-    <div class="modal-action grid grid-cols-1 gap-3">
-      <VeeForm
-        @submit="onSubmit"
-        class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-10"
-        v-slot="{ errors }"
-      >
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="name">Name</label>
-          </div>
-          <VeeField
-            id="name"
-            name="name"
-            type="text"
-            v-model="productsData.name"
-            class="input input-bordered w-full input-md"
-            placeholder="Name"
-            autocomplete="name"
-          />
-          <VeeErrorMessage name="name" class="text-sm text-error" />
+  <CompAdminBackButton link="onze-vacaturies" linkTitle="Edit Property" />
+  <div class="h-screen max-h-[450px] overflow-y-auto">
+    <VeeForm
+      @submit="onSubmit"
+      class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-8"
+      v-slot="{ errors }"
+    >
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="name">Name</label>
         </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="description">Description</label>
-          </div>
-          <VeeField
-            id="description"
-            name="description"
-            as="textarea"
-            type="text"
-            v-model="productsData.description"
-            class="w-full textarea textarea-bordered"
-            placeholder="Description"
-            autocomplete="description"
-          />
-          <VeeErrorMessage name="description" class="text-sm text-error" />
-        </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="email">Email</label>
-          </div>
-          <VeeField
-            id="email"
-            name="email"
-            type="text"
-            v-model="productsData.email"
-            class="input input-bordered w-full input-md"
-            placeholder="Email"
-            autocomplete="email"
-          />
-        </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="phoneNumber">Phone Number</label>
-          </div>
-          <VeeField
-            id="phoneNumber"
-            name="phoneNumber"
-            type="text"
-            v-model="productsData.phone_number"
-            class="input input-bordered w-full input-md"
-            placeholder="Phone Number"
-            autocomplete="Phone"
-          />
-        </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="latitude">Latitude</label>
-          </div>
-          <VeeField
-            id="latitude"
-            name="latitude"
-            type="text"
-            v-model="productsData.latitude"
-            class="input input-bordered w-full input-md"
-            placeholder="Latitude"
-            autocomplete="latitude"
-          />
-        </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="longitude">Longitude</label>
-          </div>
-          <VeeField
-            id="longitude"
-            name="longitude"
-            type="text"
-            v-model="productsData.longitude"
-            class="input input-bordered w-full input-md"
-            placeholder="Longitude"
-            autocomplete="longitude"
-          />
-        </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="price">Price</label>
-          </div>
-          <VeeField
-            id="price"
-            name="price"
-            type="text"
-            v-model="productsData.price"
-            class="input input-bordered w-full input-md"
-            placeholder="Price"
-            autocomplete="price"
-          />
-        </div>
+        <VeeField
+          id="name"
+          name="name"
+          type="text"
+          v-model="formData.name"
+          class="input input-bordered w-full input-md"
+          placeholder="Name"
+          autocomplete="off"
+        />
+        <VeeErrorMessage name="name" class="text-sm text-error" />
+      </div>
+      <div class="flex flex-col my-5 w-full">
+        <span for="body">Description</span>
+        <FormTextEditor
+          v-model="formData.description"
+          :is-error="!!errors.body"
+        />
+        <VeeErrorMessage name="body" />
+      </div>
 
-        <div class="flex flex-col my-2 w-full">
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="email">Email</label>
+        </div>
+        <VeeField
+          id="email"
+          name="email"
+          type="text"
+          v-model="formData.email"
+          class="input input-bordered w-full input-md"
+          placeholder="Email"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="phoneNumber">Phone Number</label>
+        </div>
+        <VeeField
+          id="phoneNumber"
+          name="phoneNumber"
+          type="text"
+          v-model="formData.phone_number"
+          class="input input-bordered w-full input-md"
+          placeholder="Phone Number"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="latitude">Latitude</label>
+        </div>
+        <VeeField
+          id="latitude"
+          name="latitude"
+          type="text"
+          v-model="formData.latitude"
+          class="input input-bordered w-full input-md"
+          placeholder="Latitude"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="longitude">Longitude</label>
+        </div>
+        <VeeField
+          id="longitude"
+          name="longitude"
+          type="text"
+          v-model="formData.longitude"
+          class="input input-bordered w-full input-md"
+          placeholder="Longitude"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="price">Price</label>
+        </div>
+        <VeeField
+          id="price"
+          name="price"
+          type="number"
+          v-model="formData.price"
+          class="input input-bordered w-full input-md"
+          placeholder="Price"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="renttype">Rent Type</label>
+        </div>
+        <VeeField
+          id="renttype"
+          name="renttype"
+          as="select"
+          v-model="formData.rent_type"
+          class="select select-bordered w-full"
+          placeholder="renttype"
+          autocomplete="renttype"
+        >
+          <option disabled selected>Rent Type</option>
+          <option value="monthly">Montly</option>
+          <option value="yearly">Yearly</option>
+        </VeeField>
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="areaSize">Area Size</label>
+        </div>
+        <VeeField
+          id="areaSize"
+          name="areaSize"
+          type="text"
+          v-model="formData.area_size"
+          class="input input-bordered w-full input-md"
+          placeholder="Area Size"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="rating">Rating</label>
+        </div>
+        <VeeField
+          id="rating"
+          name="rating"
+          type="text"
+          v-model="formData.rating"
+          class="input input-bordered w-full input-md"
+          placeholder="Rating"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="location">Location</label>
+        </div>
+        <VeeField
+          id="location"
+          name="location"
+          as="select"
+          v-model="formData.location_id"
+          class="select select-bordered w-full"
+          placeholder="location"
+          autocomplete="location"
+        >
+          <option disabled selected>Location</option>
+          <option :value="item.id" v-for="item in location.data">
+            {{ item.name }}
+          </option>
+        </VeeField>
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="type">Type</label>
+        </div>
+        <VeeField
+          id="type"
+          name="type"
+          as="select"
+          v-model="formData.type_id"
+          class="select select-bordered w-full"
+          placeholder="type"
+          autocomplete="off"
+        >
+          <option disabled selected>Type</option>
+          <option :value="item.id" v-for="item in type">
+            {{ item.name }}
+          </option>
+        </VeeField>
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="levelType">Level Type</label>
+        </div>
+        <VeeField
+          id="levelType"
+          name="levelType"
+          as="select"
+          v-model="formData.level_type_id"
+          class="select select-bordered w-full"
+          placeholder="type"
+          autocomplete="type"
+        >
+          <option disabled selected>Type</option>
+          <option :value="item.id" v-for="item in levelType.data">
+            {{ item.name }}
+          </option>
+        </VeeField>
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="grid gap-2">
           <div class="flex items-center">
-            <label for="renttype">Rent Type</label>
+            <span>Facilities</span>
           </div>
-          <VeeField
-            id="renttype"
-            name="renttype"
-            as="select"
-            v-model="productsData.rent_type"
-            class="select select-bordered w-full"
-            placeholder="renttype"
-            autocomplete="renttype"
+          <label
+            v-for="item in facilities.data"
+            :key="item.id"
+            class="checkbox-label flex gap-2"
           >
-            <option disabled selected>Rent Type</option>
-            <option value="monthly">Montly</option>
-            <option value="yearly">Yearly</option>
-          </VeeField>
+            <VeeField
+              :id="`facilities + ${item.id}`"
+              :name="`facilities + ${item.name}`"
+              type="checkbox"
+              :value="{ facility_id: item.id }"
+              v-model="formData.product_facilities"
+              placeholder="facilities"
+              autocomplete="facilities"
+            />
+            {{ item.name }}
+          </label>
         </div>
+      </div>
 
-        <div class="flex flex-col my-2 w-full">
+      <div class="flex flex-col my-2 w-full">
+        <div class="grid gap-2">
           <div class="flex items-center">
-            <label for="areaSize">Area Size</label>
+            <span>Privileges</span>
           </div>
-          <VeeField
-            id="areaSize"
-            name="areaSize"
-            type="text"
-            v-model="productsData.area_size"
-            class="input input-bordered w-full input-md"
-            placeholder="Area Size"
-            autocomplete="areaSize"
-          />
+          <label
+            v-for="item in dataPrivilages"
+            :key="item.id"
+            class="checkbox-label flex gap-2"
+          >
+            <VeeField
+              :id="`privileges + ${item.id}`"
+              :name="`privileges + ${item.name}`"
+              type="checkbox"
+              :value="{ privilege: item.name }"
+              v-model="formData.product_privileges"
+              placeholder="privileges"
+              autocomplete="privileges"
+            />
+            {{ item.name }}
+          </label>
         </div>
+      </div>
 
-        <div class="flex flex-col my-2 w-full">
+      <div class="flex flex-col my-2 w-full">
+        <div class="grid gap-2">
           <div class="flex items-center">
-            <label for="location">Location</label>
+            <span>Saleable</span>
           </div>
-          <VeeField
-            id="location"
-            name="location"
-            as="select"
-            v-model="productsData.location_id"
-            class="select select-bordered w-full"
-            placeholder="location"
-            autocomplete="location"
-          >
-            <option disabled selected>Location</option>
-            <option :value="item.id" v-for="item in location.data">
-              {{ item.name }}
-            </option>
-          </VeeField>
+          <label class="radio-label flex gap-2">
+            <VeeField
+              id="saleable_yes"
+              name="saleable"
+              type="radio"
+              :value="formData.is_saleable == 1"
+              placeholder="saleable"
+            />
+            Yes
+          </label>
+          <label class="radio-label flex gap-2">
+            <VeeField
+              id="saleable_no"
+              name="saleable"
+              type="radio"
+              :value="formData.is_saleable == 0"
+              placeholder="saleable"
+            />
+            No
+          </label>
         </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="type">Type</label>
-          </div>
-          <VeeField
-            id="type"
-            name="type"
-            as="select"
-            v-model="productsData.type_id"
-            class="select select-bordered w-full"
-            placeholder="type"
-            autocomplete="type"
-          >
-            <option disabled selected>Type</option>
-            <option :value="item.id" v-for="item in type.data">
-              {{ item.name }}
-            </option>
-          </VeeField>
-        </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="grid gap-2">
-            <div class="flex items-center">
-              <span>Facilities</span>
-            </div>
-            <label
-              v-for="item in facilities.data"
-              :key="item.id"
-              class="checkbox-label flex gap-2"
-            >
-              <VeeField
-                :id="`facilities + ${item.id}`"
-                :name="`facilities + ${item.name}`"
-                type="checkbox"
-                :value="{ facility_id: item.id }"
-                v-model="productsData.product_facilities"
-                placeholder="facilities"
-                autocomplete="facilities"
-              />
-              {{ item.name }}
-            </label>
-          </div>
-        </div>
+      </div>
 
-        <div class="flex flex-col my-2 w-full">
-          <div class="grid gap-2">
-            <div class="flex items-center">
-              <span>Privileges (data not available)</span>
-            </div>
-            <!-- <label
-                  v-for="item in privileges.data"
-                  :key="item.id"
-                  class="checkbox-label flex gap-2"
-                >
-                  <VeeField
-                    :id="`privileges + ${item.id}`"
-                    :name="`privileges + ${item.name}`"
-                    type="checkbox"
-                    :value="item.id"
-                    v-model="productsData.product_privileges"
-                    placeholder="privileges"
-                    autocomplete="privileges"
-                  />
-                  {{ item.name }}
-                </label> -->
-          </div>
-        </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="grid gap-2">
-            <div class="flex items-center">
-              <span>Saleable</span>
-            </div>
-            <label class="radio-label flex gap-2">
-              <VeeField
-                id="saleable_yes"
-                name="saleable"
-                type="radio"
-                value="1"
-                v-model="productsData.is_saleable"
-                :checked="productsData.is_saleable === 1"
-                placeholder="saleable"
-                autocomplete="saleable"
-              />
-              Yes
-            </label>
-            <label class="radio-label flex gap-2">
-              <VeeField
-                id="saleable_no"
-                name="saleable"
-                type="radio"
-                value="0"
-                v-model="productsData.is_saleable"
-                :checked="productsData.is_saleable === 0"
-                placeholder="saleable"
-                autocomplete="saleable"
-              />
-              No
-            </label>
-          </div>
-        </div>
-
-        <div class="flex flex-col my-2 w-full">
-          <div class="grid gap-2">
-            <div class="flex items-center">
-              <span>Category (data not available)</span>
-            </div>
-            <label
-              class="radio-label flex gap-2"
-              :for="`category + ${item.id}`"
-              v-for="item in category.data"
-            >
-              <VeeField
-                :id="`category + ${item.id}`"
-                name="category"
-                type="radio"
-                :value="item.id"
-                v-model="productsData.category_id"
-                placeholder="category"
-                autocomplete="category"
-              />
-              {{ item.name }}
-            </label>
-          </div>
-        </div>
-
-        <div class="flex justify-end">
-          <button
-            type="submit"
-            :disabled="loading"
-            class="mt-4 bg-primary disabled:bg-secondary hover:bg-secondary transition min-w-[120px] sm:min-w-[152px] min-h-[42px] sm:min-h-[52px] rounded-full flex items-center justify-center cursor-pointer"
-          >
-            <span
-              class="text-[20px] xl:text-lg lg:text-lg text-center text-white"
-            >
-              Add Data
-            </span>
-          </button>
-        </div>
-      </VeeForm>
-    </div>
+      <div class="w-full flex justify-end">
+        <CompAdminButtonAddForm
+          buttonName="Edit Property"
+          :isLoading="loading"
+        />
+      </div>
+    </VeeForm>
   </div>
 </template>
-
-<!-- <style scoped>
-.overflow-auto {
-  max-height: 550px;
-  overflow-y: auto;
-  overflow-x: auto;
-}
-
-.overflow-auto::-webkit-scrollbar {
-  display: none;
-}
-
-.description-column {
-  overflow-y: auto;
-}
-
-.description-column::-webkit-scrollbar {
-  display: none;
-}
-</style> -->
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const router = useRouter();
 const snackbar = useSnackbar();
-
 const route = useRoute();
-const slug = computed(() => {
-  return route.params.slug;
-});
+const slug = computed(() => route.params.slug);
 
-const {
-  data: eachVacaturies,
-  error,
-  pending,
-} = await useFetch(`/products/${slug.value}`, {
+const { data: dataSlug } = await useFetch(`/admins/products/${slug.value}`, {
   method: "get",
   ...requestOptions,
 });
 
-const { data: facilities } = await useFetch(`/admins/facilities`, {
-  method: "get",
-  ...requestOptions,
-});
 const { data: location } = await useFetch(`/admins/locations`, {
   method: "get",
   ...requestOptions,
 });
-const { data: type } = await useFetch(`/admins/types`, {
-  method: "get",
-  ...requestOptions,
-});
-const { data: category } = await useFetch(`/admins/categories`, {
+
+const { data: type } = await useFetch(`/admins/type-list`, {
   method: "get",
   ...requestOptions,
 });
 
-const productsData = ref({
-  name: eachVacaturies.value.data.name,
-  description: eachVacaturies.value.data.description,
-  email: eachVacaturies.value.data.email,
-  phone_number: eachVacaturies.value.data.phone_number,
-  latitude: eachVacaturies.value.data.latitude,
-  longitude: eachVacaturies.value.data.longitude,
-  price: eachVacaturies.value.data.price,
-  rent_type: eachVacaturies.value.data.rent_type,
-  area_size: eachVacaturies.value.data.area_size,
-  location_id: eachVacaturies.value.data.location_id,
-  type_id: eachVacaturies.value.data.type_id,
-  category_id: eachVacaturies.value.data.category_id,
-  is_saleable: eachVacaturies.value.data.is_saleable,
-  product_facilities: [{ facility_id: 1 }],
-  product_privileges: [],
+const { data: levelType } = await useFetch(`/admins/level-types`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const { data: facilities, error } = await useFetch(`/admins/facilities`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const dataPrivilages = ref([
+  {
+    id: 1,
+    name: "Near the beach",
+  },
+  {
+    id: 2,
+    name: "Near the mall",
+  },
+  {
+    id: 3,
+    name: "Get a good view",
+  },
+]);
+
+const AllDataSlug = ref(dataSlug?.value.data);
+
+const privilegesArray = AllDataSlug?.value.privileges.map(
+  (item) => item.privilege
+);
+
+const facilityArray = AllDataSlug?.value.facility.map(
+  (item) => item.facility.id
+);
+
+const formData = ref({
+  name: AllDataSlug?.value?.name,
+  description: AllDataSlug?.value?.description,
+  email: AllDataSlug?.value?.email,
+  phone_number: AllDataSlug?.value?.email,
+  latitude: AllDataSlug?.value?.latitude,
+  longitude: AllDataSlug?.value?.longitude,
+  price: AllDataSlug?.value?.price,
+  rent_type: AllDataSlug?.value?.rent_type,
+  area_size: AllDataSlug?.value?.area_size,
+  location_id: AllDataSlug?.value?.location?.id,
+  type_id: AllDataSlug?.value?.type?.id,
+  level_type_id: AllDataSlug?.value?.level_type?.id,
+  is_saleable: AllDataSlug?.value?.is_saleable,
+  product_facilities: facilityArray.map((facility) => ({
+    facility_id: facility,
+  })),
+  product_privileges: privilegesArray.map((privilege) => ({
+    privilege: privilege,
+  })),
+  rating: AllDataSlug.value.rating,
 });
 
 async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const { error } = await useFetch(`/admins/products/${slug.value}`, {
-    method: "PUT",
-    body: JSON.stringify(productsData.value),
+  const { data, error } = await useFetch(`/admins/products/${slug.value}`, {
+    method: "put",
+    body: JSON.stringify(formData.value),
     ...requestOptions,
   });
 
@@ -403,17 +399,16 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Success Adding Data",
+      text: "Success Edit Data",
     });
-
-    ctx.resetForm();
+    router.push("/admin/onze-vacaturies");
   }
 
   loading.value = false;
 }
 
 useHead({
-  title: "Add Vacaturies",
+  title: "Edit Property",
 });
 
 definePageMeta({

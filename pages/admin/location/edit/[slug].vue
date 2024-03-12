@@ -1,13 +1,8 @@
 <template>
   <section>
-    <div class="flex gap-4">
-      <NuxtLink to="/admin/location" class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
-      <span class="text-2xl font-bold">Edit Location</span>
-    </div>
+    <CompAdminBackButton link="location" linkTitle="Edit Location" />
     <form @submit.prevent="onSubmit" class="max-h-[400px]">
-      <div class="grid grid-cols-1 mt-3 gap-3 min">
+      <div class="grid grid-cols-1 gap-3 min">
         <div class="flex flex-col">
           <label for="Name">Name</label>
           <input
@@ -15,35 +10,22 @@
             type="text"
             placeholder="Input Name"
             class="input input-bordered w-full"
-            v-model="name"
+            v-model="formData.name"
             autocomplete="on"
           />
         </div>
-        <div class="flex flex-col">
-          <label for="image">Image</label>
-          <input
-            id="image"
-            type="file"
-            name="image"
-            class="file-input file-input-bordered file-input-warning max-w-xs w-full"
-            accept="image/*"
-            v-on:change="handleImageChange"
-            autocomplete="on"
-          />
-          <div v-if="location.data.image" class="mt-5">
-            <span class="text-sm">File Uploaded:</span>
-            <div class="flex flex-col items-center max-w-[500px] max-h-[200px]">
-              <div class="flex justify-center mb-3">
-                <img :src="location.data.image" alt="image" />
-              </div>
-            </div>
-          </div>
-        </div>
+        <span>Image</span>
+        <BlogImageCrop
+          :loading="loading"
+          v-model="selectedImage"
+          :existingimage="locations?.data.image"
+        />
       </div>
       <div class="flex justify-end mt-5">
-        <button type="submit" :disabled="loading" class="btn btn-success">
-          Edit Location
-        </button>
+        <CompAdminButtonAddForm
+          buttonName="Edit Location"
+          :isLoading="loading"
+        />
       </div>
     </form>
   </section>
@@ -51,19 +33,13 @@
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
-const { axiosRequest } = useAxios();
-
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
+const router = useRouter();
 
-const handleImageChange = (event) => {
-  const files = event.target.files;
-  imageTest.value = files[0];
-};
-
-const { data: location, error } = await useFetch(
+const { data: locations, error } = await useFetch(
   `/admins/locations/${slug.value}`,
   {
     method: "get",
@@ -71,40 +47,71 @@ const { data: location, error } = await useFetch(
   }
 );
 
-const name = ref(location.value.data.name);
-const imageTest = ref(location.value.data.image);
+const fileInput = ref(null);
 
-const onSubmit = async (values, ctx) => {
+const selectImage = () => {
+  fileInput.value.click();
+};
+
+const imagePreview = ref();
+const selectedImage = ref();
+
+function saveToPreviewImage(event) {
+  imagePreview.value = URL.createObjectURL(event.target.files[0]);
+  selectedImage.value = event.target.files[0];
+}
+
+const onUpload = (image) => {
+  selectedImage.value = image;
+};
+
+const formData = ref({
+  name: locations.value.data.name,
+});
+
+async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const formData = new FormData();
-  formData.append("name", name.value);
-  formData.append("image", imageTest.value);
+  const object = { ...formData.value };
 
-  const { error } = await axiosRequest.post(
+  // console.log(object);
+  const formDataT = new FormData();
+
+  for (const item in object) {
+    // @ts-ignore
+    const objectItem = object[item];
+    formDataT.append(item, objectItem);
+  }
+
+  if (selectedImage.value) {
+    formDataT.append("image", selectedImage.value);
+  }
+
+  const { error, data } = await useFetch(
     `/admins/locations/${slug.value}?_method=PUT`,
-    formData,
     {
+      method: "POST",
+      body: formDataT,
       ...requestOptions,
     }
   );
 
-  if (error) {
+  if (error.value) {
     ctx.setErrors(transformErrors(error?.data));
     snackbar.add({
       type: "error",
-      text: error?.data?.message ?? "Something went wrong",
+      text: error.value?.data?.message ?? "Something went wrong",
     });
-  } else {
+  } else if (data.value) {
     snackbar.add({
       type: "success",
       text: "Edit Location Success",
     });
-    ctx.resetForm();
+    router.push("/admin/location");
   }
 
   loading.value = false;
-};
+}
 
 useHead({
   title: "Edit Location",

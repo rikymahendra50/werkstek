@@ -49,7 +49,7 @@
                   />
                 </div>
               </SwiperSlide>
-              <div class="h-full w-full bg-gradient-to-l inset-0 z-10 border-2">
+              <div class="h-full w-full bg-gradient-to-l inset-0 z-10">
                 <Swiper
                   :modules="[SwiperThumbs]"
                   @swiper="setThumbsSwiper"
@@ -84,27 +84,44 @@
           </h1>
           <div v-html="description" class="text-[12px] md:text-[16px]"></div>
         </div>
+        <!-- {{ data.data[0].name }} -->
         <p class="text-[#495057] text-base mt-10 mb-1 ml-2">
           De faciliteiten op de locatie
         </p>
         <div class="w-[95%] min-w-[70px] relative">
           <span class="absolute top-[-39px] text-primary text-4xl">____</span>
           <div class="overflow-x-auto sm:px-3">
-            <table class="table">
+            <table class="table md:mt-4">
               <tbody>
                 <tr
                   class="flex justify-between items-center"
-                  v-for="(item, index) in facility"
+                  v-for="(item, index) in data.data"
                   :key="item.id"
                 >
                   <td class="text-[13px] w-[40%] sm:w-[50%]">
-                    {{ item.facility.name }}
+                    {{ item.name }}
                   </td>
                   <td
                     class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
                   >
-                    <img src="/images/checkbox_checked.svg" alt="checkBox" />
-                    <span>{{ item.facility.name }}</span>
+                    <img
+                      :src="
+                        facilitySlugName[index] &&
+                        item.name === facilitySlugName[index].facility.name
+                          ? '/images/checkbox_checked.svg'
+                          : '/images/minus-square.png'
+                      "
+                      alt="checkBox"
+                    />
+                    <span>
+                      {{ item.name }}
+                      {{
+                        facilitySlugName[index] &&
+                        item.name === facilitySlugName[index].facility.name
+                          ? "Available"
+                          : "Unavailable"
+                      }}
+                    </span>
                   </td>
                 </tr>
               </tbody>
@@ -113,183 +130,47 @@
         </div>
       </div>
       <div class="col-span-4">
-        <ul class="rounded-[8px] bg-[#859C811A] py-4 px-2 md:px-5">
-          <li class="py-1 lg:py-2 flex" v-for="item in special">
-            <svg
-              width="24"
-              height="23"
-              viewBox="0 0 24 23"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clip-path="url(#clip0_0_3781)">
-                <path
-                  d="M12.2786 23C4.34698 22.4668 0.575981 14.2711 0.0558555 10.4064C-0.186019 9.40702 -0.139144 -0.387909 11.1086 0.0119072C22.356 0.411724 23.9014 8.14509 23.9816 9.00721C24.2415 11.8059 21.8359 21.7339 12.2786 23Z"
-                  class="fill-current text-primary"
-                />
-                <path
-                  d="M7.53746 11.021L10.8247 14.3813L16.4621 8.61868"
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-miterlimit="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_0_3781">
+        <div v-if="special.length > 0" class="mb-3">
+          <ul class="rounded-[8px] bg-[#859C811A] py-4 px-2 md:px-5">
+            <li class="py-1 lg:py-2 flex" v-for="item in special">
+              <svg
+                width="24"
+                height="23"
+                viewBox="0 0 24 23"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_0_3781)">
                   <path
-                    d="M0 10C0 4.47715 4.47715 0 10 0H14C19.5228 0 24 4.47715 24 10V13C24 18.5228 19.5228 23 14 23H10C4.47715 23 0 18.5228 0 13V10Z"
-                    fill="white"
+                    d="M12.2786 23C4.34698 22.4668 0.575981 14.2711 0.0558555 10.4064C-0.186019 9.40702 -0.139144 -0.387909 11.1086 0.0119072C22.356 0.411724 23.9014 8.14509 23.9816 9.00721C24.2415 11.8059 21.8359 21.7339 12.2786 23Z"
+                    class="fill-current text-primary"
                   />
-                </clipPath>
-              </defs>
-            </svg>
-            <span class="pl-2 text-[12px] md:text-[15px]">{{
-              item.privilege
-            }}</span>
-          </li>
-          <!-- <li class="py-1 lg:py-2 flex">
-            <svg
-              width="24"
-              height="23"
-              viewBox="0 0 24 23"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clip-path="url(#clip0_0_3781)">
-                <path
-                  d="M12.2786 23C4.34698 22.4668 0.575981 14.2711 0.0558555 10.4064C-0.186019 9.40702 -0.139144 -0.387909 11.1086 0.0119072C22.356 0.411724 23.9014 8.14509 23.9816 9.00721C24.2415 11.8059 21.8359 21.7339 12.2786 23Z"
-                  class="fill-current text-primary"
-                />
-                <path
-                  d="M7.53746 11.021L10.8247 14.3813L16.4621 8.61868"
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-miterlimit="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_0_3781">
                   <path
-                    d="M0 10C0 4.47715 4.47715 0 10 0H14C19.5228 0 24 4.47715 24 10V13C24 18.5228 19.5228 23 14 23H10C4.47715 23 0 18.5228 0 13V10Z"
-                    fill="white"
+                    d="M7.53746 11.021L10.8247 14.3813L16.4621 8.61868"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-miterlimit="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                   />
-                </clipPath>
-              </defs>
-            </svg>
-            <span class="pl-2 text-[12px] md:text-[15px]">Informeel</span>
-          </li>
-          <li class="py-1 lg:py-2 flex">
-            <svg
-              width="24"
-              height="23"
-              viewBox="0 0 24 23"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clip-path="url(#clip0_0_3781)">
-                <path
-                  d="M12.2786 23C4.34698 22.4668 0.575981 14.2711 0.0558555 10.4064C-0.186019 9.40702 -0.139144 -0.387909 11.1086 0.0119072C22.356 0.411724 23.9014 8.14509 23.9816 9.00721C24.2415 11.8059 21.8359 21.7339 12.2786 23Z"
-                  class="fill-current text-primary"
-                />
-                <path
-                  d="M7.53746 11.021L10.8247 14.3813L16.4621 8.61868"
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-miterlimit="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_0_3781">
-                  <path
-                    d="M0 10C0 4.47715 4.47715 0 10 0H14C19.5228 0 24 4.47715 24 10V13C24 18.5228 19.5228 23 14 23H10C4.47715 23 0 18.5228 0 13V10Z"
-                    fill="white"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
-            <span class="pl-2 text-[12px] md:text-[15px]"
-              >Flexwerken mogelijk</span
-            >
-          </li>
-          <li class="py-1 lg:py-2 flex">
-            <svg
-              width="24"
-              height="23"
-              viewBox="0 0 24 23"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clip-path="url(#clip0_0_3781)">
-                <path
-                  d="M12.2786 23C4.34698 22.4668 0.575981 14.2711 0.0558555 10.4064C-0.186019 9.40702 -0.139144 -0.387909 11.1086 0.0119072C22.356 0.411724 23.9014 8.14509 23.9816 9.00721C24.2415 11.8059 21.8359 21.7339 12.2786 23Z"
-                  class="fill-current text-primary"
-                />
-                <path
-                  d="M7.53746 11.021L10.8247 14.3813L16.4621 8.61868"
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-miterlimit="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_0_3781">
-                  <path
-                    d="M0 10C0 4.47715 4.47715 0 10 0H14C19.5228 0 24 4.47715 24 10V13C24 18.5228 19.5228 23 14 23H10C4.47715 23 0 18.5228 0 13V10Z"
-                    fill="white"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
-            <span class="pl-2 text-[12px] md:text-[15px]"
-              >Prachtige locatie aan de gracht</span
-            >
-          </li>
-          <li class="py-1 lg:py-2 flex">
-            <svg
-              width="24"
-              height="23"
-              viewBox="0 0 24 23"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clip-path="url(#clip0_0_3781)">
-                <path
-                  d="M12.2786 23C4.34698 22.4668 0.575981 14.2711 0.0558555 10.4064C-0.186019 9.40702 -0.139144 -0.387909 11.1086 0.0119072C22.356 0.411724 23.9014 8.14509 23.9816 9.00721C24.2415 11.8059 21.8359 21.7339 12.2786 23Z"
-                  class="fill-current text-primary"
-                />
-                <path
-                  d="M7.53746 11.021L10.8247 14.3813L16.4621 8.61868"
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-miterlimit="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_0_3781">
-                  <path
-                    d="M0 10C0 4.47715 4.47715 0 10 0H14C19.5228 0 24 4.47715 24 10V13C24 18.5228 19.5228 23 14 23H10C4.47715 23 0 18.5228 0 13V10Z"
-                    fill="white"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
-            <span class="pl-2 text-[12px] md:text-[15px]"
-              >Internationale groep mensen lore</span
-            >
-          </li> -->
-        </ul>
+                </g>
+                <defs>
+                  <clipPath id="clip0_0_3781">
+                    <path
+                      d="M0 10C0 4.47715 4.47715 0 10 0H14C19.5228 0 24 4.47715 24 10V13C24 18.5228 19.5228 23 14 23H10C4.47715 23 0 18.5228 0 13V10Z"
+                      fill="white"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+              <span class="pl-2 text-[12px] md:text-[15px]">{{
+                item.privilege
+              }}</span>
+            </li>
+          </ul>
+        </div>
         <div class="ml-1 md:ml-3">
-          <p class="text-[18px] lg:text-[24px] text-[#363636] my-4">
+          <p class="text-[18px] lg:text-[24px] text-[#363636] mb-4">
             Adresgegevens
           </p>
           <ul class="flex flex-col gap-1">
@@ -323,7 +204,7 @@
         >
           <NuxtLink
             to="/voor-verhuurders"
-            class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px] mb-3"
+            class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px] mb-3 hover:bg-secondary transition"
           >
             <p class="text-[12px] sm:text-lg text-center text-white font-thin">
               Aanvragen
@@ -331,7 +212,7 @@
           </NuxtLink>
           <NuxtLink
             to="/contact"
-            class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px]"
+            class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px] hover:bg-secondary transition"
           >
             <p class="text-[12px] sm:text-lg text-center text-white font-thin">
               Contact Opnemen
@@ -345,29 +226,19 @@
 </template>
 
 <script setup>
+const { requestOptions } = useRequestOptions();
+
 const thumbsSwiper = ref(null);
 const setThumbsSwiper = (swiper) => {
   thumbsSwiper.value = swiper;
 };
 
-const images = ref([
-  {
-    id: 1,
-    image: "/images/65b7628bc99a6.jpg",
-  },
-  {
-    id: 2,
-    image: "/images/img-slider-home-2.png",
-  },
-  {
-    id: 3,
-    image: "/images/65b7628bc99a6.jpg",
-  },
-  {
-    id: 4,
-    image: "/images/65b7628bc99a6.jpg",
-  },
-]);
+const { data, error } = await useFetch("/facilities", {
+  method: "get",
+  ...requestOptions,
+});
+
+const facilitySlugName = props.facility;
 
 const props = defineProps({
   title: {

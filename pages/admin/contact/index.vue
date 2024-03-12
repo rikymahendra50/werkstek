@@ -8,7 +8,10 @@
           <div class="text-xl md:text-3xl font-bold">Contact</div>
         </div>
       </div>
-      <div>
+      <div class="space-y-4">
+        <!-- <div class="max-w-sm">
+          <Search v-model="search" placeholder="search" />
+        </div> -->
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
           <table class="table table-xs md:table-md w-full rounded-t-xl">
             <thead class="h-12">
@@ -24,7 +27,7 @@
             <tbody>
               <tr
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
-                v-for="(item, index) in contacts?.data"
+                v-for="(item, index) in contact?.data"
               >
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.first_name }}
@@ -45,10 +48,7 @@
                       type="button"
                       class="btn btn-sm normal-case btn-ghost btn-square"
                     >
-                      <icon
-                        name="i-heroicons-chat-bubble-oval-left-ellipsis"
-                        class="mr-1"
-                      />
+                      <icon name="i-heroicons-chat-bubble-oval-left-ellipsis" />
                     </button>
                   </NuxtLink>
                   <span class="text-gray-500 text-sm font-normal !py-1.5">
@@ -81,8 +81,11 @@
                       </div>
                     </NuxtLink>
                   </span>
-                  <div class="cursor-pointer m-2" @click="showModal(index)">
-                    <icon name="i-heroicons-trash" class="mr-1" />
+                  <div
+                    class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
+                    @click="showModal(index)"
+                  >
+                    <icon name="i-heroicons-trash" />
                   </div>
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">
@@ -111,15 +114,74 @@
       </div>
     </div>
   </main>
+  <Pagination
+    v-model="page"
+    :total="contact?.meta?.total"
+    :per-page="contact?.meta?.per_page"
+    class="flex justify-center"
+  />
 </template>
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const { data: contacts, error } = await useFetch(`/admins/contacts`, {
-  method: "get",
-  ...requestOptions,
+import { useTimeoutFn } from "@vueuse/core";
+
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+const search = ref("");
+
+const {
+  data: contact,
+  error,
+  refresh,
+} = await useAsyncData("contact", () =>
+  $fetch(`/admins/contacts?page=${page.value}&filter[search]=${search.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(
+  () => page.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      start();
+    }
+  }
+);
+
+watch(
+  () => search.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+onMounted(() => {
+  stop();
+  if (route.query.page) {
+    page.value = route.query.page ?? 1;
+  }
+
+  if (route.query.search) {
+    search.value = route.query?.search ?? "";
+  }
 });
+
+function replaceWindow() {
+  router.replace(`/admin/blog?page=${page.value}&search=${search.value}`);
+  refresh();
+}
 
 const showModal = (index) => {
   const modalId = `my_modal_${index}`;

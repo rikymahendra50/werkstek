@@ -6,7 +6,7 @@
   >
     <div
       id="map"
-      :class="`relative aspect-video lg:h-[219px] z-[-999] mt-5`"
+      :class="`relative aspect-video lg:h-[219px] z-[-999] mt-5 w-full`"
     ></div>
   </section>
 </template>
@@ -14,7 +14,6 @@
 <script setup>
 const props = defineProps({
   AllData: {},
-  filterData: {},
 });
 
 let googleMapsScriptLoaded = false;
@@ -27,6 +26,8 @@ const currentInfoWindow = ref(null);
 
 const locationsTest = ref(props.AllData);
 const locations = locationsTest.value.data;
+
+// console.log(locations);
 
 onMounted(() => {
   if (!googleMapsScriptLoaded) {
@@ -54,10 +55,19 @@ const loadGoogleMapsScript = () => {
   }
 };
 
+const dataProduct = props.AllData;
+let latitudeFilter = ref([]);
+let longitudeFilter = ref([]);
+
+dataProduct.map((item) => {
+  latitudeFilter?.value?.push(item.latitude);
+  longitudeFilter?.value?.push(item.longitude);
+});
+
 const setupMap = () => {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -8.653840910873269, lng: 115.21785198506426 },
-    zoom: 4,
+    zoom: 1,
     fullscreenControl: false,
     zoomControl: false,
     keyboardShortcuts: false,
@@ -73,7 +83,7 @@ const setupMap = () => {
 
   const bounds = new google.maps.LatLngBounds();
 
-  locations.forEach((location) => {
+  dataProduct.forEach((location) => {
     const lat = parseFloat(location.latitude);
     const lng = parseFloat(location.longitude);
 

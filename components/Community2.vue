@@ -2,7 +2,7 @@
   <section class="container-custom">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-10">
       <BlogItem
-        :link="item.slug"
+        :link="`/werkstek-community/${item.slug}`"
         :image="item.image"
         :title="item.title"
         :description="item.meta"
@@ -15,7 +15,7 @@
 
 <script setup>
 const { requestOptions } = useRequestOptions();
-const { data, refresh } = await useFetch(`/articles`, {
+const { data, refresh } = await useFetch(`/community-blogs`, {
   method: "get",
   ...requestOptions,
 });

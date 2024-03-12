@@ -1,21 +1,11 @@
 <template>
   <section class="overflow-auto max-h-[500px]">
-    <div class="flex gap-4">
-      <NuxtLink to="/admin/community" class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
-      <span class="text-2xl font-bold">Add Community</span>
-    </div>
+    <CompAdminBackButton link="community" linkTitle="Community Blog" />
     <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="flex flex-col mt-10 overflow-auto p-3">
-        <label for="image" class="mb-1">Image</label>
-        <input
-          id="image"
-          name="image"
-          type="file"
-          class="file-input file-input-bordered file-input-accent w-full max-w-xs mb-5"
-          @change="handleImageChange"
-        />
+      <div class="grid mt-10 p-3 gap-4">
+        <div>
+          <BlogImageCrop :loading="loading" v-model="selectedImage" />
+        </div>
         <label for="Title">Title</label>
         <VeeField
           id="Title"
@@ -24,19 +14,12 @@
           placeholder="Input Title"
           class="input input-bordered w-full"
           v-model="formData.title"
-          autocomplete="on"
+          autocomplete="off"
         />
         <div class="flex flex-col mt-5">
           <label for="body">Body</label>
-          <VeeField
-            id="body"
-            as="textarea"
-            name="body"
-            placeholder="Input Body"
-            class="textarea textarea-bordered w-full"
-            v-model="formData.body"
-            autocomplete="on"
-          />
+          <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
+          <VeeErrorMessage name="body" />
         </div>
         <div class="flex flex-col mt-5">
           <label for="Meta">Meta</label>
@@ -47,14 +30,15 @@
             placeholder="Input Meta"
             class="textarea textarea-bordered w-full"
             v-model="formData.meta"
-            autocomplete="on"
+            autocomplete="off"
           />
         </div>
       </div>
       <div class="flex justify-end mt-5">
-        <button type="submit" :disabled="loading" class="btn btn-success">
-          Add Community
-        </button>
+        <CompAdminButtonAddForm
+          buttonName="Add Community"
+          :isLoading="loading"
+        />
       </div>
     </VeeForm>
   </section>
@@ -64,63 +48,73 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
+const router = useRouter();
 
-const imageTest = ref();
+const fileInput = ref(null);
 
-const handleImageChange = (event) => {
-  const files = event.target.files;
-  if (files.length > 0) {
-    imageTest.value = files[0];
-  }
+const selectImage = () => {
+  fileInput.value.click();
 };
-
-// const category = categoryBlog.value.data.map((item) => item.name);
 
 const formData = ref({
   title: undefined,
   body: undefined,
-  category_id: undefined,
   meta: undefined,
 });
+
+const imagePreview = ref();
+const selectedImage = ref();
+
+function saveToPreviewImage(event) {
+  imagePreview.value = URL.createObjectURL(event.target.files[0]);
+  selectedImage.value = event.target.files[0];
+}
+
+const onUpload = (image) => {
+  selectedImage.value = image;
+};
 
 async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const formDataToSend = new FormData();
+  const object = { ...formData.value };
 
-  formDataToSend.append("image", imageTest.value);
-  formDataToSend.append("title", formData.value.title);
-  formDataToSend.append("body", formData.value.body);
-  formDataToSend.append("category_id", formData.value.category_id);
-  formDataToSend.append("meta", formData.value.meta);
+  const formDataT = new FormData();
 
-  console.log(formDataToSend);
+  for (const item in object) {
+    // @ts-ignore
+    const objectItem = object[item];
+    formDataT.append(item, objectItem);
+  }
+  if (selectedImage.value) {
+    formDataT.append("image", selectedImage.value);
+  }
 
-  const { error } = await useFetch(`/admins/community-blogs`, {
+  const { error, data } = await useFetch(`/admins/community-blogs`, {
     method: "POST",
-    body: formDataToSend,
+    body: formDataT,
     ...requestOptions,
   });
 
   if (error.value) {
-    ctx.setErrors(transformErrors(error.value?.data));
+    ctx.setErrors(transformErrors(error?.data));
     snackbar.add({
       type: "error",
       text: error.value?.data?.message ?? "Something went wrong",
     });
-  } else {
+  } else if (data.value) {
     snackbar.add({
       type: "success",
       text: "Add Community Success",
     });
-
-    ctx.resetForm();
+    router.push("/admin/community");
   }
+
   loading.value = false;
 }
 
 useHead({
-  title: "Community",
+  title: "Add Community",
 });
 
 definePageMeta({

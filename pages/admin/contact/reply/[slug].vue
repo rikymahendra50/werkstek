@@ -14,9 +14,7 @@
         ></textarea>
       </div>
       <div class="flex justify-end mt-5">
-        <button type="submit" :disabled="loading" class="btn btn-success">
-          Reply
-        </button>
+        <CompAdminButtonAddForm buttonName="Reply" :isLoading="loading" />
       </div>
     </VeeForm>
   </section>

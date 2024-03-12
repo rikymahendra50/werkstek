@@ -1,3 +1,17 @@
+<template>
+  <input
+    :name="name"
+    :id="name"
+    :type="type"
+    :value="inputValue"
+    @input="handleChange"
+    @blur="handleBlur"
+    :class="className"
+    v-bind="$attrs"
+  />
+  <VeeErrorMessage :name="name" class="form-error-message" />
+</template>
+
 <script setup lang="ts">
 import { useField } from "vee-validate";
 defineOptions({
@@ -43,17 +57,3 @@ const className = computed(() => {
   return arr.join(" ");
 });
 </script>
-
-<template>
-  <input
-    :name="name"
-    :id="name"
-    :type="type"
-    :value="inputValue"
-    @input="handleChange"
-    @blur="handleBlur"
-    :class="className"
-    v-bind="$attrs"
-  />
-  <VeeErrorMessage :name="name" class="form-error-message" />
-</template>

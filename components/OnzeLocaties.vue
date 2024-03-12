@@ -1,15 +1,11 @@
 <template>
   <section class="py-20">
-    <!-- <pre>
-      {{ filteredData.data[0].longitude }}
-    </pre> -->
-
     <TitleHeader
       title="Onze locaties"
       secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-    <div class="md:grid md:grid-cols-12 container-custom gap-2">
+    <div class="md:grid md:grid-cols-12 container-custom gap-4">
       <div class="md:col-span-4">
         <div class="mt-5">
           <button
@@ -37,9 +33,9 @@
                 class="text-sm flex items-center p-5"
                 v-for="(item, index) in city"
                 :key="index"
-                :value="item"
+                :value="item.id"
               >
-                {{ item }}
+                {{ item.name }}
               </option>
             </select>
           </div>
@@ -101,67 +97,61 @@
                   <span class="absolute top-3 right-14">m<sup>2</sup></span>
                 </div>
               </div>
-              <p class="my-3">-</p>
-              <div class="flex justify-between gap-2 text-sm lg:text-base">
-                <template
-                  v-for="(column, columnIndex) in splitColumns(functieCheckbox)"
-                  :key="columnIndex"
+              <p class="text-base mt-3 opacity-50 pb-3">Facility</p>
+              <fieldset id="facility" class="grid grid-cols-2 gap-2">
+                <div
+                  class="flex items-center gap-2 cursor-pointer"
+                  v-for="item in functieCheckbox"
                 >
-                  <div class="flex flex-col">
-                    <fieldset id="functie" class="flex flex-col gap-2">
-                      <div
-                        v-for="item in column"
-                        :key="item.id"
-                        class="flex justify-start items-center"
-                      >
-                        <input
-                          :id="'functie_' + item.id"
-                          :value="item.name"
-                          :name="'functie_' + item.name"
-                          type="checkbox"
-                          class="mr-2 pt-[0.7px]"
-                          :checked="isSelectedFuncti(item.id)"
-                          @change="handlefunctieCheckbox(item.id)"
-                        />
-                        <label
-                          :for="'functie_' + item.id"
-                          class="cursor-pointer"
-                          >{{ item.name }}</label
-                        >
-                      </div>
-                    </fieldset>
-                  </div>
-                </template>
-              </div>
-              <Map :AllData="data" :filterData="filteredData.data" />
-              <div class="flex justify-center md:mt-4">
+                  <input
+                    :id="`facility-${item.id}`"
+                    :value="item.name"
+                    type="checkbox"
+                    @change="handlefunctieCheckbox(item.id)"
+                    name="facility"
+                    :checked="isSelectedFuncti(item.id)"
+                  />
+                  <label :for="`facility-${item.id}`" class="cursor-pointer">
+                    {{ item.name }}
+                  </label>
+                </div>
+              </fieldset>
+              <Map :AllData="dataProduct.data" />
+              <!--  <div class="flex justify-center md:mt-4">
                 <button
                   @click="showAllData"
                   class="btn btn-outline btn-orange btn-sm mt-3"
                 >
                   Show All Data
                 </button>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
       </div>
-      <div
-        class="md:col-span-8 py-5 overflow-auto max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
-      >
-        <eachLocaties
-          v-for="(item, index) in filteredData.data"
-          :key="item.id"
-          :name="item.location.name"
-          :type="item.level_type"
-          :latitude="item.latitude"
-          :longitude="item.longitude"
-          :link="`/onze-locaties/${item.slug}`"
-          :price="item.price"
-          :image="
-            item.images.find((image, imageIndex) => imageIndex === index)?.image
-          "
-          :rating="item.rating"
+      <div class="md:col-span-8 py-5 overflow-auto">
+        <div
+          class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
+        >
+          <eachLocaties
+            v-if="dataProduct.data"
+            v-for="(item, index) in dataProduct.data"
+            :key="item?.id"
+            :name="item?.location?.name"
+            :type="item?.level_type?.name"
+            :latitude="item?.latitude"
+            :longitude="item?.longitude"
+            :link="`/onze-locaties/${item.slug}`"
+            :price="item?.price"
+            :image="item?.images[0]?.image"
+            :rating="item?.rating"
+          />
+        </div>
+        <Pagination
+          v-model="page"
+          :total="dataProduct?.meta?.total"
+          :per-page="dataProduct?.meta?.per_page"
+          class="flex justify-center mt-10"
         />
       </div>
     </div>
@@ -171,25 +161,76 @@
 <script setup>
 import axios from "axios";
 const { axiosRequest } = useAxios();
+
+const { loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const { data, error } = await useFetch(`/products`, {
+import { useTimeoutFn } from "@vueuse/core";
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+const search = ref("");
+
+const { data: dataForFilter } = await useFetch("/products", {
   method: "get",
   ...requestOptions,
 });
+
+const { data: type } = await useFetch("/types", {
+  method: "get",
+  ...requestOptions,
+});
+
+const { data: facility } = await useFetch("/facilities", {
+  method: "get",
+  ...requestOptions,
+});
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(
+  () => page.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      start();
+    }
+  }
+);
+
+watch(
+  () => search.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+const {
+  data: dataProduct,
+  error,
+  refresh,
+} = await useAsyncData("dataProduct", () =>
+  $fetch(`/products?page=${page.value}&filter[search]=${search.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+function replaceWindow() {
+  router.replace(`/onze-locaties?page=${page.value}&search=${search.value}`);
+  refresh();
+}
 
 const showFilter = ref();
 const toggleDetail = () => {
   showFilter.value = !showFilter.value;
 };
 
-function splitColumns(arr) {
-  const midpoint = Math.ceil(arr.length / 2);
-  return [arr.slice(0, midpoint), arr.slice(midpoint)];
-}
-
 onMounted(() => {
-  showAllData();
-  selectedCity.value = "Locatie";
   if (window.innerWidth > 768) {
     showFilter.value = true;
   } else {
@@ -208,64 +249,40 @@ onMounted(() => {
   );
 });
 
-// const name = data.value.data.map((item) => item.location.name);
+function splitColumns(arr) {
+  const midpoint = Math.ceil(arr.length / 2);
+  return [arr.slice(0, midpoint), arr.slice(midpoint)];
+}
 
-// const city = ref(name);
+const arrayLocation = dataProduct?.value?.data?.map((item) => item.location);
 
-const name = data.value.data.map((item) => item.name);
+let city = ref([]);
+let citySet = {};
 
-const city = ref(name);
-
-const soortLocatiesRadio = ref([
-  {
-    id: 1,
-    name: "Alles",
-  },
-  {
-    id: 2,
-    name: "Stage Plaats",
-  },
-  {
-    id: 3,
-    name: "Functie 1",
-  },
-  {
-    id: 4,
-    name: "Functie 2",
-  },
-]);
-
-const { data: facility } = await useFetch("/facilities", {
-  method: "get",
-  ...requestOptions,
+arrayLocation.forEach((element) => {
+  const cityName = element.name;
+  const cityId = element.id;
+  if (!citySet[cityName]) {
+    // console.log(cityName, cityId);
+    citySet[cityName] = cityId;
+    city.value.push({ name: cityName, id: cityId });
+  }
 });
 
+const soortLocatiesRadio = type.value.data;
 const functieCheckbox = facility.value.data;
-
-const numericPrices = data.value.data.map((item) => parseFloat(item.price));
-
+const numericPrices = dataForFilter.value.data.map((item) =>
+  parseFloat(item.price)
+);
 const highestPrice = Math.max(...numericPrices);
 
-const selectedCity = ref("");
-const selectedSoortLocatie = ref([]);
-const selectedFunctie = ref([]);
-const selectedMinPrice = ref();
-const selectedMaxPrice = ref();
-const selectedMeterMin = ref();
-const selectedMeterMax = ref();
-const filteredData = ref([]);
+function isSelectedSoort(id) {
+  return selectedSoortLocatie.value.includes(id);
+}
 
-const filteredDataComputed = computed(() => filteredData.value);
-
-const showAllData = () => {
-  selectedCity.value = "Locatie";
-  selectedSoortLocatie.value = "";
-  selectedFunctie.value = [];
-  selectedMeterMin.value = null;
-  selectedMeterMax.value = null;
-  selectedMinPrice.value = null;
-  selectedMaxPrice.value = null;
-};
+function isSelectedFuncti(id) {
+  return selectedFunctie.value.includes(id);
+}
 
 function handlePriceChange(priceData) {
   setTimeout(() => {
@@ -274,9 +291,6 @@ function handlePriceChange(priceData) {
   }, 900);
 }
 
-function isSelectedSoort(id) {
-  return selectedSoortLocatie.value.includes(id);
-}
 function handleSoortLocatieChange(id) {
   if (selectedSoortLocatie.value.includes(id)) {
     selectedSoortLocatie.value = selectedSoortLocatie.value.filter(
@@ -287,9 +301,6 @@ function handleSoortLocatieChange(id) {
   }
 }
 
-function isSelectedFuncti(id) {
-  return selectedFunctie.value.includes(id);
-}
 function handlefunctieCheckbox(id) {
   if (selectedFunctie.value.includes(id)) {
     selectedFunctie.value = selectedFunctie.value.filter((item) => item !== id);
@@ -298,36 +309,34 @@ function handlefunctieCheckbox(id) {
   }
 }
 
-watch(
-  [
-    selectedCity,
-    selectedSoortLocatie,
-    selectedFunctie,
-    selectedMeterMin,
-    selectedMeterMax,
-    selectedMinPrice,
-    selectedMaxPrice,
-  ],
-  async () => {
-    await new Promise((resolve) => setTimeout(resolve, 900));
-    try {
-      let params = {};
+const selectedCity = ref();
+const selectedSoortLocatie = ref([]);
+const selectedFunctie = ref([]);
+const selectedMinPrice = ref();
+const selectedMaxPrice = ref();
+const selectedMeterMin = ref();
+const selectedMeterMax = ref();
 
-      params["filter[search]"] = selectedCity.value;
-      params["filter[type_id]"] = selectedSoortLocatie.value;
-      params["filter[productFacility.facility_id]"] = selectedFunctie.value;
-      params["filter[min_price]"] = selectedMinPrice.value;
-      params["filter[max_price]"] = selectedMaxPrice.value;
-      params["filter[min_area]"] = selectedMeterMin.value;
-      params["filter[max_area]"] = selectedMeterMax.value;
+// selectedCity.value = "Locatie";
 
-      const response = await axiosRequest.get("/products", { params: params });
-      filteredData.value = response.data;
-    } catch (error) {
-      console.error("Failed to retrieve data from API:", error);
-    }
-  }
-);
+watchEffect(() => {
+  fetchData();
+});
+
+async function fetchData() {
+  const response = await axiosRequest.get(`/products`, {
+    params: {
+      "filter[min_price]": selectedMinPrice.value,
+      "filter[max_price]": selectedMaxPrice.value,
+      "filter[min_area]": selectedMeterMin.value,
+      "filter[max_area]": selectedMeterMax.value,
+      "filter[type_id]": selectedSoortLocatie.value,
+      "filter[location_id]": selectedCity.value,
+      "filter[productFacility.facility_id]": selectedFunctie.value,
+    },
+  });
+  dataProduct.value = response.data;
+}
 </script>
 
 <style scoped>

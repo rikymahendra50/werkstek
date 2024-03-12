@@ -65,13 +65,6 @@ function updateToParent() {
   emit("next");
 }
 
-// onMounted(() => {
-//   const savedEmail = localStorage.getItem("userEmail");
-//   if (savedEmail) {
-//     stateForm.value.email = savedEmail;
-//   }
-// });
-
 function resentEmail() {
   showPinEmailExpired.value = false;
   secondTime.value = 60;
@@ -87,19 +80,6 @@ function resentEmail() {
 
 async function onSubmit() {
   loading.value = true;
-  // message.value = "hallo";
-  // localStorage.setItem("userPin", stateForm.value.otp);
-  // console.log(stateForm.value);
-  // console.log(stateForm.value.otp);
-  // alertType.value = "success";
-
-  // await useFetch(
-  //   "/admins/email-verification/zfwTTw3aw0h0zuf6Cex3edfVhSpbvoh1dvqmV8PQ0FEQedCart9qrOCrUbzxGKyyfgMiWvDctYX21nkBeq1ybPx6iV9oGcu6QAbrC98HH46SqkKjZajeFF5L2HwTEPbzwWKk4H1KTPFEnAtkcWtf974HUCiUHRvxkbbpBj4eCJFWdJxkyluVfRtQYHOiNBAGT3t2Y1EZiqh75Oh7tH0Eue5mJL8dOamRlJYZv6VgSmo7V3n5lUU35WAHVJQ6KDv",
-  //   {
-  //     method: "POST",
-  //     ...requestOptions,
-  //   }
-  // );
 
   const { error } = await useFetch("/admins/forget-password/verify-pin", {
     method: "POST",
@@ -120,9 +100,9 @@ async function onSubmit() {
       type: "success",
       text: "Thank you for your message. We will get back to you as soon as possible.",
     });
+    updateToParent();
   }
 
-  updateToParent();
   loading.value = false;
 }
 
