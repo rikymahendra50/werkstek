@@ -123,7 +123,7 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Thank for input your email. We will get back to you as soon as possible.",
+      text: "Thanks for input your email. We will get back to you as soon as possible.",
     });
 
     dataForm.value = { ...initialValues };

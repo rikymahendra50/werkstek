@@ -5,7 +5,7 @@
       secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-    <div class="md:grid md:grid-cols-12 container-custom gap-2">
+    <div class="md:grid md:grid-cols-12 container-custom gap-4">
       <div class="md:col-span-4">
         <div class="mt-5">
           <button
