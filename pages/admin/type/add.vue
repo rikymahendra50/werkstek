@@ -1,12 +1,8 @@
 <template>
   <section>
     <CompAdminBackButton link="type" linkTitle="Add Type" />
-    <div class="flex justify-center">
-      <VeeForm
-        @submit="onSubmit"
-        v-slot="{ errors }"
-        class="min-w-[400px] lg:min-w-[800px] shadow-md p-5"
-      >
+    <div class="grid grid-cols-2 px-4">
+      <VeeForm @submit="onSubmit" v-slot="{ errors }">
         <div class="grid grid-cols-1 gap-3">
           <div class="flex flex-col">
             <label for="Name" class="mb-3">Type Name</label>
@@ -34,6 +30,7 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
+const router = useRouter();
 
 const formData = ref({
   name: undefined,
@@ -60,7 +57,7 @@ async function onSubmit(values, ctx) {
       text: "Add Type Success",
     });
 
-    ctx.resetForm();
+    router.push("/admin/type");
   }
   loading.value = false;
 }

@@ -2,8 +2,8 @@
   <section>
     <CompAdminBackButton link="location" linkTitle="Edit Location" />
     <form @submit.prevent="onSubmit" class="max-h-[400px]">
-      <div class="grid grid-cols-1 gap-3 min">
-        <div class="flex flex-col">
+      <div class="grid grid-cols-2 gap-3">
+        <div class="flex flex-col gap-2">
           <label for="Name">Name</label>
           <input
             id="Name"
@@ -13,19 +13,19 @@
             v-model="formData.name"
             autocomplete="on"
           />
+          <span>Image</span>
+          <BlogImageCrop
+            :loading="loading"
+            v-model="selectedImage"
+            :existingimage="locations?.data.image"
+          />
+          <div class="flex justify-end mt-5">
+            <CompAdminButtonAddForm
+              buttonName="Edit Location"
+              :isLoading="loading"
+            />
+          </div>
         </div>
-        <span>Image</span>
-        <BlogImageCrop
-          :loading="loading"
-          v-model="selectedImage"
-          :existingimage="locations?.data.image"
-        />
-      </div>
-      <div class="flex justify-end mt-5">
-        <CompAdminButtonAddForm
-          buttonName="Edit Location"
-          :isLoading="loading"
-        />
       </div>
     </form>
   </section>

@@ -36,15 +36,15 @@
         </div>
       </div>
       <div class="grid col-span-4 md:col-span-3 ml-5 items-center">
-        <span class="text-[14px] sm:text-lg font-semibold">{{ name }}</span>
+        <span class="text-[12px] sm:text-lg font-semibold">{{ name }}</span>
         <span class="text-sm">Adres</span>
         <div class="flex justify-between">
-          <span class="text-[12px] sm:text-base font-bold"> Opervlakte </span>
-          <span class="text-[12px] sm:text-base">+{{ phoneNumber }}</span>
+          <span class="text-[10px] sm:text-base font-bold"> Opervlakte </span>
+          <span class="text-[10px] sm:text-base">+{{ phoneNumber }}</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-[12px] sm:text-base">€ {{ price }}</span>
-          <span class="text-[12px] sm:text-base">{{ email }}</span>
+          <span class="text-[10px] sm:text-base">€ {{ price }}</span>
+          <span class="text-[10px] sm:text-base">{{ email }}</span>
         </div>
         <div class="flex justify-end w-full">
           <div class="flex mt-2 sm:mt-0">

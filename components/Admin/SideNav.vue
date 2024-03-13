@@ -25,7 +25,7 @@
           <NuxtLink
             to="/admin"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25':
+              'bg-transparent text-black hover:bg-gray-100':
                 !isRouteActive('/admin'),
               'bg-black text-black hover:bg-opacity-30':
                 isRouteActive('/admin'),
@@ -51,7 +51,7 @@
           <NuxtLink
             to="/admin/admin-list"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25':
+              'bg-transparent text-black hover:bg-gray-100':
                 !isRouteActive('/admin/admin-list'),
               'bg-black text-black hover:bg-opacity-30':
                 isRouteActive('/admin/admin-list'),
@@ -76,7 +76,7 @@
           <NuxtLink
             to="/admin/onze-vacaturies"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25': !isRouteActive(
+              'bg-transparent text-black hover:bg-gray-100': !isRouteActive(
                 '/admin/onze-vacaturies'
               ),
               'bg-black text-black hover:bg-opacity-30': isRouteActive(
@@ -104,7 +104,7 @@
           <!-- <NuxtLink
             to="/admin/onze-locaties"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25': !isRouteActive(
+              'bg-transparent text-black hover:bg-gray-100': !isRouteActive(
                 '/admin/onze-locaties'
               ),
               'bg-black text-black hover:bg-opacity-30': isRouteActive(
@@ -139,7 +139,7 @@
           <NuxtLink
             to="/admin/location"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25':
+              'bg-transparent text-black hover:bg-gray-100':
                 !isRouteActive('/admin/location'),
               'bg-black text-black hover:bg-opacity-30':
                 isRouteActive('/admin/location'),
@@ -172,7 +172,7 @@
           <NuxtLink
             to="/admin/level-type"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25':
+              'bg-transparent text-black hover:bg-gray-100':
                 !isRouteActive('/admin/level-type'),
               'bg-black text-black hover:bg-opacity-30':
                 isRouteActive('/admin/level-type'),
@@ -200,7 +200,7 @@
             to="/admin/contact"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25':
+              'bg-transparent text-black hover:bg-gray-100':
                 !isRouteActive('/admin/contact'),
               'bg-black text-black hover:bg-opacity-30':
                 isRouteActive('/admin/contact'),
@@ -234,7 +234,7 @@
             to="/admin/category"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25':
+              'bg-transparent text-black hover:bg-gray-100':
                 !isRouteActive('/admin/category'),
               'bg-black text-black hover:bg-opacity-30':
                 isRouteActive('/admin/category'),
@@ -261,7 +261,7 @@
             to="/admin/type"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25':
+              'bg-transparent text-black hover:bg-gray-100':
                 !isRouteActive('/admin/type'),
               'bg-black text-black hover:bg-opacity-30':
                 isRouteActive('/admin/type'),
@@ -288,7 +288,7 @@
             to="/admin/facility"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25':
+              'bg-transparent text-black hover:bg-gray-100':
                 !isRouteActive('/admin/facility'),
               'bg-black text-black hover:bg-opacity-30':
                 isRouteActive('/admin/facility'),
@@ -314,7 +314,7 @@
             to="/admin/blog"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25':
+              'bg-transparent text-black hover:bg-gray-100':
                 !isRouteActive('/admin/blog'),
               'bg-black text-black hover:bg-opacity-30':
                 isRouteActive('/admin/blog'),
@@ -341,7 +341,7 @@
             to="/admin/blog-category"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25': !isRouteActive(
+              'bg-transparent text-black hover:bg-gray-100': !isRouteActive(
                 '/admin/blog-category'
               ),
               'bg-black text-black hover:bg-opacity-30': isRouteActive(
@@ -370,7 +370,7 @@
             to="/admin/community"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
             :class="{
-              'bg-transparent text-black hover:text-opacity-25':
+              'bg-transparent text-black hover:bg-gray-100':
                 !isRouteActive('/admin/community'),
               'bg-black text-black hover:bg-opacity-30':
                 isRouteActive('/admin/community'),

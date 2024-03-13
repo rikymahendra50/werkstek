@@ -1,30 +1,26 @@
 <template>
   <div class="overflow-y-auto max-h-[70%]">
     <CompAdminBackButton link="level-type" linkTitle="Add Level Type" />
-    <VeeForm @submit="onSubmit">
-      <table class="table">
-        <tbody>
-          <tr>
-            <td><label for="name">Name</label></td>
-            <td>
-              <input
-                id="name"
-                type="text"
-                placeholder="Type here"
-                v-model="name"
-                class="input input-bordered w-full max-w-xs"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="flex justify-end">
-        <CompAdminButtonAddForm
-          buttonName="Add Level Type"
-          :isLoading="loading"
+    <div class="grid grid-cols-2 px-3">
+      <VeeForm @submit="onSubmit">
+        <label for="Name">Level Type</label>
+        <VeeField
+          id="Name"
+          type="text"
+          name="Name"
+          placeholder="Input Level Type"
+          class="input input-bordered w-full"
+          v-model="name"
+          autocomplete="off"
         />
-      </div>
-    </VeeForm>
+        <div class="flex justify-end mt-5">
+          <CompAdminButtonAddForm
+            buttonName="Add Level Type"
+            :isLoading="loading"
+          />
+        </div>
+      </VeeForm>
+    </div>
   </div>
   <!-- <NuxtLink to="/admin/level-type">
     <button class="btn btn-sm btn-outline btn-warning">Back</button>
@@ -35,6 +31,7 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
+const router = useRouter();
 
 const name = ref();
 
@@ -58,8 +55,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Success Add Level Type",
     });
-
-    ctx.resetForm();
+    router.push("/admin/level-type");
   }
 
   loading.value = false;

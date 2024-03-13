@@ -4,10 +4,10 @@
       <div
         class="overflow-hidden p-1.5 transition-shadow hover:shadow-md duration-500 rounded-md"
       >
-        <div class="h-[250px] w-full">
+        <div class="min-h-[150px] sm:min-h-[250px]">
           <img
             :src="image"
-            class="object-cover w-[400px] h-[250px]"
+            class="object-cover h-[150px] sm:h-[250px] w-full"
             alt="image-page8-1"
           />
         </div>

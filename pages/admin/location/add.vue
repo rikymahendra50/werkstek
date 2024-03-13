@@ -2,7 +2,7 @@
   <section>
     <CompAdminBackButton link="location" linkTitle="Add Location" />
     <VeeForm @submit="onSubmit">
-      <div class="grid grid-cols-1 gap-3">
+      <div class="grid grid-cols-2 gap-3">
         <div class="flex flex-col gap-2">
           <label for="Name">Name</label>
           <input
@@ -14,14 +14,14 @@
             autocomplete="on"
             required
           />
+          <div class="flex flex-col gap-2">
+            <span>Image</span>
+            <BlogImageCrop :loading="loading" v-model="selectedImage" />
+          </div>
+          <div class="flex justify-end mt-5">
+            <CompAdminButtonAddForm buttonName="Add Location" />
+          </div>
         </div>
-        <div class="flex flex-col gap-2">
-          <span>Image</span>
-          <BlogImageCrop :loading="loading" v-model="selectedImage" />
-        </div>
-      </div>
-      <div class="flex justify-end mt-5">
-        <CompAdminButtonAddForm buttonName="Add Location" />
       </div>
     </VeeForm>
   </section>

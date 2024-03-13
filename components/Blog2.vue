@@ -1,7 +1,28 @@
 <template>
   <section class="container-custom">
+    <div class="flex justify-end">
+      <div
+        class="cursor-pointer w-[40px] btn btn-ghost btn-square md:block hover:bg-primary transition-colors"
+        @click="toggleCategoryVisibility"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="{1.5}"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"
+          />
+        </svg>
+      </div>
+    </div>
     <div
-      class="scrollbar-hidden overflow-x-auto flex gap-4 lg:gap-6 text-[12px] sm:text-[14px] md:text-[18px] text-[#121416] border-b-2 w-full lg:w-[97%] mt-6 justify-between overflow-auto"
+      v-if="!categoryVisible"
+      class="scrollbar-hidden overflow-x-auto flex gap-4 lg:gap-6 text-[12px] sm:text-[14px] md:text-[18px] text-[#121416] border-b-2 w-full mt-6 justify-between overflow-auto"
     >
       <button
         class="categorylink"
@@ -13,12 +34,12 @@
         {{ category.name }}
       </button>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-10">
+    <div class="grid min-[320px]:grid-cols-2 lg:grid-cols-3 gap-3 mt-10">
       <BlogItem
         :link="`/blog/${item.slug}`"
-        :image="item.image"
-        :title="item.title"
-        :description="item.meta"
+        :image="item?.image"
+        :title="item?.title"
+        :description="item?.meta"
         v-for="item in filteredData"
         :key="item.id"
       />
@@ -42,6 +63,7 @@ const categoryData = computed(() => {
 });
 
 const selectedCategory = ref(null);
+const categoryVisible = ref(true);
 
 const handleCategoryClick = (categorySlug) => {
   selectedCategory.value = categorySlug;
@@ -56,6 +78,10 @@ const filteredData = computed(() => {
     );
   }
 });
+
+function toggleCategoryVisibility() {
+  categoryVisible.value = !categoryVisible.value;
+}
 </script>
 
 <style scoped>

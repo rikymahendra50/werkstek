@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[470px]">
+  <main class="flex-grow overflow-y-auto">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -15,8 +15,7 @@
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Name</th>
-                <th class="font-medium">Modification</th>
-                <th class="font-medium">Detail</th>
+                <th class="font-medium"></th>
               </tr>
             </thead>
             <tbody>
@@ -29,6 +28,13 @@
                   {{ item.name }}
                 </td>
                 <td class="flex items-center gap-3">
+                  <NuxtLink
+                    :to="`/onze-locaties/${item.slug}`"
+                    class="btn btn-sm normal-case btn-ghost btn-square"
+                    target="_blank"
+                  >
+                    <icon name="i-heroicons-eye" class="cursor-pointer" />
+                  </NuxtLink>
                   <NuxtLink
                     :to="`/admin/onze-vacaturies/add-image/${item.slug}`"
                     class="btn btn-sm normal-case btn-ghost btn-square"
@@ -74,15 +80,6 @@
                       </div>
                     </div>
                   </dialog>
-                </td>
-                <td class="text-gray-500 text-sm font-normal !py-2">
-                  <NuxtLink
-                    :to="`/onze-locaties/${item.slug}`"
-                    class="btn btn-sm normal-case btn-ghost btn-square"
-                    target="_blank"
-                  >
-                    <icon name="i-heroicons-eye" class="cursor-pointer" />
-                  </NuxtLink>
                 </td>
               </tr>
             </tbody>

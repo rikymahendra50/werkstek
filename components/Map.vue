@@ -16,18 +16,13 @@ const props = defineProps({
   AllData: {},
 });
 
-let googleMapsScriptLoaded = false;
+console.log(props.AllData);
 
-// console.log(props.filterData);
+let googleMapsScriptLoaded = false;
 
 let map = ref(null);
 const markers = ref([]);
 const currentInfoWindow = ref(null);
-
-const locationsTest = ref(props.AllData);
-const locations = locationsTest.value.data;
-
-// console.log(locations);
 
 onMounted(() => {
   if (!googleMapsScriptLoaded) {
@@ -55,16 +50,17 @@ const loadGoogleMapsScript = () => {
   }
 };
 
-const dataProduct = props.AllData;
+// const dataProduct = props.AllData;
 let latitudeFilter = ref([]);
 let longitudeFilter = ref([]);
 
-dataProduct.map((item) => {
+props.AllData.map((item) => {
   latitudeFilter?.value?.push(item.latitude);
   longitudeFilter?.value?.push(item.longitude);
 });
 
 const setupMap = () => {
+  clearMarkers();
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -8.653840910873269, lng: 115.21785198506426 },
     zoom: 1,
@@ -83,7 +79,7 @@ const setupMap = () => {
 
   const bounds = new google.maps.LatLngBounds();
 
-  dataProduct.forEach((location) => {
+  props.AllData.forEach((location) => {
     const lat = parseFloat(location.latitude);
     const lng = parseFloat(location.longitude);
 
@@ -130,5 +126,12 @@ const setupMap = () => {
 
     markers.value.push(marker);
   });
+};
+
+const clearMarkers = () => {
+  markers.value.forEach((marker) => {
+    marker.setMap(null);
+  });
+  markers.value = [];
 };
 </script>

@@ -1,34 +1,30 @@
 <template>
-  <section class="overflow-auto max-h-[500px]">
-    <div class="flex gap-4">
-      <NuxtLink
-        to="/admin/blog-category"
-        class="btn btn-warning btn-outline btn-sm"
-        >Back</NuxtLink
-      >
-      <span class="text-2xl font-bold">Edit Blog Category</span>
-    </div>
-    <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="flex flex-col mt-10 overflow-auto">
-        <div class="flex flex-col p-3 px-8">
-          <label for="Name">Name</label>
-          <VeeField
-            id="Name"
-            type="text"
-            name="Name"
-            placeholder="Input Name"
-            class="textarea textarea-bordered w-full"
-            v-model="name"
-            autocomplete="on"
-          />
+  <section class="overflow-auto">
+    <CompAdminBackButton link="blog-category" linkTitle="Edit Blog Category" />
+    <div class="grid grid-cols-2">
+      <VeeForm @submit="onSubmit" v-slot="{ errors }">
+        <div class="flex flex-col mt-4 px-8 overflow-auto">
+          <div class="flex flex-col">
+            <label for="Name">Name</label>
+            <VeeField
+              id="Name"
+              type="text"
+              name="Name"
+              placeholder="Input Name"
+              class="textarea textarea-bordered w-full"
+              v-model="name"
+              autocomplete="on"
+            />
+          </div>
+          <div class="flex justify-end mt-5">
+            <CompAdminButtonAddForm
+              buttonName="Edit Category Blog"
+              :isLoading="loading"
+            />
+          </div>
         </div>
-      </div>
-      <div class="flex justify-end mt-5">
-        <button type="submit" :disabled="loading" class="btn btn-success">
-          Edit Category Blog
-        </button>
-      </div>
-    </VeeForm>
+      </VeeForm>
+    </div>
   </section>
 </template>
 

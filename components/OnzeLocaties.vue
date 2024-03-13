@@ -5,13 +5,11 @@
       secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-    <div class="md:grid md:grid-cols-12 container-custom gap-4">
-      <div class="md:col-span-4">
+
+    <div class="md:grid md:grid-cols-12 container-custom">
+      <div class="md:col-span-4 w-[97%]">
         <div class="mt-5">
-          <button
-            @click="toggleDetail"
-            class="flex items-center gap-3 hover:text-primary"
-          >
+          <button class="flex items-center gap-3 hover:text-primary">
             <img
               src="/images/filter-icon.svg"
               class="w-5 h-5 my-4"
@@ -20,9 +18,9 @@
             <p class="text-base opacity-50">Meer filter opties</p>
           </button>
         </div>
-        <div v-if="showFilter">
+        <div>
           <span class="text-base mt-3 opacity-50">Kies een locatie</span>
-          <div class="flex-col form-control max-w-xs mt-2">
+          <div class="flex-col form-control max-w-[90%] mt-2">
             <select
               id="city"
               class="select select-bordered dropdown"
@@ -49,10 +47,10 @@
                 <input
                   :id="item.id"
                   :value="item.name"
-                  type="checkbox"
                   @change="handleSoortLocatieChange(item.id)"
-                  name="soort"
                   :checked="isSelectedSoort(item.id)"
+                  type="checkbox"
+                  name="soort"
                 />
                 <label :for="item.id" class="cursor-pointer">
                   {{ item.name }}
@@ -71,7 +69,7 @@
               class="my-2"
               @price-change="handlePriceChange"
             />
-            <div class="md:w-[90%]">
+            <div class="">
               <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
               <div class="flex my-2">
                 <div class="relative">
@@ -116,19 +114,12 @@
                   </label>
                 </div>
               </fieldset>
-              <Map :AllData="dataProduct.data" />
-              <!--  <div class="flex justify-center md:mt-4">
-                <button
-                  @click="showAllData"
-                  class="btn btn-outline btn-orange btn-sm mt-3"
-                >
-                  Show All Data
-                </button>
-              </div> -->
+              <!-- <Map :AllData="filteredData.data" /> -->
             </div>
           </div>
         </div>
       </div>
+
       <div class="md:col-span-8 py-5 overflow-auto">
         <div
           class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
@@ -149,6 +140,10 @@
         </div>
         <Pagination
           v-model="page"
+          first="Eerst"
+          last="Laatst"
+          prev="Vorig"
+          next="Volgende"
           :total="dataProduct?.meta?.total"
           :per-page="dataProduct?.meta?.per_page"
           class="flex justify-center mt-10"
@@ -157,6 +152,17 @@
     </div>
   </section>
 </template>
+
+<style scoped>
+.scrollbar-onze {
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-onze::-webkit-scrollbar {
+  display: none;
+}
+</style>
 
 <script setup>
 import axios from "axios";
@@ -169,22 +175,14 @@ const router = useRouter();
 const route = useRoute();
 
 const page = ref(1);
-const search = ref("");
-
-const { data: dataForFilter } = await useFetch("/products", {
-  method: "get",
-  ...requestOptions,
-});
-
-const { data: type } = await useFetch("/types", {
-  method: "get",
-  ...requestOptions,
-});
-
-const { data: facility } = await useFetch("/facilities", {
-  method: "get",
-  ...requestOptions,
-});
+// const search = ref("");
+const selectedCity = ref("");
+const selectedSoortLocatie = ref([]);
+const selectedMinPrice = ref("");
+const selectedMaxPrice = ref("");
+const selectedMeterMin = ref("");
+const selectedMeterMax = ref("");
+const selectedFunctie = ref([]);
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
@@ -200,95 +198,78 @@ watch(
 );
 
 watch(
-  () => search.value,
-  (newValue, oldValue) => {
-    if (newValue !== oldValue) {
+  [
+    () => selectedCity.value,
+    () => selectedSoortLocatie.value,
+    () => selectedMinPrice.value,
+    () => selectedMaxPrice.value,
+    () => selectedMeterMin.value,
+    () => selectedMeterMax.value,
+    () => selectedFunctie.value,
+  ],
+  (
+    [
+      cityValue,
+      soortLocatieValue,
+      minPriceValue,
+      maxPriceValue,
+      minMeterValue,
+      maxMeterValue,
+      functieValue,
+    ],
+    [
+      oldCityValue,
+      oldSoortLocatieValue,
+      oldMinPriceValue,
+      oldMaxPriceValue,
+      oldMinMeterValue,
+      oldMaxMeterValue,
+      oldfunctieValue,
+    ]
+  ) => {
+    if (
+      cityValue !== oldCityValue ||
+      soortLocatieValue !== oldSoortLocatieValue ||
+      minPriceValue !== oldMinPriceValue ||
+      maxPriceValue !== oldMaxPriceValue ||
+      minMeterValue !== oldMinMeterValue ||
+      maxMeterValue !== oldMaxMeterValue ||
+      functieValue !== oldfunctieValue
+    ) {
       page.value = 1;
       start();
+      replaceWindow();
     }
   }
 );
 
-const {
-  data: dataProduct,
-  error,
-  refresh,
-} = await useAsyncData("dataProduct", () =>
-  $fetch(`/products?page=${page.value}&filter[search]=${search.value}`, {
-    method: "get",
-    ...requestOptions,
-  })
-);
-
-function replaceWindow() {
-  router.replace(`/onze-locaties?page=${page.value}&search=${search.value}`);
-  refresh();
-}
-
-const showFilter = ref();
-const toggleDetail = () => {
-  showFilter.value = !showFilter.value;
-};
-
-onMounted(() => {
-  if (window.innerWidth > 768) {
-    showFilter.value = true;
-  } else {
-    showFilter.value = false;
-  }
-
-  watch(
-    () => window.innerWidth,
-    (newWidth) => {
-      if (newWidth > 768) {
-        showFilter.value = true;
-      } else {
-        showFilter.value = false;
-      }
-    }
-  );
+// untuk mengambil nilai location pada filter
+const { data: dataForFilter } = await useFetch("/products", {
+  method: "get",
+  ...requestOptions,
 });
-
-function splitColumns(arr) {
-  const midpoint = Math.ceil(arr.length / 2);
-  return [arr.slice(0, midpoint), arr.slice(midpoint)];
-}
-
-const arrayLocation = dataProduct?.value?.data?.map((item) => item.location);
-
+const arrayLocation = dataForFilter?.value?.data?.map((item) => item.location);
 let city = ref([]);
 let citySet = {};
-
 arrayLocation.forEach((element) => {
   const cityName = element.name;
   const cityId = element.id;
   if (!citySet[cityName]) {
-    // console.log(cityName, cityId);
     citySet[cityName] = cityId;
     city.value.push({ name: cityName, id: cityId });
   }
 });
+// end location
 
-const soortLocatiesRadio = type.value.data;
-const functieCheckbox = facility.value.data;
-const numericPrices = dataForFilter.value.data.map((item) =>
-  parseFloat(item.price)
-);
-const highestPrice = Math.max(...numericPrices);
+// untuk mengelola soort locatie
+const { data: type } = await useFetch("/types", {
+  method: "get",
+  ...requestOptions,
+});
+const soortLocatiesRadio = type?.value?.data;
 
 function isSelectedSoort(id) {
   return selectedSoortLocatie.value.includes(id);
-}
-
-function isSelectedFuncti(id) {
-  return selectedFunctie.value.includes(id);
-}
-
-function handlePriceChange(priceData) {
-  setTimeout(() => {
-    selectedMinPrice.value = priceData.minPrice;
-    selectedMaxPrice.value = priceData.maxPrice;
-  }, 900);
 }
 
 function handleSoortLocatieChange(id) {
@@ -300,6 +281,28 @@ function handleSoortLocatieChange(id) {
     selectedSoortLocatie.value = [...selectedSoortLocatie.value, id];
   }
 }
+// end soort locatie
+
+// untuk mengelola slider range
+const numericPrices = dataForFilter.value.data.map((item) =>
+  parseFloat(item.price)
+);
+const highestPrice = Math.max(...numericPrices);
+function handlePriceChange(priceData) {
+  selectedMinPrice.value = priceData.minPrice;
+  selectedMaxPrice.value = priceData.maxPrice;
+}
+// end untuk mengelola slider range
+
+// untuk mengelola facility
+const { data: facility } = await useFetch("/facilities", {
+  method: "get",
+  ...requestOptions,
+});
+const functieCheckbox = facility?.value?.data;
+function isSelectedFuncti(id) {
+  return selectedFunctie.value.includes(id);
+}
 
 function handlefunctieCheckbox(id) {
   if (selectedFunctie.value.includes(id)) {
@@ -308,44 +311,57 @@ function handlefunctieCheckbox(id) {
     selectedFunctie.value = [...selectedFunctie.value, id];
   }
 }
+// end untuk mengelola facility
 
-const selectedCity = ref();
-const selectedSoortLocatie = ref([]);
-const selectedFunctie = ref([]);
-const selectedMinPrice = ref();
-const selectedMaxPrice = ref();
-const selectedMeterMin = ref();
-const selectedMeterMax = ref();
-
-// selectedCity.value = "Locatie";
-
-watchEffect(() => {
-  fetchData();
+const {
+  data: dataProduct,
+  error,
+  refresh,
+} = await useAsyncData("dataProduct", async () => {
+  const response = await $fetch(
+    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&filter[productFacility.facility_id]=${selectedFunctie.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  );
+  return response;
 });
 
-async function fetchData() {
-  const response = await axiosRequest.get(`/products`, {
-    params: {
-      "filter[min_price]": selectedMinPrice.value,
-      "filter[max_price]": selectedMaxPrice.value,
-      "filter[min_area]": selectedMeterMin.value,
-      "filter[max_area]": selectedMeterMax.value,
-      "filter[type_id]": selectedSoortLocatie.value,
-      "filter[location_id]": selectedCity.value,
-      "filter[productFacility.facility_id]": selectedFunctie.value,
-    },
-  });
-  dataProduct.value = response.data;
+function replaceWindow() {
+  let filters = [];
+  if (selectedCity.value) {
+    filters.push(`filter[location_id]=${selectedCity.value}`);
+  }
+  if (selectedSoortLocatie.value.length > 0) {
+    const soortLocatieFilters = selectedSoortLocatie.value.map(
+      (id) => `filter[type_id]=${id}`
+    );
+    filters = filters.concat(soortLocatieFilters);
+  }
+  if (selectedMinPrice !== "" && selectedMaxPrice !== "") {
+    filters.push(`filter[min_price]=${selectedMinPrice.value}`);
+    filters.push(`filter[max_price]=${selectedMaxPrice.value}`);
+  }
+
+  if (selectedMeterMin !== "" && selectedMeterMax !== "") {
+    filters.push(`filter[min_area]=${selectedMeterMin.value}`);
+    filters.push(`filter[max_area]=${selectedMeterMax.value}`);
+  }
+
+  if (selectedFunctie.value.length > 0) {
+    const functieFilters = selectedFunctie.value.map(
+      (id) => `filter[productFacility.facility_id]=${id}`
+    );
+    filters = filters.concat(functieFilters);
+  }
+
+  const queryString = filters.join("&");
+  const url = `/onze-locaties?page=${page.value}${
+    queryString ? `&${queryString}` : ""
+  }`;
+
+  router.replace(url);
+  refresh();
 }
 </script>
-
-<style scoped>
-.scrollbar-onze {
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.scrollbar-onze::-webkit-scrollbar {
-  display: none;
-}
-</style>

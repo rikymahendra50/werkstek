@@ -1,12 +1,12 @@
 <template>
   <CompAdminBackButton link="onze-vacaturies" linkTitle="Edit Property" />
-  <div class="h-screen max-h-[450px] overflow-y-auto">
+  <div class="overflow-y-auto grid md:grid-cols-2">
     <VeeForm
       @submit="onSubmit"
       class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-8"
       v-slot="{ errors }"
     >
-      <div class="flex flex-col my-2 w-full">
+      <div class="flex flex-col w-full">
         <div class="flex items-center">
           <label for="name">Name</label>
         </div>
@@ -265,31 +265,26 @@
       <div class="flex flex-col my-2 w-full">
         <div class="grid gap-2">
           <div class="flex items-center">
-            <span>Saleable</span>
+            <span>SaleAble</span>
           </div>
-          <label class="radio-label flex gap-2">
+          <label
+            v-for="item in dataIsSaleAble"
+            :key="item.id"
+            class="checkbox-label flex gap-2"
+          >
             <VeeField
-              id="saleable_yes"
-              name="saleable"
+              :id="`saleAble + ${item.id}`"
+              :name="`saleAble + ${item.name}`"
               type="radio"
-              :value="formData.is_saleable == 1"
-              placeholder="saleable"
+              :value="item.value"
+              v-model="formData.is_saleable"
+              placeholder="privileges"
+              autocomplete="privileges"
             />
-            Yes
-          </label>
-          <label class="radio-label flex gap-2">
-            <VeeField
-              id="saleable_no"
-              name="saleable"
-              type="radio"
-              :value="formData.is_saleable == 0"
-              placeholder="saleable"
-            />
-            No
+            {{ item.name }}
           </label>
         </div>
       </div>
-
       <div class="w-full flex justify-end">
         <CompAdminButtonAddForm
           buttonName="Edit Property"
@@ -358,6 +353,19 @@ const facilityArray = AllDataSlug?.value.facility.map(
   (item) => item.facility.id
 );
 
+const dataIsSaleAble = ref([
+  {
+    id: 1,
+    name: "Yes",
+    value: 0,
+  },
+  {
+    id: 2,
+    name: "No",
+    value: 1,
+  },
+]);
+
 const formData = ref({
   name: AllDataSlug?.value?.name,
   description: AllDataSlug?.value?.description,
@@ -380,6 +388,8 @@ const formData = ref({
   })),
   rating: AllDataSlug.value.rating,
 });
+
+console.log(formData.value.is_saleable);
 
 async function onSubmit(values, ctx) {
   loading.value = true;

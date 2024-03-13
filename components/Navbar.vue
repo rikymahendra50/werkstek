@@ -67,11 +67,12 @@
             </span>
             <ul
               tabindex="0"
-              class="ml-[-20px] dropdown-content z-[1] menu p-1 shadow bg-base-100 rounded-box w-40 text-black"
+              class="ml-[-20px] dropdown-content rounded-sm z-[1] menu p-1 shadow bg-base-100 w-48 text-black"
             >
               <li class="text-sm">
                 <NuxtLink
                   to="/blog"
+                  class="rounded-none hover:bg-primary hover:text-white"
                   :class="{ active: isRouteActive('/blog') }"
                 >
                   Werkstek Blog
@@ -80,6 +81,7 @@
               <li>
                 <NuxtLink
                   to="/onze-vacaturies"
+                  class="rounded-none hover:bg-primary hover:text-white"
                   :class="{ active: isRouteActive('/onze-vacaturies') }"
                 >
                   Westek Vacatures
@@ -88,6 +90,7 @@
               <li>
                 <NuxtLink
                   to="/werkstek-community"
+                  class="rounded-none hover:bg-primary hover:text-white"
                   :class="{ active: isRouteActive('/werkstek-community') }"
                 >
                   Werkstek Community

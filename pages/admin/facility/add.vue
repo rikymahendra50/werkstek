@@ -1,30 +1,32 @@
 <template>
   <section>
     <CompAdminBackButton link="facility" linkTitle="Add Facility" />
-    <VeeForm @submit="onSubmit">
-      <div class="grid grid-cols-1 mt-8 gap-3">
-        <span>Image</span>
-        <BlogImageCrop :loading="loading" v-model="selectedImage" />
-        <div class="flex flex-col">
-          <label for="Name">Name</label>
-          <input
-            id="Name"
-            type="text"
-            placeholder="Input Name"
-            class="input input-bordered w-full"
-            v-model="name"
-            autocomplete="on"
-            required
+    <div class="grid grid-cols-2">
+      <VeeForm @submit="onSubmit">
+        <div class="grid mt-8 gap-3">
+          <span>Image</span>
+          <BlogImageCrop :loading="loading" v-model="selectedImage" />
+          <div class="flex flex-col">
+            <label for="Name">Name</label>
+            <input
+              id="Name"
+              type="text"
+              placeholder="Input Name"
+              class="input input-bordered w-full"
+              v-model="name"
+              autocomplete="on"
+              required
+            />
+          </div>
+        </div>
+        <div class="flex justify-end mt-5">
+          <CompAdminButtonAddForm
+            buttonName="Add Facility"
+            :isLoading="loading"
           />
         </div>
-      </div>
-      <div class="flex justify-end mt-5">
-        <CompAdminButtonAddForm
-          buttonName="Add Facility"
-          :isLoading="loading"
-        />
-      </div>
-    </VeeForm>
+      </VeeForm>
+    </div>
   </section>
 </template>
 

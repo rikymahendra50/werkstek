@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[500px]">
+  <main class="flex-grow overflow-y-auto">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -27,7 +27,7 @@
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.name }}
                 </td>
-                <td class="flex items-center">
+                <td class="flex items-center gap-3">
                   <NuxtLink
                     :to="`/admin/level-type/edit/${item.id}`"
                     class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
@@ -84,6 +84,14 @@ const showModal = (index) => {
   const modal = document.getElementById(modalId);
   if (modal) {
     modal.showModal();
+  }
+};
+
+const showEditModal = (index) => {
+  const editModalId = `edit_modal_${index}`;
+  const editModal = document.getElementById(editModalId);
+  if (editModal) {
+    editModal.showModal();
   }
 };
 

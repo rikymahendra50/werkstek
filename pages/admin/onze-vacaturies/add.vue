@@ -1,12 +1,12 @@
 <template>
   <CompAdminBackButton link="onze-vacaturies" linkTitle="Add Property" />
-  <div class="h-screen max-h-[450px] overflow-y-auto">
+  <div class="overflow-y-auto grid grid-cols-2">
     <VeeForm
       @submit="onSubmit"
       class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-8"
       v-slot="{ errors }"
     >
-      <div class="flex flex-col my-2 w-full">
+      <div class="flex flex-col w-full">
         <div class="flex items-center">
           <label for="name">Name</label>
         </div>
@@ -261,34 +261,27 @@
       <div class="flex flex-col my-2 w-full">
         <div class="grid gap-2">
           <div class="flex items-center">
-            <span>Saleable</span>
+            <span>Is SaleAble</span>
           </div>
-          <label class="radio-label flex gap-2">
+          <label
+            v-for="item in dataIsSaleAble"
+            :key="item.id"
+            class="checkbox-label flex gap-2"
+          >
             <VeeField
-              id="saleable_yes"
-              name="saleable"
+              :id="`isSaleAble + ${item.id}`"
+              :name="`isSaleAble + ${item.name}`"
               type="radio"
-              value="1"
+              :value="item.value"
               v-model="productsData.is_saleable"
-              placeholder="saleable"
-              autocomplete="saleable"
+              placeholder="privileges"
+              autocomplete="privileges"
             />
-            Yes
-          </label>
-          <label class="radio-label flex gap-2">
-            <VeeField
-              id="saleable_no"
-              name="saleable"
-              type="radio"
-              value="0"
-              v-model="productsData.is_saleable"
-              placeholder="saleable"
-              autocomplete="saleable"
-            />
-            No
+            {{ item.name }}
           </label>
         </div>
       </div>
+
       <div class="flex justify-end w-full">
         <CompAdminButtonAddForm
           buttonName="Add Property"
@@ -318,6 +311,19 @@ const dataPrivilages = ref([
   {
     id: 3,
     name: "Get a good view",
+  },
+]);
+
+const dataIsSaleAble = ref([
+  {
+    id: 1,
+    name: "Yes",
+    value: 0,
+  },
+  {
+    id: 2,
+    name: "No",
+    value: 1,
   },
 ]);
 

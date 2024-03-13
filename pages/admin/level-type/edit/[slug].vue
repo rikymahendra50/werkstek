@@ -1,29 +1,25 @@
 <template>
   <CompAdminBackButton link="level-type" linkTitle="Edit Level Type" />
-  <VeeForm @submit="onSubmit">
-    <table class="table">
-      <tbody>
-        <tr>
-          <td><label for="name">Name</label></td>
-          <td>
-            <input
-              id="name"
-              type="text"
-              placeholder="Type here"
-              v-model="name"
-              class="input input-bordered w-full max-w-xs"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="flex justify-end">
-      <CompAdminButtonAddForm
-        buttonName="Edit Level Type"
-        :isLoading="loading"
+  <div class="grid grid-cols-2 px-3">
+    <VeeForm @submit="onSubmit">
+      <label for="Name">Name</label>
+      <VeeField
+        id="Name"
+        type="text"
+        name="Name"
+        placeholder="Input Level Type"
+        class="input input-bordered w-full"
+        v-model="name"
+        autocomplete="off"
       />
-    </div>
-  </VeeForm>
+      <div class="flex justify-end mt-5">
+        <CompAdminButtonAddForm
+          buttonName="Edit Level Type"
+          :isLoading="loading"
+        />
+      </div>
+    </VeeForm>
+  </div>
 </template>
 
 <script setup>

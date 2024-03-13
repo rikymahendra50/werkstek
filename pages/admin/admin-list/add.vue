@@ -2,7 +2,7 @@
   <div class="grid place-items-center items-center">
     <div class="w-full p-4 justify-center">
       <CompAdminBackButton link="admin-list" linkTitle="Register Admin" />
-      <VeeForm @submit="onSubmit" v-slot="{ errors }">
+      <VeeForm @submit="onSubmit" v-slot="{ errors }" class="grid grid-cols-2">
         <div class="grid grid-cols-1 text-left gap-4 rounded-md">
           <FormGroup label="First Name" name="firstname">
             <FormTextField

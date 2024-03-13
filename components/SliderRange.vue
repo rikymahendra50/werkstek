@@ -1,5 +1,5 @@
 <template>
-  <div class="main w-[80%]">
+  <div class="main w-[90%]">
     <div class="custom-wrapper pt-3">
       <span class="text-sm font-medium opacity-50">{{ title }}</span>
       <div class="price-input-container">
@@ -32,7 +32,7 @@
             :min="minPrice"
             :max="maxPrice"
             v-model="localMinRange"
-            step="10"
+            :step="100"
           />
         </label>
         <label :for="idInputMax">
@@ -43,7 +43,7 @@
             :min="minPrice"
             :max="maxPrice"
             v-model="localMaxRange"
-            step="10"
+            :step="100"
           />
         </label>
       </div>

@@ -1,26 +1,27 @@
 <template>
   <CompAdminBackButton link="type" linkTitle="Edit Type" />
-  <VeeForm @submit="onSubmit">
-    <table class="table">
-      <tbody>
-        <tr>
-          <td><label for="name">Name</label></td>
-          <td>
-            <input
-              id="name"
-              type="text"
-              placeholder="Type here"
-              v-model="name"
-              class="input input-bordered w-full max-w-xs"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="flex justify-end">
-      <CompAdminButtonAddForm buttonName="Edit Type" :isLoading="loading" />
-    </div>
-  </VeeForm>
+  <div class="grid grid-cols-2 px-4">
+    <VeeForm @submit="onSubmit" v-slot="{ errors }">
+      <div class="grid grid-cols-1 gap-3">
+        <div class="flex flex-col">
+          <label for="Name" class="mb-3">Type Name</label>
+          <VeeField
+            id="Name"
+            type="text"
+            name="Name"
+            placeholder="Input Type Name"
+            class="input input-bordered w-full"
+            v-model="name"
+            autocomplete="off"
+          />
+          <VeeErrorMessage name="name" class="text-sm text-error" />
+        </div>
+      </div>
+      <div class="flex justify-end mt-5">
+        <CompAdminButtonAddForm buttonName="Add Type" :isLoading="loading" />
+      </div>
+    </VeeForm>
+  </div>
 </template>
 
 <script setup>
