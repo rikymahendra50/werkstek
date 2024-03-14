@@ -8,7 +8,7 @@
         {{ typeArticle }}
       </h1>
       <p
-        class="text-[#404040] text-xl sm:text-[26px] md:text-[36px] mb-3 lg:mb-10"
+        class="text-[#404040] text-xl sm:text-[26px] md:text-[36px] mb-3 lg:mb-10 mt-3"
       >
         {{ title }}
       </p>
@@ -24,7 +24,9 @@
 
       <!-- author small screen -->
       <div class="block lg:hidden my-3 min-[400px]:my-5 sm:my-7 p-3">
-        <div class="flex items-center max-h-[150px] overflow-hidden shadow-sm">
+        <div
+          class="flex items-center max-h-[150px] overflow-hidden shadow-sm p-4"
+        >
           <img
             src="/images/author.png"
             alt="author"
@@ -74,15 +76,17 @@
             </div>
           </div>
         </div>
-        <NuxtLink to="/" class="w-full mt-2 md:mt-4 flex justify-end">
-          <div class="flex flex-col">
-            <img src="/images/share.svg" class="max-w-[20px] h-[20px]" />
-            <p class="text-[14px] md:text-[16px]">share</p>
-          </div>
-        </NuxtLink>
+        <div class="w-full mt-4 md:mt-4 flex justify-end">
+          <NuxtLink to="/">
+            <div class="flex flex-col items-center">
+              <img src="/images/share.svg" class="max-w-[20px] h-[20px]" />
+              <p class="text-[14px] md:text-[16px]">share</p>
+            </div>
+          </NuxtLink>
+        </div>
       </div>
-      <div class="flex lg:mt-20">
-        <div class="flex flex-col lg:w-[70%]">
+      <div class="grid grid-cols-12 lg:mt-20">
+        <div class="grid lg:col-span-9 col-span-12">
           <div v-html="body" class="leading-9 text-[16px]"></div>
           <div
             class="flex mt-10 gap-5 items-center sm:items-start p-2 shadow-md rounded-lg"
@@ -136,7 +140,7 @@
           </div>
         </div>
         <!-- author -->
-        <div class="hidden lg:block lg:w-[30%]">
+        <div class="hidden lg:grid col-span-3">
           <div class="lg:flex flex-col items-center">
             <h1 class="text-[#121416] text-[18px]">AUTHOR</h1>
             <h3 class="text-[20px]">Luci Avetisyan</h3>

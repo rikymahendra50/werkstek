@@ -40,7 +40,7 @@
         <span class="text-sm">Adres</span>
         <div class="flex justify-between">
           <span class="text-[10px] sm:text-base font-bold"> Opervlakte </span>
-          <span class="text-[10px] sm:text-base">+{{ phoneNumber }}</span>
+          <span class="text-[10px] sm:text-base">+{{ phone }}</span>
         </div>
         <div class="flex justify-between">
           <span class="text-[10px] sm:text-base">€ {{ price }}</span>
@@ -91,7 +91,7 @@ export default {
       type: String,
       default: "Mail Adres",
     },
-    phoneNumber: {
+    phone: {
       default: 31302393838,
     },
     price: {},

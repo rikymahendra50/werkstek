@@ -23,9 +23,6 @@
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
                 v-for="(item, index) in locations?.data"
               >
-                <!-- <td class="text-gray-500 text-sm font-normal !py-2">
-                  <img :src="item.image" :alt="item.id" class="max-w-[90px]" />
-                </td> -->
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.name }}
                 </td>
@@ -152,22 +149,14 @@ const showModal = (index) => {
 
 const deleteLocation = async (slug) => {
   loading.value = true;
-  await useFetch(`/admins/locations/${slug}`, {
-    method: "DELETE",
-    ...requestOptions,
-  });
-  window.location.reload();
-
-  if (error.value) {
-    snackbar.add({
-      type: "error",
-      text: error.value?.data?.message ?? "Something went wrong",
+  try {
+    await useFetch(`/admins/locations/${slug}`, {
+      method: "delete",
+      ...requestOptions,
     });
-  } else {
-    snackbar.add({
-      type: "success",
-      text: "Delete Location Success",
-    });
+    window.location.reload();
+  } catch (error) {
+    console.error("Error:", error);
   }
   loading.value = false;
 };

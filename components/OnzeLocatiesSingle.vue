@@ -45,7 +45,7 @@
                   <img
                     :src="slide.image"
                     alt="image"
-                    class="w-full h-full aspect-video md:min-h-[350px]"
+                    class="w-full h-full aspect-video md:min-h-[350px] object-cover"
                   />
                 </div>
               </SwiperSlide>
@@ -117,7 +117,7 @@
         </div>
       </div>
       <div class="col-span-4">
-        <div v-if="special.length > 0" class="mb-3">
+        <div v-if="special?.length > 0" class="mb-3">
           <ul class="rounded-[8px] bg-[#859C811A] py-4 px-2 md:px-5">
             <li class="py-1 lg:py-2 flex" v-for="item in special">
               <svg
@@ -227,18 +227,17 @@ const { data, error } = await useFetch("/facilities", {
 
 const facilitySlugName = props?.facility;
 
-// console.log(props.facility);
 function getCheckboxImage(itemName) {
-  return facilitySlugName.some(
-    (facility) => facility.facility.name === itemName
+  return facilitySlugName?.some(
+    (facility) => facility?.facility?.name === itemName
   )
     ? "/images/checkbox_checked.svg"
     : "/images/minus-square.png";
 }
 
 function getAvailabilityStatus(itemName) {
-  return facilitySlugName.some(
-    (facility) => facility.facility.name === itemName
+  return facilitySlugName?.some(
+    (facility) => facility?.facility?.name === itemName
   )
     ? " Available"
     : " Unavailable";

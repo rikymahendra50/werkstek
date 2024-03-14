@@ -2,10 +2,10 @@
   <section>
     <CompAdminBackButton link="facility" linkTitle="Add Facility" />
     <div class="grid grid-cols-2">
-      <VeeForm @submit="onSubmit">
+      <form @submit.prevent="onSubmit">
         <div class="grid mt-8 gap-3">
-          <span>Image</span>
-          <BlogImageCrop :loading="loading" v-model="selectedImage" />
+          <!-- <span>Image</span>
+          <BlogImageCrop :loading="loading" v-model="selectedImage" /> -->
           <div class="flex flex-col">
             <label for="Name">Name</label>
             <input
@@ -13,11 +13,14 @@
               type="text"
               placeholder="Input Name"
               class="input input-bordered w-full"
-              v-model="name"
-              autocomplete="on"
+              v-model="formData.name"
+              autocomplete="off"
               required
             />
           </div>
+          <button type="button" class="btn hidden" @click="selectImage">
+            Choose Image
+          </button>
         </div>
         <div class="flex justify-end mt-5">
           <CompAdminButtonAddForm
@@ -25,7 +28,7 @@
             :isLoading="loading"
           />
         </div>
-      </VeeForm>
+      </form>
     </div>
   </section>
 </template>
@@ -35,6 +38,7 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const route = useRoute();
+const router = useRouter();
 
 const formData = ref({
   name: undefined,
@@ -46,8 +50,10 @@ const selectImage = () => {
   fileInput.value.click();
 };
 
-const imagePreview = ref();
-const selectedImage = ref();
+const imagePreview = ref(null);
+const selectedImage = ref(null);
+
+selectedImage.value = "/images/checkbox_checked.svg";
 
 function saveToPreviewImage(event) {
   imagePreview.value = URL.createObjectURL(event.target.files[0]);
@@ -63,7 +69,7 @@ async function onSubmit(values, ctx) {
 
   const object = { ...formData.value };
 
-  console.log(object);
+  // console.log(object);
   const formDataT = new FormData();
 
   for (const item in object) {
@@ -72,10 +78,10 @@ async function onSubmit(values, ctx) {
     formDataT.append(item, objectItem);
   }
   if (selectedImage.value) {
-    formDataT.append("image", selectedImage.value);
+    formDataT.append("icon", selectedImage.value);
   }
 
-  const { error, data } = await useFetch(`/admins/facility/`, {
+  const { error, data } = await useFetch(`/admins/facility`, {
     method: "POST",
     body: formDataT,
     ...requestOptions,
@@ -92,7 +98,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Edit Blog Success",
     });
-    ctx.resetForm();
+    router.push("/admin/facility");
   }
 
   loading.value = false;

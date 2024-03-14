@@ -79,6 +79,33 @@ export default function () {
     }
   });
 
+  const formInput = toTypedSchema(
+    object({
+      name: string().min(1, "Name is required"),
+      // body: bodyField,
+      email: emailField,
+      phone: number({
+        required_error: "Phone is required",
+      }),
+      latitude: number({
+        required_error: "Latitude is required",
+      }),
+      longitude: number({
+        required_error: "Longitude is required",
+      }),
+      price: number({
+        required_error: "Price is required",
+      }),
+      renttype: string().min(1, "Rent Type is required"),
+      areasize: number({
+        required_error: "Area Size is required",
+      }),
+      location: number().min(1, "Location is required"),
+      type: number().min(1, "Type is Requeired"),
+      leveltype: number().min(1, "Level Type is requeired"),
+    })
+  );
+
   const registerSchema = toTypedSchema(
     object({
       first_name: firstNameField,
@@ -109,6 +136,7 @@ export default function () {
 
   return {
     contactSchema,
+    formInput,
     loginSchema,
     registerSchema,
     onlyEmailSchema,

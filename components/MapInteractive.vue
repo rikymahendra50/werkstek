@@ -157,26 +157,32 @@ const { data, error } = await useFetch(`/products`, {
   method: "get",
   ...requestOptions,
 });
+const { data: locationData } = await useFetch("/locations", {
+  method: "get",
+  ...requestOptions,
+});
 
-const arrayLocation = data?.value?.data?.map((item) => item.location);
 const numericPrices = data.value.data.map((item) => parseFloat(item.price));
 
 const highestPrice = Math.max(...numericPrices);
 
 let infoWindowTimeout;
 
-let city = ref([]);
-let citySet = {};
+const arrayLocation = locationData?.value?.data?.map((item) => item);
+let city = ref(arrayLocation);
 
-arrayLocation.forEach((element) => {
-  const cityName = element.name;
-  const cityId = element.id;
-  if (!citySet[cityName]) {
-    // console.log(cityName, cityId);
-    citySet[cityName] = cityId;
-    city.value.push({ name: cityName, id: cityId });
-  }
-});
+// let city = ref([]);
+// let citySet = {};
+
+// arrayLocation.forEach((element) => {
+//   const cityName = element.name;
+//   const cityId = element.id;
+//   if (!citySet[cityName]) {
+//     // console.log(cityName, cityId);
+//     citySet[cityName] = cityId;
+//     city.value.push({ name: cityName, id: cityId });
+//   }
+// });
 
 const categories = ref([
   {
@@ -261,7 +267,7 @@ const recenterMap = () => {
 
 function findMap(dataFilter) {
   if (!dataFilter || !dataFilter.data || dataFilter.data.length === 0) {
-    alert("Data Not Found.");
+    alert("Data Not Found.Please adjust your filter");
     return;
   }
 
@@ -276,29 +282,29 @@ function findMap(dataFilter) {
 
   locations.forEach((location) => {
     moveToLocation(location.latitude, location.longitude);
-    showInfoWindow(location.latitude, location.longitude, dataFilter);
+    // showInfoWindow(location.latitude, location.longitude, dataFilter);
   });
 }
 
-const showInfoWindow = (latitude, longitude, location) => {
-  const marker = findMarkerByLatLng(latitude, longitude);
+// const showInfoWindow = (latitude, longitude, location) => {
+//   const marker = findMarkerByLatLng(latitude, longitude);
 
-  if (marker) {
-    clearInfoWindows();
+//   if (marker) {
+//     clearInfoWindows();
 
-    const contentString = buildInfoWindowContent(location);
+//     const contentString = buildInfoWindowContent(location);
 
-    console.log(location);
+//     // console.log(location);
 
-    const infowindow = new google.maps.InfoWindow({
-      content: contentString,
-      closeBoxMargin: "10px 10px 0 0",
-    });
+//     const infowindow = new google.maps.InfoWindow({
+//       content: contentString,
+//       closeBoxMargin: "10px 10px 0 0",
+//     });
 
-    infowindow.open(map, marker);
-    currentInfoWindow.value = infowindow;
-  }
-};
+//     infowindow.open(map, marker);
+//     currentInfoWindow.value = infowindow;
+//   }
+// };
 
 const buildInfoWindowContent = (location) => {
   if (Array.isArray(location)) {
@@ -325,18 +331,19 @@ const buildInfoWindowContent = (location) => {
     return `
       <a href="/" class="max-w-[190px] w-full flex flex-col text-end">
         <div class="relative">
-          <img src="${location.location.Image}" alt="${location.Name}" class="w-full min-h-[100px]">
+          <img src="${location?.location?.Image}" alt="${location?.Name}" class="w-full min-h-[100px]">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
         </div>
         <div class="px-2 py-5 pb-3">
-          <h2 class="text-primary mt-2">${location.Name}</h2>
-          <p class="text-black text-[10px] my-2">Price: $${location.Price}</p>
-          <p>${location.Area}&nbsp<span>m<sup>2</sup></span></p>
+          <h2 class="text-primary mt-2">${location?.Name}</h2>
+          <p class="text-black text-[10px] my-2">Price: $${location?.Price}</p>
+          <p>${location?.Area}&nbsp<span>m<sup>2</sup></span></p>
         </div>
       </a>
     `;
   }
 };
+
 const clearInfoWindows = () => {
   if (currentInfoWindow.value) {
     currentInfoWindow.value.close();
@@ -357,6 +364,7 @@ const moveToLocation = (lat, lng) => {
     const filteredMarkers = markers.value.filter(
       (marker) => marker.details.filtered
     );
+
     const bounds = new google.maps.LatLngBounds();
     filteredMarkers.forEach((marker) => {
       bounds.extend(marker.getPosition());
@@ -376,13 +384,10 @@ const moveToLocation = (lat, lng) => {
     if (matchingMarker) {
       matchingMarker.details.filtered = true;
 
-      const contentString = buildInfoWindowContent(matchingMarker.details);
-
-      const infowindow = new google.maps.InfoWindow({
-        content: contentString,
-      });
-      infowindow.open(map, matchingMarker);
-      currentInfoWindow.value = infowindow;
+      matchingMarker.setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(() => {
+        matchingMarker.setAnimation(null);
+      }, 70000);
     }
   }
 };
@@ -421,14 +426,14 @@ const setupMap = () => {
 
     const contentString = `
       <a href="/" class="max-w-[190px] w-full flex flex-col text-end">
-        <div class="relative"> 
-          <img src="${location.location.image}" alt="${location.name}" class="w-full min-h-[100px]">
+        <div class="relative">
+          <img src="${location?.location?.image}" alt="${location?.name}" class="w-full min-h-[100px]">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
         </div>
         <div class="px-2 py-5 pb-3 relative">
-          <h2 class="text-primary mt-4">${location.name}</h2>
-          <p class="text-black text-[10px] my-2">Price: $${location.price}</p>
-          <p>${location.area_size}&nbsp<span>m<sup>2</sup></span></p>
+          <h2 class="text-primary mt-4">${location?.name}</h2>
+          <p class="text-black text-[10px] my-2">Price: $${location?.price}</p>
+          <p>${location?.area_size}&nbsp<span>m<sup>2</sup></span></p>
           <img src="/images/icon-werstek.svg" alt="icon-werstek" class="absolute right-3 top-[-5px]" />
         </div>
       </a>
@@ -439,7 +444,7 @@ const setupMap = () => {
       closeBoxMargin: "10px 10px 0 0",
     });
 
-    marker.addListener("mouseover", () => {
+    marker.addListener("click", () => {
       clearTimeout(infoWindowTimeout);
 
       if (currentInfoWindow.value) {
@@ -450,10 +455,10 @@ const setupMap = () => {
         hoverInfoWindow.close();
       }
 
-      marker.setIcon({
-        url: icon.url,
-        scaledSize: new google.maps.Size(60, 60),
-      });
+      // marker.setIcon({
+      //   url: icon.url,
+      //   scaledSize: new google.maps.Size(60, 60),
+      // });
 
       hoverInfoWindow = new google.maps.InfoWindow({
         content: contentString,
@@ -466,23 +471,23 @@ const setupMap = () => {
       currentInfoWindow.value = infowindow;
     });
 
-    marker.addListener("mouseout", () => {
-      infoWindowTimeout = setTimeout(() => {
-        if (currentInfoWindow.value) {
-          currentInfoWindow.value.close();
-        }
+    // marker.addListener("mouseout", () => {
+    //   infoWindowTimeout = setTimeout(() => {
+    //     if (currentInfoWindow.value) {
+    //       currentInfoWindow.value.close();
+    //     }
 
-        if (currentHoveredMarker === marker) {
-          hoverInfoWindow.close();
-          currentHoveredMarker = null;
-        }
+    //     if (currentHoveredMarker === marker) {
+    //       hoverInfoWindow.close();
+    //       currentHoveredMarker = null;
+    //     }
 
-        marker.setIcon({
-          url: icon.url,
-          scaledSize: new google.maps.Size(40, 40),
-        });
-      }, 1000);
-    });
+    //     marker.setIcon({
+    //       url: icon.url,
+    //       scaledSize: new google.maps.Size(40, 40),
+    //     });
+    //   }, 1000);
+    // });
 
     markers.value.push(marker);
   });

@@ -22,10 +22,13 @@
 
 <script setup>
 const route = useRoute();
-const slug = route.params.slug;
+
+const slug = computed(() => {
+  return route?.params?.slug;
+});
 
 const { requestOptions } = useRequestOptions();
-const { data, error } = await useFetch(`/products/${slug}`, {
+const { data, error } = await useFetch(`/products/${slug.value}`, {
   method: "get",
   ...requestOptions,
 });

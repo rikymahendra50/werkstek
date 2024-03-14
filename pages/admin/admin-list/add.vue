@@ -95,7 +95,7 @@ const form = ref({
   confirm_password: undefined,
 });
 
-async function onSubmit() {
+async function onSubmit(values, ctx) {
   loading.value = true;
 
   const { data, error } = await useFetch(`/admins`, {
@@ -116,13 +116,14 @@ async function onSubmit() {
       type: "error",
       text: error.value?.data?.message ?? "Something went wrong",
     });
-  } else if (data.value) {
+  } else {
     snackbar.add({
       type: "success",
       text: "Your data registration is Success, We will confirm soon",
     });
     router.push("/admin/admin-list");
   }
+  loading.value = false;
 }
 
 useHead({

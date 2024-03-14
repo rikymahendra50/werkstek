@@ -32,6 +32,7 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
+const router = useRouter();
 
 const route = useRoute();
 const slug = computed(() => {
@@ -46,7 +47,7 @@ const { data: category } = await useFetch(
   }
 );
 
-const name = ref(category.value.data.name);
+const name = ref(category?.value?.data?.name);
 
 async function onSubmit(values, ctx) {
   loading.value = true;

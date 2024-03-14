@@ -114,7 +114,7 @@
                   </label>
                 </div>
               </fieldset>
-              <!-- <Map :AllData="filteredData.data" /> -->
+              <Map :AllData="dataProduct.data" />
             </div>
           </div>
         </div>
@@ -134,6 +134,8 @@
             :longitude="item?.longitude"
             :link="`/onze-locaties/${item.slug}`"
             :price="item?.price"
+            :email="item?.email"
+            :phone="item?.phone_number"
             :image="item?.images[0]?.image"
             :rating="item?.rating"
           />
@@ -248,17 +250,30 @@ const { data: dataForFilter } = await useFetch("/products", {
   method: "get",
   ...requestOptions,
 });
-const arrayLocation = dataForFilter?.value?.data?.map((item) => item.location);
-let city = ref([]);
-let citySet = {};
-arrayLocation.forEach((element) => {
-  const cityName = element.name;
-  const cityId = element.id;
-  if (!citySet[cityName]) {
-    citySet[cityName] = cityId;
-    city.value.push({ name: cityName, id: cityId });
-  }
+
+const { data: locations } = await useFetch("/locations", {
+  method: "get",
+  ...requestOptions,
 });
+
+// const arrayLocation = locations?.value?.data?.map((item) => item.name);
+
+// const arrayLocation = locations?.value?.data?.map((item) => item.);
+// let city = ref(arrayLocation);
+
+// let citySet = {};
+// arrayLocation.forEach((element) => {
+//   const cityName = element.name;
+//   const cityId = element.id;
+//   if (!citySet[cityName]) {
+//     citySet[cityName] = cityId;
+//     city.value.push({ name: cityName, id: cityId });
+//   }
+// });
+
+const arrayLocation = locations?.value?.data?.map((item) => item);
+let city = ref(arrayLocation);
+
 // end location
 
 // untuk mengelola soort locatie
@@ -317,16 +332,15 @@ const {
   data: dataProduct,
   error,
   refresh,
-} = await useAsyncData("dataProduct", async () => {
-  const response = await $fetch(
+} = await useAsyncData("dataProduct", () =>
+  $fetch(
     `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&filter[productFacility.facility_id]=${selectedFunctie.value}`,
     {
       method: "get",
       ...requestOptions,
     }
-  );
-  return response;
-});
+  )
+);
 
 function replaceWindow() {
   let filters = [];

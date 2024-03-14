@@ -1,7 +1,7 @@
 <template>
   <CompAdminBackButton link="contact" linkTitle="Detail Contact" />
   <div v-if="pending">Loading...</div>
-  <div v-if="data && data?.data" class="overflow-y-auto max-h-[70%]">
+  <div v-if="data && data?.data" class="overflow-y-auto">
     <table class="table">
       <tbody>
         <tr>

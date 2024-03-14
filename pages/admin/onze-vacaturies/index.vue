@@ -105,11 +105,7 @@
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-
-// const { data: Vacaturies } = await useFetch(`/admins/products`, {
-//   method: "get",
-//   ...requestOptions,
-// });
+const { snackbar } = useSnackbar();
 
 const router = useRouter();
 const route = useRoute();
@@ -179,24 +175,16 @@ const showModal = (index) => {
 
 const deleteLocatie = async (slug) => {
   loading.value = true;
-  await useFetch(`/admins/products/${slug}`, {
-    method: "DELETE",
-    ...requestOptions,
-  });
-
-  if (error.value) {
-    snackbar.add({
-      type: "error",
-      text: error.value?.data?.message ?? "Something went wrong",
-    });
-  } else {
-    snackbar.add({
-      type: "success",
-      text: "Delete Property Success",
+  try {
+    await useFetch(`/admins/products/${slug}`, {
+      method: "DELETE",
+      ...requestOptions,
     });
     window.location.reload();
+  } catch (error) {
+    console.error("Error:", error);
   }
-  loading.value = false;
+  loading.value = true;
 };
 
 useHead({

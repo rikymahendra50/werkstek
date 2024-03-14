@@ -16,8 +16,6 @@ const props = defineProps({
   AllData: {},
 });
 
-console.log(props.AllData);
-
 let googleMapsScriptLoaded = false;
 
 let map = ref(null);
@@ -96,7 +94,7 @@ const setupMap = () => {
     const contentString = `
       <div class="max-w-[190px] w-full h-full flex flex-col text-end border-2">
         <div class="relative">
-          <img src="${location.image}" alt="${location.name}" class="w-full min-h-[100px]">
+          <img src="${location?.location?.image}" alt="${location?.location?.name}" class="w-full min-h-[100px]">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
         </div>
         <div class="px-2 pb-4">

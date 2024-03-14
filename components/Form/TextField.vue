@@ -9,7 +9,7 @@
     :class="className"
     v-bind="$attrs"
   />
-  <VeeErrorMessage :name="name" class="form-error-message" />
+  <VeeErrorMessage :name="name" class="form-error-message text-red-600" />
 </template>
 
 <script setup lang="ts">
@@ -20,7 +20,6 @@ defineOptions({
 
 const props = defineProps({
   type: {
-    type: String,
     default: "text",
   },
   modelValue: [String, Number],

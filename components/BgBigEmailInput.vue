@@ -52,13 +52,13 @@
         :style="{ WebkitAppearance: 'none', color: 'white' }"
       />
       <button
-        class="rounded-full bg-tertiary text-tertiary hover:bg-opacity-40 transition"
+        class="rounded-full bg-tertiary text-tertiary hover:bg-opacity-40 transition ml-2 my-2 mr-1"
         type="submit"
         :disabled="loading"
       >
         <svg
-          width="34"
-          height="34"
+          width="40"
+          height="40"
           viewBox="0 0 24 25"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

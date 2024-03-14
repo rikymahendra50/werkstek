@@ -357,12 +357,12 @@ const dataIsSaleAble = ref([
   {
     id: 1,
     name: "Yes",
-    value: 0,
+    value: 1,
   },
   {
     id: 2,
     name: "No",
-    value: 1,
+    value: 0,
   },
 ]);
 

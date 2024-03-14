@@ -62,11 +62,11 @@
               :to="`/onze-locaties/${itemSlider.slug}`"
               class="absolute inset-0 flex flex-col justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50"
             >
-              <h2 class="text-3xl">{{ itemSlider.location.name }}</h2>
-              <p class="text-sm py-1">{{ itemSlider.location.name }}</p>
+              <h2 class="text-3xl">{{ itemSlider?.location?.name }}</h2>
+              <p class="text-sm py-1">{{ itemSlider?.location?.name }}</p>
               <h4 class="text-lg font-semibold">Opervlakte</h4>
               <p class="text-sm py-1">
-                € {{ itemSlider.price }} p/{{ itemSlider.rent_type }}
+                € {{ itemSlider?.price }} p/{{ itemSlider?.rent_type }}
               </p>
               <p class="text-sm">Neem een kijkje ></p>
             </NuxtLink>

@@ -55,8 +55,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Add Category Blog Success",
     });
-
-    ctx.resetForm();
+    router.push("/admin/facility");
   }
   loading.value = false;
 }

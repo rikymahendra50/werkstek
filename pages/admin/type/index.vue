@@ -98,7 +98,7 @@ const deleteType = async (categoryslug) => {
   } catch (error) {
     console.error("Error:", error);
   }
-  loading.value = true;
+  loading.value = false;
 };
 
 useHead({

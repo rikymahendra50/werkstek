@@ -97,22 +97,14 @@ const showEditModal = (index) => {
 
 const deleteLevelType = async (slug) => {
   loading.value = true;
-  await useFetch(`/admins/level-types/${slug}`, {
-    method: "DELETE",
-    ...requestOptions,
-  });
-  window.location.reload();
-
-  if (error.value) {
-    snackbar.add({
-      type: "error",
-      text: error.value?.data?.message ?? "Something went wrong",
+  try {
+    await useFetch(`/admins/level-types/${slug}`, {
+      method: "delete",
+      ...requestOptions,
     });
-  } else {
-    snackbar.add({
-      type: "success",
-      text: "Delete Level Type Success",
-    });
+    window.location.reload();
+  } catch (error) {
+    console.error("Error:", error);
   }
   loading.value = false;
 };
