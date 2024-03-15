@@ -5,7 +5,7 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Facility</div>
+          <div class="text-xl md:text-3xl font-bold">Facilityy</div>
         </div>
         <CompAdminButtonAddIndex name="Facility" link="facility" />
       </div>
