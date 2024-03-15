@@ -1,50 +1,51 @@
 <template>
   <CompAdminBackButton link="community" linkTitle="Edit Community" />
-  <VeeForm @submit="onSubmit" v-slot="{ errors }">
-    <!-- {{ props.eachBlog?.category_id }} -->
-    <div class="grid mt-10 p-3 gap-4">
-      <div>
-        <BlogImageCrop
-          :loading="loading"
-          :existingimage="dataSlug?.image"
-          v-model="selectedImage"
-        />
-      </div>
-      <label for="Title">Title</label>
-      <VeeField
-        id="Title"
-        type="text"
-        name="Title"
-        placeholder="Input Title"
-        class="input input-bordered w-full"
-        v-model="formData.title"
-        autocomplete="off"
-      />
-      <div class="flex flex-col mt-5">
-        <label for="body">Body</label>
-        <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
-        <VeeErrorMessage name="body" />
-      </div>
-      <div class="flex flex-col mt-5">
-        <label for="Meta">Meta</label>
+  <div class="grid grid-cols-2">
+    <VeeForm @submit="onSubmit" v-slot="{ errors }">
+      <div class="grid p-3 gap-4">
+        <div>
+          <BlogImageCrop
+            :loading="loading"
+            :existingimage="dataSlug?.image"
+            v-model="selectedImage"
+          />
+        </div>
+        <label for="Title">Title</label>
         <VeeField
-          id="Meta"
-          as="textarea"
-          name="Meta"
-          placeholder="Input Meta"
-          class="textarea textarea-bordered w-full"
-          v-model="formData.meta"
+          id="Title"
+          type="text"
+          name="Title"
+          placeholder="Input Title"
+          class="input input-bordered w-full"
+          v-model="formData.title"
           autocomplete="off"
         />
+        <div class="flex flex-col mt-5">
+          <label for="body">Body</label>
+          <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
+          <VeeErrorMessage name="body" />
+        </div>
+        <div class="flex flex-col mt-5">
+          <label for="Meta">Meta</label>
+          <VeeField
+            id="Meta"
+            as="textarea"
+            name="Meta"
+            placeholder="Input Meta"
+            class="textarea textarea-bordered w-full"
+            v-model="formData.meta"
+            autocomplete="off"
+          />
+        </div>
       </div>
-    </div>
-    <div class="flex justify-end mt-5">
-      <CompAdminButtonAddForm
-        buttonName="Edit Community"
-        :isLoading="loading"
-      />
-    </div>
-  </VeeForm>
+      <div class="flex justify-end mt-5">
+        <CompAdminButtonAddForm
+          buttonName="Edit Community"
+          :isLoading="loading"
+        />
+      </div>
+    </VeeForm>
+  </div>
 </template>
 
 <script setup>

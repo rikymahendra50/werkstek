@@ -53,6 +53,12 @@ export default function () {
     })
   );
 
+  const singleNameField = toTypedSchema(
+    object({
+      name: string().min(1, "Name is required"),
+    })
+  );
+
   const emailField = string().email("Please enter a valid email");
   const passwordField = string()
     .min(7, "Password should be at least 7 characters")
@@ -135,6 +141,7 @@ export default function () {
   );
 
   return {
+    singleNameField,
     contactSchema,
     formInput,
     loginSchema,

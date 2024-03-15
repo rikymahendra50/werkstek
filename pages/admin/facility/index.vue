@@ -29,7 +29,7 @@
                 <!-- <td class="font-medium">{{ item.icon }}</td> -->
                 <td class="flex justify-center gap-4 my-1">
                   <NuxtLink
-                    :to="`/admin/facility/edit/${item.name}`"
+                    :to="`/admin/facility/edit/${item.slug}`"
                     class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
                   >
                     <icon name="i-heroicons-pencil-square" />
@@ -49,7 +49,7 @@
                       <div class="modal-action">
                         <form method="dialog">
                           <button
-                            @click="deleteFacility(item.id)"
+                            @click="deleteFacility(item.slug)"
                             class="btn btn-outline btn-error mr-3"
                           >
                             Delete

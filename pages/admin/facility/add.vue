@@ -2,25 +2,28 @@
   <section>
     <CompAdminBackButton link="facility" linkTitle="Add Facility" />
     <div class="grid grid-cols-2">
-      <form @submit.prevent="onSubmit">
-        <div class="grid mt-8 gap-3">
+      <VeeForm
+        @submit="onSubmit"
+        :validation-schema="singleNameField"
+        v-slot="{ errors }"
+      >
+        <div class="grid gap-3">
           <!-- <span>Image</span>
           <BlogImageCrop :loading="loading" v-model="selectedImage" /> -->
-          <div class="flex flex-col">
-            <label for="Name">Name</label>
-            <input
-              id="Name"
-              type="text"
-              placeholder="Input Name"
-              class="input input-bordered w-full"
+          <div class="flex flex-col gap-2">
+            <label for="name">Facility</label>
+            <FormTextField
+              id="name"
+              name="name"
               v-model="formData.name"
-              autocomplete="off"
-              required
+              placeholder="Input Facility Name"
+              class="input-bordered"
+              autocomplete="on"
             />
           </div>
-          <button type="button" class="btn hidden" @click="selectImage">
+          <!-- <button type="button" class="btn" @click="selectImage">
             Choose Image
-          </button>
+          </button> -->
         </div>
         <div class="flex justify-end mt-5">
           <CompAdminButtonAddForm
@@ -28,7 +31,7 @@
             :isLoading="loading"
           />
         </div>
-      </form>
+      </VeeForm>
     </div>
   </section>
 </template>
@@ -39,6 +42,7 @@ const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const route = useRoute();
 const router = useRouter();
+const { singleNameField } = useSchema();
 
 const formData = ref({
   name: undefined,
@@ -81,7 +85,7 @@ async function onSubmit(values, ctx) {
     formDataT.append("icon", selectedImage.value);
   }
 
-  const { error, data } = await useFetch(`/admins/facility`, {
+  const { error, data } = await useFetch(`/admins/facilities`, {
     method: "POST",
     body: formDataT,
     ...requestOptions,

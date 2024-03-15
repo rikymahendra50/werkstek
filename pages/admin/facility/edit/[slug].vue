@@ -1,16 +1,21 @@
 <template>
   <section>
     <CompAdminBackButton link="facility" linkTitle="Edit Facility" />
-    <form @submit.prevent="onSubmit" class="max-h-[400px] grid grid-cols-2">
+    <VeeForm
+      @submit.prevent="onSubmit"
+      :validation-schema="singleNameField"
+      v-slot="{ errors }"
+      class="grid grid-cols-2"
+    >
       <div class="grid grid-cols-1 gap-3">
-        <div class="flex flex-col">
-          <label for="Name">Name</label>
-          <input
-            id="Name"
-            type="text"
-            placeholder="Input Name"
-            class="input input-bordered w-full"
+        <div class="flex flex-col gap-2">
+          <label for="name">Edit Facility</label>
+          <FormTextField
+            id="name"
+            name="name"
             v-model="formData.name"
+            placeholder="Input Facility Name"
+            class="input-bordered"
             autocomplete="on"
           />
         </div>
@@ -29,7 +34,7 @@
           />
         </div>
       </div>
-    </form>
+    </VeeForm>
   </section>
 </template>
 
@@ -40,8 +45,7 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 const router = useRouter();
-
-console.log(slug.value);
+const { singleNameField } = useSchema();
 
 const { data: facilities, error } = await useFetch(
   `/admins/facilities/${slug.value}`,

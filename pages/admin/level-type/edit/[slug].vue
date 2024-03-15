@@ -1,16 +1,20 @@
 <template>
   <CompAdminBackButton link="level-type" linkTitle="Edit Level Type" />
   <div class="grid grid-cols-2 px-3">
-    <VeeForm @submit="onSubmit">
-      <label for="Name">Name</label>
-      <VeeField
-        id="Name"
-        type="text"
-        name="Name"
-        placeholder="Input Level Type"
-        class="input input-bordered w-full"
+    <VeeForm
+      @submit="onSubmit"
+      :validation-schema="singleNameField"
+      v-slot="{ errors }"
+      class="grid gap-3"
+    >
+      <label for="name">Level Type</label>
+      <FormTextField
+        id="name"
+        name="name"
         v-model="name"
-        autocomplete="off"
+        placeholder="Level Type"
+        class="input-bordered"
+        autocomplete="on"
       />
       <div class="flex justify-end mt-5">
         <CompAdminButtonAddForm
