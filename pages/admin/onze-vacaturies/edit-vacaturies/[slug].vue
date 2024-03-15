@@ -454,7 +454,7 @@ const formData = ref({
 });
 
 onMounted(() => {
-  // parseInt(formData?.value?.rating);
+  formData.value.price = parseInt(AllDataSlug?.value?.price);
   formData.value.rating = parseInt(AllDataSlug?.value?.rating);
 });
 
