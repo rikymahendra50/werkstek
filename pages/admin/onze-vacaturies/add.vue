@@ -14,7 +14,7 @@
         <FormTextField
           id="name"
           name="name"
-          v-model="productsData.name"
+          v-model="formData.name"
           placeholder="Name"
           class="input-bordered"
           autocomplete="on"
@@ -23,7 +23,7 @@
       <div class="flex flex-col my-5 w-full">
         <label for="body">Description</label>
         <FormTextEditor
-          v-model="productsData.description"
+          v-model="formData.description"
           :is-error="!!errors.body"
         />
         <VeeErrorMessage name="body" />
@@ -35,7 +35,7 @@
         <FormTextField
           id="email"
           name="email"
-          v-model="productsData.email"
+          v-model="formData.email"
           placeholder="ex:werstek@gmail.com"
           class="input-bordered"
           autocomplete="on"
@@ -49,7 +49,7 @@
           id="phone"
           name="phone"
           type="number"
-          v-model="productsData.phone_number"
+          v-model="formData.phone_number"
           placeholder="ex:6221210291"
           class="input-bordered"
           autocomplete="on"
@@ -63,7 +63,7 @@
           id="latitude"
           name="latitude"
           type="number"
-          v-model="productsData.latitude"
+          v-model="formData.latitude"
           placeholder="ex:51.9934345296239"
           class="input-bordered"
           autocomplete="on"
@@ -77,7 +77,7 @@
           id="longitude"
           name="longitude"
           type="number"
-          v-model="productsData.longitude"
+          v-model="formData.longitude"
           placeholder="ex:5.5162370519396349"
           class="input-bordered"
           autocomplete="on"
@@ -92,7 +92,7 @@
           id="price"
           name="price"
           type="number"
-          v-model="productsData.price"
+          v-model="formData.price"
           placeholder="ex:80"
           class="input-bordered"
           autocomplete="on"
@@ -107,7 +107,7 @@
           id="renttype"
           name="renttype"
           as="select"
-          v-model="productsData.rent_type"
+          v-model="formData.rent_type"
           class="select select-bordered w-full"
           placeholder="renttype"
           autocomplete="renttype"
@@ -130,7 +130,7 @@
           id="areasize"
           name="areasize"
           type="number"
-          v-model="productsData.area_size"
+          v-model="formData.area_size"
           placeholder="ex:80"
           class="input-bordered"
           autocomplete="on"
@@ -145,7 +145,7 @@
           id="rating"
           name="rating"
           type="number"
-          v-model="productsData.rating"
+          v-model="formData.rating"
           placeholder="ex:10"
           class="input-bordered"
           autocomplete="off"
@@ -160,7 +160,7 @@
           id="location"
           name="location"
           as="select"
-          v-model="productsData.location_id"
+          v-model="formData.location_id"
           class="select select-bordered w-full"
           placeholder="location"
           autocomplete="location"
@@ -184,7 +184,7 @@
           id="type"
           name="type"
           as="select"
-          v-model="productsData.type_id"
+          v-model="formData.type_id"
           class="select select-bordered w-full"
           placeholder="type"
           autocomplete="off"
@@ -205,7 +205,7 @@
           id="leveltype"
           name="leveltype"
           as="select"
-          v-model="productsData.level_type_id"
+          v-model="formData.level_type_id"
           class="select select-bordered w-full"
           placeholder="Level Type"
           autocomplete="off"
@@ -236,7 +236,7 @@
               :name="`facilities + ${item.name}`"
               type="checkbox"
               :value="{ facility_id: item.id }"
-              v-model="productsData.product_facilities"
+              v-model="formData.product_facilities"
               placeholder="facilities"
               autocomplete="facilities"
             />
@@ -260,7 +260,7 @@
               :name="`privileges + ${item.name}`"
               type="checkbox"
               :value="{ privilege: item.name }"
-              v-model="productsData.product_privileges"
+              v-model="formData.product_privileges"
               placeholder="privileges"
               autocomplete="privileges"
             />
@@ -272,7 +272,7 @@
       <div class="flex-col my-2 w-full hidden">
         <div class="grid gap-2">
           <div class="flex items-center">
-            <span>Is SaleAble</span>
+            <span>Is Saleable</span>
           </div>
           <label
             v-for="item in dataIsSaleAble"
@@ -284,7 +284,7 @@
               :name="`isSaleAble + ${item.name}`"
               type="radio"
               :value="item.value"
-              v-model="productsData.is_saleable"
+              v-model="formData.is_saleable"
               placeholder="privileges"
               autocomplete="privileges"
             />
@@ -357,7 +357,7 @@ const { data: levelType } = await useFetch(`/admins/level-types`, {
   ...requestOptions,
 });
 
-const productsData = ref({
+const formData = ref({
   name: undefined,
   description: undefined,
   email: undefined,
@@ -381,7 +381,7 @@ async function onSubmit(values, ctx) {
 
   const { data, error } = await useFetch("/admins/products", {
     method: "POST",
-    body: JSON.stringify(productsData.value),
+    body: JSON.stringify(formData.value),
     ...requestOptions,
   });
 

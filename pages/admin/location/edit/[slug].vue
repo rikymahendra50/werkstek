@@ -1,6 +1,7 @@
 <template>
   <section>
     <CompAdminBackButton link="location" linkTitle="Edit Location" />
+    <!-- {{ locations?.data }} -->
     <form @submit.prevent="onSubmit" class="max-h-[400px]">
       <div class="grid grid-cols-2 gap-3">
         <div class="flex flex-col gap-2">
@@ -17,8 +18,10 @@
           <BlogImageCrop
             :loading="loading"
             v-model="selectedImage"
-            :existingimage="locations?.data.image"
+            :existingimage="locations?.data?.image"
           />
+          <!-- <span>Icon</span>
+          <BlogImageCrop :loading="loading" v-model="selectedIcon" /> -->
           <div class="flex justify-end mt-5">
             <CompAdminButtonAddForm
               buttonName="Edit Location"
@@ -55,6 +58,7 @@ const selectImage = () => {
 
 const imagePreview = ref();
 const selectedImage = ref();
+const selectedIcon = ref();
 
 function saveToPreviewImage(event) {
   imagePreview.value = URL.createObjectURL(event.target.files[0]);
@@ -72,6 +76,8 @@ const formData = ref({
 async function onSubmit(values, ctx) {
   loading.value = true;
 
+  console.log(selectedImage.value);
+
   const object = { ...formData.value };
 
   // console.log(object);
@@ -86,6 +92,10 @@ async function onSubmit(values, ctx) {
   if (selectedImage.value) {
     formDataT.append("image", selectedImage.value);
   }
+
+  // if (selectedIcon.value) {
+  //   formDataT.append("icon", selectedIcon.value);
+  // }
 
   const { error, data } = await useFetch(
     `/admins/locations/${slug.value}?_method=PUT`,
@@ -109,7 +119,6 @@ async function onSubmit(values, ctx) {
     });
     router.push("/admin/location");
   }
-
   loading.value = false;
 }
 

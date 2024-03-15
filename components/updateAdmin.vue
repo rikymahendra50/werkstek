@@ -119,8 +119,6 @@ async function onSubmit(values, ctx) {
     formDataT.append(item, objectItem);
   }
 
-  // console.log(selectedImage.value);
-
   if (selectedImage.value) {
     formDataT.append("image", selectedImage.value);
   }

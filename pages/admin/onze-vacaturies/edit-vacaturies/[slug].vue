@@ -4,22 +4,21 @@
     <VeeForm
       @submit="onSubmit"
       class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-8"
+      :validation-schema="formInput"
       v-slot="{ errors }"
     >
       <div class="flex flex-col w-full">
         <div class="flex items-center">
           <label for="name">Name</label>
         </div>
-        <VeeField
+        <FormTextField
           id="name"
           name="name"
-          type="text"
           v-model="formData.name"
-          class="input input-bordered w-full input-md"
           placeholder="Name"
-          autocomplete="off"
+          class="input-bordered"
+          autocomplete="on"
         />
-        <VeeErrorMessage name="name" class="text-sm text-error" />
       </div>
       <div class="flex flex-col my-5 w-full">
         <span for="body">Description</span>
@@ -34,14 +33,13 @@
         <div class="flex items-center">
           <label for="email">Email</label>
         </div>
-        <VeeField
+        <FormTextField
           id="email"
           name="email"
-          type="text"
           v-model="formData.email"
-          class="input input-bordered w-full input-md"
-          placeholder="Email"
-          autocomplete="off"
+          placeholder="ex:werstek@gmail.com"
+          class="input-bordered"
+          autocomplete="on"
         />
       </div>
 
@@ -49,14 +47,14 @@
         <div class="flex items-center">
           <label for="phoneNumber">Phone Number</label>
         </div>
-        <VeeField
-          id="phoneNumber"
-          name="phoneNumber"
-          type="text"
+        <FormTextField
+          id="phone"
+          name="phone"
+          type="number"
           v-model="formData.phone_number"
-          class="input input-bordered w-full input-md"
-          placeholder="Phone Number"
-          autocomplete="off"
+          placeholder="ex:6221210291"
+          class="input-bordered"
+          autocomplete="on"
         />
       </div>
 
@@ -64,14 +62,14 @@
         <div class="flex items-center">
           <label for="latitude">Latitude</label>
         </div>
-        <VeeField
+        <FormTextField
           id="latitude"
           name="latitude"
-          type="text"
+          type="number"
           v-model="formData.latitude"
-          class="input input-bordered w-full input-md"
-          placeholder="Latitude"
-          autocomplete="off"
+          placeholder="ex:51.9934345296239"
+          class="input-bordered"
+          autocomplete="on"
         />
       </div>
 
@@ -94,14 +92,14 @@
         <div class="flex items-center">
           <label for="price">Price</label>
         </div>
-        <VeeField
+        <FormTextField
           id="price"
           name="price"
           type="number"
           v-model="formData.price"
-          class="input input-bordered w-full input-md"
-          placeholder="Price"
-          autocomplete="off"
+          placeholder="ex:80"
+          class="input-bordered"
+          autocomplete="on"
         />
       </div>
 
@@ -122,20 +120,24 @@
           <option value="monthly">Montly</option>
           <option value="yearly">Yearly</option>
         </VeeField>
+        <VeeErrorMessage
+          name="renttype"
+          class="form-error-message text-red-600"
+        />
       </div>
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="areaSize">Area Size</label>
         </div>
-        <VeeField
-          id="areaSize"
-          name="areaSize"
-          type="text"
+        <FormTextField
+          id="areasize"
+          name="areasize"
+          type="number"
           v-model="formData.area_size"
-          class="input input-bordered w-full input-md"
-          placeholder="Area Size"
-          autocomplete="off"
+          placeholder="ex:80"
+          class="input-bordered"
+          autocomplete="on"
         />
       </div>
 
@@ -143,13 +145,13 @@
         <div class="flex items-center">
           <label for="rating">Rating</label>
         </div>
-        <VeeField
+        <FormTextField
           id="rating"
           name="rating"
-          type="text"
+          type="number"
           v-model="formData.rating"
-          class="input input-bordered w-full input-md"
-          placeholder="Rating"
+          placeholder="ex:10"
+          class="input-bordered"
           autocomplete="off"
         />
       </div>
@@ -172,6 +174,10 @@
             {{ item.name }}
           </option>
         </VeeField>
+        <VeeErrorMessage
+          name="location"
+          class="form-error-message text-red-600"
+        />
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -192,6 +198,7 @@
             {{ item.name }}
           </option>
         </VeeField>
+        <VeeErrorMessage name="type" class="form-error-message text-red-600" />
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -212,6 +219,10 @@
             {{ item.name }}
           </option>
         </VeeField>
+        <VeeErrorMessage
+          name="leveltype"
+          class="form-error-message text-red-600"
+        />
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -265,7 +276,7 @@
       <div class="flex flex-col my-2 w-full">
         <div class="grid gap-2">
           <div class="flex items-center">
-            <span>SaleAble</span>
+            <span>Is Saleable</span>
           </div>
           <label
             v-for="item in dataIsSaleAble"
@@ -302,6 +313,7 @@ const router = useRouter();
 const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
+const { fomInput } = useSchema();
 
 const { data: dataSlug } = await useFetch(`/admins/products/${slug.value}`, {
   method: "get",
@@ -409,7 +421,7 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Success Edit Data",
+      text: "Success Edit Property",
     });
     router.push("/admin/onze-vacaturies");
   }

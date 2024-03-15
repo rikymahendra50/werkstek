@@ -19,7 +19,7 @@
           <BlogImageCrop
             :loading="loading"
             v-model="selectedImage"
-            :existingimage="facilities?.data.icon"
+            :existingimage="facilities?.data?.icon"
           />
         </div>
         <div class="flex justify-end mt-5">
@@ -40,6 +40,8 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 const router = useRouter();
+
+console.log(slug.value);
 
 const { data: facilities, error } = await useFetch(
   `/admins/facilities/${slug.value}`,
@@ -68,7 +70,7 @@ const onUpload = (image) => {
 };
 
 const formData = ref({
-  name: facilities.value.data.name,
+  name: facilities?.value?.data?.name,
 });
 
 async function onSubmit(values, ctx) {

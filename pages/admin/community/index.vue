@@ -33,7 +33,7 @@
                     <img
                       :src="item.image"
                       :alt="`item` + index"
-                      class="object-cover"
+                      class="object-cover rounded-sm"
                     />
                   </div>
                 </td>
