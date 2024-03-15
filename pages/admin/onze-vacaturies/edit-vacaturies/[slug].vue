@@ -33,14 +33,24 @@
         <div class="flex items-center">
           <label for="email">Email</label>
         </div>
-        <FormTextField
+        <!-- <FormTextField
           id="email"
           name="email"
           v-model="formData.email"
           placeholder="ex:werstek@gmail.com"
           class="input-bordered"
           autocomplete="on"
+        /> -->
+        <VeeField
+          id="email"
+          name="email"
+          v-model="formData.email"
+          type="text"
+          class="input input-bordered w-full input-md"
+          placeholder="Email"
+          autocomplete="off"
         />
+        <VeeErrorMessage name="email" class="text-red-500" />
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -50,34 +60,45 @@
         <FormTextField
           id="phone"
           name="phone"
-          type="number"
+          type="text"
           v-model="formData.phone_number"
           placeholder="ex:6221210291"
           class="input-bordered"
           autocomplete="on"
         />
+        <VeeErrorMessage name="phone" class="text-red-500" />
       </div>
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="latitude">Latitude</label>
         </div>
-        <FormTextField
+        <!-- <FormTextField
           id="latitude"
           name="latitude"
           type="number"
           v-model="formData.latitude"
-          placeholder="ex:51.9934345296239"
+          placeholder="Latitude"
           class="input-bordered"
           autocomplete="on"
+        /> -->
+        <VeeField
+          id="latitude"
+          name="latitude"
+          v-model="formData.latitude"
+          type="text"
+          class="input input-bordered w-full input-md"
+          placeholder="Latitude"
+          autocomplete="off"
         />
+        <VeeErrorMessage name="latitude" class="text-red-500" />
       </div>
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="longitude">Longitude</label>
         </div>
-        <VeeField
+        <!-- <VeeField
           id="longitude"
           name="longitude"
           type="text"
@@ -85,7 +106,17 @@
           class="input input-bordered w-full input-md"
           placeholder="Longitude"
           autocomplete="off"
+        /> -->
+        <VeeField
+          id="longitude"
+          name="longitude"
+          v-model="formData.longitude"
+          type="text"
+          class="input input-bordered w-full input-md"
+          placeholder="Longitude"
+          autocomplete="off"
         />
+        <VeeErrorMessage name="longitude" class="text-red-500" />
       </div>
 
       <!-- <CompAdminMapForm
@@ -410,6 +441,11 @@ const formData = ref({
     privilege: privilege,
   })),
   rating: AllDataSlug.value.rating,
+});
+
+onMounted(() => {
+  // parseInt(formData?.value?.rating);
+  formData.value.rating = parseInt(AllDataSlug?.value?.rating);
 });
 
 async function onSubmit(values, ctx) {

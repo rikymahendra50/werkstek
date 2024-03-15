@@ -114,7 +114,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Success Edit Admin",
     });
-    router.push("/admin");
+    router.push("/admin/admin-list");
   }
 
   loading.value = false;

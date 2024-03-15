@@ -62,7 +62,7 @@ export default function () {
   const blogSchema = toTypedSchema(
     object({
       title: string().min(1, "Title is required"),
-      number: string().min(1, "Category is required"),
+      category: number().min(1, "Category is required"),
       meta: string().min(1, "Meta is required"),
     })
   );
@@ -105,22 +105,15 @@ export default function () {
       name: string().min(1, "Name is required"),
       // body: bodyField,
       email: emailField,
-      phone: number({
-        required_error: "Phone is required",
-      }),
-      latitude: number({
-        required_error: "Latitude is required",
-      }),
-      longitude: number({
-        required_error: "Longitude is required",
-      }),
-      price: number({
-        required_error: "Price is required",
-      }),
+      rating: number({ invalid_type_error: "Rating Required" })
+        .min(0, "Minimum 1 Rating")
+        .max(10, "Maximum 10 Rating"),
+      phone: string().min(1, "Phone is required"),
+      latitude: string().min(1, "Latitude is required"),
+      longitude: string().min(1, "Longitude is required"),
+      price: string().min(1, "price is required"),
       renttype: string().min(1, "Rent Type is required"),
-      areasize: number({
-        required_error: "Area Size is required",
-      }),
+      areasize: string().min(1, "Area Size is required"),
       location: number().min(1, "Location is required"),
       type: number().min(1, "Type is Requeired"),
       leveltype: number().min(1, "Level Type is requeired"),

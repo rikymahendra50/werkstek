@@ -4,8 +4,8 @@
     <div class="grid grid-cols-2">
       <VeeForm
         @submit="onSubmit"
-        v-slot="{ errors }"
         :validation-schema="blogSchema"
+        v-slot="{ errors }"
       >
         <div class="grid mt-10 p-3 gap-2">
           <div>
@@ -87,10 +87,6 @@ const { data: categoryBlog, error } = await useFetch(
 
 const fileInput = ref(null);
 
-const selectImage = () => {
-  fileInput.value.click();
-};
-
 const formData = ref({
   title: undefined,
   body: undefined,
@@ -100,15 +96,6 @@ const formData = ref({
 
 const imagePreview = ref();
 const selectedImage = ref();
-
-function saveToPreviewImage(event) {
-  imagePreview.value = URL.createObjectURL(event.target.files[0]);
-  selectedImage.value = event.target.files[0];
-}
-
-const onUpload = (image) => {
-  selectedImage.value = image;
-};
 
 async function onSubmit(values, ctx) {
   loading.value = true;

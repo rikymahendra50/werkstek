@@ -2,12 +2,17 @@
   <div class="grid place-items-center items-center">
     <div class="w-full p-4 justify-center">
       <CompAdminBackButton link="admin-list" linkTitle="Register Admin" />
-      <VeeForm @submit="onSubmit" v-slot="{ errors }" class="grid grid-cols-2">
+      <VeeForm
+        @submit="onSubmit"
+        v-slot="{ errors }"
+        :validation-schema="registerSchema"
+        class="grid grid-cols-2"
+      >
         <div class="grid grid-cols-1 text-left gap-4 rounded-md">
-          <FormGroup label="First Name" name="firstname">
+          <FormGroup label="First Name" name="first_name">
             <FormTextField
-              id="firstname"
-              name="firstname"
+              id="first_name"
+              name="first_name"
               v-model="form.first_name"
               placeholder="First Name"
               class="input-bordered"
@@ -16,10 +21,10 @@
             />
           </FormGroup>
 
-          <FormGroup label="Last Name" name="lastname">
+          <FormGroup label="Last Name" name="last_name">
             <FormTextField
-              id="lastname"
-              name="lastname"
+              id="last_name"
+              name="last_name"
               v-model="form.last_name"
               placeholder="Last Name"
               class="input-bordered"
@@ -53,10 +58,10 @@
             />
           </FormGroup>
 
-          <FormGroup label="Confirm Password" name="confirmPassword">
+          <FormGroup label="Confirm Password" name="confirm_password">
             <FormTextField
-              id="confirmPassword"
-              name="confirmPassword"
+              id="confirm_password"
+              name="confirm_password"
               type="password"
               v-model="form.confirm_password"
               placeholder="Confirm Password"

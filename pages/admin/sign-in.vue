@@ -111,7 +111,7 @@ useHead({
 });
 
 definePageMeta({
-  layout: "admin",
+  layout: false,
   // @ts-ignore
   middleware: ["guest"],
 });
