@@ -371,7 +371,7 @@ const formData = ref({
   type_id: undefined,
   level_type_id: undefined,
   is_saleable: dataIsSaleAble.value[0].value,
-  product_facilities: [{ facility_id: 1 }],
+  product_facilities: [],
   product_privileges: [{ privilege: "Near the beach" }],
   rating: undefined,
 });
