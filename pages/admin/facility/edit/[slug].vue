@@ -55,23 +55,7 @@ const { data: facilities, error } = await useFetch(
   }
 );
 
-// const fileInput = ref(null);
-
-// const selectImage = () => {
-//   fileInput.value.click();
-// };
-
-// const imagePreview = ref();
 const selectedImage = ref();
-
-// function saveToPreviewImage(event) {
-//   imagePreview.value = URL.createObjectURL(event.target.files[0]);
-//   selectedImage.value = event.target.files[0];
-// }
-
-// const onUpload = (image) => {
-//   selectedImage.value = image;
-// };
 
 const formData = ref({
   name: facilities?.value?.data?.name,

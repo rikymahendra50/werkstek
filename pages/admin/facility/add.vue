@@ -49,25 +49,9 @@ const formData = ref({
   name: undefined,
 });
 
-// const fileInput = ref(null);
-
-// const selectImage = () => {
-//   fileInput.value.click();
-// };
-
-// const imagePreview = ref(null);
 const selectedImage = ref(null);
 
 selectedImage.value = "/images/checkbox_checked.svg";
-
-// function saveToPreviewImage(event) {
-//   imagePreview.value = URL.createObjectURL(event.target.files[0]);
-//   selectedImage.value = event.target.files[0];
-// }
-
-// const onUpload = (image) => {
-//   selectedImage.value = image;
-// };
 
 async function onSubmit(values, ctx) {
   loading.value = true;
@@ -108,36 +92,6 @@ async function onSubmit(values, ctx) {
 
   loading.value = false;
 }
-
-// const onSubmit = async (values, ctx) => {
-//   loading.value = true;
-
-//   const formData = new FormData();
-//   formData.append("name", name.value);
-//   formData.append("image", imageTest.value);
-
-//   const { error } = await useFetch(`/admins/facility`, {
-//     method: "post",
-//     body: formData,
-//     ...requestOptions,
-//   });
-
-//   if (error.value) {
-//     ctx.setErrors(transformErrors(error.value?.data));
-//     snackbar.add({
-//       type: "error",
-//       text: error.value?.data?.message ?? "Something went wrong",
-//     });
-//   } else {
-//     snackbar.add({
-//       type: "success",
-//       text: "Add Facility Success",
-//     });
-//     ctx.resetForm();
-//   }
-
-//   loading.value = false;
-// };
 
 useHead({
   title: "Add Facility",
