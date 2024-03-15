@@ -5,7 +5,6 @@
       secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-
     <div class="md:grid md:grid-cols-12 container-custom">
       <div class="md:col-span-4 w-[97%]">
         <div class="mt-5">
@@ -353,12 +352,12 @@ function replaceWindow() {
     );
     filters = filters.concat(soortLocatieFilters);
   }
-  if (selectedMinPrice !== "" && selectedMaxPrice !== "") {
+  if (selectedMinPrice && selectedMaxPrice) {
     filters.push(`filter[min_price]=${selectedMinPrice.value}`);
     filters.push(`filter[max_price]=${selectedMaxPrice.value}`);
   }
 
-  if (selectedMeterMin !== "" && selectedMeterMax !== "") {
+  if (selectedMeterMin && selectedMeterMax) {
     filters.push(`filter[min_area]=${selectedMeterMin.value}`);
     filters.push(`filter[max_area]=${selectedMeterMax.value}`);
   }

@@ -21,9 +21,10 @@
               autocomplete="on"
             />
           </div>
-          <!-- <button type="button" class="btn" @click="selectImage">
-            Choose Image
-          </button> -->
+          <div class="flex flex-col gap-2">
+            <span>Icon</span>
+            <BlogImageCrop :loading="loading" v-model="selectedImage" />
+          </div>
         </div>
         <div class="flex justify-end mt-5">
           <CompAdminButtonAddForm
@@ -48,32 +49,31 @@ const formData = ref({
   name: undefined,
 });
 
-const fileInput = ref(null);
+// const fileInput = ref(null);
 
-const selectImage = () => {
-  fileInput.value.click();
-};
+// const selectImage = () => {
+//   fileInput.value.click();
+// };
 
-const imagePreview = ref(null);
+// const imagePreview = ref(null);
 const selectedImage = ref(null);
 
 selectedImage.value = "/images/checkbox_checked.svg";
 
-function saveToPreviewImage(event) {
-  imagePreview.value = URL.createObjectURL(event.target.files[0]);
-  selectedImage.value = event.target.files[0];
-}
+// function saveToPreviewImage(event) {
+//   imagePreview.value = URL.createObjectURL(event.target.files[0]);
+//   selectedImage.value = event.target.files[0];
+// }
 
-const onUpload = (image) => {
-  selectedImage.value = image;
-};
+// const onUpload = (image) => {
+//   selectedImage.value = image;
+// };
 
 async function onSubmit(values, ctx) {
   loading.value = true;
 
   const object = { ...formData.value };
 
-  // console.log(object);
   const formDataT = new FormData();
 
   for (const item in object) {
@@ -81,6 +81,7 @@ async function onSubmit(values, ctx) {
     const objectItem = object[item];
     formDataT.append(item, objectItem);
   }
+
   if (selectedImage.value) {
     formDataT.append("icon", selectedImage.value);
   }
@@ -100,7 +101,7 @@ async function onSubmit(values, ctx) {
   } else if (data.value) {
     snackbar.add({
       type: "success",
-      text: "Edit Blog Success",
+      text: "Add Facility Success",
     });
     router.push("/admin/facility");
   }

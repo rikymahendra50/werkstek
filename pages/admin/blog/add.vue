@@ -2,20 +2,23 @@
   <section class="overflow-auto">
     <CompAdminBackButton link="blog" linkTitle="Add Blog" />
     <div class="grid grid-cols-2">
-      <VeeForm @submit="onSubmit" v-slot="{ errors }">
-        <div class="grid mt-10 p-3 gap-4">
+      <VeeForm
+        @submit="onSubmit"
+        v-slot="{ errors }"
+        :validation-schema="blogSchema"
+      >
+        <div class="grid mt-10 p-3 gap-2">
           <div>
             <BlogImageCrop :loading="loading" v-model="selectedImage" />
           </div>
-          <label for="Title">Title</label>
-          <VeeField
-            id="Title"
-            type="text"
-            name="Title"
-            placeholder="Input Title"
-            class="input input-bordered w-full"
+          <label for="title">Title</label>
+          <FormTextField
+            id="title"
+            name="title"
             v-model="formData.title"
-            autocomplete="off"
+            placeholder="Name"
+            class="input-bordered"
+            autocomplete="on"
           />
           <div class="flex flex-col mt-5">
             <label for="body">Body</label>
@@ -38,16 +41,19 @@
                 {{ item.name }}
               </option>
             </VeeField>
+            <VeeErrorMessage
+              name="category"
+              class="form-error-message text-red-600"
+            />
           </div>
           <div class="flex flex-col mt-5">
-            <label for="Meta">Meta</label>
-            <VeeField
-              id="Meta"
-              as="textarea"
-              name="Meta"
-              placeholder="Input Meta"
-              class="textarea textarea-bordered w-full"
+            <label for="meta">Meta</label>
+            <FormTextField
+              id="meta"
+              name="meta"
               v-model="formData.meta"
+              placeholder="Input Meta"
+              class="input-bordered"
               autocomplete="off"
             />
           </div>
@@ -69,6 +75,7 @@ const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const route = useRoute();
 const router = useRouter();
+const { blogSchema } = useSchema();
 
 const { data: categoryBlog, error } = await useFetch(
   `/admins/article-categories`,

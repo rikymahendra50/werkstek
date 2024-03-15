@@ -2,7 +2,7 @@
   <header
     class="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-white px-6"
   >
-    <div class="flex items-center justify-between w-[100%] md:w-[40%] gap-4">
+    <div class="flex items-center justify-between w-[100%] lg:w-[40%] gap-4">
       <a class="font-semibold" href="#">Werkstek</a
       ><button
         @click="showDrawer = !showDrawer"

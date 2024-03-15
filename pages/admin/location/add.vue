@@ -49,7 +49,6 @@ const formData = ref({
 });
 
 async function onSubmit(values, ctx) {
-  console.lo;
   loading.value = true;
 
   const object = { ...formData.value };

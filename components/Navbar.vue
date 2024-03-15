@@ -78,7 +78,7 @@
                   Werkstek Blog
                 </NuxtLink>
               </li>
-              <li>
+              <!-- <li>
                 <NuxtLink
                   to="/onze-vacaturies"
                   class="rounded-none hover:bg-primary hover:text-white"
@@ -86,7 +86,7 @@
                 >
                   Westek Vacatures
                 </NuxtLink>
-              </li>
+              </li> -->
               <li>
                 <NuxtLink
                   to="/werkstek-community"
@@ -208,11 +208,11 @@
                   Werkstek Blog
                 </NuxtLink>
               </li>
-              <li>
+              <!-- <li>
                 <NuxtLink to="/onze-vacaturies" @click="isOpen = false">
                   Werstek Vacatures
                 </NuxtLink>
-              </li>
+              </li> -->
               <li>
                 <NuxtLink
                   to="/werkstek-community"

@@ -2,7 +2,7 @@
   <section>
     <CompAdminBackButton link="facility" linkTitle="Edit Facility" />
     <VeeForm
-      @submit.prevent="onSubmit"
+      @submit="onSubmit"
       :validation-schema="singleNameField"
       v-slot="{ errors }"
       class="grid grid-cols-2"
@@ -19,8 +19,8 @@
             autocomplete="on"
           />
         </div>
-        <div class="hidden">
-          <span>Image</span>
+        <div>
+          <span>Icon</span>
           <BlogImageCrop
             :loading="loading"
             v-model="selectedImage"
@@ -55,23 +55,23 @@ const { data: facilities, error } = await useFetch(
   }
 );
 
-const fileInput = ref(null);
+// const fileInput = ref(null);
 
-const selectImage = () => {
-  fileInput.value.click();
-};
+// const selectImage = () => {
+//   fileInput.value.click();
+// };
 
-const imagePreview = ref();
+// const imagePreview = ref();
 const selectedImage = ref();
 
-function saveToPreviewImage(event) {
-  imagePreview.value = URL.createObjectURL(event.target.files[0]);
-  selectedImage.value = event.target.files[0];
-}
+// function saveToPreviewImage(event) {
+//   imagePreview.value = URL.createObjectURL(event.target.files[0]);
+//   selectedImage.value = event.target.files[0];
+// }
 
-const onUpload = (image) => {
-  selectedImage.value = image;
-};
+// const onUpload = (image) => {
+//   selectedImage.value = image;
+// };
 
 const formData = ref({
   name: facilities?.value?.data?.name,

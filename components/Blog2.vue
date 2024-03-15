@@ -6,11 +6,11 @@
       <button
         class="categorylink"
         v-for="(category, index) in categoryData?.slice(0, 4)"
-        :key="category.id"
-        :class="{ active: selectedCategory === category.slug }"
-        @click="handleCategoryClick(category.slug)"
+        :key="category?.id"
+        :class="{ active: selectedCategory === category?.slug }"
+        @click="handleCategoryClick(category?.slug)"
       >
-        {{ category.name }}
+        {{ category?.name }}
       </button>
       <VMenu>
         <button class="btn btn-ghost hover:bg-primary">
@@ -66,9 +66,9 @@ const { data, refresh } = await useFetch(`/articles`, {
 });
 
 const categoryData = computed(() => {
-  const categories = data.value.data.map((item) => item.category);
-  const uniqueCategories = [...new Set(categories.map((cat) => cat.id))].map(
-    (id) => categories.find((cat) => cat.id === id)
+  const categories = data?.value?.data?.map((item) => item?.category);
+  const uniqueCategories = [...new Set(categories.map((cat) => cat?.id))].map(
+    (id) => categories.find((cat) => cat?.id === id)
   );
   return [{ id: null, name: "Alle" }, ...uniqueCategories];
 });
@@ -82,10 +82,10 @@ const handleCategoryClick = (categorySlug) => {
 
 const filteredData = computed(() => {
   if (!selectedCategory.value) {
-    return data.value.data;
+    return data?.value?.data;
   } else {
-    return data.value.data.filter(
-      (item) => item.category.slug === selectedCategory.value
+    return data?.value?.data.filter(
+      (item) => item?.category?.slug === selectedCategory.value
     );
   }
 });
