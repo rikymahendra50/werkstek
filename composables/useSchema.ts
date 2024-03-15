@@ -105,6 +105,7 @@ export default function () {
       name: string().min(1, "Name is required"),
       // body: bodyField,
       email: emailField,
+      body: string().min(1, "Description is required"),
       rating: number({ invalid_type_error: "Rating Required" })
         .min(0, "Minimum 1 Rating")
         .max(10, "Maximum 10 Rating"),
@@ -117,6 +118,14 @@ export default function () {
       location: number().min(1, "Location is required"),
       type: number().min(1, "Type is Requeired"),
       leveltype: number().min(1, "Level Type is requeired"),
+    }).superRefine((data, ctx) => {
+      if (data.body === "<p></p>") {
+        ctx.addIssue({
+          code: "custom",
+          message: "Body Requeired",
+          path: ["body"],
+        });
+      }
     })
   );
 

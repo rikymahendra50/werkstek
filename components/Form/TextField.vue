@@ -8,6 +8,7 @@
     @blur="handleBlur"
     :class="className"
     v-bind="$attrs"
+    :step="step1"
   />
   <VeeErrorMessage :name="name" class="form-error-message text-red-600" />
 </template>
@@ -26,6 +27,9 @@ const props = defineProps({
   name: {
     type: String,
     required: true,
+  },
+  step1: {
+    type: String,
   },
 });
 

@@ -23,11 +23,20 @@
       </div>
       <div class="flex flex-col my-5 w-full">
         <label for="body">Description</label>
+        <div class="hidden">
+          <VeeField name="body" v-model="formData.description" />
+        </div>
         <FormTextEditor
           v-model="formData.description"
           :is-error="!!errors.body"
         />
-        <VeeErrorMessage name="body" />
+        <!-- <pre>
+          {{ formData.description }}
+        </pre>
+        <pre>
+          {{ errors.body }}
+        </pre> -->
+        <VeeErrorMessage name="body" class="text-red-500" />
       </div>
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">

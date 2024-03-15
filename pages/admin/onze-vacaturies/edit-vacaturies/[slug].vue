@@ -7,6 +7,7 @@
       :validation-schema="formInput"
       v-slot="{ errors }"
     >
+      <!-- {{ errors }} -->
       <div class="flex flex-col w-full">
         <div class="flex items-center">
           <label for="name">Name</label>
@@ -21,12 +22,21 @@
         />
       </div>
       <div class="flex flex-col my-5 w-full">
-        <span for="body">Description</span>
+        <label for="body">Description</label>
+        <div class="hidden">
+          <VeeField name="body" v-model="formData.description" />
+        </div>
         <FormTextEditor
           v-model="formData.description"
           :is-error="!!errors.body"
         />
-        <VeeErrorMessage name="body" />
+        <!-- <pre>
+          {{ formData.description }}
+        </pre>
+        <pre>
+          {{ errors.body }}
+        </pre> -->
+        <VeeErrorMessage name="body" class="text-red-500" />
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -239,11 +249,11 @@
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
-          <label for="levelType">Level Type</label>
+          <label for="leveltype">Level Type</label>
         </div>
         <VeeField
-          id="levelType"
-          name="levelType"
+          id="leveltype"
+          name="leveltype"
           as="select"
           v-model="formData.level_type_id"
           class="select select-bordered w-full"
