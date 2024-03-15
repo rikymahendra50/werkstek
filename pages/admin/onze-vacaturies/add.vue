@@ -49,7 +49,7 @@
         <FormTextField
           id="phone"
           name="phone"
-          type="number"
+          type="text"
           v-model="formData.phone_number"
           placeholder="ex:6221210291"
           class="input-bordered"
@@ -63,7 +63,7 @@
         <FormTextField
           id="latitude"
           name="latitude"
-          type="number"
+          type="text"
           v-model="formData.latitude"
           placeholder="ex:51.9934345296239"
           class="input-bordered"
@@ -77,7 +77,7 @@
         <FormTextField
           id="longitude"
           name="longitude"
-          type="number"
+          type="text"
           v-model="formData.longitude"
           placeholder="ex:5.5162370519396349"
           class="input-bordered"

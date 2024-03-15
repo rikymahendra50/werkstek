@@ -17,7 +17,6 @@
               placeholder="First Name"
               class="input-bordered"
               autocomplete="on"
-              v-slot="{ errors }"
             />
           </FormGroup>
 
@@ -29,7 +28,6 @@
               placeholder="Last Name"
               class="input-bordered"
               autocomplete="on"
-              v-slot="{ errors }"
             />
           </FormGroup>
 
@@ -41,7 +39,6 @@
               placeholder="ex:myemail@gmail.com"
               class="input-bordered"
               autocomplete="on"
-              v-slot="{ errors }"
             />
           </FormGroup>
 
@@ -54,7 +51,6 @@
               placeholder="Password"
               class="input-bordered"
               autocomplete="on"
-              v-slot="{ errors }"
             />
           </FormGroup>
 
@@ -67,7 +63,6 @@
               placeholder="Confirm Password"
               class="input-bordered"
               autocomplete="on"
-              v-slot="{ errors }"
             />
           </FormGroup>
           <div class="flex justify-end">
@@ -90,7 +85,8 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const { registerSchema } = useSchema();
 const { stateForm } = useForgotPassword();
-const { snackbar } = useSnackbar();
+const snackbar = useSnackbar();
+const router = useRouter();
 
 const form = ref({
   first_name: undefined,
@@ -128,7 +124,6 @@ async function onSubmit(values, ctx) {
     });
     router.push("/admin/admin-list");
   }
-  loading.value = false;
 }
 
 useHead({
