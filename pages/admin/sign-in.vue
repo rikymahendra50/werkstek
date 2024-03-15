@@ -100,7 +100,6 @@ async function onSubmit(values: any, ctx: any) {
      *
      */
     // localPerson.value = [];
-
     window.location.replace("/admin");
   }
 
@@ -112,7 +111,9 @@ useHead({
 });
 
 definePageMeta({
-  layout: false,
+  layout: "admin",
+  // @ts-ignore
+  middleware: ["guest"],
 });
 </script>
 

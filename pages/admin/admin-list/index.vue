@@ -10,13 +10,14 @@
         <CompAdminButtonAddIndex name="Admin" link="admin-list" />
       </div>
       <div>
-        <div class="overflow-x-auto !py-2 border rounded-t-lg">
+        <div class="overflow-x-auto !py-2 rounded-t-lg">
           <table class="table table-xs md:table-md w-full rounded-t-xl">
             <thead class="h-12">
               <tr>
                 <th class="font-medium">First Name</th>
                 <th class="font-medium">Last Name</th>
                 <th class="font-medium">Email</th>
+                <th class="font-medium"></th>
               </tr>
             </thead>
             <tbody>
@@ -32,6 +33,61 @@
                   {{ item.last_name }}
                 </td>
                 <td>{{ item.email }}</td>
+                <td class="flex justify-center items-center gap-4 h-full">
+                  <div
+                    class="btn btn-sm normal-case btn-ghost btn-square"
+                    @click="showModal(index)"
+                  >
+                    <icon name="i-heroicons-eye" class="cursor-pointer" />
+                  </div>
+                  <dialog :id="'my_modal_' + index" class="modal">
+                    <div class="modal-box">
+                      <h3 class="font-bold text-xl text-green-500">
+                        Detail Admin
+                      </h3>
+                      <p class="py-4 text-lg grid">
+                        <!-- {{ item }}
+                        <div class="grid">
+                          <span>First Name</span>
+                          <p>{{ item?.first_name }}</p>
+                        </div>
+                        <div class="grid">
+                          <span>Last Name</span>
+                          <p>{{ item?.last_name }}</p>
+                        </div>
+                        
+                        <p>{{  }}</p>
+                        <p>{{ item?.email }}</p> -->
+                        <table>
+                          <tr>
+                            <td>First Name</td>
+                            <td>Last Name</td>
+                            <td>Email</td>
+                          </tr>
+                          <tr>
+                            <td>{{ item?.first_name }}</td>
+                            <td>{{ item?.last_name }}</td>
+                            <td>{{ item?.email }}</td>
+                          </tr>
+                        </table>
+                      </p>
+                      <div class="modal-action">
+                        <form method="dialog">
+                          <button class="btn">Close</button>
+                        </form>
+                      </div>
+                    </div>
+                  </dialog>
+                  <NuxtLink
+                    :to="`/admin/admin-list/${item.uuid}`"
+                    class="btn btn-sm normal-case btn-ghost btn-square"
+                  >
+                    <icon
+                      name="i-heroicons-pencil-square"
+                      class="cursor-pointer"
+                    />
+                  </NuxtLink>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -62,6 +118,14 @@ const search = ref("");
 //   method: "get",
 //   ...requestOptions,
 // });
+
+const showModal = (index) => {
+  const modalId = `my_modal_${index}`;
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.showModal();
+  }
+};
 
 const {
   data: admins,

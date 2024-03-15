@@ -113,7 +113,7 @@
                   </label>
                 </div>
               </fieldset>
-              <Map :AllData="dataProduct.data" />
+              <!-- <Map :AllData="dataProduct?.data" /> -->
             </div>
           </div>
         </div>
@@ -125,7 +125,7 @@
         >
           <eachLocaties
             v-if="dataProduct.data"
-            v-for="(item, index) in dataProduct.data"
+            v-for="(item, index) in dataProduct?.data"
             :key="item?.id"
             :name="item?.location?.name"
             :type="item?.level_type?.name"
@@ -255,24 +255,8 @@ const { data: locations } = await useFetch("/locations", {
   ...requestOptions,
 });
 
-// const arrayLocation = locations?.value?.data?.map((item) => item.name);
-
-// const arrayLocation = locations?.value?.data?.map((item) => item.);
-// let city = ref(arrayLocation);
-
-// let citySet = {};
-// arrayLocation.forEach((element) => {
-//   const cityName = element.name;
-//   const cityId = element.id;
-//   if (!citySet[cityName]) {
-//     citySet[cityName] = cityId;
-//     city.value.push({ name: cityName, id: cityId });
-//   }
-// });
-
 const arrayLocation = locations?.value?.data?.map((item) => item);
 let city = ref(arrayLocation);
-
 // end location
 
 // untuk mengelola soort locatie
@@ -313,6 +297,7 @@ const { data: facility } = await useFetch("/facilities", {
   method: "get",
   ...requestOptions,
 });
+
 const functieCheckbox = facility?.value?.data;
 function isSelectedFuncti(id) {
   return selectedFunctie.value.includes(id);
@@ -325,21 +310,15 @@ function handlefunctieCheckbox(id) {
     selectedFunctie.value = [...selectedFunctie.value, id];
   }
 }
-// end untuk mengelola facility
 
-const {
-  data: dataProduct,
-  error,
-  refresh,
-} = await useAsyncData("dataProduct", () =>
-  $fetch(
-    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&filter[productFacility.facility_id]=${selectedFunctie.value}`,
-    {
-      method: "get",
-      ...requestOptions,
-    }
-  )
-);
+const selectedFacilities = computed(() => {
+  if (selectedFunctie.value.length > 0) {
+    return `filter[facilities]=${selectedFunctie.value.join("|")}`;
+  } else {
+    return "";
+  }
+});
+// end untuk mengelola facility
 
 function replaceWindow() {
   let filters = [];
@@ -362,11 +341,8 @@ function replaceWindow() {
     filters.push(`filter[max_area]=${selectedMeterMax.value}`);
   }
 
-  if (selectedFunctie.value.length > 0) {
-    const functieFilters = selectedFunctie.value.map(
-      (id) => `filter[productFacility.facility_id]=${id}`
-    );
-    filters = filters.concat(functieFilters);
+  if (selectedFacilities?.value) {
+    filters.push(selectedFacilities.value);
   }
 
   const queryString = filters.join("&");
@@ -377,4 +353,18 @@ function replaceWindow() {
   router.replace(url);
   refresh();
 }
+
+const {
+  data: dataProduct,
+  error,
+  refresh,
+} = await useAsyncData("dataProduct", () =>
+  $fetch(
+    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
+);
 </script>

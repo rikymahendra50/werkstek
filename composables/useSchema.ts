@@ -67,6 +67,13 @@ export default function () {
     })
   );
 
+  const communitySchema = toTypedSchema(
+    object({
+      title: string().min(1, "Title is required"),
+      meta: string().min(1, "Meta is required"),
+    })
+  );
+
   const emailField = string().email("Please enter a valid email");
   const passwordField = string()
     .min(7, "Password should be at least 7 characters")
@@ -150,6 +157,7 @@ export default function () {
 
   return {
     singleNameField,
+    communitySchema,
     blogSchema,
     contactSchema,
     formInput,

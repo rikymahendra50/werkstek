@@ -2,19 +2,22 @@
   <section class="overflow-auto">
     <CompAdminBackButton link="community" linkTitle="Community Blog" />
     <div class="grid grid-cols-2">
-      <VeeForm @submit="onSubmit" v-slot="{ errors }">
-        <div class="grid p-3 gap-4">
+      <VeeForm
+        @submit="onSubmit"
+        :validation-schema="communitySchema"
+        v-slot="{ errors }"
+      >
+        <div class="grid p-3 gap-2">
           <div>
             <BlogImageCrop :loading="loading" v-model="selectedImage" />
           </div>
-          <label for="Title">Title</label>
-          <VeeField
-            id="Title"
-            type="text"
-            name="Title"
-            placeholder="Input Title"
-            class="input input-bordered w-full"
+          <label for="title">Title</label>
+          <FormTextField
+            id="title"
+            name="title"
             v-model="formData.title"
+            placeholder="Input Title"
+            class="input-bordered"
             autocomplete="off"
           />
           <div class="flex flex-col mt-5">
@@ -23,14 +26,13 @@
             <VeeErrorMessage name="body" />
           </div>
           <div class="flex flex-col mt-5">
-            <label for="Meta">Meta</label>
-            <VeeField
-              id="Meta"
-              as="textarea"
-              name="Meta"
-              placeholder="Input Meta"
-              class="textarea textarea-bordered w-full"
+            <label for="meta">Meta</label>
+            <FormTextField
+              id="meta"
+              name="meta"
               v-model="formData.meta"
+              placeholder="Input Meta"
+              class="input-bordered"
               autocomplete="off"
             />
           </div>
@@ -51,12 +53,13 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const router = useRouter();
+const { communitySchema } = useSchema();
 
 const fileInput = ref(null);
 
-const selectImage = () => {
-  fileInput.value.click();
-};
+// const selectImage = () => {
+//   fileInput.value.click();
+// };
 
 const formData = ref({
   title: undefined,
@@ -67,14 +70,14 @@ const formData = ref({
 const imagePreview = ref();
 const selectedImage = ref();
 
-function saveToPreviewImage(event) {
-  imagePreview.value = URL.createObjectURL(event.target.files[0]);
-  selectedImage.value = event.target.files[0];
-}
+// function saveToPreviewImage(event) {
+//   imagePreview.value = URL.createObjectURL(event.target.files[0]);
+//   selectedImage.value = event.target.files[0];
+// }
 
-const onUpload = (image) => {
-  selectedImage.value = image;
-};
+// const onUpload = (image) => {
+//   selectedImage.value = image;
+// };
 
 async function onSubmit(values, ctx) {
   loading.value = true;

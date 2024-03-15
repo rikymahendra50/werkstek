@@ -19,14 +19,14 @@
             autocomplete="on"
           />
         </div>
-        <div>
+        <!-- <div>
           <span>Icon</span>
           <BlogImageCrop
             :loading="loading"
             v-model="selectedImage"
             :existingimage="facilities?.data?.icon"
           />
-        </div>
+        </div> -->
         <div class="flex justify-end mt-5">
           <CompAdminButtonAddForm
             buttonName="Edit Facility"

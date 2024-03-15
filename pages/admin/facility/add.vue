@@ -8,8 +8,6 @@
         v-slot="{ errors }"
       >
         <div class="grid gap-3">
-          <!-- <span>Image</span>
-          <BlogImageCrop :loading="loading" v-model="selectedImage" /> -->
           <div class="flex flex-col gap-2">
             <label for="name">Facility</label>
             <FormTextField
@@ -21,10 +19,10 @@
               autocomplete="on"
             />
           </div>
-          <div class="flex flex-col gap-2">
+          <!-- <div class="flex flex-col gap-2">
             <span>Icon</span>
             <BlogImageCrop :loading="loading" v-model="selectedImage" />
-          </div>
+          </div> -->
         </div>
         <div class="flex justify-end mt-5">
           <CompAdminButtonAddForm
@@ -51,7 +49,7 @@ const formData = ref({
 
 const selectedImage = ref(null);
 
-selectedImage.value = "/images/checkbox_checked.svg";
+// selectedImage.value = "/images/checkbox_checked.svg";
 
 async function onSubmit(values, ctx) {
   loading.value = true;

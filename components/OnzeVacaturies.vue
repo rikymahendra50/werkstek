@@ -81,31 +81,6 @@
               @price-change="handlePriceChange"
             />
             <div class="">
-              <!-- <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
-              <div class="flex my-2">
-                <div class="relative">
-                  <input
-                    type="number"
-                    id="deopervlakteMin"
-                    placeholder="Min"
-                    min="0"
-                    class="input input-bordered w-[90%] p-[10px] mr-2 input-md"
-                    v-model="selectedMeterMin"
-                  /><br />
-                  <span class="absolute top-3 right-14">m<sup>2</sup></span>
-                </div>
-                <div class="relative">
-                  <input
-                    type="number"
-                    id="deopervlakteMax"
-                    min="0"
-                    placeholder="Max"
-                    class="input input-bordered w-[90%] p-[10px] mr-2 input-md"
-                    v-model="selectedMeterMax"
-                  /><br />
-                  <span class="absolute top-3 right-14">m<sup>2</sup></span>
-                </div>
-              </div> -->
               <p class="text-base mt-3 opacity-50 pb-3">Faciliteit</p>
               <fieldset id="facility" class="grid grid-cols-2 gap-2">
                 <div
@@ -248,17 +223,6 @@ const { data: dataForFilter } = await useFetch("/products", {
   method: "get",
   ...requestOptions,
 });
-// const arrayLocation = dataForFilter?.value?.data?.map((item) => item.location);
-// let city = ref([]);
-// let citySet = {};
-// arrayLocation.forEach((element) => {
-//   const cityName = element.name;
-//   const cityId = element.id;
-//   if (!citySet[cityName]) {
-//     citySet[cityName] = cityId;
-//     city.value.push({ name: cityName, id: cityId });
-//   }
-// });
 
 const { data: locations } = await useFetch("/locations", {
   method: "get",
@@ -320,22 +284,14 @@ function handlefunctieCheckbox(id) {
     selectedFunctie.value = [...selectedFunctie.value, id];
   }
 }
-// end untuk mengelola facility
-
-const {
-  data: dataProduct,
-  error,
-  refresh,
-} = await useAsyncData("dataProduct", async () => {
-  const response = await $fetch(
-    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&filter[productFacility.facility_id]=${selectedFunctie.value}`,
-    {
-      method: "get",
-      ...requestOptions,
-    }
-  );
-  return response;
+const selectedFacilities = computed(() => {
+  if (selectedFunctie.value.length > 0) {
+    return `filter[facilities]=${selectedFunctie.value.join("|")}`;
+  } else {
+    return "";
+  }
 });
+// end untuk mengelola facility
 
 function replaceWindow() {
   let filters = [];
@@ -358,11 +314,8 @@ function replaceWindow() {
     filters.push(`filter[max_area]=${selectedMeterMax.value}`);
   }
 
-  if (selectedFunctie.value.length > 0) {
-    const functieFilters = selectedFunctie.value.map(
-      (id) => `filter[productFacility.facility_id]=${id}`
-    );
-    filters = filters.concat(functieFilters);
+  if (selectedFacilities?.value) {
+    filters.push(selectedFacilities?.value);
   }
 
   const queryString = filters.join("&");
@@ -373,6 +326,20 @@ function replaceWindow() {
   router.replace(url);
   refresh();
 }
+
+const {
+  data: dataProduct,
+  error,
+  refresh,
+} = await useAsyncData("dataProduct", () =>
+  $fetch(
+    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
+);
 </script>
 
 <style scoped>

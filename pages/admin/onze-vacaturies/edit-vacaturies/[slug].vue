@@ -88,6 +88,11 @@
         />
       </div>
 
+      <!-- <CompAdminMapForm
+        @longitude-updated="updateLongitude"
+        @latitude-updated="updateLatitude"
+      /> -->
+
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="price">Price</label>
@@ -215,14 +220,10 @@
           autocomplete="type"
         >
           <option disabled selected>Type</option>
-          <option :value="item.id" v-for="item in levelType.data">
+          <option :value="item.id" v-for="item in levelType?.data">
             {{ item.name }}
           </option>
         </VeeField>
-        <VeeErrorMessage
-          name="leveltype"
-          class="form-error-message text-red-600"
-        />
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -296,6 +297,7 @@
           </label>
         </div>
       </div>
+
       <div class="w-full flex justify-end">
         <CompAdminButtonAddForm
           buttonName="Edit Property"
@@ -313,7 +315,7 @@ const router = useRouter();
 const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
-const { fomInput } = useSchema();
+const { formInput } = useSchema();
 
 const { data: dataSlug } = await useFetch(`/admins/products/${slug.value}`, {
   method: "get",
@@ -378,6 +380,15 @@ const dataIsSaleAble = ref([
   },
 ]);
 
+const updateLongitude = (longitude) => {
+  formData.value.longitude = longitude;
+  console.log(formData.value.longitude);
+};
+
+const updateLatitude = (latitude) => {
+  formData.value.latitude = latitude;
+};
+
 const formData = ref({
   name: AllDataSlug?.value?.name,
   description: AllDataSlug?.value?.description,
@@ -400,8 +411,6 @@ const formData = ref({
   })),
   rating: AllDataSlug.value.rating,
 });
-
-console.log(formData.value.is_saleable);
 
 async function onSubmit(values, ctx) {
   loading.value = true;
