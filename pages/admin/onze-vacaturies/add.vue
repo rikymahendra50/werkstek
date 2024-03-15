@@ -1,4 +1,5 @@
 <template>
+  <!-- add -->
   <CompAdminBackButton link="onze-vacaturies" linkTitle="Add Property" />
   <div class="overflow-y-auto grid grid-cols-2">
     <VeeForm
