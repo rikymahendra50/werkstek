@@ -6,9 +6,12 @@
       description="Op deze locaties hebben we kantoorruimtes"
     />
     <div class="md:grid md:grid-cols-12 container-custom">
-      <div class="md:col-span-4 w-[97%]">
+      <div class="md:col-span-4 w-[90%]">
         <div class="mt-5">
-          <button class="flex items-center gap-3 hover:text-primary">
+          <button
+            class="flex items-center gap-3 hover:text-primary"
+            @click="toggleDetail"
+          >
             <img
               src="/images/filter-icon.svg"
               class="w-5 h-5 my-4"
@@ -17,12 +20,17 @@
             <p class="text-base opacity-50">Meer filter opties</p>
           </button>
         </div>
-        <div>
+        <div v-if="showFilter">
           <span class="text-base mt-3 opacity-50">Kies een locatie</span>
-          <div class="flex-col form-control max-w-[90%] mt-2">
+          <div class="flex-col form-control mt-2 relative">
+            <!-- <img
+              src="/images/location-logo-locaties.svg"
+              alt="img-logo"
+              class="w-8 h-8"
+            /> -->
             <select
               id="city"
-              class="select select-bordered dropdown"
+              class="select select-bordered dropdown z-10"
               v-model="selectedCity"
             >
               <option disabled selected>Locatie</option>
@@ -70,17 +78,17 @@
             />
             <div class="">
               <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
-              <div class="flex my-2">
+              <div class="grid grid-cols-2 my-2">
                 <div class="relative">
                   <input
                     type="number"
                     id="deopervlakteMin"
                     placeholder="Min"
                     min="0"
-                    class="input input-bordered w-[90%] p-[10px] mr-2 input-md"
+                    class="input input-bordered w-[95%] p-[10px]input-md"
                     v-model="selectedMeterMin"
                   /><br />
-                  <span class="absolute top-3 right-14">m<sup>2</sup></span>
+                  <span class="absolute top-3 right-8">m<sup>2</sup></span>
                 </div>
                 <div class="relative">
                   <input
@@ -88,14 +96,14 @@
                     id="deopervlakteMax"
                     min="0"
                     placeholder="Max"
-                    class="input input-bordered w-[90%] p-[10px] mr-2 input-md"
+                    class="input input-bordered w-[95%] p-[10px] input-md"
                     v-model="selectedMeterMax"
                   /><br />
-                  <span class="absolute top-3 right-14">m<sup>2</sup></span>
+                  <span class="absolute top-3 right-8">m<sup>2</sup></span>
                 </div>
               </div>
               <p class="text-base mt-3 opacity-50 pb-3">Facility</p>
-              <fieldset id="facility" class="grid grid-cols-2 gap-2">
+              <fieldset id="facility" class="grid grid-cols-2 gap-4">
                 <div
                   class="flex items-center gap-2 cursor-pointer"
                   v-for="item in functieCheckbox"
@@ -108,12 +116,15 @@
                     name="facility"
                     :checked="isSelectedFuncti(item.id)"
                   />
-                  <label :for="`facility-${item.id}`" class="cursor-pointer">
+                  <label
+                    :for="`facility-${item.id}`"
+                    class="cursor-pointer text-sm"
+                  >
                     {{ item.name }}
                   </label>
                 </div>
               </fieldset>
-              <!-- <Map :AllData="dataProduct?.data" /> -->
+              <Map :AllData="dataProduct?.data" />
             </div>
           </div>
         </div>
@@ -124,7 +135,7 @@
           class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
         >
           <eachLocaties
-            v-if="dataProduct.data"
+            v-if="dataProduct?.data"
             v-for="(item, index) in dataProduct?.data"
             :key="item?.id"
             :name="item?.location?.name"
@@ -189,6 +200,28 @@ const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
 }, 1000);
 
+const {
+  data: dataProduct,
+  error,
+  refresh,
+} = await useAsyncData("dataProduct", () =>
+  $fetch(
+    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
+);
+
+const selectedFacilities = computed(() => {
+  if (selectedFunctie.value.length > 0) {
+    return `filter[facilities]=${selectedFunctie.value.join("|")}`;
+  } else {
+    return "";
+  }
+});
+
 watch(
   () => page.value,
   (newValue, oldValue) => {
@@ -243,6 +276,30 @@ watch(
     }
   }
 );
+
+const showFilter = ref();
+const toggleDetail = () => {
+  showFilter.value = !showFilter.value;
+};
+
+onMounted(() => {
+  if (window.innerWidth > 768) {
+    showFilter.value = true;
+  } else {
+    showFilter.value = false;
+  }
+
+  watch(
+    () => window.innerWidth,
+    (newWidth) => {
+      if (newWidth > 768) {
+        showFilter.value = true;
+      } else {
+        showFilter.value = false;
+      }
+    }
+  );
+});
 
 // untuk mengambil nilai location pada filter
 const { data: dataForFilter } = await useFetch("/products", {
@@ -311,14 +368,11 @@ function handlefunctieCheckbox(id) {
   }
 }
 
-const selectedFacilities = computed(() => {
-  if (selectedFunctie.value.length > 0) {
-    return `filter[facilities]=${selectedFunctie.value.join("|")}`;
-  } else {
-    return "";
-  }
-});
 // end untuk mengelola facility
+
+onMounted(() => {
+  replaceWindow();
+});
 
 function replaceWindow() {
   let filters = [];
@@ -353,18 +407,4 @@ function replaceWindow() {
   router.replace(url);
   refresh();
 }
-
-const {
-  data: dataProduct,
-  error,
-  refresh,
-} = await useAsyncData("dataProduct", () =>
-  $fetch(
-    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
-    {
-      method: "get",
-      ...requestOptions,
-    }
-  )
-);
 </script>

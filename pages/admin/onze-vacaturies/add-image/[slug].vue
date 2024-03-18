@@ -142,7 +142,7 @@ const saveToPreviewImage = (event) => {
 
     if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
       alert(
-        `File ${file.name} terlalu besar. Harap pilih file dengan ukuran maksimum ${MAX_FILE_SIZE_MB} MB.`
+        `File ${file.name} too big. Please chose file width maximum ${MAX_FILE_SIZE_MB} MB.`
       );
       return;
     } else {
@@ -150,8 +150,6 @@ const saveToPreviewImage = (event) => {
       selectedImage.value = file;
       StoreProduct();
     }
-
-    // selectedImages.value.push(file);
   }
 };
 

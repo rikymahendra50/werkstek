@@ -392,7 +392,13 @@
             </svg>
             Community
           </NuxtLink>
-          <button @click="$logout()" class="btn btn-error mt-20">Logout</button>
+          <button
+            @click="$logout()"
+            :disabled="loading"
+            class="btn btn-error mt-20"
+          >
+            Logout
+          </button>
         </nav>
       </div>
     </div>
@@ -401,6 +407,7 @@
 
 <script setup lang="ts">
 const showDrawer = inject("showTableOrMobileSidebar");
+const { loading, transformErrors } = useRequestHelper();
 const { $logout } = useAuth();
 
 const route = useRoute();

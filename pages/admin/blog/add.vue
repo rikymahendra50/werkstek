@@ -4,9 +4,10 @@
     <div class="grid grid-cols-2">
       <VeeForm
         @submit="onSubmit"
-        :validation-schema="blogSchema"
         v-slot="{ errors }"
+        :validation-schema="blogSchema"
       >
+        <!-- {{ errors }} -->
         <div class="grid mt-10 p-3 gap-2">
           <div>
             <BlogImageCrop :loading="loading" v-model="selectedImage" />
@@ -21,12 +22,20 @@
             autocomplete="on"
           />
           <div class="flex flex-col mt-5">
-            <label for="body">Body</label>
+            <span>Body</span>
+            <div class="hidden">
+              <VeeField
+                type="text"
+                name="body"
+                v-model="formData.body"
+                immediate
+              />
+            </div>
             <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
-            <VeeErrorMessage name="body" />
+            <VeeErrorMessage name="body" class="text-red-500" />
           </div>
           <div class="flex flex-col mt-5">
-            <label for="Category">Category</label>
+            <label for="category">Category</label>
             <VeeField
               id="category"
               name="category"
@@ -93,6 +102,15 @@ const formData = ref({
   category_id: undefined,
   meta: undefined,
 });
+
+watch(
+  () => formData.value.body,
+  (newValue) => {
+    if (newValue === "<p></p>" || !newValue) {
+      formData.value.body = undefined;
+    }
+  }
+);
 
 const imagePreview = ref();
 const selectedImage = ref();

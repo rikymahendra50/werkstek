@@ -29,8 +29,6 @@ const { data: categoryBlog, pending: categoryBlogPending } = await useFetch(
   }
 );
 
-// const category = categoryBlog.value.data.map((item) => item.name);
-
 useHead({
   title: "Edit Blog",
 });

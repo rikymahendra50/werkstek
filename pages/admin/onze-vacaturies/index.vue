@@ -64,13 +64,13 @@
                     <div class="modal-box">
                       <h3 class="font-bold text-xl text-red-500">Warning !</h3>
                       <p class="py-4 text-lg">
-                        Are you sure want to delete this called
+                        Are you sure want to delete this property called
                         {{ item.name }}?
                       </p>
                       <div class="modal-action">
                         <form method="dialog">
                           <button
-                            @click="deleteLocatie(item.slug)"
+                            @click="deleteProperty(item.slug)"
                             class="btn btn-outline btn-error mr-3"
                           >
                             Delete
@@ -105,7 +105,7 @@
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const { snackbar } = useSnackbar();
+const snackbar = useSnackbar();
 
 const router = useRouter();
 const route = useRoute();
@@ -173,18 +173,26 @@ const showModal = (index) => {
   }
 };
 
-const deleteLocatie = async (slug) => {
+const deleteProperty = async (slug) => {
   loading.value = true;
-  try {
-    await useFetch(`/admins/products/${slug}`, {
-      method: "DELETE",
-      ...requestOptions,
+  await useFetch(`/admins/products/${slug}`, {
+    method: "DELETE",
+    ...requestOptions,
+  });
+
+  if (error.value) {
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
+    });
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Delete Property Success",
     });
     window.location.reload();
-  } catch (error) {
-    console.error("Error:", error);
   }
-  loading.value = true;
+  loading.value = false;
 };
 
 useHead({

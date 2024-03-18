@@ -46,18 +46,6 @@
                         Detail Admin
                       </h3>
                       <p class="py-4 text-lg grid">
-                        <!-- {{ item }}
-                        <div class="grid">
-                          <span>First Name</span>
-                          <p>{{ item?.first_name }}</p>
-                        </div>
-                        <div class="grid">
-                          <span>Last Name</span>
-                          <p>{{ item?.last_name }}</p>
-                        </div>
-                        
-                        <p>{{  }}</p>
-                        <p>{{ item?.email }}</p> -->
                         <table>
                           <tr>
                             <td>First Name</td>
@@ -114,11 +102,6 @@ const route = useRoute();
 const page = ref(1);
 const search = ref("");
 
-// const { data } = await useFetch(`/admins`, {
-//   method: "get",
-//   ...requestOptions,
-// });
-
 const showModal = (index) => {
   const modalId = `my_modal_${index}`;
   const modal = document.getElementById(modalId);
@@ -132,7 +115,7 @@ const {
   error,
   refresh,
 } = await useAsyncData("admins", () =>
-  $fetch(`/admins?page=${page.value}&filter[search]=${search.value}`, {
+  $fetch(`/admins?page=${page.value}`, {
     method: "get",
     ...requestOptions,
   })
@@ -162,7 +145,7 @@ watch(
 );
 
 function replaceWindow() {
-  router.replace(`/admin/admins?page=${page.value}&search=${search.value}`);
+  router.replace(`/admin/?page=${page.value}`);
   refresh();
 }
 
@@ -176,27 +159,6 @@ onMounted(() => {
     search.value = route.query?.search ?? "";
   }
 });
-
-// const showModal = (index) => {
-//   const modalId = `my_modal_${index}`;
-//   const modal = document.getElementById(modalId);
-//   if (modal) {
-//     modal.showModal();
-//   }
-// };
-
-// const deleteLocatie = async (locatieSlug) => {
-//   loading.value = true;
-//   try {
-//     const response = await useFetch(`/admins/${locatieSlug}`, {
-//       method: "DELETE",
-//       ...requestOptions,
-//     });
-//     window.location.reload();
-//   } catch (error) {
-//     console.error("Error:", error);
-//   }
-// };
 
 useHead({
   title: "Admin List",

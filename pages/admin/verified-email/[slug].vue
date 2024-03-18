@@ -1,8 +1,10 @@
 <template>
   <div class="grid place-items-center items-center h-screen">
-    <div class="w-[500px] p-10 justify-center shadow-lg">
+    <div class="w-[500px] p-10 shadow-lg grid justify-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
+        w="34"
+        h="34"
         width="1em"
         height="1em"
         viewBox="0 0 24 24"
@@ -16,7 +18,7 @@
       </svg>
       <p>Verified Sucsess</p>
     </div>
-    <NuxtLink to="admin">Login Now</NuxtLink>
+    <!-- <NuxtLink to="admin">Login Now</NuxtLink> -->
   </div>
 </template>
 

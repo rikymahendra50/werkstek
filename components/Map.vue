@@ -21,6 +21,16 @@ let googleMapsScriptLoaded = false;
 let map = ref(null);
 const markers = ref([]);
 const currentInfoWindow = ref(null);
+const AllData = ref(props.AllData);
+
+watch(
+  () => props.AllData,
+  (newValue) => {
+    clearMarkers();
+    AllData.value = newValue;
+    setupMap();
+  }
+);
 
 onMounted(() => {
   if (!googleMapsScriptLoaded) {
@@ -48,15 +58,6 @@ const loadGoogleMapsScript = () => {
   }
 };
 
-// const dataProduct = props.AllData;
-let latitudeFilter = ref([]);
-let longitudeFilter = ref([]);
-
-props.AllData.map((item) => {
-  latitudeFilter?.value?.push(item.latitude);
-  longitudeFilter?.value?.push(item.longitude);
-});
-
 const setupMap = () => {
   clearMarkers();
   map = new google.maps.Map(document.getElementById("map"), {
@@ -77,7 +78,7 @@ const setupMap = () => {
 
   const bounds = new google.maps.LatLngBounds();
 
-  props.AllData.forEach((location) => {
+  AllData?.value?.forEach((location) => {
     const lat = parseFloat(location.latitude);
     const lng = parseFloat(location.longitude);
 
@@ -92,15 +93,15 @@ const setupMap = () => {
     bounds.extend(new google.maps.LatLng(location.lat, location.longitude));
 
     const contentString = `
-      <div class="max-w-[190px] w-full h-full flex flex-col text-end border-2">
+      <div class="max-w-[120px] w-full h-full flex flex-col text-end border-2">
         <div class="relative">
-          <img src="${location?.location?.image}" alt="${location?.location?.name}" class="w-full min-h-[100px]">
+          <img src="${location?.location?.image}" alt="${location?.location?.name}" class="w-full min-h-[80px] rounded-md">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
         </div>
         <div class="px-2 pb-4">
-          <h2 class="text-primary mt-2">${location.name}</h2>
-          <p class="text-black text-[10px] my-2">${location.area}</p>
-          <p>Price: $${location.price}</p>
+          <h2 class="text-primary mt-2">${location?.name}</h2>
+          <p class="text-black text-[10px]">${location?.area_size}</p>
+          <p class="text-black text-[10px]">Price: $${location.price}</p>
         </div>
       </div>
     `;
@@ -124,6 +125,7 @@ const setupMap = () => {
 
     markers.value.push(marker);
   });
+  // map.fitBounds(bounds);
 };
 
 const clearMarkers = () => {

@@ -73,6 +73,7 @@
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const snackbar = useSnackbar();
 
 const { data: levelType, error } = await useFetch(`/admins/level-types`, {
   method: "get",
@@ -97,14 +98,22 @@ const showEditModal = (index) => {
 
 const deleteLevelType = async (slug) => {
   loading.value = true;
-  try {
-    await useFetch(`/admins/level-types/${slug}`, {
-      method: "delete",
-      ...requestOptions,
+  await useFetch(`/admins/level-types/${slug}`, {
+    method: "DELETE",
+    ...requestOptions,
+  });
+
+  if (error.value) {
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
+    });
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Delete Level Type Success",
     });
     window.location.reload();
-  } catch (error) {
-    console.error("Error:", error);
   }
   loading.value = false;
 };

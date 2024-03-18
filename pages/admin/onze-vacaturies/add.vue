@@ -1,13 +1,13 @@
 <template>
-  <!-- add -->
   <CompAdminBackButton link="onze-vacaturies" linkTitle="Add Property" />
-  <div class="overflow-y-auto grid grid-cols-2">
+  <div class="overflow-y-auto grid md:grid-cols-2">
     <VeeForm
       @submit="onSubmit"
       class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-8"
       :validation-schema="formInput"
       v-slot="{ errors }"
     >
+      <!-- {{ errors }} -->
       <div class="flex flex-col w-full">
         <div class="flex items-center">
           <label for="name">Name</label>
@@ -22,7 +22,7 @@
         />
       </div>
       <div class="flex flex-col my-5 w-full">
-        <label for="body">Description</label>
+        <span>Description</span>
         <div class="hidden">
           <VeeField name="body" v-model="formData.description" />
         </div>
@@ -65,33 +65,42 @@
           autocomplete="on"
         />
       </div>
-      <div class="flex flex-col my-2 w-full">
-        <div class="flex items-center">
-          <label for="latitude">Latitude</label>
+      <div class="border-2 w-full p-3 rounded-md">
+        <div>
+          <p class="mb-3">
+            Please find and click the desired location to get the coordinate
+            value.
+          </p>
+          <CompAdminMapForm @location-updated="updateLocation" />
         </div>
-        <FormTextField
-          id="latitude"
-          name="latitude"
-          type="text"
-          v-model="formData.latitude"
-          placeholder="ex:51.9934345296239"
-          class="input-bordered"
-          autocomplete="on"
-        />
-      </div>
-      <div class="flex flex-col my-2 w-full">
-        <div class="flex items-center">
-          <label for="longitude">Longitude</label>
+        <div class="flex flex-col my-2 w-full">
+          <div class="flex items-center">
+            <label for="latitude">Latitude</label>
+          </div>
+          <FormTextField
+            id="latitude"
+            name="latitude"
+            type="text"
+            v-model="formData.latitude"
+            placeholder="ex:51.9934345296239"
+            class="input-bordered"
+            autocomplete="on"
+          />
         </div>
-        <FormTextField
-          id="longitude"
-          name="longitude"
-          type="text"
-          v-model="formData.longitude"
-          placeholder="ex:5.5162370519396349"
-          class="input-bordered"
-          autocomplete="on"
-        />
+        <div class="flex flex-col my-2 w-full">
+          <div class="flex items-center">
+            <label for="longitude">Longitude</label>
+          </div>
+          <FormTextField
+            id="longitude"
+            name="longitude"
+            type="text"
+            v-model="formData.longitude"
+            placeholder="ex:5.5162370519396349"
+            class="input-bordered"
+            autocomplete="on"
+          />
+        </div>
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -382,9 +391,23 @@ const formData = ref({
   level_type_id: undefined,
   is_saleable: dataIsSaleAble.value[0].value,
   product_facilities: [],
-  product_privileges: [{ privilege: "Near the beach" }],
+  product_privileges: [],
   rating: undefined,
 });
+
+watch(
+  () => formData.value.description,
+  (newValue) => {
+    if (newValue === "<p></p>" || !newValue) {
+      formData.value.description = undefined;
+    }
+  }
+);
+
+const updateLocation = (location) => {
+  formData.value.longitude = String(location.longitude);
+  formData.value.latitude = String(location.latitude);
+};
 
 async function onSubmit(values, ctx) {
   loading.value = true;

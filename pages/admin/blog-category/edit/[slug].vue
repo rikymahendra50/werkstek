@@ -2,17 +2,20 @@
   <section class="overflow-auto">
     <CompAdminBackButton link="blog-category" linkTitle="Edit Blog Category" />
     <div class="grid grid-cols-2">
-      <VeeForm @submit="onSubmit" v-slot="{ errors }">
+      <VeeForm
+        @submit="onSubmit"
+        v-slot="{ errors }"
+        :validation-schema="singleNameField"
+      >
         <div class="flex flex-col mt-4 px-8 overflow-auto">
           <div class="flex flex-col">
-            <label for="Name">Name</label>
-            <VeeField
-              id="Name"
-              type="text"
-              name="Name"
-              placeholder="Input Name"
-              class="textarea textarea-bordered w-full"
+            <label for="name">Name</label>
+            <FormTextField
+              id="name"
+              name="name"
               v-model="name"
+              placeholder="Input Name"
+              class="input-bordered"
               autocomplete="on"
             />
           </div>
@@ -33,6 +36,7 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const router = useRouter();
+const { singleNameField } = useSchema();
 
 const route = useRoute();
 const slug = computed(() => {

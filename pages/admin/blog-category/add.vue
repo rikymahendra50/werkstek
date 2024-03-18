@@ -2,17 +2,20 @@
   <section class="overflow-auto">
     <CompAdminBackButton link="blog-category" linkTitle="Add Blog Category" />
     <div class="grid grid-cols-2">
-      <VeeForm @submit="onSubmit" v-slot="{ errors }">
+      <VeeForm
+        @submit="onSubmit"
+        :validation-schema="singleNameField"
+        v-slot="{ errors }"
+      >
         <div class="flex flex-col mt-3 px-8 overflow-auto">
           <div class="flex flex-col">
-            <label for="Name">Blog Category</label>
-            <VeeField
-              id="Name"
-              type="text"
-              name="Name"
-              placeholder="Input Blog Category"
-              class="textarea textarea-bordered w-full mt-2"
+            <label for="name">Blog Category</label>
+            <FormTextField
+              id="name"
+              name="name"
               v-model="name"
+              placeholder="Name"
+              class="input-bordered"
               autocomplete="on"
             />
           </div>
@@ -33,6 +36,7 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const router = useRouter();
+const { singleNameField } = useSchema();
 
 const name = ref();
 
@@ -56,7 +60,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Add Category Blog Success",
     });
-    router.push("/admin/facility");
+    router.push("/admin/blog-category");
   }
   loading.value = false;
 }

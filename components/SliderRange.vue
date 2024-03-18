@@ -1,5 +1,5 @@
 <template>
-  <div class="main w-[90%]">
+  <div class="main">
     <div class="custom-wrapper pt-3">
       <span class="text-sm font-medium opacity-50">{{ title }}</span>
       <div class="price-input-container">

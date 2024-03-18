@@ -21,9 +21,17 @@
             autocomplete="off"
           />
           <div class="flex flex-col mt-5">
-            <label for="body">Body</label>
+            <span>Body</span>
+            <div class="hidden">
+              <VeeField
+                type="text"
+                name="body"
+                v-model="formData.body"
+                immediate
+              />
+            </div>
             <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
-            <VeeErrorMessage name="body" />
+            <VeeErrorMessage name="body" class="text-red-500" />
           </div>
           <div class="flex flex-col mt-5">
             <label for="meta">Meta</label>
@@ -67,6 +75,14 @@ const formData = ref({
   meta: undefined,
 });
 
+watch(
+  () => formData.value.body,
+  (newValue) => {
+    if (newValue === "<p></p>" || !newValue) {
+      formData.value.body = undefined;
+    }
+  }
+);
 const imagePreview = ref();
 const selectedImage = ref();
 

@@ -4,21 +4,21 @@
       class="overflow-hidden sm:mr-2 max-w-[366px] min-[420px]:w-[50%] hover:shadow-md transition flex flex-col group cursor-pointer relative"
     >
       <NuxtLink :to="link" class="card h-full mx-2">
-        <div class="min-h-[170px] sm:min-h-[200px] md:min-h-[290px]">
+        <div class="min-h-[170px] sm:min-h-[200px] md:min-h-[250px]">
           <img
             :src="imageSrc"
             alt="imageBlog"
             class="w-full object-cover h-full"
           />
         </div>
-        <div class="p-4 flex flex-col">
+        <div class="py-2 flex flex-col h-full justify-around">
           <span
             class="text-[14px] sm:text-[18px] md:text-[20px] font-semibold line-clamp-1 sm:line-clamp-none my-1"
           >
             {{ title }}
           </span>
           <p
-            class="font-normal text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] line-clamp-3 my-2 min-h-[40px] sm:min-h-[70px]"
+            class="font-normal text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] line-clamp-2 my-2 min-h-[40px] sm:min-h-[70px]"
           >
             {{ description }}
           </p>

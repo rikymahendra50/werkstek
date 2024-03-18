@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="flex justify-end mt-5">
-        <CompAdminButtonAddForm buttonName="Add Type" :isLoading="loading" />
+        <CompAdminButtonAddForm buttonName="Edit Type" :isLoading="loading" />
       </div>
     </VeeForm>
   </div>

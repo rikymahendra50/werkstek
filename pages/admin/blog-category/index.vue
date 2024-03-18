@@ -43,9 +43,7 @@
                     </div>
                     <dialog :id="'my_modal_' + index" class="modal">
                       <div class="modal-box">
-                        <h3 class="font-bold text-xl text-red-500">
-                          Warning !
-                        </h3>
+                        <h3 class="font-bold text-xl text-red-500">Dangers!</h3>
                         <p class="py-4 text-lg">
                           Are you sure want to delete this category blog
                           {{ item.name }}?

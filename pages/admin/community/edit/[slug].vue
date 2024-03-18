@@ -1,8 +1,12 @@
 <template>
   <CompAdminBackButton link="community" linkTitle="Edit Community" />
   <div class="grid grid-cols-2">
-    <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="grid p-3 gap-4">
+    <VeeForm
+      @submit="onSubmit"
+      :validation-schema="communitySchema"
+      v-slot="{ errors }"
+    >
+      <div class="grid p-3 gap-2">
         <div>
           <BlogImageCrop
             :loading="loading"
@@ -11,29 +15,35 @@
           />
         </div>
         <label for="Title">Title</label>
-        <VeeField
-          id="Title"
-          type="text"
-          name="Title"
-          placeholder="Input Title"
-          class="input input-bordered w-full"
+        <FormTextField
+          id="title"
+          name="title"
           v-model="formData.title"
+          placeholder="Input Title"
+          class="input-bordered"
           autocomplete="off"
         />
         <div class="flex flex-col mt-5">
-          <label for="body">Body</label>
+          <span>Body</span>
+          <div class="hidden">
+            <VeeField
+              type="text"
+              name="body"
+              v-model="formData.body"
+              immediate
+            />
+          </div>
           <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
-          <VeeErrorMessage name="body" />
+          <VeeErrorMessage name="body" class="text-red-500" />
         </div>
         <div class="flex flex-col mt-5">
-          <label for="Meta">Meta</label>
-          <VeeField
-            id="Meta"
-            as="textarea"
-            name="Meta"
-            placeholder="Input Meta"
-            class="textarea textarea-bordered w-full"
+          <label for="meta">Meta</label>
+          <FormTextField
+            id="meta"
+            name="meta"
             v-model="formData.meta"
+            placeholder="Input Meta"
+            class="input-bordered"
             autocomplete="off"
           />
         </div>
@@ -55,6 +65,7 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 const router = useRouter();
+const { communitySchema } = useSchema();
 
 const fileInput = ref(null);
 

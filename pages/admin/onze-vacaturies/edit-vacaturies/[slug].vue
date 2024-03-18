@@ -7,7 +7,6 @@
       :validation-schema="formInput"
       v-slot="{ errors }"
     >
-      <!-- {{ errors }} -->
       <div class="flex flex-col w-full">
         <div class="flex items-center">
           <label for="name">Name</label>
@@ -22,7 +21,7 @@
         />
       </div>
       <div class="flex flex-col my-5 w-full">
-        <label for="body">Description</label>
+        <span>Description</span>
         <div class="hidden">
           <VeeField name="body" v-model="formData.description" />
         </div>
@@ -30,12 +29,6 @@
           v-model="formData.description"
           :is-error="!!errors.body"
         />
-        <!-- <pre>
-          {{ formData.description }}
-        </pre>
-        <pre>
-          {{ errors.body }}
-        </pre> -->
         <VeeErrorMessage name="body" class="text-red-500" />
       </div>
 
@@ -65,7 +58,7 @@
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
-          <label for="phoneNumber">Phone Number</label>
+          <label for="phone">Phone Number</label>
         </div>
         <FormTextField
           id="phone"
@@ -79,60 +72,43 @@
         <VeeErrorMessage name="phone" class="text-red-500" />
       </div>
 
-      <div class="flex flex-col my-2 w-full">
-        <div class="flex items-center">
-          <label for="latitude">Latitude</label>
+      <div class="border-2 w-full p-3 rounded-md">
+        <div>
+          <p class="mb-3">
+            Please find and click the desired location to get the coordinate
+            value.
+          </p>
+          <CompAdminMapForm @location-updated="updateLocation" />
         </div>
-        <!-- <FormTextField
-          id="latitude"
-          name="latitude"
-          type="number"
-          v-model="formData.latitude"
-          placeholder="Latitude"
-          class="input-bordered"
-          autocomplete="on"
-        /> -->
-        <VeeField
-          id="latitude"
-          name="latitude"
-          v-model="formData.latitude"
-          type="text"
-          class="input input-bordered w-full input-md"
-          placeholder="Latitude"
-          autocomplete="off"
-        />
-        <VeeErrorMessage name="latitude" class="text-red-500" />
-      </div>
-
-      <div class="flex flex-col my-2 w-full">
-        <div class="flex items-center">
-          <label for="longitude">Longitude</label>
+        <div class="flex flex-col my-2 w-full">
+          <div class="flex items-center">
+            <label for="latitude">Latitude</label>
+          </div>
+          <FormTextField
+            id="latitude"
+            name="latitude"
+            type="text"
+            v-model="formData.latitude"
+            placeholder="ex:51.9934345296239"
+            class="input-bordered"
+            autocomplete="on"
+          />
         </div>
-        <!-- <VeeField
-          id="longitude"
-          name="longitude"
-          type="text"
-          v-model="formData.longitude"
-          class="input input-bordered w-full input-md"
-          placeholder="Longitude"
-          autocomplete="off"
-        /> -->
-        <VeeField
-          id="longitude"
-          name="longitude"
-          v-model="formData.longitude"
-          type="text"
-          class="input input-bordered w-full input-md"
-          placeholder="Longitude"
-          autocomplete="off"
-        />
-        <VeeErrorMessage name="longitude" class="text-red-500" />
+        <div class="flex flex-col my-2 w-full">
+          <div class="flex items-center">
+            <label for="longitude">Longitude</label>
+          </div>
+          <FormTextField
+            id="longitude"
+            name="longitude"
+            type="text"
+            v-model="formData.longitude"
+            placeholder="ex:5.5162370519396349"
+            class="input-bordered"
+            autocomplete="on"
+          />
+        </div>
       </div>
-
-      <!-- <CompAdminMapForm
-        @longitude-updated="updateLongitude"
-        @latitude-updated="updateLatitude"
-      /> -->
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
@@ -174,7 +150,7 @@
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
-          <label for="areaSize">Area Size</label>
+          <label for="areasize">Area Size</label>
         </div>
         <FormTextField
           id="areasize"
@@ -260,7 +236,7 @@
           placeholder="type"
           autocomplete="type"
         >
-          <option disabled selected>Type</option>
+          <option disabled selected>Level Type</option>
           <option :value="item.id" v-for="item in levelType?.data">
             {{ item.name }}
           </option>
@@ -421,13 +397,9 @@ const dataIsSaleAble = ref([
   },
 ]);
 
-const updateLongitude = (longitude) => {
-  formData.value.longitude = longitude;
-  console.log(formData.value.longitude);
-};
-
-const updateLatitude = (latitude) => {
-  formData.value.latitude = latitude;
+const updateLocation = (location) => {
+  formData.value.longitude = String(location.longitude);
+  formData.value.latitude = String(location.latitude);
 };
 
 const formData = ref({

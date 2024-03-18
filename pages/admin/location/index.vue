@@ -79,26 +79,26 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 import { useTimeoutFn } from "@vueuse/core";
+const snackbar = useSnackbar();
 
 const router = useRouter();
 const route = useRoute();
 
 const page = ref(1);
-const search = ref("");
+// const search = ref("");
 
 const {
   data: locations,
   error,
   refresh,
 } = await useAsyncData("locations", () =>
-  $fetch(
-    `/admins/locations?page=${page.value}&filter[search]=${search.value}`,
-    {
-      method: "get",
-      ...requestOptions,
-    }
-  )
+  $fetch(`/admins/locations?page=${page.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
 );
+
+// &filter[search]=${search.value}
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
@@ -113,20 +113,22 @@ watch(
   }
 );
 
-watch(
-  () => search.value,
-  (newValue, oldValue) => {
-    if (newValue !== oldValue) {
-      page.value = 1;
-      start();
-    }
-  }
-);
+// watch(
+//   () => search.value,
+//   (newValue, oldValue) => {
+//     if (newValue !== oldValue) {
+//       page.value = 1;
+//       start();
+//     }
+//   }
+// );
 
 function replaceWindow() {
-  router.replace(`/admin/location?page=${page.value}&search=${search.value}`);
+  router.replace(`/admin/location?page=${page.value}`);
   refresh();
 }
+
+// &search=${search.value}
 
 onMounted(() => {
   stop();
@@ -134,9 +136,9 @@ onMounted(() => {
     page.value = route.query.page ?? 1;
   }
 
-  if (route.query.search) {
-    search.value = route.query?.search ?? "";
-  }
+  // if (route.query.search) {
+  //   search.value = route.query?.search ?? "";
+  // }
 });
 
 const showModal = (index) => {
@@ -149,14 +151,22 @@ const showModal = (index) => {
 
 const deleteLocation = async (slug) => {
   loading.value = true;
-  try {
-    await useFetch(`/admins/locations/${slug}`, {
-      method: "delete",
-      ...requestOptions,
+  await useFetch(`/admins/locations/${slug}`, {
+    method: "DELETE",
+    ...requestOptions,
+  });
+
+  if (error.value) {
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
+    });
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Delete Location Success",
     });
     window.location.reload();
-  } catch (error) {
-    console.error("Error:", error);
   }
   loading.value = false;
 };

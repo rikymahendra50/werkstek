@@ -1,6 +1,10 @@
 <template>
   <div class="grid grid-cols-2">
-    <VeeForm @submit="onSubmit" v-slot="{ errors }">
+    <VeeForm
+      @submit="onSubmit"
+      v-slot="{ errors }"
+      :validation-schema="blogSchema"
+    >
       <div class="grid p-3 gap-4">
         <div>
           <BlogImageCrop
@@ -9,23 +13,25 @@
             v-model="selectedImage"
           />
         </div>
-        <label for="Title">Title</label>
-        <VeeField
-          id="Title"
-          type="text"
-          name="Title"
-          placeholder="Input Title"
-          class="input input-bordered w-full"
+        <label for="title">Title</label>
+        <FormTextField
+          id="title"
+          name="title"
           v-model="formData.title"
+          placeholder="Input Title"
+          class="input-bordered"
           autocomplete="off"
         />
         <div class="flex flex-col mt-5">
-          <label for="body">Body</label>
+          <span>Body</span>
+          <div class="hidden">
+            <VeeField type="text" name="body" v-model="formData.body" />
+          </div>
           <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
-          <VeeErrorMessage name="body" />
+          <VeeErrorMessage name="body" class="text-red-500" />
         </div>
         <div class="flex flex-col mt-5">
-          <label for="Category">Category</label>
+          <label for="category">Category</label>
           <VeeField
             id="category"
             name="category"
@@ -42,14 +48,13 @@
           </VeeField>
         </div>
         <div class="flex flex-col mt-5">
-          <label for="Meta">Meta</label>
-          <VeeField
-            id="Meta"
-            as="textarea"
-            name="Meta"
-            placeholder="Input Meta"
-            class="textarea textarea-bordered w-full"
+          <label for="meta">Meta</label>
+          <FormTextField
+            id="meta"
+            name="meta"
             v-model="formData.meta"
+            placeholder="Input Meta"
+            class="input-bordered"
             autocomplete="off"
           />
         </div>
@@ -68,6 +73,7 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 const router = useRouter();
+const { blogSchema } = useSchema();
 
 const props = defineProps({
   eachBlog: {
@@ -78,14 +84,6 @@ const props = defineProps({
   },
 });
 
-const fileInput = ref(null);
-
-const selectImage = () => {
-  fileInput.value.click();
-};
-
-// const category = categoryBlog.value.data.map((item) => item.name);
-
 const formData = ref({
   title: props.eachBlog?.title,
   body: props.eachBlog?.body,
@@ -93,17 +91,7 @@ const formData = ref({
   meta: props.eachBlog?.meta,
 });
 
-const imagePreview = ref();
 const selectedImage = ref();
-
-function saveToPreviewImage(event) {
-  imagePreview.value = URL.createObjectURL(event.target.files[0]);
-  selectedImage.value = event.target.files[0];
-}
-
-const onUpload = (image) => {
-  selectedImage.value = image;
-};
 
 async function onSubmit(values, ctx) {
   loading.value = true;

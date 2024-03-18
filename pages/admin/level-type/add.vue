@@ -26,9 +26,6 @@
       </VeeForm>
     </div>
   </div>
-  <!-- <NuxtLink to="/admin/level-type">
-    <button class="btn btn-sm btn-outline btn-warning">Back</button>
-  </NuxtLink> -->
 </template>
 
 <script setup>

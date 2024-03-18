@@ -107,6 +107,7 @@
 <script setup>
 const { loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const snackbar = useSnackbar();
 import { useTimeoutFn } from "@vueuse/core";
 
 const router = useRouter();

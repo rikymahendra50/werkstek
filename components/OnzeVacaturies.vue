@@ -1,14 +1,3 @@
-<style scoped>
-.scrollbar-onze {
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.scrollbar-onze::-webkit-scrollbar {
-  display: none;
-}
-</style>
 <template>
   <section class="py-20">
     <TitleHeader
@@ -18,9 +7,12 @@
     />
 
     <div class="md:grid md:grid-cols-12 container-custom">
-      <div class="md:col-span-4 w-[97%]">
+      <div class="md:col-span-4 lg:w-[90%]">
         <div class="mt-5">
-          <button class="flex items-center gap-3 hover:text-primary">
+          <button
+            class="flex items-center gap-3 hover:text-primary"
+            @click="toggleDetail"
+          >
             <img
               src="/images/filter-icon.svg"
               class="w-5 h-5 my-4"
@@ -29,9 +21,9 @@
             <p class="text-base opacity-50">Meer filter opties</p>
           </button>
         </div>
-        <div>
+        <div v-if="showFilter">
           <span class="text-base mt-3 opacity-50">Kies een locatie</span>
-          <div class="flex-col form-control max-w-[90%] mt-2">
+          <div class="flex-col form-control mt-2">
             <select
               id="city"
               class="select select-bordered dropdown"
@@ -110,8 +102,8 @@
           class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
         >
           <eachLocaties
-            v-if="dataProduct.data"
-            v-for="(item, index) in dataProduct.data"
+            v-if="dataProduct?.data"
+            v-for="(item, index) in dataProduct?.data"
             :key="item?.id"
             :name="item?.location?.name"
             :type="item?.level_type?.name"
@@ -142,7 +134,6 @@
 <script setup>
 import axios from "axios";
 const { axiosRequest } = useAxios();
-
 const { loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 import { useTimeoutFn } from "@vueuse/core";
@@ -158,6 +149,28 @@ const selectedMaxPrice = ref("");
 const selectedMeterMin = ref("");
 const selectedMeterMax = ref("");
 const selectedFunctie = ref([]);
+
+const {
+  data: dataProduct,
+  error,
+  refresh,
+} = await useAsyncData("dataProduct", () =>
+  $fetch(
+    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
+);
+
+const selectedFacilities = computed(() => {
+  if (selectedFunctie.value.length > 0) {
+    return `filter[facilities]=${selectedFunctie.value.join("|")}`;
+  } else {
+    return "";
+  }
+});
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
@@ -217,6 +230,30 @@ watch(
     }
   }
 );
+
+const showFilter = ref();
+const toggleDetail = () => {
+  showFilter.value = !showFilter.value;
+};
+
+onMounted(() => {
+  if (window.innerWidth > 768) {
+    showFilter.value = true;
+  } else {
+    showFilter.value = false;
+  }
+
+  watch(
+    () => window.innerWidth,
+    (newWidth) => {
+      if (newWidth > 768) {
+        showFilter.value = true;
+      } else {
+        showFilter.value = false;
+      }
+    }
+  );
+});
 
 // untuk mengambil nilai location pada filter
 const { data: dataForFilter } = await useFetch("/products", {
@@ -284,13 +321,7 @@ function handlefunctieCheckbox(id) {
     selectedFunctie.value = [...selectedFunctie.value, id];
   }
 }
-const selectedFacilities = computed(() => {
-  if (selectedFunctie.value.length > 0) {
-    return `filter[facilities]=${selectedFunctie.value.join("|")}`;
-  } else {
-    return "";
-  }
-});
+
 // end untuk mengelola facility
 
 function replaceWindow() {
@@ -326,20 +357,6 @@ function replaceWindow() {
   router.replace(url);
   refresh();
 }
-
-const {
-  data: dataProduct,
-  error,
-  refresh,
-} = await useAsyncData("dataProduct", () =>
-  $fetch(
-    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
-    {
-      method: "get",
-      ...requestOptions,
-    }
-  )
-);
 </script>
 
 <style scoped>

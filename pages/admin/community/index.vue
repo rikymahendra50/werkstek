@@ -108,6 +108,7 @@
 <script setup>
 const { loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const snackbar = useSnackbar();
 import { useTimeoutFn } from "@vueuse/core";
 
 const router = useRouter();
@@ -168,7 +169,7 @@ function replaceWindow() {
 
 const deleteBlog = async (slug) => {
   loading.value = true;
-  await useFetch(`/admins/articles/${slug}`, {
+  await useFetch(`/admins/community-blogs/${slug}`, {
     method: "DELETE",
     ...requestOptions,
   });
@@ -183,7 +184,7 @@ const deleteBlog = async (slug) => {
       type: "success",
       text: "Delete Community Success",
     });
-    start();
+    window.location.reload();
   }
   loading.value = false;
 };

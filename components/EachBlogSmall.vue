@@ -8,10 +8,10 @@
           class="max-w-[176px] max-h-[154px] mx-2 w-full"
         />
         <div class="flex-col flex w-full justify-between">
-          <h1 class="text-[14px] xl:text-[18px] font-bold">
+          <h1 class="text-[14px] xl:text-[18px] font-bold line-clamp-2">
             {{ title }}
           </h1>
-          <p class="text-[12px] xl:text-[14px] line-clamp-2">
+          <p class="text-[12px] xl:text-[14px] line-clamp-1">
             {{ description }}
           </p>
           <div
