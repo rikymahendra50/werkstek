@@ -46,7 +46,7 @@ const loadGoogleMapsScript = () => {
     window.googleMapsScriptLoaded = true;
     window.initMap = setupMap;
     const googleMapsScript = document.createElement("script");
-    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap&`;
+    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDlXDm2XgaaHSltV5byiQHe9P4HFWtZgOo`;
     googleMapsScript.defer = true;
     googleMapsScript.async = true;
     googleMapsScript.onload = () => {

@@ -1,4 +1,4 @@
-import { object, string, boolean, array, any, union, number } from "zod";
+import z, { object, string, boolean, array, any, union, number } from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 
 export default function () {
@@ -10,31 +10,19 @@ export default function () {
 
   const contactSchema = toTypedSchema(
     object({
-      name: string({
-        required_error: "Name is required",
-      })
-        .trim()
-        .min(1, "Name is required"),
+      first_name: string({
+        required_error: "First Name is required",
+      }).min(1, "First Name is required"),
+      last_name: string({
+        required_error: "Last Name is required",
+      }).min(1, "Last Name is required"),
       email: string({
         required_error: "Email is required",
       })
         .trim()
         .email("Invalid email address"),
-      subject: string({
-        required_error: "Subject is required",
-      })
-        .trim()
-        .min(1, "Subject is required"),
-      message: string({
-        required_error: "Message is required",
-      })
-        .trim()
-        .min(1, "Message is required"),
-      phone: string({
-        required_error: "Phone is required",
-      })
-        .trim()
-        .min(1, "Phone is required"),
+      subject: string().min(1, "Subject is required"),
+      message: string().min(1, "Message is required"),
     })
   );
 
@@ -62,7 +50,7 @@ export default function () {
   const blogSchema = toTypedSchema(
     object({
       title: string().min(1, "Title is required"),
-      body: string().min(1, "Description is required"),
+      body: string().min(0, "Description is required"),
       category: number().min(1, "Category is required"),
       meta: string().min(1, "Meta is required"),
     }).superRefine((data, ctx) => {
@@ -78,8 +66,9 @@ export default function () {
 
   const communitySchema = toTypedSchema(
     object({
+      image: z.instanceof(File).optional(),
       title: string().min(1, "Title is required"),
-      body: string().min(1, "Description is required"),
+      body: string().min(0, "Description is required"),
       meta: string().min(1, "Meta is required"),
     }).superRefine((data, ctx) => {
       if (data.body == "<p></p>") {
@@ -121,7 +110,6 @@ export default function () {
   const formInput = toTypedSchema(
     object({
       name: string().min(1, "Name is required"),
-      // body: bodyField,
       email: emailField,
       body: string().min(0, "Description is required"),
       rating: number({ invalid_type_error: "Rating required" })

@@ -7,7 +7,6 @@
       :validation-schema="formInput"
       v-slot="{ errors }"
     >
-      <!-- {{ errors }} -->
       <div class="flex flex-col w-full">
         <div class="flex items-center">
           <label for="name">Name</label>
@@ -71,13 +70,17 @@
             Please find and click the desired location to get the coordinate
             value.
           </p>
-          <CompAdminMapForm @location-updated="updateLocation" />
+          <!-- <CompAdminMapForm @location-updated="updateLocation" /> -->
+          <MapsTest
+            v-model:latitude="formData.latitude"
+            v-model:longitude="formData.longitude"
+          />
         </div>
-        <div class="flex flex-col my-2 w-full">
+        <div class="flex-col my-2 w-full hidden">
           <div class="flex items-center">
             <label for="latitude">Latitude</label>
           </div>
-          <FormTextField
+          <VeeField
             id="latitude"
             name="latitude"
             type="text"
@@ -86,12 +89,13 @@
             class="input-bordered"
             autocomplete="on"
           />
+          <VeeErrorMessage name="latitude" class="text-red-500" />
         </div>
-        <div class="flex flex-col my-2 w-full">
+        <div class="flex-col my-2 w-full hidden">
           <div class="flex items-center">
             <label for="longitude">Longitude</label>
           </div>
-          <FormTextField
+          <VeeField
             id="longitude"
             name="longitude"
             type="text"
@@ -101,6 +105,7 @@
             autocomplete="on"
           />
         </div>
+        <VeeErrorMessage name="longitude" class="text-red-500" />
       </div>
 
       <div class="flex flex-col my-2 w-full">

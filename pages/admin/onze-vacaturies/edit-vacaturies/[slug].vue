@@ -78,36 +78,45 @@
             Please find and click the desired location to get the coordinate
             value.
           </p>
-          <CompAdminMapForm @location-updated="updateLocation" />
-        </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="latitude">Latitude</label>
-          </div>
-          <FormTextField
-            id="latitude"
-            name="latitude"
-            type="text"
-            v-model="formData.latitude"
-            placeholder="ex:51.9934345296239"
-            class="input-bordered"
-            autocomplete="on"
+          <!-- <CompAdminMapForm @location-updated="updateLocation" /> -->
+          <MapsTest
+            v-model:latitude="formData.latitude"
+            v-model:longitude="formData.longitude"
+            :latitude="formData.latitude"
+            :longitude="formData.latitude"
           />
         </div>
-        <div class="flex flex-col my-2 w-full">
-          <div class="flex items-center">
-            <label for="longitude">Longitude</label>
+        <div class="hidden">
+          <div class="flex flex-col my-2 w-full">
+            <div class="flex items-center">
+              <label for="latitude">Latitude</label>
+            </div>
+            <FormTextField
+              id="latitude"
+              name="latitude"
+              type="text"
+              v-model="formData.latitude"
+              placeholder="ex:51.9934345296239"
+              class="input-bordered"
+              autocomplete="on"
+            />
           </div>
-          <FormTextField
-            id="longitude"
-            name="longitude"
-            type="text"
-            v-model="formData.longitude"
-            placeholder="ex:5.5162370519396349"
-            class="input-bordered"
-            autocomplete="on"
-          />
+          <div class="flex flex-col my-2 w-full">
+            <div class="flex items-center">
+              <label for="longitude">Longitude</label>
+            </div>
+            <FormTextField
+              id="longitude"
+              name="longitude"
+              type="text"
+              v-model="formData.longitude"
+              placeholder="ex:5.5162370519396349"
+              class="input-bordered"
+              autocomplete="on"
+            />
+          </div>
         </div>
+        <VeeErrorMessage name="latitude" class="text-red-500" />
       </div>
 
       <div class="flex flex-col my-2 w-full">

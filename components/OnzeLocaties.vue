@@ -1,5 +1,5 @@
 <template>
-  <section class="py-20">
+  <section class="py-20 overflow-hidden">
     <TitleHeader
       title="Onze locaties"
       secondTitle="Bekijk al onze locaties"
@@ -68,13 +68,12 @@
               :title="'De prijs per maand'"
               :idInputMin="'priceMin'"
               :idInputMax="'priceMax'"
-              :minPrice="0"
-              :maxPrice="highestPrice"
+              v-model:minPrice="selectedMinPrice"
+              v-model:maxPrice="selectedMaxPrice"
               :minRange="0"
               :maxRange="highestPrice"
               :priceGap="highestPrice"
               class="my-2"
-              @price-change="handlePriceChange"
             />
             <div class="">
               <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
@@ -180,7 +179,6 @@
 import axios from "axios";
 const { axiosRequest } = useAxios();
 
-const { loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 import { useTimeoutFn } from "@vueuse/core";
 const router = useRouter();
@@ -196,23 +194,10 @@ const selectedMeterMin = ref("");
 const selectedMeterMax = ref("");
 const selectedFunctie = ref([]);
 
-const { start, stop } = useTimeoutFn(() => {
-  replaceWindow();
-}, 1000);
-
-const {
-  data: dataProduct,
-  error,
-  refresh,
-} = await useAsyncData("dataProduct", () =>
-  $fetch(
-    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
-    {
-      method: "get",
-      ...requestOptions,
-    }
-  )
-);
+const dataForFilter = ref([]);
+const locations = ref([]);
+const soortLocatiesRadio = ref([]);
+const functieCheckbox = ref([]);
 
 const selectedFacilities = computed(() => {
   if (selectedFunctie.value.length > 0) {
@@ -221,6 +206,18 @@ const selectedFacilities = computed(() => {
     return "";
   }
 });
+
+const { data: dataProduct, refresh } = await useFetch(
+  `/products?page=${page.value}&filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
+  {
+    method: "get",
+    ...requestOptions,
+  }
+);
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1500);
 
 watch(
   () => page.value,
@@ -232,47 +229,71 @@ watch(
 );
 
 watch(
-  [
-    () => selectedCity.value,
-    () => selectedSoortLocatie.value,
-    () => selectedMinPrice.value,
-    () => selectedMaxPrice.value,
-    () => selectedMeterMin.value,
-    () => selectedMeterMax.value,
-    () => selectedFunctie.value,
-  ],
-  (
-    [
-      cityValue,
-      soortLocatieValue,
-      minPriceValue,
-      maxPriceValue,
-      minMeterValue,
-      maxMeterValue,
-      functieValue,
-    ],
-    [
-      oldCityValue,
-      oldSoortLocatieValue,
-      oldMinPriceValue,
-      oldMaxPriceValue,
-      oldMinMeterValue,
-      oldMaxMeterValue,
-      oldfunctieValue,
-    ]
-  ) => {
-    if (
-      cityValue !== oldCityValue ||
-      soortLocatieValue !== oldSoortLocatieValue ||
-      minPriceValue !== oldMinPriceValue ||
-      maxPriceValue !== oldMaxPriceValue ||
-      minMeterValue !== oldMinMeterValue ||
-      maxMeterValue !== oldMaxMeterValue ||
-      functieValue !== oldfunctieValue
-    ) {
+  () => selectedMinPrice.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
       page.value = 1;
       start();
-      replaceWindow();
+    }
+  }
+);
+
+watch(
+  () => selectedMaxPrice.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+watch(
+  () => selectedCity.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+watch(
+  () => selectedSoortLocatie.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+watch(
+  () => selectedMeterMin.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+watch(
+  () => selectedMeterMax.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
+  }
+);
+
+watch(
+  () => selectedFunctie.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
     }
   }
 );
@@ -283,6 +304,8 @@ const toggleDetail = () => {
 };
 
 onMounted(() => {
+  stop();
+  loadProperties();
   if (window.innerWidth > 768) {
     showFilter.value = true;
   } else {
@@ -299,29 +322,80 @@ onMounted(() => {
       }
     }
   );
+
+  if (route.query.page) {
+    page.value = route.query.page;
+  }
+  if (route.query.location_id) {
+    selectedCity.value = route.query.location_id;
+  }
+  if (route.query.type_id) {
+    const typeIds = route.query.type_id?.split(",")?.map(Number);
+    selectedSoortLocatie.value = typeIds;
+  }
+
+  if (route.query.min_price) {
+    selectedMinPrice.value = parseInt(route.query.min_price, 0);
+  }
+  if (route.query.max_price) {
+    selectedMaxPrice.value = parseInt(route.query.max_price, 0);
+  }
+  if (route.query.min_area) {
+    selectedMeterMin.value = route.query.min_area;
+  }
+  if (route.query.max_area) {
+    selectedMeterMax.value = route.query.max_area;
+  }
+  if (route.query.facilities) {
+    const facilitiesIds = route.query.facilities?.split("|")?.map(Number);
+    selectedFunctie.value = facilitiesIds;
+  }
 });
 
-// untuk mengambil nilai location pada filter
-const { data: dataForFilter } = await useFetch("/products", {
-  method: "get",
-  ...requestOptions,
+async function loadProperties() {
+  const [dataForFilterT, locationsT, soortLocatiesRadioT, facilitiesT] =
+    await Promise.all([
+      $fetch("/products", {
+        method: "get",
+        ...requestOptions,
+      }),
+      $fetch("/locations", {
+        method: "get",
+        ...requestOptions,
+      }),
+      $fetch("/types", {
+        method: "get",
+        ...requestOptions,
+      }),
+      $fetch("/facilities", {
+        method: "get",
+        ...requestOptions,
+      }),
+    ]);
+
+  dataForFilter.value = dataForFilterT?.data;
+  locations.value = locationsT?.data;
+  soortLocatiesRadio.value = soortLocatiesRadioT?.data;
+  functieCheckbox.value = facilitiesT?.data;
+}
+
+const city = computed(() => {
+  return locations.value.map((item) => item);
 });
 
-const { data: locations } = await useFetch("/locations", {
-  method: "get",
-  ...requestOptions,
-});
+const highestPrice = computed(() => {
+  const numericPrices = dataForFilter.value.map((item) =>
+    parseFloat(item.price)
+  );
 
-const arrayLocation = locations?.value?.data?.map((item) => item);
-let city = ref(arrayLocation);
-// end location
+  if (numericPrices.length === 0) {
+    return 0;
+  }
 
-// untuk mengelola soort locatie
-const { data: type } = await useFetch("/types", {
-  method: "get",
-  ...requestOptions,
+  const highestPrice2 = Math.max(...numericPrices);
+
+  return highestPrice2;
 });
-const soortLocatiesRadio = type?.value?.data;
 
 function isSelectedSoort(id) {
   return selectedSoortLocatie.value.includes(id);
@@ -338,24 +412,6 @@ function handleSoortLocatieChange(id) {
 }
 // end soort locatie
 
-// untuk mengelola slider range
-const numericPrices = dataForFilter.value.data.map((item) =>
-  parseFloat(item.price)
-);
-const highestPrice = Math.max(...numericPrices);
-function handlePriceChange(priceData) {
-  selectedMinPrice.value = priceData.minPrice;
-  selectedMaxPrice.value = priceData.maxPrice;
-}
-// end untuk mengelola slider range
-
-// untuk mengelola facility
-const { data: facility } = await useFetch("/facilities", {
-  method: "get",
-  ...requestOptions,
-});
-
-const functieCheckbox = facility?.value?.data;
 function isSelectedFuncti(id) {
   return selectedFunctie.value.includes(id);
 }
@@ -370,24 +426,17 @@ function handlefunctieCheckbox(id) {
 
 // end untuk mengelola facility
 
-onMounted(() => {
-  replaceWindow();
-});
-
 function replaceWindow() {
   let filters = [];
   if (selectedCity.value) {
-    filters.push(`filter[location_id]=${selectedCity.value}`);
+    filters.push(`location_id=${selectedCity.value}`);
   }
   if (selectedSoortLocatie.value.length > 0) {
-    const soortLocatieFilters = selectedSoortLocatie.value.map(
-      (id) => `filter[type_id]=${id}`
-    );
-    filters = filters.concat(soortLocatieFilters);
+    filters.push(`type_id=${selectedSoortLocatie.value}`);
   }
-  if (selectedMinPrice && selectedMaxPrice) {
-    filters.push(`filter[min_price]=${selectedMinPrice.value}`);
-    filters.push(`filter[max_price]=${selectedMaxPrice.value}`);
+  if (selectedMaxPrice.value) {
+    filters.push(`min_price=${selectedMinPrice.value}`);
+    filters.push(`max_price=${selectedMaxPrice.value}`);
   }
 
   if (selectedMeterMin && selectedMeterMax) {
@@ -395,8 +444,8 @@ function replaceWindow() {
     filters.push(`filter[max_area]=${selectedMeterMax.value}`);
   }
 
-  if (selectedFacilities?.value) {
-    filters.push(selectedFacilities.value);
+  if (selectedFunctie?.value) {
+    filters.push(`facilities=${selectedFunctie.value}`);
   }
 
   const queryString = filters.join("&");

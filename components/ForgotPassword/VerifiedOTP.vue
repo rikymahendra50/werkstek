@@ -17,7 +17,7 @@
       </FormGroup>
       <div v-if="showPinEmailExpired">
         <p class="text-gray-400">
-          If you did not receive the an email
+          If you did not receive an email
           <span class="link" @click="resentEmail" role="button"
             >click here</span
           >
