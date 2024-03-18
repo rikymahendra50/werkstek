@@ -1,14 +1,3 @@
-<style scoped>
-.scrollbar-onze {
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.scrollbar-onze::-webkit-scrollbar {
-  display: none;
-}
-</style>
 <template>
   <section class="py-20">
     <TitleHeader
@@ -17,12 +6,12 @@
       description="Op deze locaties hebben we kantoorruimtes"
     />
 
-    <div class="md:grid md:grid-cols-12 container-custom gap-2">
-      <div class="md:col-span-4">
+    <div class="md:grid md:grid-cols-12 container-custom">
+      <div class="md:col-span-4 lg:w-[90%]">
         <div class="mt-5">
           <button
-            @click="toggleDetail"
             class="flex items-center gap-3 hover:text-primary"
+            @click="toggleDetail"
           >
             <img
               src="/images/filter-icon.svg"
@@ -34,7 +23,7 @@
         </div>
         <div v-if="showFilter">
           <span class="text-base mt-3 opacity-50">Kies een locatie</span>
-          <div class="flex-col form-control max-w-xs mt-2">
+          <div class="flex-col form-control mt-2">
             <select
               id="city"
               class="select select-bordered dropdown"
@@ -61,10 +50,10 @@
                 <input
                   :id="item.id"
                   :value="item.name"
-                  type="checkbox"
                   @change="handleSoortLocatieChange(item.id)"
-                  name="soort"
                   :checked="isSelectedSoort(item.id)"
+                  type="checkbox"
+                  name="soort"
                 />
                 <label :for="item.id" class="cursor-pointer">
                   {{ item.name }}
@@ -83,27 +72,28 @@
               class="my-2"
               @price-change="handlePriceChange"
             />
-          </div>
-
-          <p class="text-base mt-3 opacity-50 pb-3">Facility</p>
-          <fieldset id="facility" class="grid grid-cols-2 gap-2">
-            <div
-              class="flex items-center gap-2 cursor-pointer"
-              v-for="item in functieCheckbox"
-            >
-              <input
-                :id="`facility-${item.id}`"
-                :value="item.name"
-                type="checkbox"
-                @change="handlefunctieCheckbox(item.id)"
-                name="facility"
-                :checked="isSelectedFuncti(item.id)"
-              />
-              <label :for="`facility-${item.id}`" class="cursor-pointer">
-                {{ item.name }}
-              </label>
+            <div class="">
+              <p class="text-base mt-3 opacity-50 pb-3">Faciliteit</p>
+              <fieldset id="facility" class="grid grid-cols-2 gap-2">
+                <div
+                  class="flex items-center gap-2 cursor-pointer"
+                  v-for="item in functieCheckbox"
+                >
+                  <input
+                    :id="`facility-${item.id}`"
+                    :value="item.name"
+                    type="checkbox"
+                    @change="handlefunctieCheckbox(item.id)"
+                    name="facility"
+                    :checked="isSelectedFuncti(item.id)"
+                  />
+                  <label :for="`facility-${item.id}`" class="cursor-pointer">
+                    {{ item.name }}
+                  </label>
+                </div>
+              </fieldset>
             </div>
-          </fieldset>
+          </div>
         </div>
       </div>
 
@@ -112,21 +102,26 @@
           class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
         >
           <eachLocaties
-            v-if="dataProduct.data"
-            v-for="(item, index) in dataProduct.data"
-            :key="item.id"
+            v-if="dataProduct?.data"
+            v-for="(item, index) in dataProduct?.data"
+            :key="item?.id"
             :name="item?.location?.name"
             :type="item?.level_type?.name"
             :latitude="item?.latitude"
             :longitude="item?.longitude"
-            :link="`/onze-vacaturies/${item.slug}`"
+            :link="`/onze-locaties/${item.slug}`"
             :price="item?.price"
+            :email="item?.email"
             :image="item?.images[0]?.image"
             :rating="item?.rating"
           />
         </div>
         <Pagination
           v-model="page"
+          first="Eerst"
+          last="Laatst"
+          prev="Vorig"
+          next="Volgende"
           :total="dataProduct?.meta?.total"
           :per-page="dataProduct?.meta?.per_page"
           class="flex justify-center mt-10"
@@ -139,7 +134,6 @@
 <script setup>
 import axios from "axios";
 const { axiosRequest } = useAxios();
-
 const { loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 import { useTimeoutFn } from "@vueuse/core";
@@ -147,21 +141,35 @@ const router = useRouter();
 const route = useRoute();
 
 const page = ref(1);
-const search = ref("");
+// const search = ref("");
+const selectedCity = ref("");
+const selectedSoortLocatie = ref([]);
+const selectedMinPrice = ref("");
+const selectedMaxPrice = ref("");
+const selectedMeterMin = ref("");
+const selectedMeterMax = ref("");
+const selectedFunctie = ref([]);
 
-const { data: dataForFilter } = await useFetch("/products", {
-  method: "get",
-  ...requestOptions,
-});
+const {
+  data: dataProduct,
+  error,
+  refresh,
+} = await useAsyncData("dataProduct", () =>
+  $fetch(
+    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
+);
 
-const { data: type } = await useFetch("/types", {
-  method: "get",
-  ...requestOptions,
-});
-
-const { data: facility } = await useFetch("/facilities", {
-  method: "get",
-  ...requestOptions,
+const selectedFacilities = computed(() => {
+  if (selectedFunctie.value.length > 0) {
+    return `filter[facilities]=${selectedFunctie.value.join("|")}`;
+  } else {
+    return "";
+  }
 });
 
 const { start, stop } = useTimeoutFn(() => {
@@ -178,30 +186,50 @@ watch(
 );
 
 watch(
-  () => search.value,
-  (newValue, oldValue) => {
-    if (newValue !== oldValue) {
+  [
+    () => selectedCity.value,
+    () => selectedSoortLocatie.value,
+    () => selectedMinPrice.value,
+    () => selectedMaxPrice.value,
+    () => selectedMeterMin.value,
+    () => selectedMeterMax.value,
+    () => selectedFunctie.value,
+  ],
+  (
+    [
+      cityValue,
+      soortLocatieValue,
+      minPriceValue,
+      maxPriceValue,
+      minMeterValue,
+      maxMeterValue,
+      functieValue,
+    ],
+    [
+      oldCityValue,
+      oldSoortLocatieValue,
+      oldMinPriceValue,
+      oldMaxPriceValue,
+      oldMinMeterValue,
+      oldMaxMeterValue,
+      oldfunctieValue,
+    ]
+  ) => {
+    if (
+      cityValue !== oldCityValue ||
+      soortLocatieValue !== oldSoortLocatieValue ||
+      minPriceValue !== oldMinPriceValue ||
+      maxPriceValue !== oldMaxPriceValue ||
+      minMeterValue !== oldMinMeterValue ||
+      maxMeterValue !== oldMaxMeterValue ||
+      functieValue !== oldfunctieValue
+    ) {
       page.value = 1;
       start();
+      replaceWindow();
     }
   }
 );
-
-const {
-  data: dataProduct,
-  error,
-  refresh,
-} = await useAsyncData("dataProduct", () =>
-  $fetch(`/products?page=${page.value}&filter[search]=${search.value}`, {
-    method: "get",
-    ...requestOptions,
-  })
-);
-
-function replaceWindow() {
-  router.replace(`/onze-vacaturies?page=${page.value}&search=${search.value}`);
-  refresh();
-}
 
 const showFilter = ref();
 const toggleDetail = () => {
@@ -227,46 +255,31 @@ onMounted(() => {
   );
 });
 
-function splitColumns(arr) {
-  const midpoint = Math.ceil(arr.length / 2);
-  return [arr.slice(0, midpoint), arr.slice(midpoint)];
-}
-
-const arrayLocation = dataProduct?.value?.data?.map((item) => item.location);
-
-let city = ref([]);
-let citySet = {};
-
-arrayLocation.forEach((element) => {
-  const cityName = element.name;
-  const cityId = element.id;
-  if (!citySet[cityName]) {
-    // console.log(cityName, cityId);
-    citySet[cityName] = cityId;
-    city.value.push({ name: cityName, id: cityId });
-  }
+// untuk mengambil nilai location pada filter
+const { data: dataForFilter } = await useFetch("/products", {
+  method: "get",
+  ...requestOptions,
 });
 
-const soortLocatiesRadio = type.value.data;
-const functieCheckbox = facility.value.data;
-const numericPrices = dataForFilter.value.data.map((item) =>
-  parseFloat(item.price)
-);
-const highestPrice = Math.max(...numericPrices);
+const { data: locations } = await useFetch("/locations", {
+  method: "get",
+  ...requestOptions,
+});
+
+const arrayLocation = locations?.value?.data?.map((item) => item);
+let city = ref(arrayLocation);
+
+// end location
+
+// untuk mengelola soort locatie
+const { data: type } = await useFetch("/types", {
+  method: "get",
+  ...requestOptions,
+});
+const soortLocatiesRadio = type?.value?.data;
 
 function isSelectedSoort(id) {
   return selectedSoortLocatie.value.includes(id);
-}
-
-function isSelectedFuncti(id) {
-  return selectedFunctie.value.includes(id);
-}
-
-function handlePriceChange(priceData) {
-  setTimeout(() => {
-    selectedMinPrice.value = priceData.minPrice;
-    selectedMaxPrice.value = priceData.maxPrice;
-  }, 900);
 }
 
 function handleSoortLocatieChange(id) {
@@ -278,6 +291,28 @@ function handleSoortLocatieChange(id) {
     selectedSoortLocatie.value = [...selectedSoortLocatie.value, id];
   }
 }
+// end soort locatie
+
+// untuk mengelola slider range
+const numericPrices = dataForFilter.value.data.map((item) =>
+  parseFloat(item.price)
+);
+const highestPrice = Math.max(...numericPrices);
+function handlePriceChange(priceData) {
+  selectedMinPrice.value = priceData.minPrice;
+  selectedMaxPrice.value = priceData.maxPrice;
+}
+// end untuk mengelola slider range
+
+// untuk mengelola facility
+const { data: facility } = await useFetch("/facilities", {
+  method: "get",
+  ...requestOptions,
+});
+const functieCheckbox = facility?.value?.data;
+function isSelectedFuncti(id) {
+  return selectedFunctie.value.includes(id);
+}
 
 function handlefunctieCheckbox(id) {
   if (selectedFunctie.value.includes(id)) {
@@ -287,33 +322,40 @@ function handlefunctieCheckbox(id) {
   }
 }
 
-const selectedCity = ref();
-const selectedSoortLocatie = ref([]);
-const selectedFunctie = ref([]);
-const selectedMinPrice = ref();
-const selectedMaxPrice = ref();
-const selectedMeterMin = ref();
-const selectedMeterMax = ref();
+// end untuk mengelola facility
 
-// selectedCity.value = "Locatie";
+function replaceWindow() {
+  let filters = [];
+  if (selectedCity.value) {
+    filters.push(`filter[location_id]=${selectedCity.value}`);
+  }
+  if (selectedSoortLocatie.value.length > 0) {
+    const soortLocatieFilters = selectedSoortLocatie.value.map(
+      (id) => `filter[type_id]=${id}`
+    );
+    filters = filters.concat(soortLocatieFilters);
+  }
+  if (selectedMinPrice !== "" && selectedMaxPrice !== "") {
+    filters.push(`filter[min_price]=${selectedMinPrice.value}`);
+    filters.push(`filter[max_price]=${selectedMaxPrice.value}`);
+  }
 
-watchEffect(() => {
-  fetchData();
-});
+  if (selectedMeterMin !== "" && selectedMeterMax !== "") {
+    filters.push(`filter[min_area]=${selectedMeterMin.value}`);
+    filters.push(`filter[max_area]=${selectedMeterMax.value}`);
+  }
 
-async function fetchData() {
-  const response = await axiosRequest.get(`/products`, {
-    params: {
-      "filter[min_price]": selectedMinPrice.value,
-      "filter[max_price]": selectedMaxPrice.value,
-      "filter[min_area]": selectedMeterMin.value,
-      "filter[max_area]": selectedMeterMax.value,
-      "filter[type_id]": selectedSoortLocatie.value,
-      "filter[location_id]": selectedCity.value,
-      "filter[productFacility.facility_id]": selectedFunctie.value,
-    },
-  });
-  dataProduct.value = response.data;
+  if (selectedFacilities?.value) {
+    filters.push(selectedFacilities?.value);
+  }
+
+  const queryString = filters.join("&");
+  const url = `/onze-vacaturies?page=${page.value}${
+    queryString ? `&${queryString}` : ""
+  }`;
+
+  router.replace(url);
+  refresh();
 }
 </script>
 

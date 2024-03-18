@@ -17,5 +17,6 @@ const props = defineProps({
   link: {
     type: String,
   },
+  isLoading: {},
 });
 </script>

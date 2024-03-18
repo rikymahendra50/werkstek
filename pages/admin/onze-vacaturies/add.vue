@@ -1,103 +1,120 @@
 <template>
   <CompAdminBackButton link="onze-vacaturies" linkTitle="Add Property" />
-  <div class="h-screen max-h-[450px] overflow-y-auto">
+  <div class="overflow-y-auto grid md:grid-cols-2">
     <VeeForm
       @submit="onSubmit"
       class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-8"
+      :validation-schema="formInput"
       v-slot="{ errors }"
     >
-      <div class="flex flex-col my-2 w-full">
+      <!-- {{ errors }} -->
+      <div class="flex flex-col w-full">
         <div class="flex items-center">
           <label for="name">Name</label>
         </div>
-        <VeeField
+        <FormTextField
           id="name"
           name="name"
-          type="text"
-          v-model="productsData.name"
-          class="input input-bordered w-full input-md"
+          v-model="formData.name"
           placeholder="Name"
-          autocomplete="name"
+          class="input-bordered"
+          autocomplete="on"
         />
-        <VeeErrorMessage name="name" class="text-sm text-error" />
       </div>
       <div class="flex flex-col my-5 w-full">
-        <label for="body">Description</label>
+        <span>Description</span>
+        <div class="hidden">
+          <VeeField name="body" v-model="formData.description" />
+        </div>
         <FormTextEditor
-          v-model="productsData.description"
+          v-model="formData.description"
           :is-error="!!errors.body"
         />
-        <VeeErrorMessage name="body" />
+        <!-- <pre>
+          {{ formData.description }}
+        </pre>
+        <pre>
+          {{ errors.body }}
+        </pre> -->
+        <VeeErrorMessage name="body" class="text-red-500" />
       </div>
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="email">Email</label>
         </div>
-        <VeeField
+        <FormTextField
           id="email"
           name="email"
-          type="text"
-          v-model="productsData.email"
-          class="input input-bordered w-full input-md"
-          placeholder="Email"
-          autocomplete="email"
+          v-model="formData.email"
+          placeholder="ex:werstek@gmail.com"
+          class="input-bordered"
+          autocomplete="on"
         />
       </div>
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
-          <label for="phoneNumber">Phone Number</label>
+          <label for="phone">Phone Number</label>
         </div>
-        <VeeField
-          id="phoneNumber"
-          name="phoneNumber"
+        <FormTextField
+          id="phone"
+          name="phone"
           type="text"
-          v-model="productsData.phone_number"
-          class="input input-bordered w-full input-md"
-          placeholder="Phone Number"
-          autocomplete="Phone"
+          v-model="formData.phone_number"
+          placeholder="ex:6221210291"
+          class="input-bordered"
+          autocomplete="on"
         />
       </div>
-      <div class="flex flex-col my-2 w-full">
-        <div class="flex items-center">
-          <label for="latitude">Latitude</label>
+      <div class="border-2 w-full p-3 rounded-md">
+        <div>
+          <p class="mb-3">
+            Please find and click the desired location to get the coordinate
+            value.
+          </p>
+          <CompAdminMapForm @location-updated="updateLocation" />
         </div>
-        <VeeField
-          id="latitude"
-          name="latitude"
-          type="text"
-          v-model="productsData.latitude"
-          class="input input-bordered w-full input-md"
-          placeholder="Latitude"
-          autocomplete="latitude"
-        />
-      </div>
-      <div class="flex flex-col my-2 w-full">
-        <div class="flex items-center">
-          <label for="longitude">Longitude</label>
+        <div class="flex flex-col my-2 w-full">
+          <div class="flex items-center">
+            <label for="latitude">Latitude</label>
+          </div>
+          <FormTextField
+            id="latitude"
+            name="latitude"
+            type="text"
+            v-model="formData.latitude"
+            placeholder="ex:51.9934345296239"
+            class="input-bordered"
+            autocomplete="on"
+          />
         </div>
-        <VeeField
-          id="longitude"
-          name="longitude"
-          type="text"
-          v-model="productsData.longitude"
-          class="input input-bordered w-full input-md"
-          placeholder="Longitude"
-          autocomplete="longitude"
-        />
+        <div class="flex flex-col my-2 w-full">
+          <div class="flex items-center">
+            <label for="longitude">Longitude</label>
+          </div>
+          <FormTextField
+            id="longitude"
+            name="longitude"
+            type="text"
+            v-model="formData.longitude"
+            placeholder="ex:5.5162370519396349"
+            class="input-bordered"
+            autocomplete="on"
+          />
+        </div>
       </div>
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="price">Price</label>
         </div>
-        <VeeField
+        <FormTextField
           id="price"
           name="price"
-          type="text"
-          v-model="productsData.price"
-          class="input input-bordered w-full input-md"
-          placeholder="Price"
-          autocomplete="price"
+          type="number"
+          v-model="formData.price"
+          placeholder="ex:80"
+          class="input-bordered"
+          autocomplete="on"
         />
       </div>
 
@@ -109,7 +126,7 @@
           id="renttype"
           name="renttype"
           as="select"
-          v-model="productsData.rent_type"
+          v-model="formData.rent_type"
           class="select select-bordered w-full"
           placeholder="renttype"
           autocomplete="renttype"
@@ -118,20 +135,24 @@
           <option value="monthly">Montly</option>
           <option value="yearly">Yearly</option>
         </VeeField>
+        <VeeErrorMessage
+          name="renttype"
+          class="form-error-message text-red-600"
+        />
       </div>
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
-          <label for="areaSize">Area Size</label>
+          <label for="areasize">Area Size</label>
         </div>
-        <VeeField
-          id="areaSize"
-          name="areaSize"
-          type="text"
-          v-model="productsData.area_size"
-          class="input input-bordered w-full input-md"
-          placeholder="Area Size"
-          autocomplete="off"
+        <FormTextField
+          id="areasize"
+          name="areasize"
+          type="number"
+          v-model="formData.area_size"
+          placeholder="ex:80"
+          class="input-bordered"
+          autocomplete="on"
         />
       </div>
 
@@ -139,13 +160,13 @@
         <div class="flex items-center">
           <label for="rating">Rating</label>
         </div>
-        <VeeField
+        <FormTextField
           id="rating"
           name="rating"
-          type="text"
-          v-model="productsData.rating"
-          class="input input-bordered w-full input-md"
-          placeholder="Rating"
+          type="number"
+          v-model="formData.rating"
+          placeholder="ex:10"
+          class="input-bordered"
           autocomplete="off"
         />
       </div>
@@ -158,7 +179,7 @@
           id="location"
           name="location"
           as="select"
-          v-model="productsData.location_id"
+          v-model="formData.location_id"
           class="select select-bordered w-full"
           placeholder="location"
           autocomplete="location"
@@ -168,6 +189,10 @@
             {{ item.name }}
           </option>
         </VeeField>
+        <VeeErrorMessage
+          name="location"
+          class="form-error-message text-red-600"
+        />
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -178,7 +203,7 @@
           id="type"
           name="type"
           as="select"
-          v-model="productsData.type_id"
+          v-model="formData.type_id"
           class="select select-bordered w-full"
           placeholder="type"
           autocomplete="off"
@@ -188,17 +213,18 @@
             {{ item.name }}
           </option>
         </VeeField>
+        <VeeErrorMessage name="type" class="form-error-message text-red-600" />
       </div>
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
-          <label for="levelType">Level Type</label>
+          <label for="leveltype">Level Type</label>
         </div>
         <VeeField
-          id="levelType"
-          name="levelType"
+          id="leveltype"
+          name="leveltype"
           as="select"
-          v-model="productsData.level_type_id"
+          v-model="formData.level_type_id"
           class="select select-bordered w-full"
           placeholder="Level Type"
           autocomplete="off"
@@ -208,6 +234,10 @@
             {{ item.name }}
           </option>
         </VeeField>
+        <VeeErrorMessage
+          name="leveltype"
+          class="form-error-message text-red-600"
+        />
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -225,7 +255,7 @@
               :name="`facilities + ${item.name}`"
               type="checkbox"
               :value="{ facility_id: item.id }"
-              v-model="productsData.product_facilities"
+              v-model="formData.product_facilities"
               placeholder="facilities"
               autocomplete="facilities"
             />
@@ -249,7 +279,7 @@
               :name="`privileges + ${item.name}`"
               type="checkbox"
               :value="{ privilege: item.name }"
-              v-model="productsData.product_privileges"
+              v-model="formData.product_privileges"
               placeholder="privileges"
               autocomplete="privileges"
             />
@@ -258,37 +288,30 @@
         </div>
       </div>
 
-      <div class="flex flex-col my-2 w-full">
+      <div class="flex-col my-2 w-full hidden">
         <div class="grid gap-2">
           <div class="flex items-center">
-            <span>Saleable</span>
+            <span>Is Saleable</span>
           </div>
-          <label class="radio-label flex gap-2">
+          <label
+            v-for="item in dataIsSaleAble"
+            :key="item.id"
+            class="checkbox-label flex gap-2"
+          >
             <VeeField
-              id="saleable_yes"
-              name="saleable"
+              :id="`isSaleAble + ${item.id}`"
+              :name="`isSaleAble + ${item.name}`"
               type="radio"
-              value="1"
-              v-model="productsData.is_saleable"
-              placeholder="saleable"
-              autocomplete="saleable"
+              :value="item.value"
+              v-model="formData.is_saleable"
+              placeholder="privileges"
+              autocomplete="privileges"
             />
-            Yes
-          </label>
-          <label class="radio-label flex gap-2">
-            <VeeField
-              id="saleable_no"
-              name="saleable"
-              type="radio"
-              value="0"
-              v-model="productsData.is_saleable"
-              placeholder="saleable"
-              autocomplete="saleable"
-            />
-            No
+            {{ item.name }}
           </label>
         </div>
       </div>
+
       <div class="flex justify-end w-full">
         <CompAdminButtonAddForm
           buttonName="Add Property"
@@ -305,6 +328,7 @@ const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const router = useRouter();
 const route = useRoute();
+const { formInput } = useSchema();
 
 const dataPrivilages = ref([
   {
@@ -318,6 +342,19 @@ const dataPrivilages = ref([
   {
     id: 3,
     name: "Get a good view",
+  },
+]);
+
+const dataIsSaleAble = ref([
+  {
+    id: 1,
+    name: "Yes",
+    value: 1,
+  },
+  {
+    id: 2,
+    name: "No",
+    value: 0,
   },
 ]);
 
@@ -339,7 +376,7 @@ const { data: levelType } = await useFetch(`/admins/level-types`, {
   ...requestOptions,
 });
 
-const productsData = ref({
+const formData = ref({
   name: undefined,
   description: undefined,
   email: undefined,
@@ -352,18 +389,32 @@ const productsData = ref({
   location_id: undefined,
   type_id: undefined,
   level_type_id: undefined,
-  is_saleable: undefined,
-  product_facilities: [{ facility_id: 1 }],
-  product_privileges: [{ privilege: "Near the beach" }],
+  is_saleable: dataIsSaleAble.value[0].value,
+  product_facilities: [],
+  product_privileges: [],
   rating: undefined,
 });
+
+watch(
+  () => formData.value.description,
+  (newValue) => {
+    if (newValue === "<p></p>" || !newValue) {
+      formData.value.description = undefined;
+    }
+  }
+);
+
+const updateLocation = (location) => {
+  formData.value.longitude = String(location.longitude);
+  formData.value.latitude = String(location.latitude);
+};
 
 async function onSubmit(values, ctx) {
   loading.value = true;
 
   const { data, error } = await useFetch("/admins/products", {
     method: "POST",
-    body: JSON.stringify(productsData.value),
+    body: JSON.stringify(formData.value),
     ...requestOptions,
   });
 

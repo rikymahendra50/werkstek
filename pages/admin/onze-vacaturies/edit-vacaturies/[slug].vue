@@ -1,107 +1,127 @@
 <template>
   <CompAdminBackButton link="onze-vacaturies" linkTitle="Edit Property" />
-  <div class="h-screen max-h-[450px] overflow-y-auto">
+  <div class="overflow-y-auto grid md:grid-cols-2">
     <VeeForm
       @submit="onSubmit"
       class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-8"
+      :validation-schema="formInput"
       v-slot="{ errors }"
     >
-      <div class="flex flex-col my-2 w-full">
+      <div class="flex flex-col w-full">
         <div class="flex items-center">
           <label for="name">Name</label>
         </div>
-        <VeeField
+        <FormTextField
           id="name"
           name="name"
-          type="text"
           v-model="formData.name"
-          class="input input-bordered w-full input-md"
           placeholder="Name"
-          autocomplete="off"
+          class="input-bordered"
+          autocomplete="on"
         />
-        <VeeErrorMessage name="name" class="text-sm text-error" />
       </div>
       <div class="flex flex-col my-5 w-full">
-        <span for="body">Description</span>
+        <span>Description</span>
+        <div class="hidden">
+          <VeeField name="body" v-model="formData.description" />
+        </div>
         <FormTextEditor
           v-model="formData.description"
           :is-error="!!errors.body"
         />
-        <VeeErrorMessage name="body" />
+        <VeeErrorMessage name="body" class="text-red-500" />
       </div>
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="email">Email</label>
         </div>
+        <!-- <FormTextField
+          id="email"
+          name="email"
+          v-model="formData.email"
+          placeholder="ex:werstek@gmail.com"
+          class="input-bordered"
+          autocomplete="on"
+        /> -->
         <VeeField
           id="email"
           name="email"
-          type="text"
           v-model="formData.email"
+          type="text"
           class="input input-bordered w-full input-md"
           placeholder="Email"
           autocomplete="off"
         />
+        <VeeErrorMessage name="email" class="text-red-500" />
       </div>
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
-          <label for="phoneNumber">Phone Number</label>
+          <label for="phone">Phone Number</label>
         </div>
-        <VeeField
-          id="phoneNumber"
-          name="phoneNumber"
+        <FormTextField
+          id="phone"
+          name="phone"
           type="text"
           v-model="formData.phone_number"
-          class="input input-bordered w-full input-md"
-          placeholder="Phone Number"
-          autocomplete="off"
+          placeholder="ex:6221210291"
+          class="input-bordered"
+          autocomplete="on"
         />
+        <VeeErrorMessage name="phone" class="text-red-500" />
       </div>
 
-      <div class="flex flex-col my-2 w-full">
-        <div class="flex items-center">
-          <label for="latitude">Latitude</label>
+      <div class="border-2 w-full p-3 rounded-md">
+        <div>
+          <p class="mb-3">
+            Please find and click the desired location to get the coordinate
+            value.
+          </p>
+          <CompAdminMapForm @location-updated="updateLocation" />
         </div>
-        <VeeField
-          id="latitude"
-          name="latitude"
-          type="text"
-          v-model="formData.latitude"
-          class="input input-bordered w-full input-md"
-          placeholder="Latitude"
-          autocomplete="off"
-        />
-      </div>
-
-      <div class="flex flex-col my-2 w-full">
-        <div class="flex items-center">
-          <label for="longitude">Longitude</label>
+        <div class="flex flex-col my-2 w-full">
+          <div class="flex items-center">
+            <label for="latitude">Latitude</label>
+          </div>
+          <FormTextField
+            id="latitude"
+            name="latitude"
+            type="text"
+            v-model="formData.latitude"
+            placeholder="ex:51.9934345296239"
+            class="input-bordered"
+            autocomplete="on"
+          />
         </div>
-        <VeeField
-          id="longitude"
-          name="longitude"
-          type="text"
-          v-model="formData.longitude"
-          class="input input-bordered w-full input-md"
-          placeholder="Longitude"
-          autocomplete="off"
-        />
+        <div class="flex flex-col my-2 w-full">
+          <div class="flex items-center">
+            <label for="longitude">Longitude</label>
+          </div>
+          <FormTextField
+            id="longitude"
+            name="longitude"
+            type="text"
+            v-model="formData.longitude"
+            placeholder="ex:5.5162370519396349"
+            class="input-bordered"
+            autocomplete="on"
+          />
+        </div>
       </div>
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="price">Price</label>
         </div>
-        <VeeField
+        <FormTextField
           id="price"
           name="price"
           type="number"
           v-model="formData.price"
-          class="input input-bordered w-full input-md"
-          placeholder="Price"
-          autocomplete="off"
+          placeholder="ex:80"
+          class="input-bordered"
+          autocomplete="on"
         />
       </div>
 
@@ -122,20 +142,24 @@
           <option value="monthly">Montly</option>
           <option value="yearly">Yearly</option>
         </VeeField>
+        <VeeErrorMessage
+          name="renttype"
+          class="form-error-message text-red-600"
+        />
       </div>
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
-          <label for="areaSize">Area Size</label>
+          <label for="areasize">Area Size</label>
         </div>
-        <VeeField
-          id="areaSize"
-          name="areaSize"
-          type="text"
+        <FormTextField
+          id="areasize"
+          name="areasize"
+          type="number"
           v-model="formData.area_size"
-          class="input input-bordered w-full input-md"
-          placeholder="Area Size"
-          autocomplete="off"
+          placeholder="ex:80"
+          class="input-bordered"
+          autocomplete="on"
         />
       </div>
 
@@ -143,13 +167,13 @@
         <div class="flex items-center">
           <label for="rating">Rating</label>
         </div>
-        <VeeField
+        <FormTextField
           id="rating"
           name="rating"
-          type="text"
+          type="number"
           v-model="formData.rating"
-          class="input input-bordered w-full input-md"
-          placeholder="Rating"
+          placeholder="ex:10"
+          class="input-bordered"
           autocomplete="off"
         />
       </div>
@@ -172,6 +196,10 @@
             {{ item.name }}
           </option>
         </VeeField>
+        <VeeErrorMessage
+          name="location"
+          class="form-error-message text-red-600"
+        />
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -192,23 +220,24 @@
             {{ item.name }}
           </option>
         </VeeField>
+        <VeeErrorMessage name="type" class="form-error-message text-red-600" />
       </div>
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
-          <label for="levelType">Level Type</label>
+          <label for="leveltype">Level Type</label>
         </div>
         <VeeField
-          id="levelType"
-          name="levelType"
+          id="leveltype"
+          name="leveltype"
           as="select"
           v-model="formData.level_type_id"
           class="select select-bordered w-full"
           placeholder="type"
           autocomplete="type"
         >
-          <option disabled selected>Type</option>
-          <option :value="item.id" v-for="item in levelType.data">
+          <option disabled selected>Level Type</option>
+          <option :value="item.id" v-for="item in levelType?.data">
             {{ item.name }}
           </option>
         </VeeField>
@@ -265,27 +294,23 @@
       <div class="flex flex-col my-2 w-full">
         <div class="grid gap-2">
           <div class="flex items-center">
-            <span>Saleable</span>
+            <span>Is Saleable</span>
           </div>
-          <label class="radio-label flex gap-2">
+          <label
+            v-for="item in dataIsSaleAble"
+            :key="item.id"
+            class="checkbox-label flex gap-2"
+          >
             <VeeField
-              id="saleable_yes"
-              name="saleable"
+              :id="`saleAble + ${item.id}`"
+              :name="`saleAble + ${item.name}`"
               type="radio"
-              :value="formData.is_saleable == 1"
-              placeholder="saleable"
+              :value="item.value"
+              v-model="formData.is_saleable"
+              placeholder="privileges"
+              autocomplete="privileges"
             />
-            Yes
-          </label>
-          <label class="radio-label flex gap-2">
-            <VeeField
-              id="saleable_no"
-              name="saleable"
-              type="radio"
-              :value="formData.is_saleable == 0"
-              placeholder="saleable"
-            />
-            No
+            {{ item.name }}
           </label>
         </div>
       </div>
@@ -307,6 +332,7 @@ const router = useRouter();
 const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
+const { formInput } = useSchema();
 
 const { data: dataSlug } = await useFetch(`/admins/products/${slug.value}`, {
   method: "get",
@@ -358,6 +384,24 @@ const facilityArray = AllDataSlug?.value.facility.map(
   (item) => item.facility.id
 );
 
+const dataIsSaleAble = ref([
+  {
+    id: 1,
+    name: "Yes",
+    value: 1,
+  },
+  {
+    id: 2,
+    name: "No",
+    value: 0,
+  },
+]);
+
+const updateLocation = (location) => {
+  formData.value.longitude = String(location.longitude);
+  formData.value.latitude = String(location.latitude);
+};
+
 const formData = ref({
   name: AllDataSlug?.value?.name,
   description: AllDataSlug?.value?.description,
@@ -381,6 +425,11 @@ const formData = ref({
   rating: AllDataSlug.value.rating,
 });
 
+onMounted(() => {
+  formData.value.price = parseInt(AllDataSlug?.value?.price);
+  formData.value.rating = parseInt(AllDataSlug?.value?.rating);
+});
+
 async function onSubmit(values, ctx) {
   loading.value = true;
 
@@ -399,7 +448,7 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Success Edit Data",
+      text: "Success Edit Property",
     });
     router.push("/admin/onze-vacaturies");
   }

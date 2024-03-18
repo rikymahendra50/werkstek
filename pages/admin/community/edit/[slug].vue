@@ -1,50 +1,61 @@
 <template>
   <CompAdminBackButton link="community" linkTitle="Edit Community" />
-  <VeeForm @submit="onSubmit" v-slot="{ errors }">
-    <!-- {{ props.eachBlog?.category_id }} -->
-    <div class="grid mt-10 p-3 gap-4">
-      <div>
-        <BlogImageCrop
-          :loading="loading"
-          :existingimage="dataSlug?.image"
-          v-model="selectedImage"
-        />
-      </div>
-      <label for="Title">Title</label>
-      <VeeField
-        id="Title"
-        type="text"
-        name="Title"
-        placeholder="Input Title"
-        class="input input-bordered w-full"
-        v-model="formData.title"
-        autocomplete="off"
-      />
-      <div class="flex flex-col mt-5">
-        <label for="body">Body</label>
-        <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
-        <VeeErrorMessage name="body" />
-      </div>
-      <div class="flex flex-col mt-5">
-        <label for="Meta">Meta</label>
-        <VeeField
-          id="Meta"
-          as="textarea"
-          name="Meta"
-          placeholder="Input Meta"
-          class="textarea textarea-bordered w-full"
-          v-model="formData.meta"
+  <div class="grid grid-cols-2">
+    <VeeForm
+      @submit="onSubmit"
+      :validation-schema="communitySchema"
+      v-slot="{ errors }"
+    >
+      <div class="grid p-3 gap-2">
+        <div>
+          <BlogImageCrop
+            :loading="loading"
+            :existingimage="dataSlug?.image"
+            v-model="selectedImage"
+          />
+        </div>
+        <label for="Title">Title</label>
+        <FormTextField
+          id="title"
+          name="title"
+          v-model="formData.title"
+          placeholder="Input Title"
+          class="input-bordered"
           autocomplete="off"
         />
+        <div class="flex flex-col mt-5">
+          <span>Body</span>
+          <div class="hidden">
+            <VeeField
+              type="text"
+              name="body"
+              v-model="formData.body"
+              immediate
+            />
+          </div>
+          <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
+          <VeeErrorMessage name="body" class="text-red-500" />
+        </div>
+        <div class="flex flex-col mt-5">
+          <label for="meta">Meta</label>
+          <FormTextField
+            id="meta"
+            name="meta"
+            v-model="formData.meta"
+            placeholder="Input Meta"
+            class="input-bordered"
+            autocomplete="off"
+          />
+        </div>
       </div>
-    </div>
-    <div class="flex justify-end mt-5">
-      <CompAdminButtonAddForm
-        buttonName="Edit Community"
-        :isLoading="loading"
-      />
-    </div>
-  </VeeForm>
+      <div class="flex justify-end mt-5">
+        <CompAdminButtonAddForm
+          buttonName="Edit Community"
+          :isLoading="loading"
+        />
+      </div>
+    </VeeForm>
+  </div>
 </template>
 
 <script setup>
@@ -54,6 +65,7 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 const router = useRouter();
+const { communitySchema } = useSchema();
 
 const fileInput = ref(null);
 

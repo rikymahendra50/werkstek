@@ -184,7 +184,12 @@
         </button>
       </div>
     </div>
-    <editor-content :editor="editor" class="p-2" placehoder="write something" />
+    <editor-content
+      :editor="editor"
+      class="p-2"
+      placehoder="write something"
+      required
+    />
   </div>
 </template>
 

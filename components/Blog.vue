@@ -19,10 +19,12 @@
         :description="`Op de hoogte blijven van de nieuwste kantoortrends? Op zoek naar tips en tricks voor ondernemers? Lees dan ook onze inspirerende blogs!`"
       />
     </div>
-    <div class="flex w-full">
-      <div class="flex w-full lg:w-[60%] justify-center">
+    <div class="flex w-full gap-2">
+      <div
+        class="flex flex-col min-[420px]:flex-row w-full lg:w-[60%] justify-center"
+      >
         <EachBlogBig
-          v-for="article in top?.data.slice(0, 2)"
+          v-for="article in top?.data?.slice(0, 2)"
           :key="article?.id"
           :imageSrc="article?.image"
           :title="article?.title"
@@ -32,12 +34,12 @@
       </div>
       <div class="flex-col justify-between lg:flex hidden lg:w-[40%]">
         <EachBlogSmall
-          v-for="article in top?.data.slice(2, 5)"
+          v-for="article in top?.data?.slice(2, 5)"
           :key="article?.id"
           :imageSrc="article?.image"
           :title="article?.title"
           :description="article?.meta"
-          :link="`/blog/${article?.slug}`"
+          :link="`/blog/${article.slug}`"
         />
       </div>
     </div>

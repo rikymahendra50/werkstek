@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[470px]">
+  <main class="flex-grow overflow-y-auto">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -20,7 +20,7 @@
                 <th class="font-medium">Image</th>
                 <th class="font-medium">Name</th>
                 <th class="font-medium">Meta</th>
-                <th class="font-medium">Detail</th>
+                <th class="font-medium"></th>
               </tr>
             </thead>
             <tbody>
@@ -33,7 +33,7 @@
                     <img
                       :src="item.image"
                       :alt="`item` + index"
-                      class="object-cover"
+                      class="object-cover rounded-md"
                     />
                   </div>
                 </td>
@@ -41,17 +41,15 @@
                   {{ item.title }}
                 </td>
                 <td class="font-medium max-w-[200px]">{{ item.meta }}</td>
-                <td class="font-medium">
-                  <NuxtLink
-                    :to="`/blog/${item.slug}`"
-                    class="btn mr-2 btn-sm normal-case btn-ghost btn-square"
-                    target="_blank"
-                  >
-                    <icon name="i-heroicons-eye" class="cursor-pointer" />
-                  </NuxtLink>
-                </td>
                 <td>
                   <div class="flex justify-center items-center gap-4 my-1">
+                    <NuxtLink
+                      :to="`/blog/${item.slug}`"
+                      class="btn mr-2 btn-sm normal-case btn-ghost btn-square"
+                      target="_blank"
+                    >
+                      <icon name="i-heroicons-eye" class="cursor-pointer" />
+                    </NuxtLink>
                     <NuxtLink
                       :to="`/admin/blog/edit/${item.slug}`"
                       class="btn mr-2 btn-sm normal-case btn-ghost btn-square"
@@ -62,7 +60,7 @@
                       />
                     </NuxtLink>
                     <div
-                      class="cursor-pointer m-2 btn mr-2 btn-sm normal-case btn-ghost btn-square"
+                      class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
                       @click="showModal(index)"
                     >
                       <icon name="i-heroicons-trash" />
@@ -109,6 +107,7 @@
 <script setup>
 const { loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const snackbar = useSnackbar();
 import { useTimeoutFn } from "@vueuse/core";
 
 const router = useRouter();

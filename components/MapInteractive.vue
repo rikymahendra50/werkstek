@@ -157,26 +157,32 @@ const { data, error } = await useFetch(`/products`, {
   method: "get",
   ...requestOptions,
 });
+const { data: locationData } = await useFetch("/locations", {
+  method: "get",
+  ...requestOptions,
+});
 
-const arrayLocation = data?.value?.data?.map((item) => item.location);
 const numericPrices = data.value.data.map((item) => parseFloat(item.price));
 
 const highestPrice = Math.max(...numericPrices);
 
 let infoWindowTimeout;
 
-let city = ref([]);
-let citySet = {};
+const arrayLocation = locationData?.value?.data?.map((item) => item);
+let city = ref(arrayLocation);
 
-arrayLocation.forEach((element) => {
-  const cityName = element.name;
-  const cityId = element.id;
-  if (!citySet[cityName]) {
-    // console.log(cityName, cityId);
-    citySet[cityName] = cityId;
-    city.value.push({ name: cityName, id: cityId });
-  }
-});
+// let city = ref([]);
+// let citySet = {};
+
+// arrayLocation.forEach((element) => {
+//   const cityName = element.name;
+//   const cityId = element.id;
+//   if (!citySet[cityName]) {
+//     // console.log(cityName, cityId);
+//     citySet[cityName] = cityId;
+//     city.value.push({ name: cityName, id: cityId });
+//   }
+// });
 
 const categories = ref([
   {
@@ -230,17 +236,18 @@ async function performSearch() {
     params["filter[min_price]"] = selectedMinPrice.value;
     params["filter[max_price]"] = selectedMaxPrice.value;
 
-    await new Promise((resolve) => setTimeout(resolve, 900));
+    // await new Promise((resolve) => setTimeout(resolve, 900));
     const response = await axiosRequest.get("/products", { params: params });
     filteredData.value = response.data;
     findMap(filteredData.value);
-    recenterMap();
+    recenterMap(filteredData.value);
+    console.log(filteredData.value);
   } catch (error) {
     console.error("Failed to retrieve data from API:", error);
   }
 }
 
-const recenterMap = () => {
+const recenterMap = (filteredData) => {
   if (
     filteredData.value &&
     filteredData.value.data &&
@@ -261,13 +268,13 @@ const recenterMap = () => {
 
 function findMap(dataFilter) {
   if (!dataFilter || !dataFilter.data || dataFilter.data.length === 0) {
-    alert("Data Not Found.");
+    alert("Location Not Found. Please adjust your filter");
     return;
   }
 
   clearInfoWindows();
 
-  const locations = dataFilter.data.map((item) => {
+  const locations = dataFilter?.data.map((item) => {
     return {
       latitude: parseFloat(item.latitude),
       longitude: parseFloat(item.longitude),
@@ -276,78 +283,13 @@ function findMap(dataFilter) {
 
   locations.forEach((location) => {
     moveToLocation(location.latitude, location.longitude);
-    showInfoWindow(location.latitude, location.longitude, dataFilter);
   });
 }
 
-const showInfoWindow = (latitude, longitude, location) => {
-  const marker = findMarkerByLatLng(latitude, longitude);
-
-  if (marker) {
-    clearInfoWindows();
-
-    const contentString = buildInfoWindowContent(location);
-
-    console.log(location);
-
-    const infowindow = new google.maps.InfoWindow({
-      content: contentString,
-      closeBoxMargin: "10px 10px 0 0",
-    });
-
-    infowindow.open(map, marker);
-    currentInfoWindow.value = infowindow;
-  }
-};
-
-const buildInfoWindowContent = (location) => {
-  if (Array.isArray(location)) {
-    const locationName = location.map((item) => item?.name);
-    const locationSlug = location.map((item) => item?.slug);
-    const locationImage = location.map((item) => item?.location?.image);
-    const locationPrice = location.map((item) => item?.price);
-    const locationArea = location.map((item) => item?.area_size);
-
-    return `
-      <a href="/" class="max-w-[190px] w-full flex flex-col text-end border-2 border-red-500">
-        <div class="relative">
-          <img src="${locationImage}" alt="${locationName}" class="w-full min-h-[100px]">
-          <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
-        </div>
-        <div class="px-2 py-5 pb-3">
-          <h2 class="text-primary mt-2">${locationName}</h2>
-          <p class="text-black text-[10px] my-2">Price: $${location.Price}</p>
-          <p>${locationArea}&nbsp<span>m<sup>2</sup></span></p>
-        </div>
-      </a>
-    `;
-  } else {
-    return `
-      <a href="/" class="max-w-[190px] w-full flex flex-col text-end">
-        <div class="relative">
-          <img src="${location.location.Image}" alt="${location.Name}" class="w-full min-h-[100px]">
-          <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
-        </div>
-        <div class="px-2 py-5 pb-3">
-          <h2 class="text-primary mt-2">${location.Name}</h2>
-          <p class="text-black text-[10px] my-2">Price: $${location.Price}</p>
-          <p>${location.Area}&nbsp<span>m<sup>2</sup></span></p>
-        </div>
-      </a>
-    `;
-  }
-};
 const clearInfoWindows = () => {
   if (currentInfoWindow.value) {
     currentInfoWindow.value.close();
   }
-};
-
-const findMarkerByLatLng = (latitude, longitude) => {
-  return markers.value.find((marker) => {
-    const position = marker.getPosition();
-    return position.lat() === latitude && position.lng() === longitude;
-  });
 };
 
 const moveToLocation = (lat, lng) => {
@@ -357,17 +299,13 @@ const moveToLocation = (lat, lng) => {
     const filteredMarkers = markers.value.filter(
       (marker) => marker.details.filtered
     );
+
     const bounds = new google.maps.LatLngBounds();
     filteredMarkers.forEach((marker) => {
       bounds.extend(marker.getPosition());
     });
 
     map.fitBounds(bounds);
-
-    const maxZoom = 12;
-    const minZoom = 10;
-    const currentZoom = map.getZoom();
-    map.setZoom(Math.min(Math.max(currentZoom, minZoom), maxZoom));
 
     const matchingMarker = markers.value.find((marker) =>
       marker.getPosition().equals(new google.maps.LatLng(lat, lng))
@@ -376,13 +314,10 @@ const moveToLocation = (lat, lng) => {
     if (matchingMarker) {
       matchingMarker.details.filtered = true;
 
-      const contentString = buildInfoWindowContent(matchingMarker.details);
-
-      const infowindow = new google.maps.InfoWindow({
-        content: contentString,
-      });
-      infowindow.open(map, matchingMarker);
-      currentInfoWindow.value = infowindow;
+      matchingMarker.setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(() => {
+        matchingMarker.setAnimation(null);
+      }, 70000);
     }
   }
 };
@@ -392,8 +327,18 @@ let hoverInfoWindow = null;
 
 const setupMap = () => {
   map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -8.653840910873269, lng: 115.21785198506426 },
-    zoom: 2,
+    center: { lat: 52.14824629295209, lng: 5.595341995302892 },
+    zoom: 5,
+    // minZoom: 7,
+    // maxZoom: 15,
+    // restriction: {
+    //   latLngBounds: {
+    //     north: -10,
+    //     south: -10,
+    //     east: 160,
+    //     west: 100,
+    //   },
+    // },
     fullscreenControl: false,
     zoomControl: false,
     keyboardShortcuts: false,
@@ -420,15 +365,15 @@ const setupMap = () => {
     });
 
     const contentString = `
-      <a href="/" class="max-w-[190px] w-full flex flex-col text-end">
-        <div class="relative"> 
-          <img src="${location.location.image}" alt="${location.name}" class="w-full min-h-[100px]">
+      <a href="onze-locaties/${location?.slug}" class="max-w-[190px] w-full flex flex-col text-end">
+        <div class="relative">
+          <img src="${location?.location?.image}" alt="${location?.name}" class="w-full min-h-[100px]">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
         </div>
         <div class="px-2 py-5 pb-3 relative">
-          <h2 class="text-primary mt-4">${location.name}</h2>
-          <p class="text-black text-[10px] my-2">Price: $${location.price}</p>
-          <p>${location.area_size}&nbsp<span>m<sup>2</sup></span></p>
+          <h2 class="text-primary mt-4">${location?.name}</h2>
+          <p class="text-black text-[10px] my-2">Price: $${location?.price}</p>
+          <p>${location?.area_size}&nbsp<span>m<sup>2</sup></span></p>
           <img src="/images/icon-werstek.svg" alt="icon-werstek" class="absolute right-3 top-[-5px]" />
         </div>
       </a>
@@ -439,7 +384,7 @@ const setupMap = () => {
       closeBoxMargin: "10px 10px 0 0",
     });
 
-    marker.addListener("mouseover", () => {
+    marker.addListener("click", () => {
       clearTimeout(infoWindowTimeout);
 
       if (currentInfoWindow.value) {
@@ -450,11 +395,6 @@ const setupMap = () => {
         hoverInfoWindow.close();
       }
 
-      marker.setIcon({
-        url: icon.url,
-        scaledSize: new google.maps.Size(60, 60),
-      });
-
       hoverInfoWindow = new google.maps.InfoWindow({
         content: contentString,
         closeBoxMargin: "10px 10px 0 0",
@@ -464,24 +404,6 @@ const setupMap = () => {
       currentHoveredMarker = marker;
       infowindow.open(map, marker);
       currentInfoWindow.value = infowindow;
-    });
-
-    marker.addListener("mouseout", () => {
-      infoWindowTimeout = setTimeout(() => {
-        if (currentInfoWindow.value) {
-          currentInfoWindow.value.close();
-        }
-
-        if (currentHoveredMarker === marker) {
-          hoverInfoWindow.close();
-          currentHoveredMarker = null;
-        }
-
-        marker.setIcon({
-          url: icon.url,
-          scaledSize: new google.maps.Size(40, 40),
-        });
-      }, 1000);
     });
 
     markers.value.push(marker);

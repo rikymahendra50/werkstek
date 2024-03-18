@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[500px]">
+  <main class="flex-grow overflow-y-auto">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -21,7 +21,7 @@
             <tbody>
               <tr
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
-                v-for="(item, index) in Facility?.data"
+                v-for="(item, index) in facility?.data"
               >
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.name }}
@@ -29,7 +29,7 @@
                 <!-- <td class="font-medium">{{ item.icon }}</td> -->
                 <td class="flex justify-center gap-4 my-1">
                   <NuxtLink
-                    :to="`/admin/facility/edit/${item.name}`"
+                    :to="`/admin/facility/edit/${item.slug}`"
                     class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
                   >
                     <icon name="i-heroicons-pencil-square" />
@@ -44,12 +44,13 @@
                     <div class="modal-box">
                       <h3 class="font-bold text-xl text-red-500">Warning !</h3>
                       <p class="py-4 text-lg">
-                        Are you sure want to delete this called {{ item.name }}?
+                        Are you sure want to delete this facility called
+                        {{ item.name }}?
                       </p>
                       <div class="modal-action">
                         <form method="dialog">
                           <button
-                            @click="deleteFacility(item.id)"
+                            @click="deleteFacility(item.slug)"
                             class="btn btn-outline btn-error mr-3"
                           >
                             Delete
@@ -67,14 +68,63 @@
       </div>
     </div>
   </main>
+  <Pagination
+    v-model="page"
+    :total="facility?.meta?.total"
+    :per-page="facility?.meta?.per_page"
+    class="flex justify-center"
+  />
 </template>
 
 <script setup>
+import { useTimeoutFn } from "@vueuse/core";
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const { data: Facility, error } = await useFetch(`/admins/facility-list`, {
-  method: "get",
-  ...requestOptions,
+const snackbar = useSnackbar();
+
+const router = useRouter();
+const route = useRoute();
+
+const page = ref(1);
+
+const {
+  data: facility,
+  error,
+  refresh,
+} = await useAsyncData("locations", () =>
+  $fetch(`/admins/facilities?page=${page.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
+);
+
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
+watch(
+  () => page.value,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      start();
+    }
+  }
+);
+
+function replaceWindow() {
+  router.replace(`/admin/facility?page=${page.value}`);
+  refresh();
+}
+
+onMounted(() => {
+  stop();
+  if (route.query.page) {
+    page.value = route.query.page ?? 1;
+  }
+
+  // if (route.query.search) {
+  //   search.value = route.query?.search ?? "";
+  // }
 });
 
 const showModal = (index) => {
@@ -85,17 +135,26 @@ const showModal = (index) => {
   }
 };
 
-const deleteFacility = async (facilityslug) => {
+const deleteFacility = async (slug) => {
   loading.value = true;
-  try {
-    await useFetch(`/admins/facilities/${facilityslug}`, {
-      method: "DELETE",
-      ...requestOptions,
+  await useFetch(`/admins/facilities/${slug}`, {
+    method: "DELETE",
+    ...requestOptions,
+  });
+
+  if (error.value) {
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
+    });
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Delete Facility Success",
     });
     window.location.reload();
-  } catch (error) {
-    console.error("Error:", error);
   }
+  loading.value = false;
 };
 
 useHead({

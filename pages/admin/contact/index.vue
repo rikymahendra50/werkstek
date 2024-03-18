@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[500px]">
+  <main class="flex-grow overflow-y-auto">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -43,42 +43,20 @@
                   </NuxtLink>
                 </td>
                 <td class="flex justify-center items-center gap-4 my-1">
-                  <NuxtLink :to="`/admin/contact/reply/${item.id}`">
+                  <!-- <NuxtLink :to="`/admin/contact/reply/${item.id}`">
                     <button
                       type="button"
                       class="btn btn-sm normal-case btn-ghost btn-square"
                     >
                       <icon name="i-heroicons-chat-bubble-oval-left-ellipsis" />
                     </button>
-                  </NuxtLink>
+                  </NuxtLink> -->
                   <span class="text-gray-500 text-sm font-normal !py-1.5">
-                    <NuxtLink :to="`/admin/contact/${item.id}`">
-                      <div placements="auto">
-                        <button
-                          type="button"
-                          class="btn btn-sm normal-case btn-ghost btn-square"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                            aria-hidden="true"
-                            role="img"
-                            class="icon"
-                            width="1em"
-                            height="1em"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="1.5"
-                              d="M8.625 12a.375.375 0 1 1-.75 0a.375.375 0 0 1 .75 0m0 0H8.25m4.125 0a.375.375 0 1 1-.75 0a.375.375 0 0 1 .75 0m0 0H12m4.125 0a.375.375 0 1 1-.75 0a.375.375 0 0 1 .75 0m0 0h-.375M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0"
-                            ></path>
-                          </svg>
-                        </button>
-                      </div>
+                    <NuxtLink
+                      :to="`/admin/contact/${item.id}`"
+                      class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
+                    >
+                      <icon name="i-heroicons-eye" class="cursor-pointer" />
                     </NuxtLink>
                   </span>
                   <div

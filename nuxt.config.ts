@@ -10,8 +10,7 @@ const projectDescription = "Nuxt App";
  * replace with actual image for thumbnail
  *
  */
-const projectImageThumbnail =
-  "https://spdigitalagency.com/assets/images/sp-digital.png";
+const projectImageThumbnail = "/images/logo-werstek-secondary.svg";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -109,7 +108,9 @@ export default defineNuxtConfig({
         { name: "twitter:description", content: "" },
         { name: "twitter:image", content: projectImageThumbnail },
       ],
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/images/icon-werstek.svg" },
+      ],
     },
   },
   vite: {

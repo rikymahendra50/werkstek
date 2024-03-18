@@ -1,40 +1,39 @@
 <template>
-  <div class="overflow-y-auto max-h-[70%]">
+  <div class="overflow-y-auto">
     <CompAdminBackButton link="level-type" linkTitle="Add Level Type" />
-    <VeeForm @submit="onSubmit">
-      <table class="table">
-        <tbody>
-          <tr>
-            <td><label for="name">Name</label></td>
-            <td>
-              <input
-                id="name"
-                type="text"
-                placeholder="Type here"
-                v-model="name"
-                class="input input-bordered w-full max-w-xs"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="flex justify-end">
-        <CompAdminButtonAddForm
-          buttonName="Add Level Type"
-          :isLoading="loading"
+    <div class="grid grid-cols-2 px-3">
+      <VeeForm
+        @submit="onSubmit"
+        :validation-schema="singleNameField"
+        v-slot="{ errors }"
+        class="grid gap-2"
+      >
+        <label for="name">Level Type</label>
+        <FormTextField
+          id="name"
+          name="name"
+          v-model="name"
+          placeholder="Level Type"
+          class="input-bordered"
+          autocomplete="on"
         />
-      </div>
-    </VeeForm>
+        <div class="flex justify-end mt-5">
+          <CompAdminButtonAddForm
+            buttonName="Add Level Type"
+            :isLoading="loading"
+          />
+        </div>
+      </VeeForm>
+    </div>
   </div>
-  <!-- <NuxtLink to="/admin/level-type">
-    <button class="btn btn-sm btn-outline btn-warning">Back</button>
-  </NuxtLink> -->
 </template>
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
+const router = useRouter();
+const { singleNameField } = useSchema();
 
 const name = ref();
 
@@ -58,8 +57,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Success Add Level Type",
     });
-
-    ctx.resetForm();
+    router.push("/admin/level-type");
   }
 
   loading.value = false;

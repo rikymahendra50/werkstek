@@ -1,33 +1,40 @@
 <template>
   <section>
     <CompAdminBackButton link="location" linkTitle="Edit Location" />
-    <form @submit.prevent="onSubmit" class="max-h-[400px]">
-      <div class="grid grid-cols-1 gap-3 min">
-        <div class="flex flex-col">
-          <label for="Name">Name</label>
-          <input
-            id="Name"
-            type="text"
-            placeholder="Input Name"
-            class="input input-bordered w-full"
+    <!-- {{ locations?.data }} -->
+    <VeeForm
+      :validation-schema="singleNameField"
+      @submit="onSubmit"
+      v-slot="{ errors }"
+    >
+      <div class="grid grid-cols-2 gap-3">
+        <div class="flex flex-col gap-2">
+          <label for="name">Name</label>
+          <FormTextField
+            id="name"
+            name="name"
             v-model="formData.name"
+            placeholder="Name"
+            class="input-bordered"
             autocomplete="on"
           />
+          <span>Image</span>
+          <BlogImageCrop
+            :loading="loading"
+            v-model="selectedImage"
+            :existingimage="locations?.data?.image"
+          />
+          <!-- <span>Icon</span>
+          <BlogImageCrop :loading="loading" v-model="selectedIcon" /> -->
+          <div class="flex justify-end mt-5">
+            <CompAdminButtonAddForm
+              buttonName="Edit Location"
+              :isLoading="loading"
+            />
+          </div>
         </div>
-        <span>Image</span>
-        <BlogImageCrop
-          :loading="loading"
-          v-model="selectedImage"
-          :existingimage="locations?.data.image"
-        />
       </div>
-      <div class="flex justify-end mt-5">
-        <CompAdminButtonAddForm
-          buttonName="Edit Location"
-          :isLoading="loading"
-        />
-      </div>
-    </form>
+    </VeeForm>
   </section>
 </template>
 
@@ -38,6 +45,7 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 const router = useRouter();
+const { singleNameField } = useSchema();
 
 const { data: locations, error } = await useFetch(
   `/admins/locations/${slug.value}`,
@@ -47,23 +55,7 @@ const { data: locations, error } = await useFetch(
   }
 );
 
-const fileInput = ref(null);
-
-const selectImage = () => {
-  fileInput.value.click();
-};
-
-const imagePreview = ref();
-const selectedImage = ref();
-
-function saveToPreviewImage(event) {
-  imagePreview.value = URL.createObjectURL(event.target.files[0]);
-  selectedImage.value = event.target.files[0];
-}
-
-const onUpload = (image) => {
-  selectedImage.value = image;
-};
+const selectedImage = ref(null);
 
 const formData = ref({
   name: locations.value.data.name,
@@ -74,7 +66,6 @@ async function onSubmit(values, ctx) {
 
   const object = { ...formData.value };
 
-  // console.log(object);
   const formDataT = new FormData();
 
   for (const item in object) {
@@ -87,11 +78,15 @@ async function onSubmit(values, ctx) {
     formDataT.append("image", selectedImage.value);
   }
 
+  // if (selectedIcon.value) {
+  //   formDataT.append("icon", selectedIcon.value);
+  // }
+
   const { error, data } = await useFetch(
     `/admins/locations/${slug.value}?_method=PUT`,
     {
       method: "POST",
-      body: formDataT,
+      body: selectedImage.value == undefined ? object : formDataT,
       ...requestOptions,
     }
   );
@@ -109,7 +104,6 @@ async function onSubmit(values, ctx) {
     });
     router.push("/admin/location");
   }
-
   loading.value = false;
 }
 

@@ -1,28 +1,33 @@
 <template>
-  <section class="overflow-auto max-h-[500px]">
+  <section class="overflow-auto">
     <CompAdminBackButton link="blog-category" linkTitle="Add Blog Category" />
-    <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="flex flex-col mt-10 overflow-auto">
-        <div class="flex flex-col p-3 px-8">
-          <label for="Name">Name</label>
-          <VeeField
-            id="Name"
-            type="text"
-            name="Name"
-            placeholder="Input Name"
-            class="textarea textarea-bordered w-full"
-            v-model="name"
-            autocomplete="on"
-          />
+    <div class="grid grid-cols-2">
+      <VeeForm
+        @submit="onSubmit"
+        :validation-schema="singleNameField"
+        v-slot="{ errors }"
+      >
+        <div class="flex flex-col mt-3 px-8 overflow-auto">
+          <div class="flex flex-col">
+            <label for="name">Blog Category</label>
+            <FormTextField
+              id="name"
+              name="name"
+              v-model="name"
+              placeholder="Name"
+              class="input-bordered"
+              autocomplete="on"
+            />
+          </div>
+          <div class="flex justify-end mt-5">
+            <CompAdminButtonAddForm
+              buttonName="Add Blog Category"
+              :isLoading="loading"
+            />
+          </div>
         </div>
-      </div>
-      <div class="flex justify-end mt-5">
-        <CompAdminButtonAddForm
-          buttonName="Add Blog Category"
-          :isLoading="loading"
-        />
-      </div>
-    </VeeForm>
+      </VeeForm>
+    </div>
   </section>
 </template>
 
@@ -30,6 +35,8 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
+const router = useRouter();
+const { singleNameField } = useSchema();
 
 const name = ref();
 
@@ -53,8 +60,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Add Category Blog Success",
     });
-
-    ctx.resetForm();
+    router.push("/admin/blog-category");
   }
   loading.value = false;
 }

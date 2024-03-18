@@ -1,32 +1,36 @@
 <template>
   <CompAdminBackButton link="type" linkTitle="Edit Type" />
-  <VeeForm @submit="onSubmit">
-    <table class="table">
-      <tbody>
-        <tr>
-          <td><label for="name">Name</label></td>
-          <td>
-            <input
-              id="name"
-              type="text"
-              placeholder="Type here"
-              v-model="name"
-              class="input input-bordered w-full max-w-xs"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="flex justify-end">
-      <CompAdminButtonAddForm buttonName="Edit Type" :isLoading="loading" />
-    </div>
-  </VeeForm>
+  <div class="grid grid-cols-2 px-4">
+    <VeeForm
+      @submit="onSubmit"
+      :validation-schema="singleNameField"
+      v-slot="{ errors }"
+    >
+      <div class="grid grid-cols-1 gap-3">
+        <div class="flex flex-col">
+          <label for="name" class="mb-3">Type Name</label>
+          <FormTextField
+            id="name"
+            name="name"
+            v-model="name"
+            placeholder="Type Name"
+            class="input-bordered"
+            autocomplete="on"
+          />
+        </div>
+      </div>
+      <div class="flex justify-end mt-5">
+        <CompAdminButtonAddForm buttonName="Edit Type" :isLoading="loading" />
+      </div>
+    </VeeForm>
+  </div>
 </template>
 
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
+const { singleNameField } = useSchema();
 
 const route = useRoute();
 const router = useRouter();
@@ -39,7 +43,7 @@ const { data, pending } = await useFetch(`/admins/types/${slug.value}`, {
   ...requestOptions,
 });
 
-const name = ref(data.value.data.name);
+const name = ref(data?.value?.data?.name);
 
 async function onSubmit(values, ctx) {
   loading.value = true;

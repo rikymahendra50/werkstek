@@ -2,7 +2,7 @@
   <header
     class="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-white px-6"
   >
-    <div class="flex items-center justify-between w-[100%] md:w-[40%] gap-4">
+    <div class="flex items-center justify-between w-[100%] lg:w-[40%] gap-4">
       <a class="font-semibold" href="#">Werkstek</a
       ><button
         @click="showDrawer = !showDrawer"
@@ -31,7 +31,7 @@
       <div class="hidden lg:flex items-center gap-4">
         <form class="w-[90%]"></form>
         <button
-          class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground rounded-full border border-gray-200 w-8 h-8 dark:border-gray-800"
+          class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary hover:text-accent-foreground rounded-full border border-gray-200 w-8 h-8 dark:border-gray-800"
           type="button"
           id="radix-:r0:"
           aria-haspopup="menu"

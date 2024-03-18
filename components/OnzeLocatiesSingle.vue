@@ -45,7 +45,7 @@
                   <img
                     :src="slide.image"
                     alt="image"
-                    class="w-full h-full aspect-video md:min-h-[350px]"
+                    class="w-full h-full aspect-video md:min-h-[350px] object-cover"
                   />
                 </div>
               </SwiperSlide>
@@ -104,23 +104,10 @@
                   <td
                     class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
                   >
-                    <img
-                      :src="
-                        facilitySlugName[index] &&
-                        item.name === facilitySlugName[index].facility.name
-                          ? '/images/checkbox_checked.svg'
-                          : '/images/minus-square.png'
-                      "
-                      alt="checkBox"
-                    />
+                    <img :src="getCheckboxImage(item.name)" alt="checkBox" />
                     <span>
-                      {{ item.name }}
-                      {{
-                        facilitySlugName[index] &&
-                        item.name === facilitySlugName[index].facility.name
-                          ? "Available"
-                          : "Unavailable"
-                      }}
+                      {{ item?.name }}
+                      {{ getAvailabilityStatus(item.name) }}
                     </span>
                   </td>
                 </tr>
@@ -130,7 +117,7 @@
         </div>
       </div>
       <div class="col-span-4">
-        <div v-if="special.length > 0" class="mb-3">
+        <div v-if="special?.length > 0" class="mb-3">
           <ul class="rounded-[8px] bg-[#859C811A] py-4 px-2 md:px-5">
             <li class="py-1 lg:py-2 flex" v-for="item in special">
               <svg
@@ -238,7 +225,23 @@ const { data, error } = await useFetch("/facilities", {
   ...requestOptions,
 });
 
-const facilitySlugName = props.facility;
+const facilitySlugName = props?.facility;
+
+function getCheckboxImage(itemName) {
+  return facilitySlugName?.some(
+    (facility) => facility?.facility?.name === itemName
+  )
+    ? "/images/checkbox_checked.svg"
+    : "/images/minus-square.png";
+}
+
+function getAvailabilityStatus(itemName) {
+  return facilitySlugName?.some(
+    (facility) => facility?.facility?.name === itemName
+  )
+    ? " Available"
+    : " Unavailable";
+}
 
 const props = defineProps({
   title: {
@@ -275,44 +278,6 @@ const props = defineProps({
     type: Array,
   },
 });
-
-const checkBoxData = ref([
-  {
-    id: 1,
-    name: "Wifi",
-    checkBoxTitle: "Lorem Epsum",
-  },
-  {
-    id: 2,
-    name: "Parkeerplaats",
-    checkBoxTitle: "Lorem Epsum",
-  },
-  {
-    id: 3,
-    name: "Receptie",
-    checkBoxTitle: "Lorem Epsum",
-  },
-  {
-    id: 4,
-    name: "Koffiebar",
-    checkBoxTitle: "Lorem Epsum",
-  },
-  {
-    id: 5,
-    name: "Vlakbij het treinstation",
-    checkBoxTitle: "Lorem Epsum",
-  },
-  {
-    id: 6,
-    name: "Loungeplekken",
-    checkBoxTitle: "Lorem Epsum",
-  },
-  {
-    id: 7,
-    name: "Vergaderruimtes met videoschermenn",
-    checkBoxTitle: "Lorem Epsum",
-  },
-]);
 </script>
 
 <style lang="scss" scoped></style>

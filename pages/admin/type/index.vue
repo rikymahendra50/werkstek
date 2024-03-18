@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[500px]">
+  <main class="flex-grow overflow-y-auto">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -74,6 +74,7 @@
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const snackbar = useSnackbar();
 const { data: type, error } = await useFetch(`/admins/type-list`, {
   method: "get",
   ...requestOptions,
@@ -87,18 +88,26 @@ const showModal = (index) => {
   }
 };
 
-const deleteType = async (categoryslug) => {
+const deleteType = async (slug) => {
   loading.value = true;
-  try {
-    await useFetch(`/admins/types/${categoryslug}`, {
-      method: "DELETE",
-      ...requestOptions,
+  await useFetch(`/admins/types/${slug}`, {
+    method: "DELETE",
+    ...requestOptions,
+  });
+
+  if (error.value) {
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
+    });
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Delete Type Success",
     });
     window.location.reload();
-  } catch (error) {
-    console.error("Error:", error);
   }
-  loading.value = true;
+  loading.value = false;
 };
 
 useHead({

@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[500px]">
+  <main class="flex-grow overflow-y-auto">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -23,9 +23,6 @@
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
                 v-for="(item, index) in locations?.data"
               >
-                <!-- <td class="text-gray-500 text-sm font-normal !py-2">
-                  <img :src="item.image" :alt="item.id" class="max-w-[90px]" />
-                </td> -->
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.name }}
                 </td>
@@ -82,26 +79,26 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 import { useTimeoutFn } from "@vueuse/core";
+const snackbar = useSnackbar();
 
 const router = useRouter();
 const route = useRoute();
 
 const page = ref(1);
-const search = ref("");
+// const search = ref("");
 
 const {
   data: locations,
   error,
   refresh,
 } = await useAsyncData("locations", () =>
-  $fetch(
-    `/admins/locations?page=${page.value}&filter[search]=${search.value}`,
-    {
-      method: "get",
-      ...requestOptions,
-    }
-  )
+  $fetch(`/admins/locations?page=${page.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
 );
+
+// &filter[search]=${search.value}
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
@@ -116,20 +113,22 @@ watch(
   }
 );
 
-watch(
-  () => search.value,
-  (newValue, oldValue) => {
-    if (newValue !== oldValue) {
-      page.value = 1;
-      start();
-    }
-  }
-);
+// watch(
+//   () => search.value,
+//   (newValue, oldValue) => {
+//     if (newValue !== oldValue) {
+//       page.value = 1;
+//       start();
+//     }
+//   }
+// );
 
 function replaceWindow() {
-  router.replace(`/admin/location?page=${page.value}&search=${search.value}`);
+  router.replace(`/admin/location?page=${page.value}`);
   refresh();
 }
+
+// &search=${search.value}
 
 onMounted(() => {
   stop();
@@ -137,9 +136,9 @@ onMounted(() => {
     page.value = route.query.page ?? 1;
   }
 
-  if (route.query.search) {
-    search.value = route.query?.search ?? "";
-  }
+  // if (route.query.search) {
+  //   search.value = route.query?.search ?? "";
+  // }
 });
 
 const showModal = (index) => {
@@ -156,7 +155,6 @@ const deleteLocation = async (slug) => {
     method: "DELETE",
     ...requestOptions,
   });
-  window.location.reload();
 
   if (error.value) {
     snackbar.add({
@@ -168,6 +166,7 @@ const deleteLocation = async (slug) => {
       type: "success",
       text: "Delete Location Success",
     });
+    window.location.reload();
   }
   loading.value = false;
 };

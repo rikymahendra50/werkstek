@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[500px]">
+  <main class="flex-grow overflow-y-auto">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -27,7 +27,7 @@
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.name }}
                 </td>
-                <td class="flex items-center">
+                <td class="flex items-center gap-3">
                   <NuxtLink
                     :to="`/admin/level-type/edit/${item.id}`"
                     class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
@@ -73,6 +73,7 @@
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const snackbar = useSnackbar();
 
 const { data: levelType, error } = await useFetch(`/admins/level-types`, {
   method: "get",
@@ -87,13 +88,20 @@ const showModal = (index) => {
   }
 };
 
+const showEditModal = (index) => {
+  const editModalId = `edit_modal_${index}`;
+  const editModal = document.getElementById(editModalId);
+  if (editModal) {
+    editModal.showModal();
+  }
+};
+
 const deleteLevelType = async (slug) => {
   loading.value = true;
   await useFetch(`/admins/level-types/${slug}`, {
     method: "DELETE",
     ...requestOptions,
   });
-  window.location.reload();
 
   if (error.value) {
     snackbar.add({
@@ -105,6 +113,7 @@ const deleteLevelType = async (slug) => {
       type: "success",
       text: "Delete Level Type Success",
     });
+    window.location.reload();
   }
   loading.value = false;
 };

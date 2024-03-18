@@ -1,39 +1,38 @@
 <template>
   <section>
     <CompAdminBackButton link="facility" linkTitle="Edit Facility" />
-    <VeeForm @submit="onSubmit">
-      <div class="grid grid-cols-2 mt-3 gap-3">
-        <div class="flex flex-col">
-          <label for="Name">Name</label>
-          <input
-            id="Name"
-            type="text"
-            placeholder="Input Name"
-            class="input input-bordered w-full"
-            v-model="name"
+    <VeeForm
+      @submit="onSubmit"
+      :validation-schema="singleNameField"
+      v-slot="{ errors }"
+      class="grid grid-cols-2"
+    >
+      <div class="grid grid-cols-1 gap-3">
+        <div class="flex flex-col gap-2">
+          <label for="name">Edit Facility</label>
+          <FormTextField
+            id="name"
+            name="name"
+            v-model="formData.name"
+            placeholder="Input Facility Name"
+            class="input-bordered"
             autocomplete="on"
           />
         </div>
-        <div class="flex flex-col">
-          <label for="image">Icon</label>
-          <input
-            id="image"
-            type="file"
-            name="image"
-            class="file-input file-input-bordered file-input-warning w-full max-w-xs"
-            accept="image/*"
-            v-on:change="handleImageChange"
-            @click="selectImage"
-            autocomplete="on"
-            required
+        <!-- <div>
+          <span>Icon</span>
+          <BlogImageCrop
+            :loading="loading"
+            v-model="selectedImage"
+            :existingimage="facilities?.data?.icon"
+          />
+        </div> -->
+        <div class="flex justify-end mt-5">
+          <CompAdminButtonAddForm
+            buttonName="Edit Facility"
+            :isLoading="loading"
           />
         </div>
-      </div>
-      <div class="flex justify-end mt-5">
-        <CompAdminButtonAddForm
-          buttonName="Edit Facility"
-          :isLoading="loading"
-        />
       </div>
     </VeeForm>
   </section>
@@ -45,6 +44,8 @@ const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
+const router = useRouter();
+const { singleNameField } = useSchema();
 
 const { data: facilities, error } = await useFetch(
   `/admins/facilities/${slug.value}`,
@@ -54,46 +55,50 @@ const { data: facilities, error } = await useFetch(
   }
 );
 
-const fileInput = ref(null);
-const getImages = ref(facilities.value);
-const imageTest = ref();
+const selectedImage = ref();
 
-// const selectImage = () => {
-//   fileInput.value.click();
-// };
-
-const handleImageChange = (event) => {
-  const files = event.target.files;
-  imageTest.value = files[0];
-};
-
-const name = ref(facilities.value.data.name);
+const formData = ref({
+  name: facilities?.value?.data?.name,
+});
 
 async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const formData = new FormData();
-  formData.append("name", name.value);
-  formData.append("image", imageTest.value);
+  const object = { ...formData.value };
 
-  const { error } = await useFetch(`/admins/facilities/${slug.value}`, {
-    method: "post",
-    body: formData,
-    ...requestOptions,
-  });
+  // console.log(object);
+  const formDataT = new FormData();
+
+  for (const item in object) {
+    // @ts-ignore
+    const objectItem = object[item];
+    formDataT.append(item, objectItem);
+  }
+
+  if (selectedImage.value) {
+    formDataT.append("icon", selectedImage.value);
+  }
+
+  const { error, data } = await useFetch(
+    `/admins/facilities/${slug.value}?_method=PUT`,
+    {
+      method: "POST",
+      body: formDataT,
+      ...requestOptions,
+    }
+  );
 
   if (error.value) {
-    ctx.setErrors(transformErrors(error.value?.data));
+    ctx.setErrors(transformErrors(error?.data));
     snackbar.add({
       type: "error",
       text: error.value?.data?.message ?? "Something went wrong",
     });
-  } else {
+  } else if (data.value) {
     snackbar.add({
       type: "success",
       text: "Edit Facility Success",
     });
-    F;
     router.push("/admin/facility");
   }
 

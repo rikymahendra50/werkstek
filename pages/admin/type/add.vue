@@ -1,25 +1,23 @@
 <template>
   <section>
     <CompAdminBackButton link="type" linkTitle="Add Type" />
-    <div class="flex justify-center">
+    <div class="grid grid-cols-2 px-4">
       <VeeForm
         @submit="onSubmit"
+        :validation-schema="singleNameField"
         v-slot="{ errors }"
-        class="min-w-[400px] lg:min-w-[800px] shadow-md p-5"
       >
         <div class="grid grid-cols-1 gap-3">
           <div class="flex flex-col">
-            <label for="Name" class="mb-3">Type Name</label>
-            <VeeField
-              id="Name"
-              type="text"
-              name="Name"
-              placeholder="Input Type Name"
-              class="input input-bordered w-full"
+            <label for="name" class="mb-3">Type Name</label>
+            <FormTextField
+              id="name"
+              name="name"
               v-model="formData.name"
-              autocomplete="off"
+              placeholder="Type Name"
+              class="input-bordered"
+              autocomplete="on"
             />
-            <VeeErrorMessage name="name" class="text-sm text-error" />
           </div>
         </div>
         <div class="flex justify-end mt-5">
@@ -34,6 +32,8 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
+const router = useRouter();
+const { singleNameField } = useSchema();
 
 const formData = ref({
   name: undefined,
@@ -60,7 +60,7 @@ async function onSubmit(values, ctx) {
       text: "Add Type Success",
     });
 
-    ctx.resetForm();
+    router.push("/admin/type");
   }
   loading.value = false;
 }

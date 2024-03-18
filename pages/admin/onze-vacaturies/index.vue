@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[470px]">
+  <main class="flex-grow overflow-y-auto">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -15,8 +15,7 @@
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Name</th>
-                <th class="font-medium">Modification</th>
-                <th class="font-medium">Detail</th>
+                <th class="font-medium"></th>
               </tr>
             </thead>
             <tbody>
@@ -29,6 +28,13 @@
                   {{ item.name }}
                 </td>
                 <td class="flex items-center gap-3">
+                  <NuxtLink
+                    :to="`/onze-locaties/${item.slug}`"
+                    class="btn btn-sm normal-case btn-ghost btn-square"
+                    target="_blank"
+                  >
+                    <icon name="i-heroicons-eye" class="cursor-pointer" />
+                  </NuxtLink>
                   <NuxtLink
                     :to="`/admin/onze-vacaturies/add-image/${item.slug}`"
                     class="btn btn-sm normal-case btn-ghost btn-square"
@@ -58,13 +64,13 @@
                     <div class="modal-box">
                       <h3 class="font-bold text-xl text-red-500">Warning !</h3>
                       <p class="py-4 text-lg">
-                        Are you sure want to delete this called
+                        Are you sure want to delete this property called
                         {{ item.name }}?
                       </p>
                       <div class="modal-action">
                         <form method="dialog">
                           <button
-                            @click="deleteLocatie(item.slug)"
+                            @click="deleteProperty(item.slug)"
                             class="btn btn-outline btn-error mr-3"
                           >
                             Delete
@@ -74,15 +80,6 @@
                       </div>
                     </div>
                   </dialog>
-                </td>
-                <td class="text-gray-500 text-sm font-normal !py-2">
-                  <NuxtLink
-                    :to="`/onze-locaties/${item.slug}`"
-                    class="btn btn-sm normal-case btn-ghost btn-square"
-                    target="_blank"
-                  >
-                    <icon name="i-heroicons-eye" class="cursor-pointer" />
-                  </NuxtLink>
                 </td>
               </tr>
             </tbody>
@@ -108,11 +105,7 @@
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-
-// const { data: Vacaturies } = await useFetch(`/admins/products`, {
-//   method: "get",
-//   ...requestOptions,
-// });
+const snackbar = useSnackbar();
 
 const router = useRouter();
 const route = useRoute();
@@ -180,7 +173,7 @@ const showModal = (index) => {
   }
 };
 
-const deleteLocatie = async (slug) => {
+const deleteProperty = async (slug) => {
   loading.value = true;
   await useFetch(`/admins/products/${slug}`, {
     method: "DELETE",

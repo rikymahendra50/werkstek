@@ -3,29 +3,27 @@
     <div class="w-[500px] p-10 justify-center shadow-lg">
       <Werkstek class="mb-10" />
       <VeeForm :validation-schema="loginSchema" @submit="onSubmit">
-        <label for="email" class="pb-1 text-lg">Email</label>
         <div class="flex flex-col space-y-4">
-          <div>
-            <VeeField
+          <div class="flex flex-col">
+            <label for="email" class="pb-1 text-lg">Email</label>
+            <FormTextField
               id="email"
               name="email"
-              class="input input-bordered w-full"
               v-model="form.email"
-              autocomplete="off"
+              placeholder="Email"
+              class="input input-bordered"
             />
-            <VeeErrorMessage name="email" class="text-sm text-error" />
           </div>
-          <div>
+          <div class="flex flex-col">
             <label for="password" class="pb-1 text-lg">Password</label>
-            <VeeField
+            <FormTextField
               id="password"
               name="password"
               v-model="form.password"
+              placeholder="*******"
               type="password"
-              class="input input-bordered w-full"
-              autocomplete="off"
+              class="input input-bordered"
             />
-            <VeeErrorMessage name="password" class="text-sm text-error" />
           </div>
           <div class="mt-5">
             <button
@@ -102,7 +100,6 @@ async function onSubmit(values: any, ctx: any) {
      *
      */
     // localPerson.value = [];
-
     window.location.replace("/admin");
   }
 
@@ -115,6 +112,8 @@ useHead({
 
 definePageMeta({
   layout: false,
+  // @ts-ignore
+  middleware: ["guest"],
 });
 </script>
 

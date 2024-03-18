@@ -2,29 +2,32 @@
   <div class="grid place-items-center items-center">
     <div class="w-full p-4 justify-center">
       <CompAdminBackButton link="admin-list" linkTitle="Register Admin" />
-      <VeeForm @submit="onSubmit" v-slot="{ errors }">
+      <VeeForm
+        @submit="onSubmit"
+        v-slot="{ errors }"
+        :validation-schema="registerSchema"
+        class="grid grid-cols-2"
+      >
         <div class="grid grid-cols-1 text-left gap-4 rounded-md">
-          <FormGroup label="First Name" name="firstname">
+          <FormGroup label="First Name" name="first_name">
             <FormTextField
-              id="firstname"
-              name="firstname"
+              id="first_name"
+              name="first_name"
               v-model="form.first_name"
               placeholder="First Name"
               class="input-bordered"
               autocomplete="on"
-              v-slot="{ errors }"
             />
           </FormGroup>
 
-          <FormGroup label="Last Name" name="lastname">
+          <FormGroup label="Last Name" name="last_name">
             <FormTextField
-              id="lastname"
-              name="lastname"
+              id="last_name"
+              name="last_name"
               v-model="form.last_name"
               placeholder="Last Name"
               class="input-bordered"
               autocomplete="on"
-              v-slot="{ errors }"
             />
           </FormGroup>
 
@@ -36,7 +39,6 @@
               placeholder="ex:myemail@gmail.com"
               class="input-bordered"
               autocomplete="on"
-              v-slot="{ errors }"
             />
           </FormGroup>
 
@@ -49,20 +51,18 @@
               placeholder="Password"
               class="input-bordered"
               autocomplete="on"
-              v-slot="{ errors }"
             />
           </FormGroup>
 
-          <FormGroup label="Confirm Password" name="confirmPassword">
+          <FormGroup label="Confirm Password" name="confirm_password">
             <FormTextField
-              id="confirmPassword"
-              name="confirmPassword"
+              id="confirm_password"
+              name="confirm_password"
               type="password"
               v-model="form.confirm_password"
               placeholder="Confirm Password"
               class="input-bordered"
               autocomplete="on"
-              v-slot="{ errors }"
             />
           </FormGroup>
           <div class="flex justify-end">
@@ -85,7 +85,8 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const { registerSchema } = useSchema();
 const { stateForm } = useForgotPassword();
-const { snackbar } = useSnackbar();
+const snackbar = useSnackbar();
+const router = useRouter();
 
 const form = ref({
   first_name: undefined,
@@ -95,7 +96,7 @@ const form = ref({
   confirm_password: undefined,
 });
 
-async function onSubmit() {
+async function onSubmit(values, ctx) {
   loading.value = true;
 
   const { data, error } = await useFetch(`/admins`, {
@@ -116,7 +117,7 @@ async function onSubmit() {
       type: "error",
       text: error.value?.data?.message ?? "Something went wrong",
     });
-  } else if (data.value) {
+  } else {
     snackbar.add({
       type: "success",
       text: "Your data registration is Success, We will confirm soon",

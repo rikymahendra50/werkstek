@@ -47,6 +47,7 @@
         </div>
         <div>
           <div
+            v-if="canUpload"
             class="h-full w-full min-h-[150px] overflow-hidden rounded-lg border border-dashed flex items-center justify-center hover:shadow-md transition-all duration-500"
             role="button"
             @click="clickUpload"
@@ -104,7 +105,7 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
-
+const router = useRouter();
 const route = useRoute();
 const slug = computed(() => {
   return route.params.slug;
@@ -141,7 +142,7 @@ const saveToPreviewImage = (event) => {
 
     if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
       alert(
-        `File ${file.name} terlalu besar. Harap pilih file dengan ukuran maksimum ${MAX_FILE_SIZE_MB} MB.`
+        `File ${file.name} too big. Please chose file width maximum ${MAX_FILE_SIZE_MB} MB.`
       );
       return;
     } else {
@@ -149,8 +150,6 @@ const saveToPreviewImage = (event) => {
       selectedImage.value = file;
       StoreProduct();
     }
-
-    // selectedImages.value.push(file);
   }
 };
 
@@ -206,10 +205,13 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Add or Edit Image Success",
     });
+    router.push("/admin/onze-vacaturies");
   }
 
   loading.value = false;
 }
+
+const canUpload = computed(() => imagePreview?.value?.length < 3);
 
 useHead({
   title: "Add or Edit Image",

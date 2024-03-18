@@ -1,63 +1,80 @@
 <template>
-  <section class="overflow-auto max-h-[500px]">
+  <section class="overflow-auto">
     <CompAdminBackButton link="blog" linkTitle="Add Blog" />
-    <VeeForm @submit="onSubmit" v-slot="{ errors }">
-      <div class="grid mt-10 p-3 gap-4">
-        <div>
-          <BlogImageCrop :loading="loading" v-model="selectedImage" />
+    <div class="grid grid-cols-2">
+      <VeeForm
+        @submit="onSubmit"
+        v-slot="{ errors }"
+        :validation-schema="blogSchema"
+      >
+        <!-- {{ errors }} -->
+        <div class="grid mt-10 p-3 gap-2">
+          <div>
+            <BlogImageCrop :loading="loading" v-model="selectedImage" />
+          </div>
+          <label for="title">Title</label>
+          <FormTextField
+            id="title"
+            name="title"
+            v-model="formData.title"
+            placeholder="Name"
+            class="input-bordered"
+            autocomplete="on"
+          />
+          <div class="flex flex-col mt-5">
+            <span>Body</span>
+            <div class="hidden">
+              <VeeField
+                type="text"
+                name="body"
+                v-model="formData.body"
+                immediate
+              />
+            </div>
+            <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
+            <VeeErrorMessage name="body" class="text-red-500" />
+          </div>
+          <div class="flex flex-col mt-5">
+            <label for="category">Category</label>
+            <VeeField
+              id="category"
+              name="category"
+              as="select"
+              v-model="formData.category_id"
+              class="select select-bordered w-full"
+              placeholder="category"
+              autocomplete="off"
+            >
+              <option disabled selected>Category</option>
+              <option :value="item.id" v-for="item in categoryBlog.data">
+                {{ item.name }}
+              </option>
+            </VeeField>
+            <VeeErrorMessage
+              name="category"
+              class="form-error-message text-red-600"
+            />
+          </div>
+          <div class="flex flex-col mt-5">
+            <label for="meta">Meta</label>
+            <FormTextField
+              id="meta"
+              name="meta"
+              v-model="formData.meta"
+              placeholder="Input Meta"
+              class="input-bordered"
+              autocomplete="off"
+            />
+          </div>
         </div>
-        <label for="Title">Title</label>
-        <VeeField
-          id="Title"
-          type="text"
-          name="Title"
-          placeholder="Input Title"
-          class="input input-bordered w-full"
-          v-model="formData.title"
-          autocomplete="off"
-        />
-        <div class="flex flex-col mt-5">
-          <label for="body">Body</label>
-          <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
-          <VeeErrorMessage name="body" />
-        </div>
-        <div class="flex flex-col mt-5">
-          <label for="Category">Category</label>
-          <VeeField
-            id="category"
-            name="category"
-            as="select"
-            v-model="formData.category_id"
-            class="select select-bordered w-full"
-            placeholder="category"
-            autocomplete="off"
-          >
-            <option disabled selected>Category</option>
-            <option :value="item.id" v-for="item in categoryBlog.data">
-              {{ item.name }}
-            </option>
-          </VeeField>
-        </div>
-        <div class="flex flex-col mt-5">
-          <label for="Meta">Meta</label>
-          <VeeField
-            id="Meta"
-            as="textarea"
-            name="Meta"
-            placeholder="Input Meta"
-            class="textarea textarea-bordered w-full"
-            v-model="formData.meta"
-            autocomplete="off"
+        <div class="flex justify-end mt-5">
+          <CompAdminButtonAddForm
+            buttonName="Add Property"
+            :isLoading="loading"
           />
         </div>
-      </div>
-      <div class="flex justify-end mt-5">
-        <CompAdminButtonAddForm
-          buttonName="Add Property"
-          :isLoading="loading"
-        />
-      </div>
-    </VeeForm>
+      </VeeForm>
+    </div>
   </section>
 </template>
 
@@ -67,6 +84,7 @@ const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 const route = useRoute();
 const router = useRouter();
+const { blogSchema } = useSchema();
 
 const { data: categoryBlog, error } = await useFetch(
   `/admins/article-categories`,
@@ -78,10 +96,6 @@ const { data: categoryBlog, error } = await useFetch(
 
 const fileInput = ref(null);
 
-const selectImage = () => {
-  fileInput.value.click();
-};
-
 const formData = ref({
   title: undefined,
   body: undefined,
@@ -89,17 +103,17 @@ const formData = ref({
   meta: undefined,
 });
 
+watch(
+  () => formData.value.body,
+  (newValue) => {
+    if (newValue === "<p></p>" || !newValue) {
+      formData.value.body = undefined;
+    }
+  }
+);
+
 const imagePreview = ref();
 const selectedImage = ref();
-
-function saveToPreviewImage(event) {
-  imagePreview.value = URL.createObjectURL(event.target.files[0]);
-  selectedImage.value = event.target.files[0];
-}
-
-const onUpload = (image) => {
-  selectedImage.value = image;
-};
 
 async function onSubmit(values, ctx) {
   loading.value = true;

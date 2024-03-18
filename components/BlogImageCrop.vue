@@ -9,9 +9,7 @@
             </div>
             <div></div>
           </div>
-
           <p>Max image size is 2MB</p>
-
           <template v-if="imageUrl">
             <VuePictureCropper
               :boxStyle="{
@@ -87,7 +85,6 @@
             </span>
           </button>
         </div>
-
         <div>
           <p>Max image size is 2MB</p>
           <progress v-if="props.loading" class="progress w-100"></progress>

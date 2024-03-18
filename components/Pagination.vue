@@ -9,7 +9,7 @@
         class="btn btn-sm h-10 bg-primary text-white"
         v-if="includeFirstLast"
       >
-        First
+        {{ props.first }}
       </button>
 
       <button
@@ -20,7 +20,7 @@
         class="btn btn-sm h-10 bg-primary text-white"
         v-if="includeNextPrev"
       >
-        Prev
+        {{ props.prev }}
       </button>
 
       <button
@@ -43,7 +43,7 @@
         class="btn btn-sm h-10 bg-primary text-white"
         v-if="includeNextPrev"
       >
-        Next
+        {{ props.next }}
       </button>
 
       <button
@@ -54,7 +54,7 @@
         class="btn btn-sm h-10 bg-primary text-white"
         v-if="includeFirstLast"
       >
-        Last
+        {{ props.last }}
       </button>
     </div>
   </div>
@@ -62,6 +62,22 @@
 
 <script setup>
 const props = defineProps({
+  first: {
+    type: String,
+    default: "First",
+  },
+  last: {
+    type: String,
+    default: "Last",
+  },
+  next: {
+    type: String,
+    default: "Next",
+  },
+  prev: {
+    type: String,
+    default: "Prev",
+  },
   maxVisibleButtons: {
     type: Number,
     required: false,

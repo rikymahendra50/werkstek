@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[470px]">
+  <main class="flex-grow overflow-y-auto">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -20,7 +20,7 @@
                 <th class="font-medium">Image</th>
                 <th class="font-medium">Name</th>
                 <th class="font-medium">Meta</th>
-                <th class="font-medium">Detail</th>
+                <th class="font-medium"></th>
               </tr>
             </thead>
             <tbody>
@@ -33,7 +33,7 @@
                     <img
                       :src="item.image"
                       :alt="`item` + index"
-                      class="object-cover"
+                      class="object-cover rounded-sm"
                     />
                   </div>
                 </td>
@@ -41,20 +41,19 @@
                   {{ item.title }}
                 </td>
                 <td class="font-medium max-w-[200px]">{{ item.meta }}</td>
-                <td class="font-medium">
-                  <NuxtLink
-                    :to="`/werkstek-community/${item.slug}`"
-                    class="btn mr-2 btn-sm normal-case btn-ghost btn-square"
-                    target="_blank"
-                  >
-                    <icon name="i-heroicons-eye" class="cursor-pointer" />
-                  </NuxtLink>
-                </td>
+                <td class="font-medium"></td>
                 <td>
                   <div class="flex justify-center items-center gap-4 my-1">
                     <NuxtLink
+                      :to="`/werkstek-community/${item.slug}`"
+                      class="btn btn-sm normal-case btn-ghost btn-square"
+                      target="_blank"
+                    >
+                      <icon name="i-heroicons-eye" class="cursor-pointer" />
+                    </NuxtLink>
+                    <NuxtLink
                       :to="`/admin/community/edit/${item.slug}`"
-                      class="btn mr-2 btn-sm normal-case btn-ghost btn-square"
+                      class="btn btn-sm normal-case btn-ghost btn-square"
                     >
                       <icon
                         name="i-heroicons-pencil-square"
@@ -62,7 +61,7 @@
                       />
                     </NuxtLink>
                     <div
-                      class="cursor-pointer m-2 btn mr-2 btn-sm normal-case btn-ghost btn-square"
+                      class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
                       @click="showModal(index)"
                     >
                       <icon name="i-heroicons-trash" />
@@ -109,6 +108,7 @@
 <script setup>
 const { loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const snackbar = useSnackbar();
 import { useTimeoutFn } from "@vueuse/core";
 
 const router = useRouter();
@@ -169,7 +169,7 @@ function replaceWindow() {
 
 const deleteBlog = async (slug) => {
   loading.value = true;
-  await useFetch(`/admins/articles/${slug}`, {
+  await useFetch(`/admins/community-blogs/${slug}`, {
     method: "DELETE",
     ...requestOptions,
   });
@@ -184,7 +184,7 @@ const deleteBlog = async (slug) => {
       type: "success",
       text: "Delete Community Success",
     });
-    start();
+    window.location.reload();
   }
   loading.value = false;
 };

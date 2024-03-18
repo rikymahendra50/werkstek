@@ -1,27 +1,33 @@
 <template>
   <section>
     <CompAdminBackButton link="location" linkTitle="Add Location" />
-    <VeeForm @submit="onSubmit">
-      <div class="grid grid-cols-1 gap-3">
+    <VeeForm
+      @submit="onSubmit"
+      :validation-schema="singleNameField"
+      v-slot="{ errors }"
+    >
+      <div class="grid grid-cols-2 gap-3">
         <div class="flex flex-col gap-2">
           <label for="Name">Name</label>
-          <input
-            id="Name"
-            type="text"
-            placeholder="Input Name"
-            class="input input-bordered w-full"
+          <FormTextField
+            id="name"
+            name="name"
             v-model="formData.name"
+            placeholder="Name"
+            class="input-bordered"
             autocomplete="on"
-            required
           />
+          <div class="flex flex-col gap-2">
+            <span>Image</span>
+            <BlogImageCrop :loading="loading" v-model="selectedImage" />
+          </div>
+          <div class="flex justify-end mt-5">
+            <CompAdminButtonAddForm
+              buttonName="Add Location"
+              :isLoading="loading"
+            />
+          </div>
         </div>
-        <div class="flex flex-col gap-2">
-          <span>Image</span>
-          <BlogImageCrop :loading="loading" v-model="selectedImage" />
-        </div>
-      </div>
-      <div class="flex justify-end mt-5">
-        <CompAdminButtonAddForm buttonName="Add Location" />
       </div>
     </VeeForm>
   </section>
@@ -34,24 +40,9 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 const router = useRouter();
+const { singleNameField } = useSchema();
 
-const fileInput = ref(null);
-
-const selectImage = () => {
-  fileInput.value.click();
-};
-
-const imagePreview = ref();
 const selectedImage = ref();
-
-function saveToPreviewImage(event) {
-  imagePreview.value = URL.createObjectURL(event.target.files[0]);
-  selectedImage.value = event.target.files[0];
-}
-
-const onUpload = (image) => {
-  selectedImage.value = image;
-};
 
 const formData = ref({
   name: undefined,

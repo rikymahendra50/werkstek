@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow overflow-y-auto max-h-[500px]">
+  <main class="flex-grow overflow-y-auto">
     <div
       class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
     >
@@ -28,21 +28,22 @@
                   <div class="flex justify-center items-center gap-4 my-1">
                     <NuxtLink
                       :to="`/admin/blog-category/edit/${item.slug}`"
-                      class="m-2"
+                      class="m-2 btn btn-sm normal-case btn-ghost btn-square"
                     >
                       <icon
                         name="i-heroicons-pencil-square"
-                        class="cursor-pointer mr-1"
+                        class="cursor-pointer"
                       />
                     </NuxtLink>
-                    <div class="cursor-pointer m-2" @click="showModal(index)">
-                      <icon name="i-heroicons-trash" class="mr-1" />
+                    <div
+                      class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
+                      @click="showModal(index)"
+                    >
+                      <icon name="i-heroicons-trash" />
                     </div>
                     <dialog :id="'my_modal_' + index" class="modal">
                       <div class="modal-box">
-                        <h3 class="font-bold text-xl text-red-500">
-                          Warning !
-                        </h3>
+                        <h3 class="font-bold text-xl text-red-500">Dangers!</h3>
                         <p class="py-4 text-lg">
                           Are you sure want to delete this category blog
                           {{ item.name }}?
@@ -80,6 +81,7 @@
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
+const snackbar = useSnackbar();
 
 const router = useRouter();
 const route = useRoute();
@@ -152,11 +154,10 @@ const showModal = (index) => {
 
 const deleteCategoryBlog = async (slug) => {
   loading.value = true;
-  await useFetch(`/admins/article-categories/${slug}`, {
-    method: "DELETE",
+  const { error } = await useFetch(`/admins/article-categories/${slug}`, {
+    method: "delete",
     ...requestOptions,
   });
-  window.location.reload();
 
   if (error.value) {
     snackbar.add({
@@ -168,6 +169,7 @@ const deleteCategoryBlog = async (slug) => {
       type: "success",
       text: "Delete Blog Category Success",
     });
+    window.location.reload();
   }
   loading.value = false;
 };
