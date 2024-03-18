@@ -82,7 +82,7 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Success Adding Data",
+      text: "Success Edit Admin",
     });
     ctx.resetForm();
   }

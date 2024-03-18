@@ -1,4 +1,5 @@
 <template>
+  <!-- test -->
   <section
     :class="{
       'container-custom': ShowContainerCustom,
@@ -31,7 +32,7 @@
             <div class="relative" v-if="category.title === 'Zoek een Locatie'">
               <div
                 @click="toggleDropdown(category)"
-                class="italic w-full flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-5 min-h-[50px] cursor-pointer text-quaternary sm:text-[14px] mb-2 md:mb-0"
+                class="italic w-full flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-2 pl-4 min-h-[50px] cursor-pointer text-quaternary sm:text-[14px] mb-2 md:mb-0"
               >
                 {{ category.selectedOption }}
 
@@ -60,7 +61,7 @@
               </ul>
             </div>
             <div v-else-if="category.title === 'Zoek op een prijs'">
-              <SliderRange
+              <SliderRangeMap
                 :idInputMin="'priceMin'"
                 :idInputMax="'priceMax'"
                 :minPrice="0"
@@ -76,11 +77,11 @@
           <div class="text-tertiary grid justify-end md:col-span-3 mt-4">
             <button
               @click="performSearch"
-              class="bg-primary rounded-full min-h-[48px] flex items-center gap-4 pl-3 pr-1"
+              class="bg-primary hover:bg-secondary transition-all rounded-full min-h-[48px] flex items-center gap-4 pl-3 pr-1"
             >
               <p class="font-semibold text-sm">Uitgebreid zoeken</p>
               <div
-                class="bg-tertiary text-primary flex items-center justify-center rounded-full min-w-[40px] min-h-[40px]"
+                class="bg-tertiary flex items-center justify-center rounded-full min-w-[40px] min-h-[40px]"
               >
                 <svg
                   width="9"
@@ -110,6 +111,9 @@
 import axios from "axios";
 const { axiosRequest } = useAxios();
 
+// test
+const center = ref({ lat: 52.21314997541194, lng: 5.3982948103810795 });
+
 let googleMapsScriptLoaded = false;
 
 const loadGoogleMapsScript = () => {
@@ -117,7 +121,7 @@ const loadGoogleMapsScript = () => {
     window.googleMapsScriptLoaded = true;
     window.initMap = setupMap;
     const googleMapsScript = document.createElement("script");
-    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhpUx1wrOB8GWCibu649AJo5Be0ocjq3U&callback=initMap&`;
+    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDlXDm2XgaaHSltV5byiQHe9P4HFWtZgOo&callback=initMap&`;
     googleMapsScript.defer = true;
     googleMapsScript.async = true;
     googleMapsScript.onload = () => {
@@ -171,19 +175,6 @@ let infoWindowTimeout;
 const arrayLocation = locationData?.value?.data?.map((item) => item);
 let city = ref(arrayLocation);
 
-// let city = ref([]);
-// let citySet = {};
-
-// arrayLocation.forEach((element) => {
-//   const cityName = element.name;
-//   const cityId = element.id;
-//   if (!citySet[cityName]) {
-//     // console.log(cityName, cityId);
-//     citySet[cityName] = cityId;
-//     city.value.push({ name: cityName, id: cityId });
-//   }
-// });
-
 const categories = ref([
   {
     title: "Zoek een Locatie",
@@ -195,10 +186,6 @@ const categories = ref([
     title: "Zoek op een prijs",
   },
 ]);
-
-onMounted(() => {
-  // showAllData();
-});
 
 const titleMap = ref("Waar bent u op zoek naar?");
 let map = ref(null);
@@ -329,16 +316,6 @@ const setupMap = () => {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 52.14824629295209, lng: 5.595341995302892 },
     zoom: 5,
-    // minZoom: 7,
-    // maxZoom: 15,
-    // restriction: {
-    //   latLngBounds: {
-    //     north: -10,
-    //     south: -10,
-    //     east: 160,
-    //     west: 100,
-    //   },
-    // },
     fullscreenControl: false,
     zoomControl: false,
     keyboardShortcuts: false,

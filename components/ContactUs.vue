@@ -67,37 +67,38 @@
         <VeeForm
           @submit="onSubmit"
           class="text-[12px] md:text-[16px]"
+          :validation-schema="contactSchema"
           v-slot="{ errors }"
         >
           <div class="flex flex-col">
             <div class="flex flex-col my-2">
               <div class="flex items-center">
-                <label for="name">Je naam (verplicht)</label>
+                <label for="first_name">Je naam (verplicht)</label>
               </div>
               <VeeField
-                id="name"
-                name="name"
+                id="first_name"
+                name="first_name"
                 v-model="dataForm.first_name"
                 type="text"
                 class="input w-full input-sm"
                 placeholder="Name"
-                autocomplete="firstname"
+                autocomplete="on"
               />
               <hr />
               <VeeErrorMessage name="first_name" class="text-sm text-error" />
             </div>
             <div class="flex flex-col my-2">
               <div class="flex items-center">
-                <label for="lastname">Last Name</label>
+                <label for="last_name">Last Name</label>
               </div>
               <VeeField
-                id="lastname"
-                name="lastname"
+                id="last_name"
+                name="last_name"
                 v-model="dataForm.last_name"
                 type="text"
                 class="input w-full input-sm"
                 placeholder="Last Name"
-                autocomplete="lastname"
+                autocomplete="on"
               />
               <hr />
               <VeeErrorMessage name="last_name" class="text-sm text-error" />

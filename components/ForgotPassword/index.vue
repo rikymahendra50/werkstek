@@ -15,7 +15,7 @@
           v-model="stateForm.email"
           placeholder="ex:myemail@gmail.com"
           class="input-bordered"
-          autocomplete="on"
+          autocomplete="off"
           v-slot="{ errors }"
         />
       </FormGroup>

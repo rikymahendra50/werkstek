@@ -145,7 +145,7 @@ watch(
 );
 
 function replaceWindow() {
-  router.replace(`/admin/?page=${page.value}`);
+  router.replace(`/admin/admin-list?page=${page.value}`);
   refresh();
 }
 

@@ -7,17 +7,17 @@
           <div
             class="price-slider"
             :style="{
-              left: `${(localMinPrice / maxPrice) * 100}%`,
-              right: `${100 - (localMaxPrice / maxPrice) * 100}%`,
+              left: `${localMaxPriceT * 100}%`,
+              right: `${100 - localMaxPriceT * 100}%`,
             }"
           ></div>
         </div>
         <div class="price-input flex justify-between text-sm opacity-50">
           <div class="price-field">
-            <span class="min-price">€ {{ localMinPrice }} min</span>
+            <span class="min-price">€ {{ localMinPriceT }} min</span>
           </div>
           <div class="price-field">
-            <span class="max-price">€ {{ localMaxPrice }} max</span>
+            <span class="max-price">€ {{ localMaxPriceT }} max</span>
           </div>
         </div>
       </div>
@@ -29,10 +29,10 @@
             :id="idInputMin"
             type="range"
             class="min-range"
-            :min="minPrice"
-            :max="maxPrice"
-            v-model="localMinRange"
-            :step="maxPrice / 10"
+            :min="minRange"
+            :max="localMaxPriceT"
+            v-model="localMinPriceT"
+            :step="10"
           />
         </label>
         <label :for="idInputMax">
@@ -40,10 +40,10 @@
             :id="idInputMax"
             type="range"
             class="max-range"
-            :min="minPrice"
-            :max="maxPrice"
-            v-model="localMaxRange"
-            :step="maxPrice / 10"
+            :min="localMinPriceT"
+            :max="maxRange"
+            v-model="localMaxPriceT"
+            :step="10"
           />
         </label>
       </div>
@@ -51,81 +51,65 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    idInputMin: {
-      type: String,
-    },
-    idInputMax: {
-      type: String,
-    },
-    title: {
-      type: String,
-    },
-    minPrice: {
-      type: Number,
-    },
-    maxPrice: {
-      type: Number,
-    },
-    maxRange: {
-      type: Number,
-    },
-    priceGap: {
-      type: Number,
-    },
+<script setup>
+const props = defineProps({
+  idInputMin: {
+    type: String,
   },
-  data() {
-    return {
-      localMinPrice: this.minPrice,
-      localMaxPrice: this.maxPrice,
-      localMinRange: this.minPrice,
-      localMaxRange: this.maxPrice,
-    };
+  idInputMax: {
+    type: String,
   },
-  watch: {
-    localMinPrice() {
-      this.updateRange();
-      this.$emit("price-change", {
-        minPrice: this.localMinPrice,
-        maxPrice: this.localMaxPrice,
-      });
-    },
-    localMaxPrice() {
-      this.updateRange();
-      this.$emit("price-change", {
-        minPrice: this.localMinPrice,
-        maxPrice: this.localMaxPrice,
-      });
-    },
-    localMinRange() {
-      this.updatePrice();
-    },
-    localMaxRange() {
-      this.updatePrice();
-    },
+  title: {
+    type: String,
   },
-  methods: {
-    updateRange() {
-      const rangeSlider = document.querySelector(".price-slider");
-      const value1 = rangeSlider.parentNode.offsetWidth;
-      const maxValue = this.maxPrice;
-      const calculatedMaxPrice = Math.min(maxValue, this.localMaxPrice);
+  minPrice: {
+    type: [String, Number],
+  },
+  maxPrice: {
+    type: [String, Number],
+  },
+  minRange: {
+    type: Number,
+  },
+  maxRange: {
+    type: Number,
+  },
+  priceGap: {
+    type: Number,
+  },
+});
 
-      rangeSlider.style.left = `${(this.localMinPrice / maxValue) * value1}px`;
-      rangeSlider.style.right = `${
-        (1 - calculatedMaxPrice / maxValue) * value1
-      }px`;
-    },
-    updatePrice() {
-      this.localMinPrice = this.localMinRange;
-      this.localMaxPrice = this.localMaxRange;
-      this.$emit("price-change", {
-        minPrice: this.localMinPrice,
-        maxPrice: this.localMaxPrice,
-      });
-    },
+const emit = defineEmits([
+  "price-change",
+  "update:minPrice",
+  "update:maxPrice",
+]);
+
+const localMinPriceT = computed({
+  set(value) {
+    emit("update:minPrice", value);
   },
-};
+  get() {
+    return props.minPrice || props.minRange;
+  },
+});
+
+const localMaxPriceT = computed({
+  set(value) {
+    emit("update:maxPrice", value);
+  },
+  get() {
+    return props.maxPrice || props.maxRange;
+  },
+});
+
+function updateRange() {
+  const rangeSlider = document.querySelector(".price-slider");
+  const value1 = rangeSlider.parentNode.offsetWidth;
+  const maxValue = maxPrice.value;
+  const calculatedMaxPrice = Math.min(maxValue, localMaxPriceT.value);
+
+  rangeSlider.style.left = `${(localMinPriceT.value / maxValue) * value1}px`;
+  rangeSlider.style.right = `${(1 - calculatedMaxPrice / maxValue) * value1}px`;
+}
 </script>

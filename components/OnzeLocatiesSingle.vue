@@ -171,13 +171,19 @@
             <li class="text-[13px] md:text-[15px] text-[#4A4A4A]">Nederland</li>
           </ul>
           <div class="my-4 flex flex-col gap-3">
-            <NuxtLink :to="`tel:${phoneNumber}`" class="flex gap-3">
+            <NuxtLink
+              :to="`tel:${phoneNumber}`"
+              class="flex gap-3 items-center"
+            >
               <img src="/images/telp-bg-primary.svg" alt="phone-icon" />
-              <p class="text-[#404040] text-[13px] md:text-[16px] mt-2">
+              <p class="text-[#404040] text-[13px] md:text-[16px]">
                 Tel : <span>{{ phoneNumber }}</span>
               </p>
             </NuxtLink>
-            <NuxtLink :to="`mailto:' + ${email}`" class="flex gap-3">
+            <NuxtLink
+              :to="`mailto:' + ${email}`"
+              class="flex gap-3 items-center"
+            >
               <img src="/images/email-bg-primary.svg" alt="phone-icon" />
               <p class="text-[#404040] text-[13px] md:text-[16px]">
                 E-mail: <span>{{ email }}</span>

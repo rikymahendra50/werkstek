@@ -10,6 +10,7 @@
         <div class="grid p-3 gap-2">
           <div>
             <BlogImageCrop :loading="loading" v-model="selectedImage" />
+            <VeeErrorMessage name="image" class="text-red-500" />
           </div>
           <label for="title">Title</label>
           <FormTextField
@@ -63,12 +64,6 @@ const snackbar = useSnackbar();
 const router = useRouter();
 const { communitySchema } = useSchema();
 
-const fileInput = ref(null);
-
-// const selectImage = () => {
-//   fileInput.value.click();
-// };
-
 const formData = ref({
   title: undefined,
   body: undefined,
@@ -83,17 +78,7 @@ watch(
     }
   }
 );
-const imagePreview = ref();
 const selectedImage = ref();
-
-// function saveToPreviewImage(event) {
-//   imagePreview.value = URL.createObjectURL(event.target.files[0]);
-//   selectedImage.value = event.target.files[0];
-// }
-
-// const onUpload = (image) => {
-//   selectedImage.value = image;
-// };
 
 async function onSubmit(values, ctx) {
   loading.value = true;

@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 grid-rows-1">
       <div class="grid w-full container-custom">
         <div class="flex justify-between items-center mb-5">
-          <div class="flex flex-col w-[60%] lg:w-[40%]">
+          <div class="flex flex-col w-[30%] min-[420px]:w-[60%] lg:w-[40%]">
             <p class="text-[12px] md:text-lg lg:text-[18px] font-bold">
               Locaties
             </p>
@@ -45,7 +45,6 @@
             v-for="(itemSlider, index) in data"
             :key="itemSlider.id"
           >
-            <!-- {{ itemSlider.images[0].image }} -->
             <img
               :src="
                 itemSlider.images[0]?.image ||

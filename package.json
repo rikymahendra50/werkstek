@@ -21,6 +21,7 @@
     "nuxt-icon": "^0.5.0"
   },
   "dependencies": {
+    "@fawmi/vue-google-maps": "^0.9.72",
     "@fullcalendar/core": "^6.1.9",
     "@fullcalendar/daygrid": "^6.1.9",
     "@fullcalendar/interaction": "^6.1.9",

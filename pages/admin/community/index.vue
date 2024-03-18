@@ -33,7 +33,7 @@
                     <img
                       :src="item.image"
                       :alt="`item` + index"
-                      class="object-cover rounded-sm"
+                      class="object-cover rounded-md"
                     />
                   </div>
                 </td>
@@ -163,7 +163,7 @@ watch(
 );
 
 function replaceWindow() {
-  router.replace(`/admin/blog?page=${page.value}&search=${search.value}`);
+  router.replace(`/admin/community?page=${page.value}&search=${search.value}`);
   refresh();
 }
 

@@ -65,6 +65,14 @@
               autocomplete="on"
             />
           </FormGroup>
+          <div v-if="showPinEmailExpired">
+            <p class="text-gray-400">
+              If you did not receive the an email
+              <span class="link" @click="resentEmail" role="button"
+                >click here</span
+              >
+            </p>
+          </div>
           <div class="flex justify-end">
             <button
               class="btn bg-primary text-white"
@@ -84,9 +92,9 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const { registerSchema } = useSchema();
-const { stateForm } = useForgotPassword();
 const snackbar = useSnackbar();
 const router = useRouter();
+const { countdown, showPinEmailExpired, secondTime } = useForgotPassword();
 
 const form = ref({
   first_name: undefined,
@@ -120,9 +128,9 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Your data registration is Success, We will confirm soon",
+      text: "We send a code to your email",
     });
-    router.push("/admin/admin-list");
+    // router.push("/admin/admin-list");
   }
 }
 
