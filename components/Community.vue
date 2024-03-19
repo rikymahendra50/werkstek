@@ -19,8 +19,10 @@
         :description="`Op de hoogte blijven van de nieuwste kantoortrends? Op zoek naar tips en tricks voor ondernemers? Lees dan ook onze inspirerende blogs!`"
       />
     </div>
-    <div class="flex w-full">
-      <div class="flex w-full lg:w-[60%] justify-center">
+    <div class="flex w-full gap-2">
+      <div
+        class="flex flex-col min-[320px]:flex-row w-full lg:w-[60%] justify-center"
+      >
         <EachBlogBig
           v-for="article in top?.data.slice(0, 2)"
           :key="article.id"

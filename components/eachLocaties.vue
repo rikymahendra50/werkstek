@@ -2,7 +2,7 @@
   <div>
     <NuxtLink
       :to="link"
-      class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg group hover:shadow-lg transition min-h-[150px] sm:min-h-[170px] md:min-h-[200px]"
+      class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 ounded-lg group hover:shadow-lg transition min-h-[150px] sm:min-h-[170px] md:min-h-[200px]"
       style="box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.05)"
     >
       <div
@@ -35,7 +35,9 @@
           </span>
         </div>
       </div>
-      <div class="grid col-span-4 md:col-span-3 ml-5 items-center">
+      <div
+        class="grid col-span-4 md:col-span-3 ml-3 sm:ml-4 md:ml-5 items-center"
+      >
         <span class="text-[12px] sm:text-lg font-semibold">{{ name }}</span>
         <span class="text-sm">Adres</span>
         <div class="flex justify-between">

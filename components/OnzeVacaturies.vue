@@ -6,7 +6,7 @@
       description="Op deze locaties hebben we kantoorruimtes"
     />
     <div class="md:grid md:grid-cols-12 container-custom">
-      <div class="md:col-span-4 lg:w-[90%]">
+      <div class="md:col-span-4 sm:w-[90%]">
         <div class="mt-5">
           <button
             @click="showAllData"
@@ -148,6 +148,7 @@
         </div>
         <Pagination
           v-if="dataProduct?.meta"
+          :includeFirstLast="false"
           v-model="page"
           first="Eerst"
           last="Laatst"

@@ -1,18 +1,18 @@
 <template>
-  <section class="py-20 overflow-hidden">
+  <section class="py-20">
     <TitleHeader
       title="Onze locaties"
       secondTitle="Bekijk al onze locaties"
       description="Op deze locaties hebben we kantoorruimtes"
     />
-    <div class="md:grid md:grid-cols-12 container-custom">
-      <div class="md:col-span-4 w-[90%]">
-        <div class="mt-5">
+    <div class="md:grid md:grid-cols-12 container-custom mx-2 sm:mx-0">
+      <div class="md:col-span-4 sm:w-[90%]">
+        <div class="sm:mt-5">
           <button
             @click="showAllData"
             class="btn w-full bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded normal-case text-md"
           >
-            Al Onze
+            Al Onze Locaties
           </button>
           <button
             class="flex items-center gap-3 hover:text-primary"
@@ -182,6 +182,7 @@
         </div>
         <Pagination
           v-if="dataProduct?.meta"
+          :includeFirstLast="false"
           v-model="page"
           first="Eerst"
           last="Laatst"
@@ -189,7 +190,7 @@
           next="Volgende"
           :total="dataProduct?.meta?.total"
           :per-page="dataProduct?.meta?.per_page"
-          class="flex justify-center mt-10"
+          class="flex justify-center mt-5"
         />
       </div>
     </div>

@@ -21,7 +21,7 @@
     </div>
     <div class="flex w-full gap-2">
       <div
-        class="flex flex-col min-[420px]:flex-row w-full lg:w-[60%] justify-center"
+        class="flex flex-col min-[320px]:flex-row w-full lg:w-[60%] justify-center"
       >
         <EachBlogBig
           v-for="article in top?.data?.slice(0, 2)"

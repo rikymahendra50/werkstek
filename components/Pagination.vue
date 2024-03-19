@@ -6,7 +6,7 @@
         @click="onClickFirstPage"
         :disabled="isInFirstPage"
         aria-label="Go to first page"
-        class="btn btn-sm h-10 bg-primary text-white"
+        class="btn btn-sm h-3 sm:h-10 bg-primary text-white"
         v-if="includeFirstLast"
       >
         {{ props.first }}
@@ -17,7 +17,7 @@
         @click="onClickPreviousPage"
         :disabled="isInFirstPage"
         aria-label="Go to previous page"
-        class="btn btn-sm h-10 bg-primary text-white"
+        class="btn btn-sm h-3 sm:h-10 bg-primary text-white"
         v-if="includeNextPrev"
       >
         {{ props.prev }}
@@ -30,7 +30,7 @@
         :disabled="page.isDisabled"
         :class="{ active: isPageActive(page.name) }"
         :aria-label="`Go to page number ${page.name}`"
-        class="btn btn-sm h-10 bg-primary text-white"
+        class="btn btn-sm h-3 sm:h-10 bg-primary text-white"
       >
         {{ page.name }}
       </button>
@@ -40,7 +40,7 @@
         @click="onClickNextPage"
         :disabled="isInLastPage"
         aria-label="Go to next page"
-        class="btn btn-sm h-10 bg-primary text-white"
+        class="btn btn-sm h-3 sm:h-10 bg-primary text-white"
         v-if="includeNextPrev"
       >
         {{ props.next }}
@@ -51,7 +51,7 @@
         @click="onClickLastPage"
         :disabled="isInLastPage"
         aria-label="Go to last page"
-        class="btn btn-sm h-10 bg-primary text-white"
+        class="btn btn-sm h-3 sm:h-10 bg-primary text-white"
         v-if="includeFirstLast"
       >
         {{ props.last }}
