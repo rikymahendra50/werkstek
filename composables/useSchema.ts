@@ -8,6 +8,13 @@ export default function () {
    *
    */
 
+  const locationSchema = toTypedSchema(
+    object({
+      image: z.instanceof(File),
+      name: string().min(1, "Name is required"),
+    })
+  );
+
   const contactSchema = toTypedSchema(
     object({
       // first_name: string({
@@ -167,6 +174,7 @@ export default function () {
   );
 
   return {
+    locationSchema,
     singleNameField,
     communitySchema,
     blogSchema,

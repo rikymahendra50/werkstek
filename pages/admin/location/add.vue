@@ -3,7 +3,7 @@
     <CompAdminBackButton link="location" linkTitle="Add Location" />
     <VeeForm
       @submit="onSubmit"
-      :validation-schema="singleNameField"
+      :validation-schema="locationSchema"
       v-slot="{ errors }"
     >
       <div class="grid grid-cols-2 gap-3">
@@ -18,8 +18,17 @@
             autocomplete="on"
           />
           <div class="flex flex-col gap-2">
+            <div class="hidden">
+              <VeeField
+                type="file"
+                name="image"
+                id="image"
+                v-model="selectedImage"
+              />
+            </div>
             <span>Image</span>
             <BlogImageCrop :loading="loading" v-model="selectedImage" />
+            <VeeErrorMessage name="image" class="text-red-500" />
           </div>
           <div class="flex justify-end mt-5">
             <CompAdminButtonAddForm
@@ -40,7 +49,7 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 const router = useRouter();
-const { singleNameField } = useSchema();
+const { locationSchema } = useSchema();
 
 const selectedImage = ref();
 
