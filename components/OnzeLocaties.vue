@@ -9,6 +9,12 @@
       <div class="md:col-span-4 w-[90%]">
         <div class="mt-5">
           <button
+            @click="showAllData"
+            class="btn w-full bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded normal-case text-md"
+          >
+            Al Onze
+          </button>
+          <button
             class="flex items-center gap-3 hover:text-primary"
             @click="toggleDetail"
           >
@@ -53,9 +59,9 @@
               >
                 <input
                   :id="item.id"
-                  :value="item.name"
-                  @change="handleSoortLocatieChange(item.id)"
-                  :checked="isSelectedSoort(item.id)"
+                  :name="'Soort' + item.id"
+                  :value="item.id"
+                  v-model="selectedSoortLocatie"
                   type="radio"
                   name="soort"
                 />
@@ -64,7 +70,7 @@
                 </label>
               </div>
             </fieldset>
-            <SliderRange
+            <!-- <SliderRange
               :title="'De prijs per maand'"
               :idInputMin="'priceMin'"
               :idInputMax="'priceMax'"
@@ -74,7 +80,33 @@
               :maxRange="highestPrice"
               :priceGap="highestPrice"
               class="my-2"
-            />
+            /> -->
+            <p class="text-sm mt-3 opacity-50">Price</p>
+            <div class="grid grid-cols-2 my-2">
+              <div class="relative">
+                <input
+                  type="number"
+                  id="MinPrice"
+                  placeholder="Min"
+                  min="0"
+                  class="input input-bordered w-[95%] p-[10px]input-md"
+                  v-model="selectedMinPrice"
+                /><br />
+                <span class="absolute top-3 right-8">€</span>
+              </div>
+              <div class="relative">
+                <input
+                  type="number"
+                  id="MaxPrice"
+                  min="0"
+                  placeholder="Max"
+                  class="input input-bordered w-[95%] p-[10px] input-md"
+                  v-model="selectedMaxPrice"
+                /><br />
+                <span class="absolute top-3 right-8">€</span>
+              </div>
+            </div>
+
             <div class="">
               <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
               <div class="grid grid-cols-2 my-2">
@@ -183,7 +215,7 @@ const route = useRoute();
 
 const page = ref(1);
 const selectedCity = ref("");
-const selectedSoortLocatie = ref([]);
+const selectedSoortLocatie = ref("");
 const selectedMinPrice = ref("");
 const selectedMaxPrice = ref("");
 const selectedMeterMin = ref("");
@@ -194,6 +226,16 @@ const dataForFilter = ref([]);
 const locations = ref([]);
 const soortLocatiesRadio = ref([]);
 const functieCheckbox = ref([]);
+
+const showAllData = () => {
+  selectedCity.value = "";
+  selectedSoortLocatie.value = "";
+  selectedMinPrice.value = "";
+  selectedMaxPrice.value = "";
+  selectedMeterMin.value = "";
+  selectedMeterMax.value = "";
+  selectedFunctie.value = [];
+};
 
 const {
   data: dataProduct,
@@ -340,10 +382,10 @@ onMounted(() => {
   }
 
   if (route.query.min_price) {
-    selectedMinPrice.value = parseInt(route.query.min_price, 0);
+    selectedMinPrice.value = parseInt(route.query.min_price);
   }
   if (route.query.max_price) {
-    selectedMaxPrice.value = parseInt(route.query.max_price, 0);
+    selectedMaxPrice.value = parseInt(route.query.max_price);
   }
   if (route.query.min_area) {
     selectedMeterMin.value = route.query.min_area;
@@ -404,19 +446,19 @@ const highestPrice = computed(() => {
   return highestPrice2;
 });
 
-function isSelectedSoort(id) {
-  return selectedSoortLocatie.value.includes(id);
-}
+// function isSelectedSoort(id) {
+//   selectedSoortLocatie.value = id;
+// }
+// function handleSoortLocatieChange(id) {
+// if (selectedSoortLocatie.value.includes(id)) {
+//   selectedSoortLocatie.value = selectedSoortLocatie.value.filter(
+//     (item) => item !== id
+//   );
+// } else {
+//   selectedSoortLocatie.value = [...selectedSoortLocatie.value, id];
+// }
+// }
 
-function handleSoortLocatieChange(id) {
-  if (selectedSoortLocatie.value.includes(id)) {
-    selectedSoortLocatie.value = selectedSoortLocatie.value.filter(
-      (item) => item !== id
-    );
-  } else {
-    selectedSoortLocatie.value = [...selectedSoortLocatie.value, id];
-  }
-}
 // end soort locatie
 
 function isSelectedFuncti(id) {
@@ -437,7 +479,7 @@ function replaceWindow() {
   if (selectedCity.value) {
     filters.push(`location_id=${selectedCity.value}`);
   }
-  if (selectedSoortLocatie.value.length > 0) {
+  if (selectedSoortLocatie.value) {
     filters.push(`type_id=${selectedSoortLocatie.value}`);
   }
   if (selectedMaxPrice.value) {

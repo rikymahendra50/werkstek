@@ -32,7 +32,7 @@
             :min="minPrice"
             :max="maxPrice"
             v-model="localMinRange"
-            :step="maxPrice / 10"
+            :step="10"
           />
         </label>
         <label :for="idInputMax">
@@ -43,7 +43,7 @@
             :min="minPrice"
             :max="maxPrice"
             v-model="localMaxRange"
-            :step="maxPrice / 10"
+            :step="10"
           />
         </label>
       </div>

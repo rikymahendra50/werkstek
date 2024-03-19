@@ -3,45 +3,6 @@
     <div
       class="rounded-full flex items-center md:p-2 px-1 lg:px-2 bg-quaternary max-h-[60px]"
     >
-      <div class="hidden">
-        <VeeField
-          id="firstName"
-          name="firstName"
-          v-model="dataForm.first_name"
-          type="text"
-          class="input w-full input-sm"
-          placeholder="First Name"
-          autocomplete="off"
-        />
-        <VeeField
-          id="lastName"
-          name="lastName"
-          v-model="dataForm.last_name"
-          type="text"
-          class="input w-full input-sm"
-          placeholder="Last Name"
-          autocomplete="off"
-        />
-        <VeeField
-          id="subject"
-          name="subject"
-          v-model="dataForm.subject"
-          type="text"
-          class="input w-full input-sm"
-          placeholder="Subject"
-          autocomplete="off"
-        />
-        <VeeField
-          id="message"
-          name="message"
-          v-model="dataForm.message"
-          type="text"
-          class="input w-full input-sm"
-          placeholder="Message"
-          autocomplete="off"
-        />
-      </div>
-
       <VeeField
         type="text"
         name="email"
@@ -78,39 +39,33 @@
 </template>
 
 <script setup>
-const { contactSchema } = useSchema();
+// const { contactSchema } = useSchema();
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 
 const dataForm = ref({
-  first_name: "Sending Email Only",
-  last_name: "Sending Email Only",
   email: undefined,
-  subject: "Sending Email Only",
-  message: "Lijst met werkplekken",
 });
 
-const initialValues = {
-  ...dataForm.value,
-};
+// const initialValues = {
+//   ...dataForm.value,
+// };
 
 async function onSubmit(values, ctx) {
-  console.log(dataForm.value);
-
   loading.value = true;
 
-  for (const key in dataForm.value) {
-    if (key !== "email") {
-      if (dataForm.value[key] === "") {
-        dataForm.value[key] = "-";
-      }
-    }
-  }
+  // for (const key in dataForm.value) {
+  //   if (key !== "email") {
+  //     if (dataForm.value[key] === "") {
+  //       dataForm.value[key] = "-";
+  //     }
+  //   }
+  // }
 
-  const { data, error } = await useFetch("/contacts", {
+  const { data, error } = await useFetch("/newsletter-subscribers", {
     method: "POST",
-    body: dataForm.value,
+    body: { ...dataForm.value },
     ...requestOptions,
   });
 
@@ -123,11 +78,11 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Thanks for input your email. We will get back to you as soon as possible.",
+      text: "Thanks for input your email.",
     });
 
-    dataForm.value = { ...initialValues };
-    // ctx.resetForm();
+    // dataForm.value = { ...initialValues };
+    ctx.resetForm();
   }
 
   loading.value = false;

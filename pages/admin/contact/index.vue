@@ -157,7 +157,7 @@ onMounted(() => {
 });
 
 function replaceWindow() {
-  router.replace(`/admin/blog?page=${page.value}&search=${search.value}`);
+  router.replace(`/admin/contact?page=${page.value}&search=${search.value}`);
   refresh();
 }
 

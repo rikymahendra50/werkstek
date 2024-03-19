@@ -15,16 +15,16 @@
         </p>
         <h4 class="text-[16px] font-semibold pt-3">Volg ons op</h4>
         <div class="social-media flex pt-3">
-          <NuxtLink to="/"
+          <NuxtLink to="https://www.instagram.com/"
             ><img src="/images/instagram.svg" alt="icon-instagram" class="pr-6"
           /></NuxtLink>
-          <NuxtLink to="/"
+          <NuxtLink to="https://www.facebook.com"
             ><img src="/images/facebook.svg" alt="icon-facebook" class="pr-6"
           /></NuxtLink>
-          <NuxtLink to="/"
+          <NuxtLink to="https://www.linkedin.com"
             ><img src="/images/linkedin.svg" alt="icon-linkedin" class="pr-6"
           /></NuxtLink>
-          <NuxtLink to="/"
+          <NuxtLink to="https://www.twitter.com"
             ><img src="/images/twitter.svg" alt="icon-twitter" class="pr-6"
           /></NuxtLink>
         </div>

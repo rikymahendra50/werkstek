@@ -16,11 +16,8 @@
     buttonLink1="/over-werkstek"
     buttonLink2="/voor-verhuurders"
   />
-
   <ContactUs class="mb-10" />
-
   <MapInteractive :ShowContainerCustom="false" />
-
   <BgBigGreen
     title1="Blijf op de hoogte"
     title2="Schrijf je in voor de nieuwsbrief"

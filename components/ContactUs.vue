@@ -65,12 +65,11 @@
       </div>
       <div class="order-1 sm:order-2 md:w-[400px] text-[#777] sm:w-[50%]">
         <VeeForm
-          @submit="onSubmit"
-          class="text-[12px] md:text-[16px]"
           :validation-schema="contactSchema"
+          @submit="onSubmit"
           v-slot="{ errors }"
         >
-          <div class="flex flex-col">
+          <div class="flex flex-col text-[12px] md:text-[16px]">
             <div class="flex flex-col my-2">
               <div class="flex items-center">
                 <label for="first_name">Je naam (verplicht)</label>
@@ -156,7 +155,7 @@
             <button
               type="submit"
               :disabled="loading"
-              class="mt-4 bg-primary disabled:bg-secondary hover:bg-secondary transition min-w-[120px] sm:min-w-[152px] min-h-[42px] sm:min-h-[52px] rounded-full flex items-center justify-center cursor-pointer"
+              class="btn normal-case mt-4 bg-primary disabled:bg-secondary hover:bg-secondary transition min-w-[120px] sm:min-w-[152px] min-h-[42px] sm:min-h-[52px] rounded-full flex items-center justify-center cursor-pointer"
             >
               <span
                 class="text-[20px] xl:text-lg lg:text-lg text-center text-white"
@@ -190,7 +189,7 @@ async function onSubmit(values, ctx) {
 
   const { data, error } = await useFetch("/contacts", {
     method: "POST",
-    body: dataForm.value,
+    body: { ...dataForm.value },
     ...requestOptions,
   });
 
@@ -205,10 +204,8 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Thank you for your message. We will get back to you as soon as possible.",
     });
-
     ctx.resetForm();
   }
-
   loading.value = false;
 }
 </script>

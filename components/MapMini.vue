@@ -12,7 +12,10 @@
       :key="index"
       v-for="(m, index) in markers"
       :position="m.position"
-      icon="/images/marker-red.svg"
+      :icon="{
+        url: '/images/marker-red.svg',
+        scaledSize: { width: 50, height: 50 },
+      }"
       :clickable="true"
       @click="center = m.position"
     >

@@ -196,40 +196,7 @@
             </svg>
             Level Type
           </NuxtLink>
-          <NuxtLink
-            to="/admin/contact"
-            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
-            :class="{
-              'bg-transparent text-black hover:bg-gray-100':
-                !isRouteActive('/admin/contact'),
-              'bg-black text-black hover:bg-opacity-30':
-                isRouteActive('/admin/contact'),
-            }"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-5 w-5"
-            >
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle>
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-            </svg>
-            Contact
-            <!-- <div
-              class="whitespace-nowrap border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-            >
-              6
-            </div> -->
-          </NuxtLink>
+
           <!-- <NuxtLink
             to="/admin/category"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
@@ -392,6 +359,66 @@
             </svg>
             Community
           </NuxtLink>
+          <NuxtLink
+            to="/admin/contact"
+            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
+            :class="{
+              'bg-transparent text-black hover:bg-gray-100':
+                !isRouteActive('/admin/contact'),
+              'bg-black text-black hover:bg-opacity-30':
+                isRouteActive('/admin/contact'),
+            }"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-5 w-5"
+            >
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            Contact
+            <!-- <div
+              class="whitespace-nowrap border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
+            >
+              6
+            </div> -->
+          </NuxtLink>
+
+          <NuxtLink
+            to="/admin/newsletter"
+            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
+            :class="{
+              'bg-transparent text-black hover:bg-gray-100':
+                !isRouteActive('/admin/newsletter'),
+              'bg-black text-black hover:bg-opacity-30':
+                isRouteActive('/admin/newsletter'),
+            }"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1.756 4.568A1.5 1.5 0 0 0 1 5.871V12.5A1.5 1.5 0 0 0 2.5 14h11a1.5 1.5 0 0 0 1.5-1.5V5.87a1.5 1.5 0 0 0-.756-1.302l-5.5-3.143a1.5 1.5 0 0 0-1.488 0l-5.5 3.143Zm1.82 2.963a.75.75 0 0 0-.653 1.35l4.1 1.98a2.25 2.25 0 0 0 1.955 0l4.1-1.98a.75.75 0 1 0-.653-1.35L8.326 9.51a.75.75 0 0 1-.652 0L3.575 7.53Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            Newsletter
+          </NuxtLink>
+
           <button
             @click="$logout()"
             :disabled="loading"

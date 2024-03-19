@@ -1,6 +1,5 @@
 <template>
   <floating-whatsapp />
-  <MapTest />
   <StatistiekLocatiesVideo
     video="/images/video_test.mp4"
     :image="StatistiekLocatiesData?.image"

@@ -9,6 +9,12 @@
       <div class="md:col-span-4 lg:w-[90%]">
         <div class="mt-5">
           <button
+            @click="showAllData"
+            class="btn w-full bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded normal-case text-md"
+          >
+            Al Vacatures
+          </button>
+          <button
             class="flex items-center gap-3 hover:text-primary"
             @click="toggleDetail"
           >
@@ -48,10 +54,10 @@
               >
                 <input
                   :id="item.id"
-                  :value="item.name"
-                  @change="handleSoortLocatieChange(item.id)"
-                  :checked="isSelectedSoort(item.id)"
-                  type="checkbox"
+                  :name="'Soort' + item.id"
+                  :value="item.id"
+                  v-model="selectedSoortLocatie"
+                  type="radio"
                   name="soort"
                 />
                 <label :for="item.id" class="cursor-pointer">
@@ -59,7 +65,7 @@
                 </label>
               </div>
             </fieldset>
-            <SliderRange
+            <!-- <SliderRange
               v-if="dataForFilter.length"
               :title="'De prijs per maand'"
               :idInputMin="'priceMin'"
@@ -70,7 +76,32 @@
               :maxRange="highestPrice"
               :priceGap="highestPrice"
               class="my-2"
-            />
+            /> -->
+            <p class="text-sm mt-3 opacity-50">Price</p>
+            <div class="grid grid-cols-2 my-2">
+              <div class="relative">
+                <input
+                  type="number"
+                  id="MinPrice"
+                  placeholder="Min"
+                  min="0"
+                  class="input input-bordered w-[95%] p-[10px]input-md"
+                  v-model="selectedMinPrice"
+                /><br />
+                <span class="absolute top-3 right-8">€</span>
+              </div>
+              <div class="relative">
+                <input
+                  type="number"
+                  id="MaxPrice"
+                  min="0"
+                  placeholder="Max"
+                  class="input input-bordered w-[95%] p-[10px] input-md"
+                  v-model="selectedMaxPrice"
+                /><br />
+                <span class="absolute top-3 right-8">€</span>
+              </div>
+            </div>
             <div class="">
               <p class="text-base mt-3 opacity-50 pb-3">Faciliteit</p>
               <fieldset id="facility" class="grid grid-cols-2 gap-2">
@@ -140,7 +171,7 @@ const route = useRoute();
 const page = ref(1);
 // const search = ref("");
 const selectedCity = ref("");
-const selectedSoortLocatie = ref([]);
+const selectedSoortLocatie = ref("");
 const selectedMinPrice = ref("");
 const selectedMaxPrice = ref("");
 const selectedMeterMin = ref("");
@@ -159,6 +190,16 @@ const selectedFacilities = computed(() => {
     return "";
   }
 });
+
+const showAllData = () => {
+  selectedCity.value = "";
+  selectedSoortLocatie.value = "";
+  selectedMinPrice.value = "";
+  selectedMaxPrice.value = "";
+  selectedMeterMin.value = "";
+  selectedMeterMax.value = "";
+  selectedFunctie.value = [];
+};
 
 // const { data: dataProduct, refresh } = await useFetch(
 //   `/products?page=${page.value}&filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
@@ -297,8 +338,9 @@ onMounted(() => {
     selectedCity.value = route.query.location_id;
   }
   if (route.query.type_id) {
-    const typeIds = route.query.type_id?.split(",")?.map(Number);
-    selectedSoortLocatie.value = typeIds;
+    // const typeIds = route.query.type_id?.split(",")?.map(Number);
+    // selectedSoortLocatie.value = typeIds;
+    selectedSoortLocatie.value = route.query.type_id;
   }
 
   if (route.query.min_price) {
@@ -365,19 +407,20 @@ const highestPrice = computed(() => {
   // return Math.max(...numericPrices);
 });
 
-function isSelectedSoort(id) {
-  return selectedSoortLocatie.value.includes(id);
-}
+// function isSelectedSoort(id) {
+//   return selectedSoortLocatie.value.includes(id);
+// }
 
-function handleSoortLocatieChange(id) {
-  if (selectedSoortLocatie.value.includes(id)) {
-    selectedSoortLocatie.value = selectedSoortLocatie.value?.filter(
-      (item) => item !== id
-    );
-  } else {
-    selectedSoortLocatie.value = [...selectedSoortLocatie.value, id];
-  }
-}
+// function handleSoortLocatieChange(id) {
+//   if (selectedSoortLocatie.value.includes(id)) {
+//     selectedSoortLocatie.value = selectedSoortLocatie.value?.filter(
+//       (item) => item !== id
+//     );
+//   } else {
+//     selectedSoortLocatie.value = [...selectedSoortLocatie.value, id];
+//   }
+// }
+
 // end soort locatie
 
 function isSelectedFuncti(id) {
@@ -399,7 +442,7 @@ function replaceWindow() {
   if (selectedCity.value) {
     filters.push(`location_id=${selectedCity.value}`);
   }
-  if (selectedSoortLocatie.value.length > 0) {
+  if (selectedSoortLocatie.value) {
     filters.push(`type_id=${selectedSoortLocatie.value}`);
   }
   if (selectedMaxPrice.value) {

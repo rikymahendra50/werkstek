@@ -9,6 +9,14 @@
       >
         <div class="grid mt-10 p-3 gap-2">
           <div>
+            <div class="hidden">
+              <VeeField
+                type="file"
+                name="image"
+                id="image"
+                v-model="selectedImage"
+              />
+            </div>
             <BlogImageCrop
               :loading="loading"
               name="image"

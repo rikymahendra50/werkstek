@@ -5,7 +5,7 @@
     >
       <button
         class="categorylink"
-        v-for="(category, index) in categoryData?.slice(0, 4)"
+        v-for="(category, index) in categoryData?.slice(0, 5)"
         :key="category?.id"
         :class="{ active: selectedCategory === category?.slug }"
         @click="handleCategoryClick(category?.slug)"
@@ -34,7 +34,7 @@
           <div class="grid gap-2">
             <button
               class="hover:bg-primary p-2 text-[14px] hover:text-white"
-              v-for="(category, index) in categoryData?.slice(4)"
+              v-for="(category, index) in categoryData?.slice(5)"
               :key="category.id"
               :class="{ active: selectedCategory === category.slug }"
               @click="handleCategoryClick(category.slug)"

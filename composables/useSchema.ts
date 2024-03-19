@@ -10,12 +10,14 @@ export default function () {
 
   const contactSchema = toTypedSchema(
     object({
-      first_name: string({
-        required_error: "First Name is required",
-      }).min(1, "First Name is required"),
-      last_name: string({
-        required_error: "Last Name is required",
-      }).min(1, "Last Name is required"),
+      // first_name: string({
+      //   required_error: "First Name is required",
+      // }).min(1, "First Name is required"),
+      first_name: string().min(1, "First Name is required"),
+      // last_name: string({
+      //   required_error: "Last Name is required",
+      // }).min(1, "Last Name is required"),
+      last_name: string().min(1, "Last Name is required"),
       email: string({
         required_error: "Email is required",
       })
@@ -49,7 +51,7 @@ export default function () {
 
   const blogSchema = toTypedSchema(
     object({
-      image: z.instanceof(File).optional(),
+      image: z.instanceof(File),
       title: string().min(1, "Title is required"),
       body: string().min(0, "Description is required"),
       category: number().min(1, "Category is required"),
@@ -67,7 +69,7 @@ export default function () {
 
   const communitySchema = toTypedSchema(
     object({
-      image: z.instanceof(File).optional(),
+      image: z.instanceof(File),
       title: string().min(1, "Title is required"),
       body: string().min(0, "Description is required"),
       meta: string().min(1, "Meta is required"),
