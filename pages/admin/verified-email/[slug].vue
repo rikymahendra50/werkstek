@@ -16,9 +16,8 @@
           clip-rule="evenodd"
         />
       </svg>
-      <p>Verified Sucsess</p>
+      <p>Verified Success</p>
     </div>
-    <!-- <NuxtLink to="admin">Login Now</NuxtLink> -->
   </div>
 </template>
 

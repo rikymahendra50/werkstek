@@ -5,7 +5,7 @@ const projectName = "WERKSTEK";
 /**
  * replace with actual description for seo
  */
-const projectDescription = "Nuxt App";
+const projectDescription = "Werkstek is..";
 /**
  * replace with actual image for thumbnail
  *
