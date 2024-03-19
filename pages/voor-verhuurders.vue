@@ -68,6 +68,6 @@
 
 <script setup>
 useHead({
-  title: "voor-Verhuurders",
+  title: "Voor-Verhuurders",
 });
 </script>

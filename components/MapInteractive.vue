@@ -228,7 +228,6 @@ async function performSearch() {
     filteredData.value = response.data;
     findMap(filteredData.value);
     recenterMap(filteredData.value);
-    console.log(filteredData.value);
   } catch (error) {
     console.error("Failed to retrieve data from API:", error);
   }

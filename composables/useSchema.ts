@@ -49,6 +49,7 @@ export default function () {
 
   const blogSchema = toTypedSchema(
     object({
+      image: z.instanceof(File).optional(),
       title: string().min(1, "Title is required"),
       body: string().min(0, "Description is required"),
       category: number().min(1, "Category is required"),

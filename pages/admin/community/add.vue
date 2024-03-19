@@ -10,7 +10,7 @@
         <div class="grid p-3 gap-2">
           <div>
             <BlogImageCrop :loading="loading" v-model="selectedImage" />
-            <VeeErrorMessage name="image" class="text-red-500" />
+            <!-- <VeeErrorMessage name="image" class="text-red-500" /> -->
           </div>
           <label for="title">Title</label>
           <FormTextField

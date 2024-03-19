@@ -86,35 +86,35 @@
             :longitude="formData.latitude"
           />
         </div>
-        <div class="hidden">
-          <div class="flex flex-col my-2 w-full">
-            <div class="flex items-center">
-              <label for="latitude">Latitude</label>
-            </div>
-            <FormTextField
-              id="latitude"
-              name="latitude"
-              type="text"
-              v-model="formData.latitude"
-              placeholder="ex:51.9934345296239"
-              class="input-bordered"
-              autocomplete="on"
-            />
+        <div class="flex flex-col my-2 w-full">
+          <div class="flex items-center">
+            <label for="latitude">Latitude</label>
           </div>
-          <div class="flex flex-col my-2 w-full">
-            <div class="flex items-center">
-              <label for="longitude">Longitude</label>
-            </div>
-            <FormTextField
-              id="longitude"
-              name="longitude"
-              type="text"
-              v-model="formData.longitude"
-              placeholder="ex:5.5162370519396349"
-              class="input-bordered"
-              autocomplete="on"
-            />
+          <VeeField
+            id="latitude"
+            name="latitude"
+            type="text"
+            v-model="formData.latitude"
+            placeholder="ex:51.9934345296239"
+            class="input-bordered input-disabled input"
+            autocomplete="on"
+            disabled
+          />
+        </div>
+        <div class="flex flex-col my-2 w-full">
+          <div class="flex items-center">
+            <label for="longitude">Longitude</label>
           </div>
+          <VeeField
+            id="longitude"
+            name="longitude"
+            type="text"
+            v-model="formData.longitude"
+            placeholder="ex:5.5162370519396349"
+            class="input-bordered input-disabled input"
+            autocomplete="on"
+            disabled
+          />
         </div>
         <VeeErrorMessage name="latitude" class="text-red-500" />
       </div>

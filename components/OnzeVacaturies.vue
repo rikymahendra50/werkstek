@@ -100,10 +100,6 @@
         <div
           class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
         >
-          <!-- <pre>
-          {{ dataProduct }}
-        </pre
-          > -->
           <eachLocaties
             v-if="dataProduct?.data"
             v-for="(item, index) in dataProduct?.data"
@@ -164,12 +160,26 @@ const selectedFacilities = computed(() => {
   }
 });
 
-const { data: dataProduct, refresh } = await useFetch(
-  `/products?page=${page.value}&filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
-  {
-    method: "get",
-    ...requestOptions,
-  }
+// const { data: dataProduct, refresh } = await useFetch(
+//   `/products?page=${page.value}&filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
+//   {
+//     method: "get",
+//     ...requestOptions,
+//   }
+// );
+
+const {
+  data: dataProduct,
+  error,
+  refresh,
+} = await useAsyncData("dataProduct2", () =>
+  $fetch(
+    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
 );
 
 const { start, stop } = useTimeoutFn(() => {

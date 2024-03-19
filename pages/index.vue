@@ -16,7 +16,7 @@
   />
   <MapInteractive class="py-10" />
   <SliderLocaties :data="sliderData?.data" />
-  <SliderTestimony class="my-20" />?
+  <SliderTestimony class="my-20" />
   <FourImages />
   <BgBigGreen
     :title1="BgBigGreenData.title1"

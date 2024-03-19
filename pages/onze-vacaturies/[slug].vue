@@ -21,10 +21,10 @@
           <p class="text-[18px] md:text-[20px]">
             Locatie : {{ dataAll?.location?.name }}
           </p>
-          <p class="text-[18px] md:text-[20px]">Categorie :</p>
-          <p class="text-[18px] md:text-[20px]">Datum :</p>
-          <p class="text-[18px] md:text-[20px]">Soort :</p>
-          <p class="text-[18px] md:text-[20px]">Tags :</p>
+          <p class="text-[18px] md:text-[20px]">Categorie : Lorem</p>
+          <p class="text-[18px] md:text-[20px]">Datum : Lorem</p>
+          <p class="text-[18px] md:text-[20px]">Soort : Lorem</p>
+          <p class="text-[18px] md:text-[20px]">Tags : Lorem</p>
         </div>
       </div>
     </div>

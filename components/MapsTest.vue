@@ -41,12 +41,15 @@ const props = defineProps({
 
 const emit = defineEmits(["update:longitude", "update:latitude"]);
 
-const center = ref({ lat: 52.21314997541194, lng: 5.3982948103810795 });
+const center = ref({
+  lat: parseFloat(props.latitude) || 52.21314997541194,
+  lng: parseFloat(props.longitude) || 5.3982948103810795,
+});
 const markers = ref([
   {
     position: {
-      lat: 52.21314997541194,
-      lng: 5.3982948103810795,
+      lat: parseFloat(props.latitude) || 52.21314997541194,
+      lng: parseFloat(props.longitude) || 5.3982948103810795,
     },
   },
 ]);
@@ -60,6 +63,7 @@ onMounted(() => {
 });
 
 function setPlace(ctx) {
+  console.log(ctx);
   const latitude = ctx.geometry?.location?.lat();
   const longitude = ctx.geometry?.location?.lng();
 
