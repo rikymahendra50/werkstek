@@ -119,7 +119,7 @@
       </div>
     </div>
     <div
-      class="bg-tertiary h-[61px] flex items-center lg:text-[16px] text-[10px]"
+      class="bg-tertiary h-[61px] flex items-center lg:text-[16px] text-[10px] relative"
     >
       <p class="md:pl-8 px-4 text-[#8C8E91]">
         Copyright All Rights Reserved © 2023 Werkstek
@@ -127,6 +127,9 @@
       <NuxtLink to="" class="md:pl-4">Cookkie beleid</NuxtLink>
       <p class="px-2">|</p>
       <NuxtLink class="md:pr-4">Privacy verklaring</NuxtLink>
+      <p class="text-sm absolute right-2 bottom-1">
+        Design & Developed by s.p Digital
+      </p>
     </div>
   </section>
 </template>

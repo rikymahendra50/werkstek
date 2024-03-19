@@ -23,11 +23,6 @@
         <div v-if="showFilter">
           <span class="text-base mt-3 opacity-50">Kies een locatie</span>
           <div class="flex-col form-control mt-2 relative">
-            <!-- <img
-              src="/images/location-logo-locaties.svg"
-              alt="img-logo"
-              class="w-8 h-8"
-            /> -->
             <select
               id="city"
               class="select select-bordered dropdown z-10"
@@ -40,6 +35,11 @@
                 :key="index"
                 :value="item.id"
               >
+                <img
+                  src="/images/location-logo-locaties.svg"
+                  alt="img-logo"
+                  class="w-8 h-8"
+                />
                 {{ item.name }}
               </option>
             </select>
@@ -56,7 +56,7 @@
                   :value="item.name"
                   @change="handleSoortLocatieChange(item.id)"
                   :checked="isSelectedSoort(item.id)"
-                  type="checkbox"
+                  type="radio"
                   name="soort"
                 />
                 <label :for="item.id" class="cursor-pointer">
@@ -128,7 +128,6 @@
           </div>
         </div>
       </div>
-
       <div class="md:col-span-8 py-5 overflow-auto">
         <div
           class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
@@ -150,6 +149,7 @@
           />
         </div>
         <Pagination
+          v-if="dataProduct?.meta"
           v-model="page"
           first="Eerst"
           last="Laatst"
@@ -176,16 +176,12 @@
 </style>
 
 <script setup>
-import axios from "axios";
-const { axiosRequest } = useAxios();
-
 const { requestOptions } = useRequestOptions();
 import { useTimeoutFn } from "@vueuse/core";
 const router = useRouter();
 const route = useRoute();
 
 const page = ref(1);
-// const search = ref("");
 const selectedCity = ref("");
 const selectedSoortLocatie = ref([]);
 const selectedMinPrice = ref("");
@@ -199,25 +195,33 @@ const locations = ref([]);
 const soortLocatiesRadio = ref([]);
 const functieCheckbox = ref([]);
 
+const {
+  data: dataProduct,
+  error,
+  refresh,
+} = await useAsyncData("dataProduct", () =>
+  $fetch(
+    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
+);
+
 const selectedFacilities = computed(() => {
   if (selectedFunctie.value.length > 0) {
-    return `filter[facilities]=${selectedFunctie.value.join("|")}`;
+    return `filter[facilities]=${selectedFunctie.value
+      .map((item) => item.toString())
+      .join("|")}`;
   } else {
     return "";
   }
 });
 
-const { data: dataProduct, refresh } = await useFetch(
-  `/products?page=${page.value}&filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
-  {
-    method: "get",
-    ...requestOptions,
-  }
-);
-
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
-}, 1500);
+}, 1000);
 
 watch(
   () => page.value,
@@ -330,8 +334,9 @@ onMounted(() => {
     selectedCity.value = route.query.location_id;
   }
   if (route.query.type_id) {
-    const typeIds = route.query.type_id?.split(",")?.map(Number);
-    selectedSoortLocatie.value = typeIds;
+    // const typeIds = route.query.type_id?.split(",")?.map(Number);
+    // selectedSoortLocatie.value = typeIds;
+    selectedSoortLocatie.value = route.query.type_id;
   }
 
   if (route.query.min_price) {
@@ -350,6 +355,8 @@ onMounted(() => {
     const facilitiesIds = route.query.facilities?.split("|")?.map(Number);
     selectedFunctie.value = facilitiesIds;
   }
+
+  start();
 });
 
 async function loadProperties() {
@@ -423,7 +430,6 @@ function handlefunctieCheckbox(id) {
     selectedFunctie.value = [...selectedFunctie.value, id];
   }
 }
-
 // end untuk mengelola facility
 
 function replaceWindow() {
@@ -445,9 +451,9 @@ function replaceWindow() {
   }
 
   if (selectedFunctie?.value) {
-    filters.push(`facilities=${selectedFunctie.value}`);
+    const facilitiesQuery = selectedFunctie.value.join("|");
+    filters.push(`facilities=${facilitiesQuery}`);
   }
-
   const queryString = filters.join("&");
   const url = `/onze-locaties?page=${page.value}${
     queryString ? `&${queryString}` : ""

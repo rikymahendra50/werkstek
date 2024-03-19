@@ -72,7 +72,7 @@ const setupMap = () => {
   const iconBase = "/images";
 
   const icon = {
-    url: iconBase + "/icon-coordinate.svg",
+    url: iconBase + "/dot-map.svg",
     scaledSize: new google.maps.Size(20, 20),
   };
 

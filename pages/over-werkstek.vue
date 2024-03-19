@@ -53,6 +53,6 @@
 const { VerhuurdersHeaderData } = useOverWerkstek();
 
 useHead({
-  title: "OverWerkstek",
+  title: "Over Werkstek",
 });
 </script>
