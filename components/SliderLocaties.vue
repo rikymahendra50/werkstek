@@ -63,7 +63,9 @@
             >
               <h2 class="text-3xl">{{ itemSlider?.location?.name }}</h2>
               <p class="text-sm py-1">{{ itemSlider?.location?.name }}</p>
-              <h4 class="text-lg font-semibold">Opervlakte</h4>
+              <h4 class="text-lg font-semibold">
+                {{ itemSlider?.area_size }} m<sup>2</sup>
+              </h4>
               <p class="text-sm py-1">
                 € {{ itemSlider?.price }} p/{{ itemSlider?.rent_type }}
               </p>

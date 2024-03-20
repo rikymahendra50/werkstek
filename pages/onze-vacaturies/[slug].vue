@@ -46,4 +46,8 @@ const dataAll = data?.value?.data;
 if (error.value) {
   console.error("Error fetching data:", error);
 }
+
+useHead({
+  title: data.value?.data?.name,
+});
 </script>

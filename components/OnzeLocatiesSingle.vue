@@ -1,6 +1,6 @@
 <template>
   <section class="container-custom">
-    <TitleHeader2 :title1="location" :title2="title" />
+    <TitleHeader2 :title1="location" :title2="title" :title3="type" />
     <div class="md:grid grid-cols-12 gap-2 sm:gap-5">
       <div class="col-span-8">
         <div class="flex flex-col md:min-h-[400px]">
@@ -39,7 +39,7 @@
                       class="bg-primary min-w-[140px] lg:min-w-[232px] text-[14px] md:text-lg text-white py-1 px-2 md:py-2 md:px-4 grid"
                     >
                       <span>Prijs :</span>
-                      <span>€ {{ price }} per/{{ rentType }}</span>
+                      <span>{{ price }} € per/{{ rentType }} </span>
                     </div>
                   </div>
                   <img
@@ -162,13 +162,17 @@
           </p>
           <ul class="flex flex-col gap-1">
             <li class="text-[14px] md:text-[16px] text-[#4A4A4A]">
-              Oudegracht aan de Werf 5
+              {{ address }}
             </li>
-            <li class="text-[12px] md:text-[14px] text-[#4A4A4A]">Postcode</li>
+            <li class="text-[12px] md:text-[14px] text-[#4A4A4A]">
+              {{ postcode }}
+            </li>
             <li class="text-[12px] md:text-[15px] text-[#4A4A4A]">
               {{ location }}
             </li>
-            <li class="text-[13px] md:text-[15px] text-[#4A4A4A]">Nederland</li>
+            <li class="text-[13px] md:text-[15px] text-[#4A4A4A]">
+              {{ Country }}
+            </li>
           </ul>
           <div class="my-4 flex flex-col gap-3">
             <NuxtLink
@@ -251,6 +255,18 @@ function getAvailabilityStatus(itemName) {
 
 const props = defineProps({
   title: {
+    type: String,
+  },
+  postcode: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
+  type: {
     type: String,
   },
   rentType: {

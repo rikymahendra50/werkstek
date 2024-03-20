@@ -58,6 +58,48 @@
 
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
+          <label for="postcode">Postcode</label>
+        </div>
+        <FormTextField
+          id="postcode"
+          name="postcode"
+          v-model="formData.postcode"
+          placeholder="ex:43121"
+          class="input-bordered"
+          autocomplete="on"
+        />
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="address">Address</label>
+        </div>
+        <FormTextField
+          id="address"
+          name="address"
+          v-model="formData.address"
+          placeholder="Address"
+          class="input-bordered"
+          autocomplete="on"
+        />
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="country">Country</label>
+        </div>
+        <FormTextField
+          id="country"
+          name="country"
+          v-model="formData.country"
+          placeholder="ex:Nederland"
+          class="input-bordered"
+          autocomplete="on"
+        />
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
           <label for="phone">Phone Number</label>
         </div>
         <FormTextField
@@ -413,6 +455,9 @@ const updateLocation = (location) => {
 
 const formData = ref({
   name: AllDataSlug?.value?.name,
+  postcode: AllDataSlug?.value?.postcode,
+  address: AllDataSlug?.value?.address,
+  country: AllDataSlug?.value?.country,
   description: AllDataSlug?.value?.description,
   email: AllDataSlug?.value?.email,
   phone_number: AllDataSlug?.value?.email,

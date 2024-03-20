@@ -15,7 +15,7 @@
   <VertrouwdDoor />
 
   <LeegstandWbutton
-    image="/images/image-page4-2.png"
+    image="/images/over-page2-1.png"
     title="Leegstand vullen"
     description="Werkstek heeft als doel oplossingen te vinden voor leegstaand vastgoed. Dat doen we door servicekosten of onkosten te betalen om placemakers of kwartiermakers voor een lage huur te laten werken waardoor de locatie aantrekkelijker wordt. Door een goede verdeling van de ruimtes en een efficiënte inrichting maakt Werkstek deze kantoorruimtes geschikt voor zzp’ers en kleine ondernemingen."
     buttonTitle1="Schrijf je in"
@@ -26,7 +26,7 @@
 
   <LeegstandNoButton
     background="bg-tertiary"
-    image="/images/image-page4-3.png"
+    image="/images/ruimtes.png"
     :uniqueIdProp="4"
     imageAlt="image-page4-3"
     title="Ruimtes inrichten"
@@ -38,7 +38,7 @@
 
   <LeegstandNoButton
     :uniqueIdProp="5"
-    image="/images/image-page4-4.png"
+    image="/images/ruimtes_proten.png"
     imageAlt="image-page4-4"
     title="Ruimtes promoten"
     description="Via onze website, social media en google marketing promoten wij de kantoorpanden die we willen verhuren. Bovendien zetten we regelmatig online marketingcampagnes in om potentiële huurders van werkplekken en kantoorunits aan te trekken. Tegen een lage prijs ontwikkelen we een website, logo en branding voor je kantoorpand."
@@ -46,7 +46,7 @@
   />
   <LeegstandNoButton
     :uniqueIdProp="6"
-    image="/images/image-page4-5.png"
+    image="/images/facilitien.png"
     imageAlt="image-page4-5"
     title="Faciliteiten"
     description="Om het plaatje compleet te maken leveren wij pand gebonden faciliteiten zoals receptiediensten (hostess/ kwartiermaker/ Placemaker) en ondersteunde horeca en cateringdiensten (marketing gedreven horecaondernemer/ Wundermart)."

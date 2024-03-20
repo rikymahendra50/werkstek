@@ -2,7 +2,7 @@
   <div class="grid md:grid-cols-2 mx-2 md:mx-3 lg:mx-4 items-center">
     <div class="flex sm:order-1 max-w-[600px]">
       <div class="w-[70%] md:w-full">
-        <svg
+        <!-- <svg
           width="100%"
           viewBox="0 0 598 632"
           fill="none"
@@ -34,7 +34,8 @@
               :xlink:href="image"
             />
           </defs>
-        </svg>
+        </svg> -->
+        <img :src="image" alt="image" />
       </div>
     </div>
     <div class="flex flex-col mx-3 sm:mx-5 xl:mx-16 order-1 sm:order-2">

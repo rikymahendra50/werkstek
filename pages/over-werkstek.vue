@@ -13,7 +13,7 @@
 
   <LeegstandNoButton
     :uniqueIdProp="7"
-    :image="'/images/image-page5-2.png'"
+    :image="'/images/over-page2-1.png'"
     title="Betaalbare werkplekken"
     description="Als zzp’er of kleine ondernemer huur je bij Werkstek een werkplek of kantoorunit die voor jou betaalbaar is. Wij zorgen voor een makkelijk bereikbare kantoorlocatie en een goede inrichting van jouw werkplek. Als huurder van een werkplek bij Werkstek maak je gebruik van alle gezamenlijke faciliteiten."
   />

@@ -50,6 +50,49 @@
           autocomplete="on"
         />
       </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="postcode">Postcode</label>
+        </div>
+        <FormTextField
+          id="postcode"
+          name="postcode"
+          v-model="formData.postcode"
+          placeholder="ex:43121"
+          class="input-bordered"
+          autocomplete="on"
+        />
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="address">Address</label>
+        </div>
+        <FormTextField
+          id="address"
+          name="address"
+          v-model="formData.address"
+          placeholder="Address"
+          class="input-bordered"
+          autocomplete="on"
+        />
+      </div>
+
+      <div class="flex flex-col my-2 w-full">
+        <div class="flex items-center">
+          <label for="country">Country</label>
+        </div>
+        <FormTextField
+          id="country"
+          name="country"
+          v-model="formData.country"
+          placeholder="ex:Nederland"
+          class="input-bordered"
+          autocomplete="on"
+        />
+      </div>
+
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="phone">Phone Number</label>
@@ -76,7 +119,7 @@
             v-model:longitude="formData.longitude"
           />
         </div>
-        <div class="flex-col my-2 w-full hidden">
+        <div class="flex flex-col w-full">
           <div class="flex items-center">
             <label for="latitude">Latitude</label>
           </div>
@@ -86,12 +129,12 @@
             type="text"
             v-model="formData.latitude"
             placeholder="ex:51.9934345296239"
-            class="input-bordered"
+            class="input-bordered input-disabled input"
             autocomplete="on"
+            disabled
           />
-          <VeeErrorMessage name="latitude" class="text-red-500" />
         </div>
-        <div class="flex-col my-2 w-full hidden">
+        <div class="flex flex-col my-2 w-full">
           <div class="flex items-center">
             <label for="longitude">Longitude</label>
           </div>
@@ -101,11 +144,12 @@
             type="text"
             v-model="formData.longitude"
             placeholder="ex:5.5162370519396349"
-            class="input-bordered"
+            class="input-bordered input-disabled input"
             autocomplete="on"
+            disabled
           />
         </div>
-        <VeeErrorMessage name="longitude" class="text-red-500" />
+        <VeeErrorMessage name="latitude" class="text-red-500" />
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -385,6 +429,9 @@ const formData = ref({
   name: undefined,
   description: undefined,
   email: undefined,
+  country: undefined,
+  postcode: undefined,
+  address: undefined,
   phone_number: undefined,
   latitude: undefined,
   longitude: undefined,

@@ -14,10 +14,10 @@
         </div>
         <div class="price-input flex justify-between text-sm opacity-50">
           <div class="price-field">
-            <span class="min-price">€ {{ localMinPriceT }} min</span>
+            <span class="min-price">{{ localMinPriceT }} € min</span>
           </div>
           <div class="price-field">
-            <span class="max-price">€ {{ localMaxPriceT }} max</span>
+            <span class="max-price">{{ localMaxPriceT }} € max</span>
           </div>
         </div>
       </div>

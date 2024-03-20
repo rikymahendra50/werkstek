@@ -82,8 +82,12 @@
           </h1>
           <!-- <hr class="border-b-2 border-primary lg:border-[#1FAB71] w-[50px]" /> -->
           <ul class="text-[12px] md:text-[15px]">
-            <NuxtLink to="/"><li class="pt-3">Flex plekkenn</li></NuxtLink>
-            <NuxtLink to="/"><li class="pt-3">Werkplekken</li></NuxtLink>
+            <!-- <NuxtLink to="/"><li class="pt-3">Flex plekkenn</li></NuxtLink> -->
+            <NuxtLink
+              to="/onze-locaties"
+              :class="{ active: isRouteActive('/onze-locaties') }"
+              ><li class="pt-3">Werkplekken</li></NuxtLink
+            >
           </ul>
         </div>
         <div class="">

@@ -41,7 +41,7 @@
                 />
               </svg>
             </span>
-            <span class="text-black"
+            <span class="text-black font-bold"
               >Kantoordreef 123, Werkstad, The Netherlands.</span
             >
           </div>

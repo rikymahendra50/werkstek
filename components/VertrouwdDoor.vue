@@ -1,6 +1,6 @@
 <template>
   <section class="container-custom my-10">
-    <div class="grid grid-cols-12">
+    <div class="grid sm:grid-cols-12">
       <div
         class="col-span-6 grid grid-cols-12 min-h-[170px] sm:min-h-[200px] gap-1"
       >
@@ -8,7 +8,7 @@
           class="bg-quaternary rounded-full max-w-[16px] box-shadow flex flex-col justify-center"
         ></div>
         <div
-          class="col-span-11 rounded-2xl bg-primary text-tertiary flex flex-col justify-center gap-3 pr-3 pl-2 xl:px-10"
+          class="col-span-11 rounded-2xl bg-primary text-tertiary flex flex-col justify-center gap-3 p-3 pl-2 xl:px-10"
         >
           <h1 class="text-lg md:text-2xl xl:text-3xl font-regular xl:w-[70%]">
             Werkstek wordt vertrouwt door
@@ -18,9 +18,9 @@
           </p>
         </div>
       </div>
-      <div class="col-span-6">
+      <div class="col-span-6 mt-5 sm:mt-0">
         <div
-          class="grid-cols-2 grid-rows-2 grid h-full justify-items-center content-center"
+          class="grid-cols-2 grid-rows-2 grid h-full justify-items-center content-center gap-5 sm:gap-2"
         >
           <div class="sm:p-5 sm:m-2 flex items-center">
             <img src="/images/logo-ipsum.svg" alt="logo-ipsum" />

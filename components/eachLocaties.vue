@@ -6,7 +6,7 @@
       style="box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.05)"
     >
       <div
-        class="grid col-span-4 md:col-span-5 md:min-h-[210px] h-full bg-no-repeat bg-cover rounded-lg relative text-white"
+        class="grid col-span-4 md:col-span-4 md:min-h-[210px] h-full bg-no-repeat bg-cover rounded-lg relative text-white"
         :style="{
           backgroundImage: `url('${image}')`,
           background: `linear-gradient(90deg, rgba(251,249,249,0) 39%, rgba(255,255,255,1) 100%), url('${image}')`,
@@ -36,16 +36,25 @@
         </div>
       </div>
       <div
-        class="grid col-span-4 md:col-span-3 ml-3 sm:ml-4 md:ml-5 items-center"
+        class="grid col-span-4 md:col-span-4 ml-3 sm:ml-4 md:ml-5 items-center md:pr-4"
       >
-        <span class="text-[12px] sm:text-lg font-semibold">{{ name }}</span>
-        <span class="text-sm">Adres</span>
+        <span class="text-[11px] sm:text-lg font-semibold">{{ name }}</span>
+        <span
+          class="text-[10px] min-[420px]:text-sm text-ellipsis"
+          v-if="address == null"
+          >Address</span
+        >
+        <span class="text-[10px] min-[420px]:text-sm text-ellipsis" v-else>{{
+          address
+        }}</span>
         <div class="flex justify-between">
-          <span class="text-[10px] sm:text-base font-bold"> Opervlakte </span>
+          <span class="text-[10px] sm:text-base font-bold">
+            <span>{{ areaSize }} m<sup>2</sup></span>
+          </span>
           <span class="text-[10px] sm:text-base">+{{ phone }}</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-[10px] sm:text-base">€ {{ price }}</span>
+          <span class="text-[10px] sm:text-base">{{ price }} €</span>
           <span class="text-[10px] sm:text-base">{{ email }}</span>
         </div>
         <div class="flex justify-end w-full">
@@ -73,11 +82,16 @@ export default {
     link: {
       type: String,
     },
+    areaSize: {
+      type: [String, Number],
+      default: "Opervlakte",
+    },
+    address: {
+      type: [String, Number],
+      default: "address",
+    },
     latitude: {},
     longitude: {},
-    opervlakte: {
-      type: String,
-    },
     image: {
       type: String,
       default: "/images/img-each-locatie-3.jpg",

@@ -32,9 +32,9 @@
           </li>
           <li>
             <NuxtLink
-              to="/onze-vacaturies"
+              to="/voor-verhuurders"
               class="navlink"
-              :class="{ active: isRouteActive('/onze-vacaturies') }"
+              :class="{ active: isRouteActive('/voor-verhuurders') }"
               >Verhuur</NuxtLink
             >
           </li>
@@ -71,6 +71,15 @@
             >
               <li class="text-sm">
                 <NuxtLink
+                  to="/onze-vacaturies"
+                  class="rounded-none hover:bg-primary hover:text-white"
+                  :class="{ active: isRouteActive('/onze-vacaturies') }"
+                >
+                  Werkstek Vacatures
+                </NuxtLink>
+              </li>
+              <li class="text-sm">
+                <NuxtLink
                   to="/blog"
                   class="rounded-none hover:bg-primary hover:text-white"
                   :class="{ active: isRouteActive('/blog') }"
@@ -78,15 +87,6 @@
                   Werkstek Blog
                 </NuxtLink>
               </li>
-              <!-- <li>
-                <NuxtLink
-                  to="/onze-vacaturies"
-                  class="rounded-none hover:bg-primary hover:text-white"
-                  :class="{ active: isRouteActive('/onze-vacaturies') }"
-                >
-                  Westek Vacatures
-                </NuxtLink>
-              </li> -->
               <li>
                 <NuxtLink
                   to="/werkstek-community"
@@ -170,7 +170,7 @@
         <ul class="divide-y font-sans">
           <li class="cursor-pointer">
             <NuxtLink
-              to="/onze-vacaturies"
+              to="/voor-verhuurders"
               @click="isOpen = false"
               class="my-4 inline-block"
               >Verhuur</NuxtLink
@@ -192,7 +192,7 @@
               >Over werkstek</NuxtLink
             >
           </li>
-          <li class="cursor-pointer dropdown">
+          <li class="cursor-pointer dropdown w-full">
             <div
               tabindex="1"
               class="bg-transparent border-none my-4 inline-block font-thin cursor-pointer"
@@ -201,18 +201,18 @@
             </div>
             <ul
               tabindex="1"
-              class="ml-[-20px] dropdown-content z-[1] menu p-1 shadow bg-base-100 rounded-box w-40 text-black"
+              class="ml-[-20px] dropdown-content z-[1] menu p-1 w-full shadow bg-base-100 rounded-sm text-black"
             >
               <li class="text-sm">
                 <NuxtLink to="/blog" @click="isOpen = false">
                   Werkstek Blog
                 </NuxtLink>
               </li>
-              <!-- <li>
+              <li>
                 <NuxtLink to="/onze-vacaturies" @click="isOpen = false">
                   Werstek Vacatures
                 </NuxtLink>
-              </li> -->
+              </li>
               <li>
                 <NuxtLink
                   to="/werkstek-community"
@@ -262,7 +262,7 @@ export default {
     isUpdateActive() {
       return (
         this.$route.path.startsWith("/blog") ||
-        this.$route.path.startsWith("/werkstek-vacaturies") ||
+        this.$route.path.startsWith("/onze-vacaturies") ||
         this.$route.path.startsWith("/werkstek-community")
       );
     },

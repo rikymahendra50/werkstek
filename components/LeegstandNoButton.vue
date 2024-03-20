@@ -3,7 +3,7 @@
     <div class="grid md:grid-cols-2 mx-2 md:mx-3 lg:mx-4 items-center">
       <div class="order-2 flex justify-end max-w-[600px]">
         <div class="w-[70%] md:w-[100%]">
-          <svg
+          <!-- <svg
             width="100%"
             viewBox="0 0 598 632"
             fill="none"
@@ -35,7 +35,8 @@
                 :xlink:href="image"
               />
             </defs>
-          </svg>
+          </svg> -->
+          <img :src="image" alt="image" />
         </div>
       </div>
 

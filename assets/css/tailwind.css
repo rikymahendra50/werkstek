@@ -13,13 +13,26 @@
     @apply px-3 sm:px-6 md:px-[30px] lg:px-[40px] xl:px-[106px] mx-auto;
   }
 
-  @layer base {
+  /* @layer base {
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
-  }
+  } */
+
+  /* @layer base {
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-moz-number-spin-box {
+      appearance: none;
+      margin: 0;
+    }
+  } */
 
   /* .checkbox {
     @apply bg-white text-white border-2 border-primary;
@@ -55,6 +68,17 @@
   .categorylink.active::after {
     @apply scale-100;
   }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 body {

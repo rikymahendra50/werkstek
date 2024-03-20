@@ -120,6 +120,9 @@ export default function () {
   const formInput = toTypedSchema(
     object({
       name: string().min(1, "Name is required"),
+      postcode: string().min(5, "Postcode at least 5 characters"),
+      country: string().min(1, "Country is required"),
+      address: string().min(1, "Address is required"),
       email: emailField,
       body: string().min(0, "Description is required"),
       rating: number({ invalid_type_error: "Rating required" })

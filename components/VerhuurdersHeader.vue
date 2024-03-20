@@ -33,7 +33,7 @@
       </div>
       <div class="grid relative mt-5 justify-items-end md:justify-items-center">
         <div class="z-10 w-[70%] md:w-[100%]">
-          <svg
+          <!-- <svg
             width="100%"
             viewBox="0 0 657 744"
             fill="none"
@@ -65,7 +65,8 @@
                 :xlink:href="image"
               />
             </defs>
-          </svg>
+          </svg> -->
+          <img :src="image" alt="image" />
         </div>
       </div>
     </div>

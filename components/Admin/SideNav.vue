@@ -101,41 +101,6 @@
             </svg>
             Property
           </NuxtLink>
-          <!-- <NuxtLink
-            to="/admin/onze-locaties"
-            :class="{
-              'bg-transparent text-black hover:bg-gray-100': !isRouteActive(
-                '/admin/onze-locaties'
-              ),
-              'bg-black text-black hover:bg-opacity-30': isRouteActive(
-                '/admin/onze-locaties'
-              ),
-            }"
-            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="2"
-              stroke="currentColor"
-              class="w-4 h-4"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-              />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
-              />
-            </svg>
-            Onze Locaties
-          </NuxtLink> -->
           <NuxtLink
             to="/admin/location"
             :class="{
@@ -333,6 +298,62 @@
             Blog Category
           </NuxtLink>
 
+          <!-- Test -->
+          <!-- <details @click="toggleDropdown">
+            <summary
+              class="group cursor-pointer flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all relative"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819"
+                />
+              </svg>
+              <span>Property</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="w-4 h-4 absolute right-3"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </summary>
+            <ul class="ml-7 mt-2 space-y-2">
+              <li class="hover:">
+                <NuxtLink
+                  to="/admin/property-type"
+                  class="text-gray-600 hover:text-black transition-all"
+                >
+                  Property Type
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  to="/admin/property-category"
+                  class="text-gray-600 hover:text-black transition-all"
+                >
+                  Property Category
+                </NuxtLink>
+              </li>
+            </ul>
+          </details> -->
+          <!-- Test -->
+
           <NuxtLink
             to="/admin/community"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
@@ -438,6 +459,12 @@ const { loading, transformErrors } = useRequestHelper();
 const { $logout } = useAuth();
 
 const route = useRoute();
+
+const showDropdown = ref(false);
+
+const toggleDropdown = () => {
+  showDropdown.value = !showDropdown.value;
+};
 
 const isRouteActive = (route: string) => {
   const currentRoute = useRoute();

@@ -63,7 +63,6 @@
                   :value="item.id"
                   v-model="selectedSoortLocatie"
                   type="radio"
-                  name="soort"
                 />
                 <label :for="item.id" class="cursor-pointer">
                   {{ item.name }}
@@ -89,7 +88,7 @@
                   id="MinPrice"
                   placeholder="Min"
                   min="0"
-                  class="input input-bordered w-[95%] p-[10px]input-md"
+                  class="input input-bordered w-[95%] p-[10px] input-md"
                   v-model="selectedMinPrice"
                 /><br />
                 <span class="absolute top-3 right-8">€</span>
@@ -160,6 +159,9 @@
           </div>
         </div>
       </div>
+      <!-- <pre>
+        {{ dataProduct?.data?. }}
+      </pre> -->
       <div class="md:col-span-8 py-5 overflow-auto">
         <div
           class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
@@ -168,7 +170,10 @@
             v-if="dataProduct?.data"
             v-for="(item, index) in dataProduct?.data"
             :key="item?.id"
-            :name="item?.location?.name"
+            :name="item?.name"
+            :address="item?.address"
+            :category="item?.type?.name"
+            :areaSize="item?.area_size"
             :type="item?.level_type?.name"
             :latitude="item?.latitude"
             :longitude="item?.longitude"
@@ -181,8 +186,8 @@
           />
         </div>
         <Pagination
-          v-if="dataProduct?.meta"
           :includeFirstLast="false"
+          v-if="dataProduct?.meta"
           v-model="page"
           first="Eerst"
           last="Laatst"

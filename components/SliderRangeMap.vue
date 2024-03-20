@@ -14,10 +14,10 @@
         </div>
         <div class="price-input flex justify-between text-sm opacity-50">
           <div class="price-field">
-            <span class="min-price">€ {{ localMinPrice }} min</span>
+            <span class="min-price">{{ localMinPrice }} € min</span>
           </div>
           <div class="price-field">
-            <span class="max-price">€ {{ localMaxPrice }} max</span>
+            <span class="max-price">{{ localMaxPrice }} € max</span>
           </div>
         </div>
       </div>
@@ -32,7 +32,6 @@
             :min="minPrice"
             :max="maxPrice"
             v-model="localMinRange"
-            :step="10"
           />
         </label>
         <label :for="idInputMax">
@@ -43,7 +42,6 @@
             :min="minPrice"
             :max="maxPrice"
             v-model="localMaxRange"
-            :step="10"
           />
         </label>
       </div>
