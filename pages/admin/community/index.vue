@@ -40,7 +40,9 @@
                 <td class="text-gray-500 text-sm font-normal !py-2">
                   {{ item.title }}
                 </td>
-                <td class="font-medium max-w-[200px]">{{ item.meta }}</td>
+                <td class="font-medium max-w-[200px] line-clamp-2 leading-9">
+                  {{ item.meta }}
+                </td>
                 <td class="font-medium"></td>
                 <td>
                   <div class="flex justify-center items-center gap-4 my-1">

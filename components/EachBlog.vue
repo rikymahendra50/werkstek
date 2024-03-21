@@ -13,10 +13,10 @@
         {{ title }}
       </p>
       <div
-        class="min-h-[200px] md:min-h-[400px]"
+        class="min-h-[200px] md:min-h-[500px]"
         :style="{
           backgroundImage: `url('${imageSrc}')`,
-          backgroundPosition: 'center center',
+          backgroundPosition: 'top left',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
         }"

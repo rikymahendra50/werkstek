@@ -1,7 +1,7 @@
 <template>
   <floating-whatsapp />
   <StatistiekLocatiesVideo
-    video="/images/video_test.mp4"
+    video="https://werkstek.nl/wp-content/uploads/2019/10/werkstek-video.mov"
     :image="StatistiekLocatiesData?.image"
     :title1="StatistiekLocatiesData?.title1"
     :title2="StatistiekLocatiesData?.title2"

@@ -128,9 +128,9 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "We send a code to your email",
+      text: "We have received your registration. The next step is to verify your email address to activate your account.",
     });
-    // router.push("/admin/admin-list");
+    router.push("/admin/admin-list");
   }
 }
 
@@ -144,3 +144,50 @@ definePageMeta({
   middleware: ["auth", "admin"],
 });
 </script>
+
+<!-- <template>
+  <div class="grid place-items-center items-center">
+    <div class="w-full p-4 justify-center">
+      <CompAdminBackButton link="admin-list" linkTitle="Register Admin" />
+
+      <Registration
+        v-model:email="registerForm.email"
+        v-if="stepper.isCurrent('register')"
+        @next="() => stepper.goTo('verify')"
+      />
+
+      <RegistrationVerify
+        v-if="stepper.isCurrent('verify')"
+        :email="registerForm.email"
+      />
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { useStepper } from "@vueuse/core";
+const { registerForm } = useRegister();
+
+const router = useRouter();
+
+const stepper = useStepper({
+  register: {
+    title: "Register Admin",
+    isValid: () => true,
+  },
+  verify: {
+    title: "Verify",
+    isValid: () => true,
+  },
+});
+
+function goToHome() {
+  router.push("/admin/admin-list");
+}
+
+definePageMeta({
+  layout: "admin",
+  // @ts-ignore
+  middleware: ["auth", "admin"],
+});
+</script> -->

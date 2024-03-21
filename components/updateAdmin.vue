@@ -3,9 +3,9 @@
     <VeeForm
       @submit="onSubmit"
       v-slot="{ errors }"
-      :validation-schema="blogSchema"
+      :validation-schema="editBlogSchema"
     >
-      <div class="grid p-3 gap-4">
+      <div class="grid p-3">
         <div>
           <BlogImageCrop
             :loading="loading"
@@ -13,7 +13,7 @@
             v-model="selectedImage"
           />
         </div>
-        <label for="title">Title</label>
+        <label for="title" class="mt-3">Title</label>
         <FormTextField
           id="title"
           name="title"
@@ -73,7 +73,7 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 const router = useRouter();
-const { blogSchema } = useSchema();
+const { editBlogSchema } = useSchema();
 
 const props = defineProps({
   eachBlog: {

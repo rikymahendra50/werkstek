@@ -69,7 +69,7 @@ function resentEmail() {
   showPinEmailExpired.value = false;
   secondTime.value = 60;
   countdown();
-  console.log(stateForm.value.email);
+  // console.log(stateForm.value.email);
 
   useFetch("/admins/resend-email-verification", {
     method: "POST",

@@ -1,5 +1,4 @@
 <template>
-  <!-- test -->
   <section
     :class="{
       'container-custom': ShowContainerCustom,
@@ -111,7 +110,6 @@
 import axios from "axios";
 const { axiosRequest } = useAxios();
 
-// test
 const center = ref({ lat: 52.21314997541194, lng: 5.3982948103810795 });
 
 let googleMapsScriptLoaded = false;
@@ -355,11 +353,6 @@ const setupMap = () => {
       </a>
     `;
 
-    const infowindow = new google.maps.InfoWindow({
-      content: contentString,
-      closeBoxMargin: "10px 10px 0 0",
-    });
-
     marker.addListener("click", () => {
       clearTimeout(infoWindowTimeout);
 
@@ -478,3 +471,76 @@ const setBoundsForMarkers = () => {
   display: none !important;
 }
 </style>
+
+<!-- <template>
+  <div class="rounded-lg overflow-hidden relative">
+    <GMapMap
+      :center="center"
+      :zoom="10"
+      map-type-id="terrain"
+      style="width: 100vw; height: 40rem"
+    >
+      <GMapCluster :styles="clusterIconStyles" :zoomOnClick="true">
+        <GMapMarker
+          :key="index"
+          v-for="(m, index) in markers"
+          :position="m.position"
+          :clickable="true"
+          :draggable="true"
+          :icon="{
+            url: '/images/icon-flag.png',
+            scaledSize: { width: 50, height: 50 },
+          }"
+          @click="openMarker(m.id)"
+        >
+          <GMapInfoWindow
+            :closeclick="true"
+            @closeclick="openMarker(null)"
+            :opened="openedMarkerID === m.id"
+          >
+            <div>I am in info window {{ m.id }}</div>
+          </GMapInfoWindow>
+        </GMapMarker>
+      </GMapCluster>
+    </GMapMap>
+  </div>
+</template>
+
+<script setup>
+const openedMarkerID = ref(null);
+const center = ref({
+  lat: 51.093048,
+  lng: 6.84212,
+});
+
+const markers = ref([
+  {
+    id: 1,
+    position: {
+      lat: 51.093048,
+      lng: 6.84212,
+    },
+  },
+  {
+    id: 2,
+    position: {
+      lat: 51.198429,
+      lng: 6.69529,
+    },
+  },
+]);
+
+const clusterIconStyles = [
+  {
+    textColor: "red",
+    url: "/images/icon-flag.png",
+    height: 50,
+    width: 50,
+    backgroundColor: "red",
+  },
+];
+
+function openMarker(id) {
+  openedMarkerID.value = id;
+}
+</script> -->

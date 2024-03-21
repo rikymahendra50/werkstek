@@ -27,7 +27,9 @@
           </button>
         </div>
         <div v-if="showFilter">
-          <span class="text-base mt-3 opacity-50">Kies een locatie</span>
+          <label for="city" class="text-base mt-3 opacity-50"
+            >Kies een locatie</label
+          >
           <div class="flex-col form-control mt-2 relative">
             <select
               id="city"
@@ -51,10 +53,10 @@
             </select>
           </div>
           <div class="flex flex-col">
-            <p class="text-base mt-3 opacity-50 pb-3">Soort locatie</p>
+            <span class="text-base mt-3 opacity-50 pb-3">Soort locatie</span>
             <fieldset id="soortLocatie" class="grid grid-cols-2 gap-2">
               <div
-                class="flex items-center gap-2 cursor-pointer"
+                class="flex items-center cursor-pointer gap-4"
                 v-for="item in soortLocatiesRadio"
               >
                 <input
@@ -80,7 +82,10 @@
               :priceGap="highestPrice"
               class="my-2"
             /> -->
-            <p class="text-sm mt-3 opacity-50">Price</p>
+            <label for="MinPrice" class="text-sm mt-3 opacity-50">Price</label>
+            <label for="MaxPrice" class="text-sm mt-3 opacity-50 hidden"
+              >Price</label
+            >
             <div class="grid grid-cols-2 my-2">
               <div class="relative">
                 <input
@@ -107,7 +112,14 @@
             </div>
 
             <div class="">
-              <p class="text-sm mt-3 opacity-50">De opervlakte m²</p>
+              <label for="deopervlakteMin" class="text-sm mt-3 opacity-50"
+                >De opervlakte m²</label
+              >
+              <label
+                for="deopervlakteMax"
+                class="text-sm mt-3 opacity-50 hidden"
+                >De opervlakte m²</label
+              >
               <div class="grid grid-cols-2 my-2">
                 <div class="relative">
                   <input

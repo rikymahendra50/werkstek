@@ -3,7 +3,7 @@
   <div class="grid grid-cols-2">
     <VeeForm
       @submit="onSubmit"
-      :validation-schema="communitySchema"
+      :validation-schema="editCommunitySchema"
       v-slot="{ errors }"
     >
       <div class="grid p-3 gap-2">
@@ -65,7 +65,7 @@ const snackbar = useSnackbar();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
 const router = useRouter();
-const { communitySchema } = useSchema();
+const { editCommunitySchema } = useSchema();
 
 const fileInput = ref(null);
 

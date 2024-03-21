@@ -39,9 +39,9 @@ const { loading, message, alertType, transformErrors } = useRequestHelper();
 const { stateForm } = useForgotPassword();
 const { onlyEmailSchema } = useSchema();
 
-const props = defineProps({
-  email: String,
-});
+// const props = defineProps({
+//   email: String,
+// });
 
 const emit = defineEmits(["next", "update:email"]);
 

@@ -74,9 +74,42 @@ export default function () {
     })
   );
 
+  const editBlogSchema = toTypedSchema(
+    object({
+      title: string().min(1, "Title is required"),
+      body: string().min(0, "Description is required"),
+      category: number().min(1, "Category is required"),
+      meta: string().min(1, "Meta is required"),
+    }).superRefine((data, ctx) => {
+      if (data.body == "<p></p>") {
+        ctx.addIssue({
+          code: "custom",
+          message: "Body required",
+          path: ["body"],
+        });
+      }
+    })
+  );
+
   const communitySchema = toTypedSchema(
     object({
       image: z.instanceof(File),
+      title: string().min(1, "Title is required"),
+      body: string().min(0, "Description is required"),
+      meta: string().min(1, "Meta is required"),
+    }).superRefine((data, ctx) => {
+      if (data.body == "<p></p>") {
+        ctx.addIssue({
+          code: "custom",
+          message: "Body required",
+          path: ["body"],
+        });
+      }
+    })
+  );
+
+  const editCommunitySchema = toTypedSchema(
+    object({
       title: string().min(1, "Title is required"),
       body: string().min(0, "Description is required"),
       meta: string().min(1, "Meta is required"),
@@ -180,6 +213,8 @@ export default function () {
     locationSchema,
     singleNameField,
     communitySchema,
+    editBlogSchema,
+    editCommunitySchema,
     blogSchema,
     contactSchema,
     formInput,

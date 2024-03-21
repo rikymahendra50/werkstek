@@ -4,7 +4,6 @@
     :postcode="OnzeLocatiesData?.postcode"
     :country="OnzeLocatiesData?.country"
     :address="OnzeLocatiesData?.address"
-    :type="OnzeLocatiesData?.type?.name"
     :location="OnzeLocatiesData?.location?.name"
     :rentType="OnzeLocatiesData?.rent_type"
     :category="OnzeLocatiesData?.category_id"

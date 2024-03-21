@@ -18,7 +18,9 @@
         </td>
         <td data-label="Position">{{ $user?.last_name }}</td>
         <td data-label="Email">{{ $user?.email }}</td>
-        <td data-label="Active">{{ $user?.is_active }}</td>
+        <td data-label="Active">
+          {{ $user?.is_active === 1 ? "Active" : "Nonaktif" }}
+        </td>
       </tr>
     </tbody>
   </table>

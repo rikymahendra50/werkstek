@@ -31,10 +31,35 @@
                 isRouteActive('/admin'),
             }"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
-            ><svg
+          >
+            <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+              />
+            </svg>
+            Profile
+          </NuxtLink>
+          <!-- <NuxtLink
+            to="/admin/dashboard"
+            :class="{
+              'bg-transparent text-black hover:bg-gray-100':
+                !isRouteActive('/admin/dashboard'),
+              'bg-black text-black hover:bg-opacity-30':
+                isRouteActive('/admin/dashboard'),
+            }"
+            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -46,8 +71,8 @@
               <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
-            Home
-          </NuxtLink>
+            Dashboard
+          </NuxtLink> -->
           <NuxtLink
             to="/admin/admin-list"
             :class="{
@@ -161,33 +186,6 @@
             </svg>
             Level Type
           </NuxtLink>
-
-          <!-- <NuxtLink
-            to="/admin/category"
-            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
-            :class="{
-              'bg-transparent text-black hover:bg-gray-100':
-                !isRouteActive('/admin/category'),
-              'bg-black text-black hover:bg-opacity-30':
-                isRouteActive('/admin/category'),
-            }"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-5 w-5"
-            >
-              <path d="M3 3v18h18"></path>
-              <path d="m19 9-5 5-4-4-3 3"></path>
-            </svg>
-            Category
-          </NuxtLink> -->
 
           <NuxtLink
             to="/admin/type"

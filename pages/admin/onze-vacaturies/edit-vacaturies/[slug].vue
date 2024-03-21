@@ -413,15 +413,23 @@ const { data: facilities, error } = await useFetch(`/admins/facilities`, {
 const dataPrivilages = ref([
   {
     id: 1,
-    name: "Near the beach",
+    name: "Kleinschalig",
   },
   {
     id: 2,
-    name: "Near the mall",
+    name: "Informeel",
   },
   {
     id: 3,
-    name: "Get a good view",
+    name: "Flexwerken mogelijk",
+  },
+  {
+    id: 4,
+    name: "Prachtige locatie aan de gracht",
+  },
+  {
+    id: 5,
+    name: "Internationale groep mensen",
   },
 ]);
 

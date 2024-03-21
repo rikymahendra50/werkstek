@@ -1,5 +1,4 @@
 <template>
-  <div v-if="pending">Loading...</div>
   <div v-if="data && data?.data">
     <EachBlog
       typeArticle="Community"

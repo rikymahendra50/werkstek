@@ -1,6 +1,6 @@
 <template>
   <section class="container-custom">
-    <TitleHeader2 :title1="location" :title2="title" :title3="type" />
+    <TitleHeader2 :title1="location" :title2="title" :title3="location" />
     <div class="md:grid grid-cols-12 gap-2 sm:gap-5">
       <div class="col-span-8">
         <div class="flex flex-col md:min-h-[400px]">
@@ -85,7 +85,7 @@
           <div v-html="description" class="text-[12px] md:text-[16px]"></div>
         </div>
         <!-- {{ data.data[0].name }} -->
-        <p class="text-[#495057] text-base mt-10 mb-1 ml-2">
+        <p class="text-[#495057] text-base mt-10 mb-5 sm:mb-1 ml-2">
           De faciliteiten op de locatie
         </p>
         <div class="w-[95%] min-w-[70px] relative">
@@ -95,7 +95,7 @@
               <tbody>
                 <tr
                   class="flex justify-between items-center"
-                  v-for="(item, index) in data.data"
+                  v-for="(item, index) in data?.data"
                   :key="item.id"
                 >
                   <td class="text-[13px] w-[40%] sm:w-[50%]">
@@ -171,7 +171,7 @@
               {{ location }}
             </li>
             <li class="text-[13px] md:text-[15px] text-[#4A4A4A]">
-              {{ Country }}
+              {{ country }}
             </li>
           </ul>
           <div class="my-4 flex flex-col gap-3">
@@ -197,7 +197,7 @@
         </div>
 
         <div
-          class="flex flex-col sm:flex-row text-white justify-between mt-5 items-start md:gap-3"
+          class="flex flex-col sm:flex-row text-white my-5 items-start gap-3"
         >
           <NuxtLink
             to="/voor-verhuurders"

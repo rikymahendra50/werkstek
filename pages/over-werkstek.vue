@@ -1,5 +1,4 @@
 <template>
-  <!-- test -->
   <VerhuurdersHeader
     :image="VerhuurdersHeaderData.image"
     :title1="VerhuurdersHeaderData.title1"

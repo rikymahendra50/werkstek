@@ -10,7 +10,6 @@
     ></div>
   </section>
 </template>
-
 <script setup>
 const props = defineProps({
   AllData: {},
@@ -125,7 +124,6 @@ const setupMap = () => {
 
     markers.value.push(marker);
   });
-  // map.fitBounds(bounds);
 };
 
 const clearMarkers = () => {
