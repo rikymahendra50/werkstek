@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 grid-rows-1">
       <div class="grid w-full container-custom">
         <div class="flex justify-between items-center mb-5">
-          <div class="flex flex-col w-[30%] min-[420px]:w-[60%] lg:w-[40%]">
+          <div class="flex flex-col w-[40%] min-[420px]:w-[60%] lg:w-[40%]">
             <p class="text-[12px] md:text-lg lg:text-[18px] font-bold">
               Locaties
             </p>
@@ -33,11 +33,11 @@
           :slidesPerView="slidesPerView"
           :navigation="true"
           :modules="modules"
-          :slides-per-view="3"
+          :slides-per-view="slidesPerView"
           :spaceBetween="10"
           :css-mode="true"
           :watch-slides-progress="true"
-          class="mySwiper h-full"
+          class="mySwiper min-h-[400px]"
           loop
         >
           <swiper-slide
@@ -61,12 +61,16 @@
               :to="`/onze-locaties/${itemSlider.slug}`"
               class="absolute inset-0 flex flex-col justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50"
             >
-              <h2 class="text-3xl">{{ itemSlider?.location?.name }}</h2>
-              <p class="text-sm py-1">{{ itemSlider?.location?.name }}</p>
-              <h4 class="text-lg font-semibold">
+              <h2 class="text-md lg:text-3xl">
+                {{ itemSlider?.location?.name }}
+              </h2>
+              <p class="text-[14px] lg:text-sm py-1">
+                {{ itemSlider?.location?.name }}
+              </p>
+              <h4 class="text-[16px] lg:text-lg font-semibold">
                 {{ itemSlider?.area_size }} m<sup>2</sup>
               </h4>
-              <p class="text-sm py-1">
+              <p class="text-[15px] lg:text-sm py-1">
                 € {{ itemSlider?.price }} p/{{ itemSlider?.rent_type }}
               </p>
               <p class="text-sm">Neem een kijkje ></p>
@@ -149,10 +153,12 @@ export default {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
         slidesPerView.value = 2;
+      } else if (window.innerWidth <= 500) {
+        slidesPerView.value = 1;
       } else if (window.innerWidth <= 1028) {
         slidesPerView.value = 3;
       } else {
-        slidesPerView.value = 3.3;
+        slidesPerView.value = 3;
       }
     };
 

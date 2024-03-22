@@ -104,7 +104,7 @@
             </div>
             <div class="">
               <p class="text-base mt-3 opacity-50 pb-3">Faciliteit</p>
-              <fieldset id="facility" class="grid grid-cols-2 gap-2">
+              <fieldset id="facility" class="grid grid-cols-1 gap-2">
                 <div
                   class="flex items-center gap-2 cursor-pointer"
                   v-for="item in functieCheckbox"
@@ -141,11 +141,13 @@
             :type="item?.level_type?.name"
             :latitude="item?.latitude"
             :longitude="item?.longitude"
+            :address="item?.address"
             :link="`/onze-vacaturies/${item.slug}`"
             :price="item?.price"
             :email="item?.email"
             :image="item?.images[0]?.image"
             :rating="item?.rating"
+            :phone="item?.phone_number"
           />
         </div>
         <Pagination

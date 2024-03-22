@@ -4,14 +4,14 @@
       class="bg-quaternary rounded-full min-w-[26px] md:min-w-[46px]"
     ></span>
     <div
-      :class="`w-[95%] lg:w-[80%] bg-${backgroundColor} rounded-2xl box-shadow h-[318px] lg:h-[418px] flex flex-col justify-center`"
+      :class="`w-[95%] lg:w-[80%] bg-${backgroundColor} rounded-2xl box-shadow min-h-[318px] lg:min-h-[418px] flex flex-col justify-center`"
     >
       <div
         class="mx-3 sm:mx-5 lg:mx-10 flex flex-col text-white justify-between gap-1 lg:gap-2"
       >
         <div class="w-[90%] lg:w-[60%]">
           <p
-            class="text-[12px] md:text-[18px] font-bold text-[#404040] tracking-widest"
+            class="text-[12px] md:text-[18px] font-bold text-[#404040] tracking-widest min-[320px]:pt-2 min-[420px]:pt-0"
           >
             {{ title1 }}
           </p>
@@ -31,7 +31,7 @@
         <!-- showButtonSection -->
         <div
           v-if="showButtonSection"
-          class="flex mt-3 w-[90%] lg:w-[50%] items-center gap-5 my-2"
+          class="flex flex-col min-[400px]:flex-row mt-3 w-[90%] lg:w-[50%] items-center gap-5 my-2"
         >
           <ButtonSM
             :buttonTitle="linkTitle"

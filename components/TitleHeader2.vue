@@ -4,7 +4,7 @@
       <h3 class="text-primary font-bold text-[18px] xl:text-[22px]">
         {{ title1 }}
       </h3>
-      <h1 class="text-[40px] text-[#363636]">{{ title2 }}</h1>
+      <h1 class="text-[30px] lg:text-[40px] text-[#363636]">{{ title2 }}</h1>
       <p class="text-[#4A4A4A] text-[16px]">{{ title3 }}</p>
     </div>
   </div>

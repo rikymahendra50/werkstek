@@ -94,7 +94,7 @@ export default {
     longitude: {},
     image: {
       type: String,
-      default: "/images/img-each-locatie-3.jpg",
+      default: "/images/image-not-found.png",
     },
     rating: {
       default: "Rating",
