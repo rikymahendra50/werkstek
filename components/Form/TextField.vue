@@ -31,6 +31,12 @@ const props = defineProps({
   step1: {
     type: String,
   },
+  min: {
+    type: [Number, String],
+  },
+  max: {
+    type: [Number, String],
+  },
 });
 
 const name = toRef(props, "name");

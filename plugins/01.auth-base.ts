@@ -12,7 +12,7 @@ export default defineNuxtPlugin({
 
     addRouteMiddleware("guest", async () => {
       if (credential.value?.token) {
-        return await navigateTo("/");
+        return await navigateTo("/admin");
       }
     });
 

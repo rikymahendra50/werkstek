@@ -31,9 +31,9 @@ export default <Partial<Config>>{
       },
     },
     fontFamily: {
-      regular: ["PoppinsRegular"],
-      bold: ["PoppinsBold"],
-      medium: ["PoppinsMedium"],
+      regular: ["NotoRegular"],
+      bold: ["NotoBold"],
+      medium: ["NotoMedium"],
     },
   },
 };

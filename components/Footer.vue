@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <section id="footer" class="relative border-t-2 border-secondary">
     <div
       class="pb-20 pt-10 flex flex-col lg:flex-row relative container-custom gap-3 sm:gap-0"
@@ -38,7 +38,6 @@
           >
             Over ons
           </h1>
-          <!-- <hr class="border-b-2 border-primary lg:border-[#1FAB71] w-[50px]" /> -->
           <ul class="text-[12px] md:text-[15px]">
             <li class="pt-3">
               <NuxtLink
@@ -80,9 +79,8 @@
           >
             Wat wij doen
           </h1>
-          <!-- <hr class="border-b-2 border-primary lg:border-[#1FAB71] w-[50px]" /> -->
           <ul class="text-[12px] md:text-[15px]">
-            <!-- <NuxtLink to="/"><li class="pt-3">Flex plekkenn</li></NuxtLink> -->
+            <NuxtLink to="/"><li class="pt-3">Flex plekkenn</li></NuxtLink>
             <NuxtLink
               to="/onze-locaties"
               :class="{ active: isRouteActive('/onze-locaties') }"
@@ -96,7 +94,6 @@
           >
             Contact
           </h1>
-          <!-- <hr class="border-b-2 border-primary lg:border-[#1FAB71] w-[50px]" /> -->
           <ul class="text-[12px] md:text-[15px]">
             <NuxtLink :to="'tel:085-0290598'">
               <li class="flex pt-3 items-center gap-2">
@@ -146,4 +143,148 @@ export default {
     },
   },
 };
+</script> -->
+
+<template>
+  <section
+    id="footer"
+    class="relative border-t-2 border-secondary container-custom"
+  >
+    <div class="grid sm:grid-cols-3 gap-5 md:gap-0 my-10">
+      <div class="flex flex-col gap-5">
+        <div class="grid gap-2">
+          <span class="text-[#808080]">Soorten kantoorruimte</span>
+          <ul class="grid gap-4">
+            <!-- <li>
+              <NuxtLink to="/" class="hover:text-primary">Flexplek</NuxtLink>
+            </li> -->
+            <li>
+              <NuxtLink to="/onze-locaties" class="hover:text-primary"
+                >Kantoorruimte</NuxtLink
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="grid gap-2">
+          <span class="text-[#808080]">Meer informatie</span>
+          <ul class="grid gap-4">
+            <li>
+              <a
+                href="algemene-voorwaarden-werkstek.pdf"
+                target="_blank"
+                class="hover:text-primary"
+                >Algemene voorwaarden</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <div class="grid gap-3">
+          <span class="text-[#808080]">Populaire locaties</span>
+          <ul class="grid gap-4">
+            <li
+              v-for="item in dataLocation?.data"
+              @click="handelLocation(item.id)"
+              class="cursor-pointer"
+            >
+              <span class="hover:text-primary">
+                Kantoorruimte {{ item.name }}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex flex-col">
+        <div class="grid gap-3">
+          <span class="text-[#808080]">Populaire ruimtes</span>
+          <ul class="grid gap-4">
+            <li v-for="item in dataProduct?.data" class="cursor-pointer">
+              <NuxtLink
+                :to="`/onze-locaties/${item.slug}`"
+                class="hover:text-primary"
+              >
+                {{ item.name }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- <div class="bg-tertiary flex items-center">
+    <div class="h-[61px] grid grid-cols-2 lg:text-[16px] text-[10px] relative">
+      <p class="md:pl-8 px-4 ">
+        Copyright All Rights Reserved © 2023 Werkstek
+      </p>
+      <a
+        href="algemene-voorwaarden-werkstek.pdf"
+        target="_blank"
+        class="md:pl-4 hover:text-primary"
+        >Veel gestelde vragen</a
+      >
+      <p class="px-2">|</p>
+      <NuxtLink to="privacy-verklaring" class="md:pr-4 hover:text-primary"
+        >Privacy verklaring</NuxtLink
+      >
+      <p class="text-[9px] sm:text-sm right-2 bottom-1 pr-5">
+        Design & Developed by s.p Digital
+      </p>
+    </div>
+  </div> -->
+  <div
+    class="bg-tertiary flex flex-col lg:flex-row items-center container-custom"
+  >
+    <div class="grid sm:grid-cols-12 place-items-center py-5">
+      <div class="sm:col-span-8 flex sm:flex-row flex-col gap-4">
+        <p class="text-[#8C8E91]">
+          Copyright All Rights Reserved © 2023 Werkstek
+        </p>
+        <a
+          href="algemene-voorwaarden-werkstek.pdf"
+          target="_blank"
+          class="hover:text-primary col-span-4"
+          >Veel gestelde vragen</a
+        >
+        <span class="hidden sm:block">|</span>
+        <NuxtLink to="privacy-verklaring" class="sm:pr-4 hover:text-primary"
+          >Privacy verklaring</NuxtLink
+        >
+      </div>
+      <div class="sm:col-span-4 text-right mt-9 sm:mt-0">
+        <p class="text-[12px] opacity-60">Design & Developed by s.p Digital</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+const { requestOptions } = useRequestOptions();
+import { useTimeoutFn } from "@vueuse/core";
+const router = useRouter();
+const route = useRoute();
+
+const selectedCity = ref("");
+
+const { data: dataLocation } = useFetch("/locations", {
+  method: "get",
+  ...requestOptions,
+});
+
+const { data: dataProduct } = useFetch("/products", {
+  method: "get",
+  ...requestOptions,
+});
+
+function handelLocation(locationId) {
+  selectedCity.value = locationId;
+  router.push(
+    `/onze-locaties?page=1&location_id=${selectedCity.value}&filter[min_area]=&filter[max_area]=&facilities=`
+  );
+}
+
+function handleProduct(slug) {
+  router.push(`onze-locaties/${slug}`);
+}
 </script>

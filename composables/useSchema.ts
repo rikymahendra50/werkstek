@@ -161,10 +161,12 @@ export default function () {
       rating: number({ invalid_type_error: "Rating required" })
         .min(0, "Minimum 1 Rating")
         .max(10, "Maximum 10 Rating"),
-      phone: string().min(1, "Phone is required"),
+      phone: string({ invalid_type_error: "Phone is required" }),
       latitude: string().min(0, "Latitude is required"),
       longitude: string().min(0, "Latitude is required"),
-      price: number({ invalid_type_error: "Price required" }),
+      price: number({ invalid_type_error: "Price required" })
+        .min(0, "Minimum price is 1")
+        .max(100000000, "Maximum price is 100000000"),
       renttype: string().min(1, "Rent Type is required"),
       areasize: number({ invalid_type_error: "Area Size Required" }),
       location: number().min(1, "Location is required"),

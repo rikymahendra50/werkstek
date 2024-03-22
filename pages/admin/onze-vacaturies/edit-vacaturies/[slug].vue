@@ -111,7 +111,6 @@
           class="input-bordered"
           autocomplete="on"
         />
-        <VeeErrorMessage name="phone" class="text-red-500" />
       </div>
 
       <div class="border-2 w-full p-3 rounded-md">
@@ -243,7 +242,7 @@
           autocomplete="location"
         >
           <option disabled selected>Location</option>
-          <option :value="item.id" v-for="item in location.data">
+          <option :value="item.id" v-for="item in location?.data">
             {{ item.name }}
           </option>
         </VeeField>
@@ -468,7 +467,7 @@ const formData = ref({
   country: AllDataSlug?.value?.country,
   description: AllDataSlug?.value?.description,
   email: AllDataSlug?.value?.email,
-  phone_number: AllDataSlug?.value?.email,
+  phone_number: AllDataSlug?.value?.phone_number,
   latitude: AllDataSlug?.value?.latitude,
   longitude: AllDataSlug?.value?.longitude,
   price: AllDataSlug?.value?.price,

@@ -16,9 +16,12 @@
         <p class="text-[16px] text-[#230000] leading-9">
           Dan kun je een mail sturen of bellen:
         </p>
-        <p class="text-[#777] text-[12px] sm:text-[16px] leading-9">
+        <NuxtLink
+          to="mailto:/info@werkstek.nl"
+          class="text-[#777] text-[12px] sm:text-[16px] leading-9"
+        >
           info@werkstek.nl
-        </p>
+        </NuxtLink>
         <p class="text-[#777] text-[12px] sm:text-[16px] leading-9">
           085 – 0290598
         </p>
@@ -36,26 +39,32 @@
         <p class="text-[#777] text-[12px] sm:text-[16px] leading-9">
           1013 JB AMSTERDAM
         </p>
-        <div class="flex gap-1 mt-2">
-          <NuxtLink to="https://www.facebook.com/">
+        <div class="flex gap-3 mt-2">
+          <NuxtLink to="https://www.facebook.com/werkstek/" target="_blank">
             <img
               src="/images/icon-facebook-black.svg"
               alt="icon-facebook-black"
             />
           </NuxtLink>
-          <NuxtLink to="https://www.instagram.com/">
+          <NuxtLink to="https://www.instagram.com/werkstek/" target="_blank">
             <img
               src="/images/icon-instagram-black.svg"
               alt="icon-instagram-black"
             />
           </NuxtLink>
-          <NuxtLink to="https://www.youtube.com/">
+          <NuxtLink
+            to="https://www.youtube.com/channel/UC6Oo-nukQWPpGzapf7T6PnA"
+            target="_blank"
+          >
             <img
               src="/images/icon-youtube-black.svg"
               alt="icon-youtube-black"
             />
           </NuxtLink>
-          <NuxtLink to="https://www.linkedin.com/">
+          <NuxtLink
+            to="https://www.linkedin.com/company/werkstek/"
+            target="_blank"
+          >
             <img
               src="/images/icon-linkedin-black.svg"
               alt="icon-linkedin-black"

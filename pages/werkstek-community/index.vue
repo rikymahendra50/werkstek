@@ -33,6 +33,6 @@
 
 <script setup>
 useHead({
-  title: "WerkstekCommunity",
+  title: "Werkstek Community",
 });
 </script>
