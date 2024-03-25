@@ -99,13 +99,13 @@
             Admin List
           </NuxtLink>
           <NuxtLink
-            to="/admin/onze-vacaturies"
+            to="/admin/onze-vacatures"
             :class="{
               'bg-transparent text-black hover:bg-gray-100': !isRouteActive(
-                '/admin/onze-vacaturies'
+                '/admin/onze-vacatures'
               ),
               'bg-black text-black hover:bg-opacity-30': isRouteActive(
-                '/admin/onze-vacaturies'
+                '/admin/onze-vacatures'
               ),
             }"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"

@@ -62,20 +62,20 @@ export default {
       },
       Faq: [
         {
-          header: "How can I build equity into my house?",
+          header: "Hoe kan ik overwaarde inbouwen in mijn huis?",
           description:
-            "You can build equity in three ways. First (and easiest) is from market appreciation. Second, when making your monthly mortgage payment, try to send a little bit more.",
+            "U kunt op drie manieren eigen vermogen opbouwen. De eerste (en gemakkelijkste) is de waardering van de markt. Ten tweede: probeer bij het doen van uw maandelijkse hypotheekbetaling een klein beetje meer te sturen.",
         },
         {
-          header: "How big is an acre?",
+          header: "Hoe groot is een hectare?",
           description: "-",
         },
         {
-          header: "What are closing costs?",
+          header: "Wat zijn afsluitkosten?",
           description: "-",
         },
         {
-          header: "What is Title Insurance?",
+          header: "Wat is een eigendomsverzekering?",
           description: "-",
         },
       ],

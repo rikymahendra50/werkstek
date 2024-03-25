@@ -37,9 +37,9 @@
           </div>
         </NuxtLink>
         <NuxtLink
-          to="/onze-vacaturies"
+          to="/onze-vacatures"
           class="flex flex-wrap w-[60%] h-full rounded-xl transition hover:shadow-xl"
-          :class="{ active: isRouteActive('/onze-vacaturies') }"
+          :class="{ active: isRouteActive('/onze-vacatures') }"
           :style="{
             backgroundImage: `url('${Data[1].imageSrc}')`,
             backgroundPosition: 'center center',

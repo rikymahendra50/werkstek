@@ -1,7 +1,7 @@
 <template>
   <div>
     <NuxtLink
-      :to="`onze-vacaturies/${link}`"
+      :to="`onze-vacatures/${link}`"
       class="grid grid-cols-8 grid-rows-1 mb-2 lg:mb-5 mx-2 sm:mx-0 rounded-lg group hover:shadow-lg transition min-h-[150px] sm:min-h-[170px] md:min-h-[200px]"
     >
       <div

@@ -50,15 +50,14 @@
         >
           <Icon name="ph:paragraph" />
         </button>
-
-        <button
+        <!-- <button
           @click="editor.chain().focus().toggleCodeBlock().run()"
           :class="{ 'is-active': editor.isActive('codeBlock') }"
           class="btn btn-sm btn-square"
           type="button"
         >
           <Icon name="fluent:code-block-16-regular" />
-        </button>
+        </button> -->
       </div>
       <div class="space-x-2 space-y-2">
         <button

@@ -338,7 +338,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Edit Blog Success",
     });
-    router.push("/admin/onze-vacaturies");
+    router.push("/admin/onze-vacatures");
   }
 
   loading.value = false;

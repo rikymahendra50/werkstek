@@ -2,7 +2,7 @@
   <section class="py-20 overflow-hidden">
     <TitleHeader
       title="Onze locaties"
-      secondTitle="Bekijk al onze vacaturies"
+      secondTitle="Bekijk al onze vacatures"
       description="Op deze locaties hebben we kantoorruimtes"
     />
     <div class="md:grid md:grid-cols-12 container-custom">
@@ -142,7 +142,7 @@
             :latitude="item?.latitude"
             :longitude="item?.longitude"
             :address="item?.address"
-            :link="`/onze-vacaturies/${item.slug}`"
+            :link="`/onze-vacatures/${item.slug}`"
             :price="item?.price"
             :email="item?.email"
             :image="item?.images[0]?.image"
@@ -460,7 +460,7 @@ function replaceWindow() {
   }
 
   const queryString = filters.join("&");
-  const url = `/onze-vacaturies?page=${page.value}${
+  const url = `/onze-vacatures?page=${page.value}${
     queryString ? `&${queryString}` : ""
   }`;
 

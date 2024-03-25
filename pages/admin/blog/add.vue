@@ -80,10 +80,7 @@
           </div>
         </div>
         <div class="flex justify-end mt-5">
-          <CompAdminButtonAddForm
-            buttonName="Add Property"
-            :isLoading="loading"
-          />
+          <CompAdminButtonAddForm buttonName="Add Blog" :isLoading="loading" />
         </div>
       </VeeForm>
     </div>

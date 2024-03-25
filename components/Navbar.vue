@@ -71,9 +71,9 @@
             >
               <li class="text-sm">
                 <NuxtLink
-                  to="/onze-vacaturies"
+                  to="/onze-vacatures"
                   class="rounded-none hover:bg-primary hover:text-white"
-                  :class="{ active: isRouteActive('/onze-vacaturies') }"
+                  :class="{ active: isRouteActive('/onze-vacatures') }"
                 >
                   Werkstek Vacatures
                 </NuxtLink>
@@ -209,7 +209,7 @@
                 </NuxtLink>
               </li>
               <li>
-                <NuxtLink to="/onze-vacaturies" @click="isOpen = false">
+                <NuxtLink to="/onze-vacatures" @click="isOpen = false">
                   Werstek Vacatures
                 </NuxtLink>
               </li>
@@ -262,7 +262,7 @@ export default {
     isUpdateActive() {
       return (
         this.$route.path.startsWith("/blog") ||
-        this.$route.path.startsWith("/onze-vacaturies") ||
+        this.$route.path.startsWith("/onze-vacatures") ||
         this.$route.path.startsWith("/werkstek-community")
       );
     },

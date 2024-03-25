@@ -312,7 +312,7 @@ let hoverInfoWindow = null;
 const setupMap = () => {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 52.14824629295209, lng: 5.595341995302892 },
-    zoom: 5,
+    zoom: 9,
     fullscreenControl: false,
     zoomControl: false,
     keyboardShortcuts: false,
@@ -346,7 +346,7 @@ const setupMap = () => {
         </div>
         <div class="px-2 py-5 pb-3 relative">
           <h2 class="text-primary mt-4">${location?.name}</h2>
-          <p class="text-black text-[10px] my-2">Price: $${location?.price}</p>
+          <p class="text-black text-[10px] my-2">Prijs: $${location?.price}</p>
           <p>${location?.area_size}&nbsp<span>m<sup>2</sup></span></p>
           <img src="/images/icon-werstek.svg" alt="icon-werstek" class="absolute right-3 top-[-5px]" />
         </div>
@@ -480,13 +480,16 @@ const setBoundsForMarkers = () => {
       map-type-id="terrain"
       style="width: 100vw; height: 40rem"
     >
-      <GMapCluster :styles="clusterIconStyles" :zoomOnClick="true">
+      <GMapCluster
+        :minimumClusterSize="2"
+        :styles="clusterIcon"
+        :zoomOnClick="true"
+      >
         <GMapMarker
           :key="index"
           v-for="(m, index) in markers"
           :position="m.position"
           :clickable="true"
-          :draggable="true"
           :icon="{
             url: '/images/icon-flag.png',
             scaledSize: { width: 50, height: 50 },
@@ -530,13 +533,12 @@ const markers = ref([
   },
 ]);
 
-const clusterIconStyles = [
+const clusterIcon = [
   {
-    textColor: "red",
+    textColor: "blue",
     url: "/images/icon-flag.png",
-    height: 50,
-    width: 50,
-    backgroundColor: "red",
+    height: 20,
+    width: 20,
   },
 ];
 

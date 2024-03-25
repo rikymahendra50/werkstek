@@ -60,11 +60,13 @@ const loadGoogleMapsScript = () => {
 const setupMap = () => {
   clearMarkers();
   map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -8.653840910873269, lng: 115.21785198506426 },
-    zoom: 1,
+    center: { lat: 52.21314997541194, lng: 5.3982948103810795 },
+    zoom: 6,
     fullscreenControl: false,
     zoomControl: false,
     keyboardShortcuts: false,
+    mapTypeControl: false,
+    streetViewControl: false,
     mapId: null,
   });
 
@@ -72,7 +74,7 @@ const setupMap = () => {
 
   const icon = {
     url: iconBase + "/dot-map.svg",
-    scaledSize: new google.maps.Size(20, 20),
+    scaledSize: new google.maps.Size(30, 30),
   };
 
   const bounds = new google.maps.LatLngBounds();
