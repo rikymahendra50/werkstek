@@ -112,14 +112,14 @@ const formData = ref({
   meta: undefined,
 });
 
-watch(
-  () => formData.value.body,
-  (newValue) => {
-    if (newValue === "<p></p>" || !newValue) {
-      formData.value.body = undefined;
-    }
-  }
-);
+// watch(
+//   () => formData.value.body,
+//   (newValue) => {
+//     if (newValue === "<p></p>" || !newValue) {
+//       formData.value.body = undefined;
+//     }
+//   }
+// );
 
 const imagePreview = ref();
 const selectedImage = ref();

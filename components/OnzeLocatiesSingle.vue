@@ -39,7 +39,13 @@
                       class="bg-primary min-w-[140px] lg:min-w-[232px] text-[14px] md:text-lg text-white py-1 px-2 md:py-2 md:px-4 grid"
                     >
                       <span>Prijs :</span>
-                      <span>{{ price }} € per/{{ rentType }} </span>
+                      <span
+                        >{{ price }} € per/{{
+                          rentType === "monthly"
+                            ? (rentType = "maand")
+                            : (rentType = "jaar")
+                        }}
+                      </span>
                     </div>
                   </div>
                   <img
@@ -79,12 +85,10 @@
           <h1
             class="text-[#363636] text-[20px] md:text-[25px] font-semibold my-3"
           >
-            <!-- Over WERF5 -->
             {{ title }}
           </h1>
           <div v-html="description" class="text-[12px] md:text-[16px]"></div>
         </div>
-        <!-- {{ data.data[0].name }} -->
         <p class="text-[#495057] text-base mt-10 mb-5 sm:mb-1 ml-2">
           De faciliteiten op de locatie
         </p>

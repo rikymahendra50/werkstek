@@ -113,7 +113,7 @@
         <button
           @click="editor.chain().focus().toggleBulletList().run()"
           :class="{ 'is-active': editor.isActive('bulletList') }"
-          class="btn btn-sm btn-square"
+          class="btn btn-sm btn-square border-2 border-red-500"
           type="button"
         >
           <Icon name="zondicons:list-bullet" />
@@ -121,14 +121,14 @@
         <button
           @click="editor.chain().focus().toggleOrderedList().run()"
           :class="{ 'is-active': editor.isActive('orderedList') }"
-          class="btn btn-sm btn-square"
+          class="btn btn-sm btn-square border-2 border-green-500"
           type="button"
         >
           <Icon name="bx:list-ol" />
         </button>
         <button
           @click="editor.chain().focus().setHorizontalRule().run()"
-          class="btn btn-sm btn-square"
+          class="btn btn-sm btn-square border-2 border-red-200"
           type="button"
         >
           <Icon name="ic:outline-horizontal-rule" />
@@ -137,7 +137,7 @@
         <button
           @click="editor.chain().focus().toggleBlockquote().run()"
           :class="{ 'is-active': editor.isActive('blockquote') }"
-          class="btn btn-sm btn-square"
+          class="btn btn-sm btn-square border-2 border-green-600"
           type="button"
         >
           <Icon name="mingcute:blockquote-line" />
@@ -147,29 +147,29 @@
         <button
           @click="editor.chain().focus().unsetAllMarks().run()"
           type="button"
-          class="btn btn-sm btn-square"
+          class="btn btn-sm btn-square border-2 border-red-500"
         >
           <Icon name="codicon:clear-all" />
         </button>
         <button
           @click="editor.chain().focus().clearNodes().run()"
           type="button"
-          class="btn btn-sm btn-square"
+          class="btn btn-sm btn-square border-2 border-pink-600"
         >
           <Icon name="ant-design:clear-outlined" />
         </button>
 
-        <button
+        <!-- <button
           @click="editor.chain().focus().setHardBreak().run()"
-          class="btn btn-sm btn-square"
+          class="btn btn-sm btn-square border-2 border-orange-700"
         >
           <Icon name="icon-park-outline:paragraph-break" />
-        </button>
+        </button> -->
         <button
           @click="editor.chain().focus().undo().run()"
           :disabled="!editor.can().chain().focus().undo().run()"
           type="button"
-          class="btn btn-sm btn-square"
+          class="btn btn-sm btn-square border-2 border-pink-600"
         >
           <Icon name="ant-design:undo-outlined" />
         </button>

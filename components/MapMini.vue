@@ -5,7 +5,12 @@
     map-type-id="terrain"
     style="width: 100%; height: 250px"
     :options="{
-      disableDefaultUi: false,
+      zoomControl: false,
+      mapTypeControl: false,
+      scaleControl: false,
+      streetViewControl: true,
+      rotateControl: false,
+      fullscreenControl: false,
     }"
   >
     <GMapMarker

@@ -11,7 +11,7 @@
     :count2="StatistiekLocaties2Data.titleBg2.count"
     :count3="StatistiekLocaties2Data.titleBg3.count"
   />
-  <OnzeLocaties />
+  <OnzeLocaties id="section-2" />
   <BgBigGreen
     :title1="BgBigGreenData.title1"
     :title2="BgBigGreenData.title2"

@@ -171,9 +171,6 @@
           </div>
         </div>
       </div>
-      <!-- <pre>
-        {{ dataProduct?.data?. }}
-      </pre> -->
       <div class="md:col-span-8 py-5 overflow-auto">
         <div
           class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"

@@ -63,8 +63,6 @@ definePageMeta({
 });
 
 async function onSubmit(values, ctx) {
-  console.log("test");
-
   loading.value = true;
 
   const { error } = await useFetch(`/admins`, {

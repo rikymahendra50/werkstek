@@ -44,8 +44,6 @@ const setupMap = () => {
     const clickedLocation = event.latLng;
     const latitude = clickedLocation.lat();
     const longitude = clickedLocation.lng();
-    console.log("Latitude: " + latitude);
-    console.log("Longitude: " + longitude);
 
     emit("location-updated", { latitude, longitude });
 
