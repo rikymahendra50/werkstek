@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="flex-1 py-2">
-        <nav class="grid items-start px-4 text-sm font-medium">
+        <nav class="grid items-start px-4 text-[12px] font-medium">
           <!-- Home -->
           <NuxtLink
             to="/admin"
@@ -48,31 +48,6 @@
             </svg>
             Profile
           </NuxtLink>
-          <!-- <NuxtLink
-            to="/admin/dashboard"
-            :class="{
-              'bg-transparent text-black hover:bg-gray-100':
-                !isRouteActive('/admin/dashboard'),
-              'bg-black text-black hover:bg-opacity-30':
-                isRouteActive('/admin/dashboard'),
-            }"
-            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-5 w-5"
-            >
-              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-              <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-            Dashboard
-          </NuxtLink> -->
           <NuxtLink
             to="/admin/admin-list"
             :class="{
@@ -99,13 +74,13 @@
             Admin List
           </NuxtLink>
           <NuxtLink
-            to="/admin/onze-vacatures"
+            to="/admin/onze-locaties"
             :class="{
               'bg-transparent text-black hover:bg-gray-100': !isRouteActive(
-                '/admin/onze-vacatures'
+                '/admin/onze-locaties'
               ),
               'bg-black text-black hover:bg-opacity-30': isRouteActive(
-                '/admin/onze-vacatures'
+                '/admin/onze-locaties'
               ),
             }"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"

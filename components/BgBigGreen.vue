@@ -9,18 +9,18 @@
       <div
         class="mx-3 sm:mx-5 lg:mx-10 flex flex-col text-white justify-between gap-1 lg:gap-2"
       >
-        <div class="w-[90%] lg:w-[60%]">
+        <div class="w-[90%] lg:w-[60%] grid md:gap-2">
           <p
-            class="text-[12px] md:text-[18px] font-bold text-[#404040] tracking-widest min-[320px]:pt-2 min-[420px]:pt-0"
+            class="text-[10px] sm:text-[12px] md:text-[14px] font-bold text-[#404040] tracking-widest min-[320px]:pt-2 min-[420px]:pt-0"
           >
             {{ title1 }}
           </p>
           <p
-            class="text-2xl md:text-3xl leading-normal lg:w-[60%] pt-2 xl:text-[32px]"
+            class="text-lg md:text-2xl leading-normal lg:w-[60%] pt-2 font-bold"
           >
             {{ title2 }}
           </p>
-          <p class="text-sm md:text-base font-normal lg:w-[80%] pt-2">
+          <p class="text-[12px] md:text-base font-normal lg:w-[80%] pt-2">
             {{ title3 }}
           </p>
         </div>
@@ -50,7 +50,7 @@
             <img src="/images/white-phone.svg" alt="white-phone" />
             <NuxtLink
               :to="'tel:' + `${phoneNumber}`"
-              class="ml-1 lg:ml-3 text-[12px] sm:text-sm"
+              class="ml-1 lg:ml-3 text-[10px] sm:text-[12px] sm:text-sm lg:text-[14px]"
             >
               {{ phoneNumber }}
             </NuxtLink>
@@ -59,7 +59,7 @@
             <img src="/images/white-mail.svg" alt="white-phone" />
             <NuxtLink
               :to="'mailto:' + `${mail}`"
-              class="ml-1 lg:ml-3 text-[12px] sm:text-sm"
+              class="ml-1 lg:ml-3 text-[10px] sm:text-[12px] sm:text-sm lg:text-[14px]"
             >
               {{ mail }}
             </NuxtLink>

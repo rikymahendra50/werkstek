@@ -22,27 +22,23 @@
   font-style: normal;
 }
 
-/* Noto Font */
 @font-face {
   font-family: "NotoBold";
-  src: url("../fonts/Noto/NotoSans-Bold.ttf") format("ttf");
-  font-weight: 700;
+  src: url("../fonts/Noto/NotoSans-Bold.ttf") format("truetype");
   font-display: swap;
   font-style: normal;
 }
 
 @font-face {
   font-family: "NotoRegular";
-  src: url("../fonts/Noto/NotoSans-Regular.ttf") format("ttf");
-  font-weight: 400;
+  src: url("../fonts/Noto/NotoSans-Regular.ttf") format("truetype");
   font-display: swap;
   font-style: normal;
 }
 
 @font-face {
   font-family: "NotoMedium";
-  src: url("../fonts/Noto/NotoSans-Medium.ttf") format("ttf");
-  font-weight: 500;
+  src: url("../fonts/Noto/NotoSans-Medium.ttf") format("truetype");
   font-display: swap;
   font-style: normal;
 }

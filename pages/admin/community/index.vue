@@ -5,7 +5,7 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Community</div>
+          <div class="text-xl md:text-2xl font-bold">Community</div>
         </div>
         <CompAdminButtonAddIndex name="Community" link="community" />
       </div>
@@ -37,10 +37,12 @@
                     />
                   </div>
                 </td>
-                <td class="text-gray-500 text-sm font-normal !py-2">
+                <td class="text-gray-500 text-[12px] font-normal !py-2">
                   {{ item.title }}
                 </td>
-                <td class="font-medium max-w-[200px] line-clamp-2 leading-9">
+                <td
+                  class="font-medium max-w-[200px] line-clamp-2 leading-9 text-[12px]"
+                >
                   {{ item.meta }}
                 </td>
                 <td class="font-medium"></td>
@@ -70,10 +72,10 @@
                     </div>
                     <dialog :id="'my_modal_' + index" class="modal">
                       <div class="modal-box">
-                        <h3 class="font-bold text-xl text-red-500">
+                        <h3 class="font-bold text-lg text-red-500">
                           Warning !
                         </h3>
-                        <p class="py-4 text-lg">
+                        <p class="py-4 text-sm">
                           Are you sure want to delete this called
                           {{ item.slug }}?
                         </p>
@@ -81,7 +83,7 @@
                           <form method="dialog">
                             <button
                               @click="deleteBlog(item.slug)"
-                              class="btn btn-outline btn-error mr-3"
+                              class="btn btn-outline btn-error mr-3 text-[12px]"
                             >
                               Delete
                             </button>

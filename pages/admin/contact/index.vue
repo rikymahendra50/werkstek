@@ -5,7 +5,7 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Contact</div>
+          <div class="text-xl md:text-2xl font-bold">Contact</div>
         </div>
       </div>
       <div class="space-y-4">
@@ -29,29 +29,21 @@
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
                 v-for="(item, index) in contact?.data"
               >
-                <td class="text-gray-500 text-sm font-normal !py-2">
+                <td class="text-gray-500 text-[12px] font-normal !py-2">
                   {{ item.first_name }}
                 </td>
-                <td class="font-medium">{{ item.last_name }}</td>
-                <td class="font-medum">{{ item.email }}</td>
-                <td class="font-medium">{{ item.subject }}</td>
+                <td class="font-medium text-[12px]">{{ item.last_name }}</td>
+                <td class="font-medum text-[12px]">{{ item.email }}</td>
+                <td class="font-medium text-[12px]">{{ item.subject }}</td>
                 <td
-                  class="font-medium max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
+                  class="font-medium max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap text-[12px]"
                 >
                   <NuxtLink :to="`/admin/contact/${item.id}`">
                     {{ item.message }}
                   </NuxtLink>
                 </td>
                 <td class="flex justify-center items-center gap-4 my-1">
-                  <!-- <NuxtLink :to="`/admin/contact/reply/${item.id}`">
-                    <button
-                      type="button"
-                      class="btn btn-sm normal-case btn-ghost btn-square"
-                    >
-                      <icon name="i-heroicons-chat-bubble-oval-left-ellipsis" />
-                    </button>
-                  </NuxtLink> -->
-                  <span class="text-gray-500 text-sm font-normal !py-1.5">
+                  <span class="text-gray-500 text-[12px] font-normal !py-1.5">
                     <NuxtLink
                       :to="`/admin/contact/${item.id}`"
                       class="cursor-pointer btn btn-sm normal-case btn-ghost btn-square"
@@ -68,14 +60,14 @@
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">
                       <h3 class="font-bold text-xl text-red-500">Warning !</h3>
-                      <p class="py-4 text-lg">
+                      <p class="py-4 text-sm">
                         Are you sure want to delete this item?
                       </p>
                       <div class="modal-action">
                         <form method="dialog">
                           <button
                             @click="deleteContact(item.id)"
-                            class="btn btn-outline btn-error mr-3"
+                            class="btn btn-outline btn-error mr-3 text-[12px]"
                           >
                             Delete
                           </button>

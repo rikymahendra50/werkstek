@@ -4,7 +4,7 @@
       Your Profile
     </caption>
     <thead>
-      <tr>
+      <tr class="text-sm">
         <th scope="col">Name</th>
         <th scope="col">Position</th>
         <th scope="col">Email</th>
@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr class="text-sm">
         <td scope="row" data-label="Name">
           {{ $user?.first_name }}
         </td>

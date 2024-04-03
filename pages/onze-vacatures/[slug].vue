@@ -7,7 +7,7 @@
     />
     <div class="container-custom">
       <div class="grid grid-cols-1 lg:grid-cols-2 my-20 gap-10">
-        <div class="col-span-1 max-h-[400px]">
+        <div class="col-span-1 max-h-[200px] md:max-h-[400px]">
           <img
             :src="dataAll?.images[0]?.image"
             alt="Lees alles"
@@ -15,16 +15,14 @@
           />
         </div>
         <div
-          class="flex flex-col text-[#1C1F35] text-[35px] justify-center gap-3"
+          class="flex flex-col text-[#1C1F35] justify-center gap-3 text-[18px]"
         >
-          <h1 class="font-semibold mb-5">Vacature info</h1>
-          <p class="text-[18px] md:text-[20px]">
-            Locatie : {{ dataAll?.location?.name }}
-          </p>
-          <p class="text-[18px] md:text-[20px]">Categorie : Lorem</p>
-          <p class="text-[18px] md:text-[20px]">Datum : Lorem</p>
-          <p class="text-[18px] md:text-[20px]">Soort : Lorem</p>
-          <p class="text-[18px] md:text-[20px]">Tags : Lorem</p>
+          <h1 class="font-semibold mb-5 text-[25px]">Vacature info</h1>
+          <p>Locatie : {{ dataAll?.location?.name }}</p>
+          <p>Categorie : Lorem</p>
+          <p>Datum : Lorem</p>
+          <p>Soort : Lorem</p>
+          <p>Tags : Lorem</p>
         </div>
       </div>
     </div>

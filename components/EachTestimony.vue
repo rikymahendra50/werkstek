@@ -8,7 +8,7 @@
       class="aspect-square max-w-[100px] object-cover absolute rounded-full mt-[-50px] box-shadow-testimony-img"
     />
     <p
-      class="text-[14px] md:text-[16px] lg:text-[18px] leading-6 md:leading-8 text-[#3D3D3D] pt-16 md:pt-20"
+      class="text-[14px] md:text-[16px] leading-6 md:leading-8 text-[#3D3D3D] pt-16 md:pt-20"
     >
       {{ description }}
     </p>

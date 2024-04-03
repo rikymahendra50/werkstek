@@ -3,7 +3,7 @@
     :to="buttonLink"
     class="border border-quaternary hover:bg-opacity-60 transition rounded-full flex items-center gap-2 p-1 lg:px-2"
   >
-    <p class="pl-[2px] py-[1px] sm:p-3 text-sm lg:text-base">
+    <p class="pl-[2px] py-[1px] sm:p-3 text-[12px] lg:text-sm">
       {{ buttonTitle }}
     </p>
     <div

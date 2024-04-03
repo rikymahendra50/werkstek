@@ -4,11 +4,13 @@
   >
     <div class="flex flex-col justify-center items-center my-10">
       <h1
-        class="text-[#404040] text-[20px] md:text-[34px] lg:text-[48px] font-semibold text-center"
+        class="text-[#404040] text-[20px] md:text-[34px] lg:text-[40px] font-semibold text-center"
       >
         {{ HeaderFaq.title }}
       </h1>
-      <p class="w-full md:w-[80%] my-5 font-normal text-center text-[16px]">
+      <p
+        class="w-full md:w-[80%] my-5 font-normal text-center text-[14px] md:text-[16px]"
+      >
         {{ HeaderFaq.description }}
       </p>
     </div>
@@ -29,7 +31,7 @@
       >
         <h1
           :class="[
-            'font-semibold text-[18px] sm:text-[20px] md:text-[24px]',
+            'font-semibold text-[16px] sm:text-[18px] md:text-[20px]',
             activeIndex === index ? 'text-white mb-2' : 'text-[#404040] py-1',
           ]"
         >

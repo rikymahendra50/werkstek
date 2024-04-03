@@ -28,9 +28,7 @@
                   class="rotate-[-40deg]"
                 />
               </div>
-              <h1
-                class="text-[10px] min-[420px]:text-sm sm:text-[20px] lg:text-2xl sm:w-[80%] pl-1"
-              >
+              <h1 class="text-[10px] sm:text-[12px] md:text-xl sm:w-[80%] pl-1">
                 {{ Data[0].title }}
               </h1>
             </div>
@@ -61,7 +59,7 @@
                 />
               </div>
               <h1
-                class="text-[10px] min-[420px]:text-sm sm:text-[20px] lg:text-2xl sm:w-[60%] pl-1 text-secondary"
+                class="text-[10px] sm:text-[12px] md:text-xl sm:w-[60%] pl-1 text-secondary"
               >
                 {{ Data[1].title }}
               </h1>
@@ -97,7 +95,7 @@
                 />
               </div>
               <h1
-                class="text-[10px] min-[420px]:text-sm sm:text-[20px] lg:text-2xl sm:w-[60%] pl-2 pb-2 text-secondary"
+                class="text-[10px] sm:text-[12px] md:text-xl sm:w-[60%] pl-2 pb-2 text-secondary"
               >
                 {{ Data[2].title }}
               </h1>
@@ -129,7 +127,7 @@
                 />
               </div>
               <h1
-                class="text-[10px] min-[420px]:text-sm sm:text-[20px] lg:text-2xl lg:pl-2 lg:pb-2 text-tertiary"
+                class="text-[10px] sm:text-[12px] md:text-xl lg:pl-2 lg:pb-2 text-tertiary"
               >
                 {{ Data[3].title }}
               </h1>

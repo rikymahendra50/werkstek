@@ -18,25 +18,25 @@
         </p>
         <NuxtLink
           to="mailto:/info@werkstek.nl"
-          class="text-[#777] text-[12px] sm:text-[16px] leading-9"
+          class="text-[#777] text-[12px] sm:text-[14px] leading-9"
         >
           info@werkstek.nl
         </NuxtLink>
-        <p class="text-[#777] text-[12px] sm:text-[16px] leading-9">
+        <p class="text-[#777] text-[12px] sm:text-[14px] leading-9">
           085 – 0290598
         </p>
         <h1
-          class="text-[12px] sm:text-[16px] text-[#230000] leading-9 my-1 md:my-4"
+          class="text-[12px] sm:text-[14px] text-[#230000] leading-9 my-1 md:my-4"
         >
           Ons Werkstek hoofdkantoor:
         </h1>
-        <p class="text-[#777] text-[12px] sm:text-[16px] leading-9">
+        <p class="text-[#777] text-[12px] sm:text-[14px] leading-9">
           Werkstek B.V.
         </p>
-        <p class="text-[#777] text-[12px] sm:text-[16px] leading-9">
+        <p class="text-[#777] text-[12px] sm:text-[14px] leading-9">
           Tussen de Bogen 81
         </p>
-        <p class="text-[#777] text-[12px] sm:text-[16px] leading-9">
+        <p class="text-[#777] text-[12px] sm:text-[14px] leading-9">
           1013 JB AMSTERDAM
         </p>
         <div class="flex gap-3 mt-2">
@@ -78,7 +78,7 @@
           @submit="onSubmit"
           v-slot="{ errors }"
         >
-          <div class="flex flex-col text-[12px] md:text-[16px]">
+          <div class="flex flex-col text-[12px] md:text-[14px]">
             <div class="flex flex-col my-2">
               <div class="flex items-center">
                 <label for="first_name">Je naam (verplicht)</label>
@@ -93,7 +93,10 @@
                 autocomplete="on"
               />
               <hr />
-              <VeeErrorMessage name="first_name" class="text-sm text-error" />
+              <VeeErrorMessage
+                name="first_name"
+                class="text-[13px] text-error"
+              />
             </div>
             <div class="flex flex-col my-2">
               <div class="flex items-center">
@@ -109,7 +112,10 @@
                 autocomplete="on"
               />
               <hr />
-              <VeeErrorMessage name="last_name" class="text-sm text-error" />
+              <VeeErrorMessage
+                name="last_name"
+                class="text-[13px] text-error"
+              />
             </div>
             <div class="flex flex-col my-2">
               <div class="flex items-center">
@@ -125,7 +131,7 @@
                 autocomplete="Mail"
               />
               <hr />
-              <VeeErrorMessage name="email" class="text-sm text-error" />
+              <VeeErrorMessage name="email" class="text-[13px] text-error" />
             </div>
             <div class="flex flex-col my-2">
               <div class="flex items-center">
@@ -141,7 +147,7 @@
                 autocomplete="Onderwerp"
               />
               <hr />
-              <VeeErrorMessage name="subject" class="text-sm text-error" />
+              <VeeErrorMessage name="subject" class="text-[13px] text-error" />
             </div>
             <div class="flex flex-col my-2">
               <div class="flex items-center">
@@ -157,7 +163,7 @@
               >
               </VeeField>
               <hr />
-              <VeeErrorMessage name="message" class="text-sm text-error" />
+              <VeeErrorMessage name="message" class="text-[13px] text-error" />
             </div>
           </div>
           <div class="flex justify-end">
@@ -166,11 +172,7 @@
               :disabled="loading"
               class="btn normal-case mt-4 bg-primary disabled:bg-secondary hover:bg-secondary transition min-w-[120px] sm:min-w-[152px] min-h-[42px] sm:min-h-[52px] rounded-full flex items-center justify-center cursor-pointer"
             >
-              <span
-                class="text-[20px] xl:text-lg lg:text-lg text-center text-white"
-              >
-                Versturen
-              </span>
+              <span class="text-base text-center text-white"> Versturen </span>
             </button>
           </div>
         </VeeForm>

@@ -16,7 +16,7 @@
           class="min-h-[278px] md:grid md:grid-cols-3 items-center h-full px-10 font-semibold gap-1 md:gap-3 py-9"
         >
           <p
-            class="text-[25px] font-bold lg:leading-10 lg:text-4xl text-secondary mb-4 md:mb-0"
+            class="text-[25px] font-bold lg:leading-10 lg:text-3xl text-secondary mb-4 md:mb-0"
           >
             {{ titleMap }}
           </p>
@@ -25,7 +25,7 @@
             :key="index"
             class="flex flex-col"
           >
-            <p class="text-lg sm:text-[16px] lg:pl-3 lg:pb-2 pt-2">
+            <p class="text-lg sm:text-[14px] lg:pl-3 lg:pb-2 pt-2">
               {{ category.title }}
             </p>
             <div class="relative" v-if="category.title === 'Zoek een Locatie'">
@@ -47,13 +47,13 @@
               </div>
               <ul
                 v-if="category.showDropdown"
-                class="absolute text-[10px] dropdownMap max-h-[200px] overflow-hidden overflow-y-auto lg:text-[16px] top-[100%] left-0 bg-[#F7F7F7] rounded-[5px] mt-1 w-full text-quaternary z-20"
+                class="absolute text-[10px] dropdownMap max-h-[200px] overflow-hidden overflow-y-auto lg:text-[14px] top-[100%] left-0 bg-[#F7F7F7] rounded-[5px] mt-1 w-full text-quaternary z-20"
               >
                 <li
                   v-for="(item, index) in city"
                   :key="index"
                   @click="selectOption(category, item.name, item.id)"
-                  class="cursor-pointer hover:bg-secondary transition hover:text-tertiary px-3 py-1"
+                  class="cursor-pointer hover:bg-secondary transition hover:text-tertiary px-3 py-2"
                 >
                   {{ item.name }}
                 </li>
@@ -473,17 +473,26 @@ const setBoundsForMarkers = () => {
 </style>
 
 <!-- <template>
-  <div class="rounded-lg overflow-hidden relative">
+  <div class="overflow-hidden relative flex justify-center rounded-xl">
     <GMapMap
       :center="center"
       :zoom="10"
       map-type-id="terrain"
-      style="width: 100vw; height: 40rem"
+      class="rounded-xl"
+      style="width: 90vw; height: 45rem; border-radius: 20px"
+      :options="{
+        zoomControl: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: true,
+        rotateControl: false,
+        fullscreenControl: false,
+      }"
     >
       <GMapCluster
         :minimumClusterSize="2"
-        :styles="clusterIcon"
         :zoomOnClick="true"
+        :styles="clusterIcon"
       >
         <GMapMarker
           :key="index"
@@ -533,16 +542,17 @@ const markers = ref([
   },
 ]);
 
-const clusterIcon = [
-  {
-    textColor: "blue",
-    url: "/images/icon-flag.png",
-    height: 20,
-    width: 20,
-  },
-];
-
 function openMarker(id) {
   openedMarkerID.value = id;
 }
+
+const clusterIcon = [
+  {
+    textColor: "white",
+    url: "/images/cluster-icon.svg",
+    height: 30,
+    width: 30,
+    padding: "40px",
+  },
+];
 </script> -->

@@ -54,9 +54,9 @@
           </div>
           <div class="flex flex-col">
             <span class="text-base mt-3 opacity-50 pb-3">Soort locatie</span>
-            <fieldset id="soortLocatie" class="grid grid-cols-2 gap-2">
+            <fieldset id="soortLocatie" class="grid lg:grid-cols-2 gap-2">
               <div
-                class="flex items-center cursor-pointer gap-4"
+                class="flex items-center cursor-pointer gap-2 md:gap-4"
                 v-for="item in soortLocatiesRadio"
               >
                 <input
@@ -66,7 +66,7 @@
                   v-model="selectedSoortLocatie"
                   type="radio"
                 />
-                <label :for="item.id" class="cursor-pointer">
+                <label :for="item.id" class="cursor-pointer text-sm">
                   {{ item.name }}
                 </label>
               </div>
@@ -145,7 +145,7 @@
                 </div>
               </div>
               <p class="text-base mt-3 opacity-50 pb-3">Facility</p>
-              <fieldset id="facility" class="grid grid-cols-2 gap-4">
+              <fieldset id="facility" class="grid lg:grid-cols-1 gap-4">
                 <div
                   class="flex items-center gap-2 cursor-pointer"
                   v-for="item in functieCheckbox"

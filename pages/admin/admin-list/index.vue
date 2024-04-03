@@ -1,11 +1,11 @@
 <template>
   <main class="flex-grow overflow-y-auto">
     <div
-      class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
+      class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-5xl py-8 space-y-8"
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Admin List</div>
+          <div class="text-lg md:text-2xl font-bold">Admin List</div>
         </div>
         <CompAdminButtonAddIndex name="Admin" link="admin-list" />
       </div>
@@ -27,14 +27,15 @@
                 v-for="(item, index) in admins?.data"
                 :key="item.id"
               >
-                <td class="text-gray-500 text-sm font-normal !py-2">
+                <td class="text-gray-500 text-[12px] font-normal !py-2">
                   {{ item.first_name }}
                 </td>
-                <td class="text-gray-500 text-sm font-normal !py-2">
+                <td class="text-gray-500 text-[12px] font-normal !py-2">
                   {{ item.last_name }}
                 </td>
-                <td>{{ item.email }}</td>
+                <td class="text-[12px]">{{ item.email }}</td>
                 <td
+                  class="text-[12px]"
                   :class="{
                     'text-green-500': item.is_active === 1,
                     'text-red-500': item.is_active !== 1,

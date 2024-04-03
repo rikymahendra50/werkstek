@@ -8,14 +8,11 @@
         class="container-custom flex items-center mt-10 lg:mt-20 justify-center"
       >
         <div class="grid">
-          <span class="text-[19px] sm:text-[24px] font-semibold">{{
+          <span class="text-[19px] sm:text-[22px] font-semibold">{{
             title1
           }}</span>
-          <span
-            class="text-[35px] sm:text-[40px] md:text-[50px] xl:text-[55px] font-bold"
-            >{{ title2 }}</span
-          >
-          <span class="text-[12px] sm:text-[20px] mt-3 lg:w-[90%]">
+          <span class="text-[35px] sm:text-[40px] font-bold">{{ title2 }}</span>
+          <span class="text-[12px] sm:text-[18px] mt-3 lg:w-[90%]">
             {{ title3 }}
           </span>
           <div
@@ -70,19 +67,19 @@
           class="bg-primary grid grid-rows-1 grid-cols-3 z-10 absolute bottom-10 lg:bottom-20 right-10 lg:right-20 w-[80%] sm:w-[90%] md:w-[98%] content-center justify-items-center py-2 lg:py-5 rounded-[40px] px-4 lg:px-10"
         >
           <div class="text-white">
-            <p class="text-[24px] sm:text-[36px] xl:text-[48px] font-semibold">
+            <p class="text-[24px] sm:text-[36px] font-semibold">
               {{ count1 }} <span class="text-[#00985B]">+</span>
             </p>
             <p class="text-[12px] md:text-[16px] font-normal">{{ titleBg1 }}</p>
           </div>
           <div class="text-white">
-            <p class="text-[24px] sm:text-[36px] xl:text-[48px] font-semibold">
+            <p class="text-[24px] sm:text-[36px] font-semibold">
               {{ count2 }} <span class="text-[#00985B]">+</span>
             </p>
             <p class="text-[12px] md:text-[16px] font-normal">{{ titleBg2 }}</p>
           </div>
           <div class="text-white">
-            <p class="text-[24px] sm:text-[36px] xl:text-[48px] font-semibold">
+            <p class="text-[24px] sm:text-[36px] font-semibold">
               {{ count3 }} <span class="text-[#00985B]">+</span>
             </p>
             <p class="text-[12px] md:text-[16px] font-normal">{{ titleBg3 }}</p>

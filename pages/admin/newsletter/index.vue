@@ -5,7 +5,7 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Newsletter Subscribe</div>
+          <div class="text-xl md:text-2xl font-bold">Newsletter Subscribe</div>
         </div>
       </div>
       <div class="space-y-4">
@@ -25,8 +25,10 @@
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
                 v-for="(item, index) in newsLetter?.data"
               >
-                <td>{{ index + 1 }}</td>
-                <td class="font-medum">{{ item.email }}</td>
+                <td class="text-[12px] md:text-sm">{{ index + 1 }}</td>
+                <td class="font-medum text-[12px] md:text-sm">
+                  {{ item.email }}
+                </td>
               </tr>
             </tbody>
           </table>

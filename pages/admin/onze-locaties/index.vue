@@ -1,13 +1,13 @@
 <template>
   <main class="flex-grow overflow-y-auto">
     <div
-      class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
+      class="mx-auto px-2 sm:px-4 lg:px-6 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-5xl py-8 space-y-8"
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Property</div>
+          <div class="text-lg md:text-2xl font-bold">Property</div>
         </div>
-        <CompAdminButtonAddIndex name="Property" link="onze-vacatures" />
+        <CompAdminButtonAddIndex name="Property" link="onze-locaties" />
       </div>
       <div>
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
@@ -24,7 +24,9 @@
                 v-for="(item, index) in property?.data"
                 :key="item.id"
               >
-                <td class="text-gray-500 text-sm font-normal !py-2">
+                <td
+                  class="text-gray-500 text-[12px] font-normal !py-2 md:text-sm"
+                >
                   {{ item.name }}
                 </td>
                 <td class="flex items-center gap-3">
@@ -36,7 +38,7 @@
                     <icon name="i-heroicons-eye" class="cursor-pointer" />
                   </NuxtLink>
                   <NuxtLink
-                    :to="`/admin/onze-vacatures/add-image/${item.slug}`"
+                    :to="`/admin/onze-locaties/add-image/${item.slug}`"
                     class="btn btn-sm normal-case btn-ghost btn-square"
                   >
                     <img
@@ -46,7 +48,7 @@
                     />
                   </NuxtLink>
                   <NuxtLink
-                    :to="`/admin/onze-vacatures/edit-vacatures/${item.slug}`"
+                    :to="`/admin/onze-locaties/edit-locaties/${item.slug}`"
                     class="btn btn-sm normal-case btn-ghost btn-square"
                   >
                     <icon
@@ -62,8 +64,8 @@
                   </div>
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">
-                      <h3 class="font-bold text-xl text-red-500">Warning !</h3>
-                      <p class="py-4 text-lg">
+                      <h3 class="font-bold text-lg text-red-500">Warning !</h3>
+                      <p class="py-4 text-sm">
                         Are you sure want to delete this property called
                         {{ item.name }}?
                       </p>
@@ -71,7 +73,7 @@
                         <form method="dialog">
                           <button
                             @click="deleteProperty(item.slug)"
-                            class="btn btn-outline btn-error mr-3"
+                            class="btn btn-outline btn-error mr-3 text-[12px]"
                           >
                             Delete
                           </button>
@@ -149,7 +151,7 @@ watch(
 
 function replaceWindow() {
   router.replace(
-    `/admin/onze-vacatures?page=${page.value}&search=${search.value}`
+    `/admin/onze-locaties?page=${page.value}&search=${search.value}`
   );
   refresh();
 }

@@ -5,7 +5,7 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Category Blog</div>
+          <div class="text-xl md:text-2xl font-bold">Category Blog</div>
         </div>
         <CompAdminButtonAddIndex name="Category Blog" link="blog-category" />
       </div>
@@ -23,7 +23,9 @@
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
                 v-for="(item, index) in categoryBlog?.data"
               >
-                <td class="max-w-[100px]">{{ item.name }}</td>
+                <td class="max-w-[100px] text-[12px] md:text-sm">
+                  {{ item.name }}
+                </td>
                 <td>
                   <div class="flex justify-center items-center gap-4 my-1">
                     <NuxtLink
@@ -43,8 +45,8 @@
                     </div>
                     <dialog :id="'my_modal_' + index" class="modal">
                       <div class="modal-box">
-                        <h3 class="font-bold text-xl text-red-500">Dangers!</h3>
-                        <p class="py-4 text-lg">
+                        <h3 class="font-bold text-lg text-red-500">Dangers!</h3>
+                        <p class="py-4 text-sm">
                           Are you sure want to delete this category blog
                           {{ item.name }}?
                         </p>
@@ -52,7 +54,7 @@
                           <form method="dialog">
                             <button
                               @click="deleteCategoryBlog(item.slug)"
-                              class="btn btn-outline btn-error mr-3"
+                              class="btn btn-outline btn-error mr-3 text-[12px]"
                             >
                               Delete
                             </button>

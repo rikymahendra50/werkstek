@@ -25,7 +25,9 @@
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
                 v-for="(item, index) in type"
               >
-                <td class="text-gray-500 text-sm font-normal !py-2">
+                <td
+                  class="text-gray-500 font-normal !py-2 text-[12px] md:text-sm"
+                >
                   {{ item.name }}
                 </td>
                 <td class="flex justify-center gap-4 my-1">
@@ -43,8 +45,8 @@
                   </div>
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">
-                      <h3 class="font-bold text-xl text-red-500">Warning !</h3>
-                      <p class="py-4 text-lg">
+                      <h3 class="font-bold text-lg text-red-500">Warning !</h3>
+                      <p class="py-4 text-sm">
                         Are you sure want to delete this item called
                         {{ item.name }}?
                       </p>
@@ -52,7 +54,7 @@
                         <form method="dialog">
                           <button
                             @click="deleteType(item.id)"
-                            class="btn btn-outline btn-error mr-3"
+                            class="btn btn-outline btn-error mr-3 text-[12px]"
                           >
                             Delete
                           </button>

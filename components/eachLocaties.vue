@@ -19,17 +19,17 @@
           <div
             class="bg-primary absolute flex items-center sm:py-1 px-1 sm:px-2 gap-1 md:gap-2 rounded-full ml-2 mt-2 text-[12px] sm:text-sm"
           >
-            <div class="flex items-center gap-2 px-1">
+            <div class="flex items-center gap-1 px-1">
               <img
                 src="/images/icon-rating-white.svg"
                 alt="page2"
                 class="w-[14px]"
               />
-              <span class="pt-[2px]">{{ rating }}</span>
+              <span class="pt-[2px] text-[12px]">{{ rating }}</span>
             </div>
           </div>
           <span
-            class="bg-primary absolute top-[20%] sm:top-[30%] md:top-[20%] left-0 flex sm:py-1 px-1 sm:px-2 rounded-full ml-2 mt-2 text-[12px] sm:text-sm font-semibold"
+            class="bg-primary absolute top-[20%] sm:top-[30%] md:top-[20%] left-0 flex sm:py-1 px-1 sm:px-2 rounded-full ml-2 mt-2 text-[12px] font-semibold"
           >
             <span>{{ type }}</span>
           </span>
@@ -38,24 +38,28 @@
       <div
         class="grid col-span-4 md:col-span-4 ml-3 sm:ml-4 md:ml-5 items-center md:pr-4"
       >
-        <span class="text-[11px] sm:text-lg font-semibold">{{ name }}</span>
+        <span class="text-[11px] sm:text-sm lg:text-base font-semibold">{{
+          name
+        }}</span>
         <span
-          class="text-[10px] min-[420px]:text-sm text-ellipsis"
+          class="text-[10px] sm:text-sm text-ellipsis"
           v-if="address == null"
           >Address</span
         >
-        <span class="text-[10px] min-[420px]:text-sm text-ellipsis" v-else>{{
-          address
-        }}</span>
+        <span
+          class="text-[10px] sm:text-[12px] text-ellipsis line-clamp-1 lg:line-clamp-2 opacity-80"
+          v-else
+          >{{ address }}</span
+        >
         <div class="flex justify-between">
-          <span class="text-[10px] sm:text-base font-bold">
+          <span class="text-[10px] sm:text-sm font-bold">
             <span>{{ areaSize }} m<sup>2</sup></span>
           </span>
-          <span class="text-[10px] sm:text-base">+{{ phone }}</span>
+          <span class="text-[10px] sm:text-sm">+{{ phone }}</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-[10px] sm:text-base">{{ price }} €</span>
-          <span class="text-[10px] sm:text-base">{{ email }}</span>
+          <span class="text-[10px] sm:text-sm">{{ price }} €</span>
+          <span class="text-[10px] sm:text-sm">{{ email }}</span>
         </div>
         <div class="flex justify-end w-full">
           <div class="flex mt-2 sm:mt-0">

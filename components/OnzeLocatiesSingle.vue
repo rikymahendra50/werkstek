@@ -36,7 +36,7 @@
                 <div class="relative">
                   <div class="absolute mt-10">
                     <div
-                      class="bg-primary min-w-[140px] lg:min-w-[232px] text-[14px] md:text-lg text-white py-1 px-2 md:py-2 md:px-4 grid"
+                      class="bg-primary min-w-[140px] lg:min-w-[232px] text-[14px] md:text-[16px] text-white py-1 px-2 md:py-2 md:px-4 grid"
                     >
                       <span>Prijs :</span>
                       <span
@@ -82,19 +82,20 @@
           <!-- end swiper -->
         </div>
         <div class="mt-2 sm:mt-10 md:mt-16 w-[100%] text-justify">
-          <h1
-            class="text-[#363636] text-[20px] md:text-[25px] font-semibold my-3"
-          >
+          <h1 class="text-[#363636] text-[20px] font-semibold my-3">
             {{ title }}
           </h1>
-          <div v-html="description" class="text-[12px] md:text-[16px]"></div>
+          <span
+            v-html="description"
+            class="text-[12px] md:text-[14px] deskBody"
+          ></span>
         </div>
-        <p class="text-[#495057] text-base mt-10 mb-5 sm:mb-1 ml-2">
+        <p class="text-[#495057] text-base mt-10 mb-5 sm:mb-1 ml-1">
           De faciliteiten op de locatie
         </p>
         <div class="w-[95%] min-w-[70px] relative">
           <span class="absolute top-[-39px] text-primary text-4xl">____</span>
-          <div class="overflow-x-auto sm:px-3">
+          <div class="overflow-x-auto">
             <table class="table md:mt-4">
               <tbody>
                 <tr
@@ -109,7 +110,7 @@
                     class="w-[60%] sm:w-[50%] flex items-center text-quaternary gap-3"
                   >
                     <img :src="getCheckboxImage(item.name)" alt="checkBox" />
-                    <span>
+                    <span class="text-sm">
                       {{ item?.name }}
                       {{ getAvailabilityStatus(item.name) }}
                     </span>
@@ -123,7 +124,7 @@
       <div class="col-span-4">
         <div v-if="special?.length > 0" class="mb-3">
           <ul class="rounded-[8px] bg-[#859C811A] py-4 px-2 md:px-5">
-            <li class="py-1 lg:py-2 flex" v-for="item in special">
+            <li class="py-1 lg:py-2 flex items-center" v-for="item in special">
               <svg
                 width="24"
                 height="23"
@@ -154,27 +155,27 @@
                   </clipPath>
                 </defs>
               </svg>
-              <span class="pl-2 text-[12px] md:text-[15px]">{{
+              <span class="pl-2 text-[12px] md:text-[14px]">{{
                 item.privilege
               }}</span>
             </li>
           </ul>
         </div>
         <div class="ml-1 md:ml-3">
-          <p class="text-[18px] lg:text-[24px] text-[#363636] mb-4">
+          <p class="text-[14px] lg:text-[20px] text-[#363636] mb-4">
             Adresgegevens
           </p>
           <ul class="flex flex-col gap-1">
-            <li class="text-[14px] md:text-[16px] text-[#4A4A4A]">
+            <li class="text-[14px] text-[#4A4A4A]">
               {{ address }}
             </li>
-            <li class="text-[12px] md:text-[14px] text-[#4A4A4A]">
+            <li class="text-[12px] text-[#4A4A4A]">
               {{ postcode }}
             </li>
-            <li class="text-[12px] md:text-[15px] text-[#4A4A4A]">
+            <li class="text-[12px] md:text-[14px] text-[#4A4A4A]">
               {{ location }}
             </li>
-            <li class="text-[13px] md:text-[15px] text-[#4A4A4A]">
+            <li class="text-[13px] md:text-[14px] text-[#4A4A4A]">
               {{ country }}
             </li>
           </ul>
@@ -184,7 +185,7 @@
               class="flex gap-3 items-center"
             >
               <img src="/images/telp-bg-primary.svg" alt="phone-icon" />
-              <p class="text-[#404040] text-[13px] md:text-[16px]">
+              <p class="text-[#404040] text-[14px]">
                 Tel : <span>{{ phoneNumber }}</span>
               </p>
             </NuxtLink>
@@ -193,7 +194,7 @@
               class="flex gap-3 items-center"
             >
               <img src="/images/email-bg-primary.svg" alt="phone-icon" />
-              <p class="text-[#404040] text-[13px] md:text-[16px]">
+              <p class="text-[#404040] text-[14px]">
                 E-mail: <span>{{ email }}</span>
               </p>
             </NuxtLink>
@@ -207,7 +208,9 @@
             to="/voor-verhuurders"
             class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px] mb-3 hover:bg-secondary transition"
           >
-            <p class="text-[12px] sm:text-lg text-center text-white font-thin">
+            <p
+              class="text-[12px] sm:text-[14px] text-center text-white font-thin"
+            >
               Aanvragen
             </p>
           </NuxtLink>
@@ -215,7 +218,9 @@
             to="/contact"
             class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px] hover:bg-secondary transition"
           >
-            <p class="text-[12px] sm:text-lg text-center text-white font-thin">
+            <p
+              class="text-[12px] sm:text-[14px] text-center text-white font-thin"
+            >
               Contact Opnemen
             </p>
           </NuxtLink>
@@ -253,8 +258,8 @@ function getAvailabilityStatus(itemName) {
   return facilitySlugName?.some(
     (facility) => facility?.facility?.name === itemName
   )
-    ? " Available"
-    : " Unavailable";
+    ? " Beschikbaar"
+    : " Niet beschikbaar";
 }
 
 const props = defineProps({
@@ -306,4 +311,10 @@ const props = defineProps({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+.deskBody ul,
+.deskBody ol {
+  list-style: revert;
+  margin-left: 20px;
+}
+</style>

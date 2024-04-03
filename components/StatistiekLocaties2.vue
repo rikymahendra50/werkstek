@@ -2,7 +2,7 @@
   <section class="container-custom my-5 lg:my-10">
     <div class="relative">
       <h1
-        class="text-[14px] min-[400px]:text-[18px] min-[500px]:text-[22px] sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold absolute pl-2 sm:pl-4 sm:pt-1 lg:pl-4 lg:pt-3 top-0"
+        class="text-[12px] min-[400px]:text-[16px] min-[500px]:text-[20px] sm:text-[22px] md:text-[28px] lg:text-[34px] xl:text-[40px] font-bold absolute pl-2 sm:pl-4 sm:pt-1 lg:pl-4 lg:pt-3 top-0"
       >
         {{ title1 }}
       </h1>
@@ -46,12 +46,12 @@
           class="absolute bottom-[30%] min-[500px]:bottom-[14%] sm:bottom-[20%] lg:bottom-[35%] xl:bottom-36 text-white ml-4 sm:ml-5"
         >
           <p
-            class="text-sm min-[420px]:text-base min-[520px]:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold pb-1 md:pb-4 text-shadow"
+            class="text-sm min-[420px]:text-base min-[520px]:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold pb-1 md:pb-4 text-shadow"
           >
             {{ title2 }}
           </p>
           <p
-            class="text-[8px] min-[420px]:text-[10px] min-[520px]:text-[13px] sm:text-sm md:text-base lg:text-lg leading-2 w-[50%] text-shadow"
+            class="text-[8px] min-[420px]:text-[10px] min-[520px]:text-[13px] sm:text-sm md:text-base lg:text-[16px] leading-2 w-[80%] md:w-[60%] text-shadow"
           >
             {{ title3 }}
           </p>

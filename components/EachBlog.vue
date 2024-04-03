@@ -4,11 +4,11 @@
       class="bg-tertiary absolute top-0 z-[-99] w-full min-h-[315px] md:min-h-[515px]"
     ></span>
     <div class="lg:container-custom mx-10 flex flex-col py-10 lg:py-20">
-      <h1 class="text-primary text-[18px] sm:text-[20px] md:text-[30px]">
+      <h1 class="text-primary text-[14px] sm:text-[18px] md:text-[30px]">
         {{ typeArticle }}
       </h1>
       <p
-        class="text-[#404040] text-xl sm:text-[26px] md:text-[36px] mb-3 lg:mb-10 mt-3"
+        class="text-[#404040] text-lg sm:text-[26px] md:text-[30px] mb-3 lg:mb-10 mt-3"
       >
         {{ title }}
       </p>
@@ -24,9 +24,7 @@
 
       <!-- author small screen -->
       <div class="block lg:hidden my-3 min-[400px]:my-5 sm:my-7 p-3">
-        <div
-          class="flex items-center max-h-[150px] overflow-hidden shadow-sm p-4"
-        >
+        <div class="flex items-center max-h-[150px] overflow-hidden shadow-sm">
           <img
             src="/images/author.png"
             alt="author"
@@ -34,12 +32,12 @@
           />
           <div class="flex flex-col pl-4 max-w-[70%]">
             <p
-              class="text-[0.9rem] min-[400px]:text-base overflow-ellipsis overflow-hidden sm:text-lg font-bold"
+              class="text-[0.9rem] overflow-ellipsis overflow-hidden sm:text-lg font-bold"
             >
               Luci Avetisyan
             </p>
             <p
-              class="text-[0.5rem] min-[400px]:text-[14px] sm:text-lg overflow-ellipsis overflow-hidden"
+              class="text-[0.5rem] min-[400px]:text-[12px] sm:text-[14px] overflow-ellipsis overflow-hidden"
             >
               Luci vitae dapibus rhoncus. Eget etiam aenean nisi montes felis
               pretium donec veni. Pede…
@@ -85,9 +83,9 @@
           </NuxtLink>
         </div>
       </div>
-      <div class="grid grid-cols-12 lg:mt-20">
+      <div class="grid grid-cols-12 lg:mt-20 lg:gap-10">
         <div class="grid lg:col-span-9 col-span-12">
-          <div v-html="body" class="leading-9 text-[16px]"></div>
+          <div v-html="body" class="leading-9 text-[14px]"></div>
           <div
             class="flex mt-10 gap-5 items-center sm:items-start p-2 shadow-md rounded-lg"
             v-for="(DataComment, index) in comment.slice(
@@ -145,7 +143,7 @@
             <h1 class="text-[#121416] text-[18px]">AUTHOR</h1>
             <h3 class="text-[20px]">Luci Avetisyan</h3>
             <img src="/images/author.png" alt="author" class="my-4" />
-            <p class="text-center leading-9 text-[#ADADAD]">
+            <p class="text-center text-sm leading-9 text-[#ADADAD]">
               Luci vitae dapibus rhoncus. Eget etiam aenean nisi montes felis
               pretium donec veni. Pede…
             </p>

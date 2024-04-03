@@ -23,14 +23,14 @@
       <!-- Navbar -->
       <div class="hidden lg:flex z-[99999] items-center justify-between w-full">
         <ul
-          class="flex space-x-5 items-center justify-between md:gap-2 xl:gap-3 pr-10 bg-primary p-1 rounded-full text-tertiary md:w-[78%] xl:w-[80%]"
+          class="flex space-x-5 items-center justify-between md:gap-1 pr-10 bg-primary p-1 rounded-full text-tertiary md:w-[78%] xl:w-[80%]"
         >
           <li class="bg-white rounded-full">
             <NuxtLink to="/">
               <Werkstek />
             </NuxtLink>
           </li>
-          <li>
+          <li class="text-sm">
             <NuxtLink
               to="/voor-verhuurders"
               class="navlink"
@@ -38,7 +38,7 @@
               >Verhuur</NuxtLink
             >
           </li>
-          <li>
+          <li class="text-sm">
             <NuxtLink
               to="/onze-locaties"
               class="navlink"
@@ -47,7 +47,7 @@
             >
           </li>
           <li
-            class="relative group flex z-10 pr-1 pt-1 dropdown dropdown-hover"
+            class="relative group flex z-10 pr-1 pt-1 dropdown dropdown-hover text-sm"
           >
             <NuxtLink
               to="/over-werkstek"
@@ -60,14 +60,14 @@
           <li class="dropdown">
             <span
               tabindex="0"
-              class="bg-transparent border-none text-white font-thin hover:bg-transparent cursor-pointer navlink"
+              class="bg-transparent border-none text-white font-thin hover:bg-transparent cursor-pointer navlink text-sm"
               :class="{ active: isUpdateActive() }"
             >
               Werkstek Update
             </span>
             <ul
               tabindex="0"
-              class="ml-[-20px] dropdown-content rounded-sm z-[1] menu p-1 shadow bg-base-100 w-48 text-black"
+              class="ml-[-20px] dropdown-content rounded-sm z-[1] menu p-1 shadow bg-base-100 w-48 text-black text-sm"
             >
               <li class="text-sm">
                 <NuxtLink
@@ -98,7 +98,7 @@
               </li>
             </ul>
           </li>
-          <li>
+          <li class="text-sm">
             <NuxtLink
               to="/faq"
               class="pr-1 navlink"
@@ -167,7 +167,7 @@
             <Werkstek />
           </NuxtLink>
         </span>
-        <ul class="divide-y font-sans">
+        <ul class="divide-y font-sans text-m">
           <li class="cursor-pointer">
             <NuxtLink
               to="/voor-verhuurders"

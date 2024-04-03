@@ -4,9 +4,7 @@
     type="submit"
     :disabled="isLoading"
   >
-    <span
-      class="text-[20px] xl:text-lg lg:text-lg text-center text-white normal-case"
-    >
+    <span class="text-[14px] text-center text-white normal-case">
       {{ buttonName }}
     </span>
   </button>

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <CompAdminBackButton link="onze-vacatures" linkTitle="Add Or Edit Image" />
+    <CompAdminBackButton link="onze-locaties" linkTitle="Add Or Edit Image" />
     <VeeForm @submit="onSubmit">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div
@@ -205,7 +205,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Add or Edit Image Success",
     });
-    router.push("/admin/onze-vacatures");
+    router.push("/admin/onze-locaties");
   }
 
   loading.value = false;

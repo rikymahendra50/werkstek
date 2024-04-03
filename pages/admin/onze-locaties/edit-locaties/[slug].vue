@@ -1,5 +1,5 @@
 <template>
-  <CompAdminBackButton link="onze-vacatures" linkTitle="Add Property" />
+  <CompAdminBackButton link="onze-locaties" linkTitle="Edit Property" />
   <div class="overflow-y-auto grid md:grid-cols-2">
     <VeeForm
       @submit="onSubmit"
@@ -29,26 +29,31 @@
           v-model="formData.description"
           :is-error="!!errors.body"
         />
-        <!-- <pre>
-          {{ formData.description }}
-        </pre>
-        <pre>
-          {{ errors.body }}
-        </pre> -->
         <VeeErrorMessage name="body" class="text-red-500" />
       </div>
+
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="email">Email</label>
         </div>
-        <FormTextField
+        <!-- <FormTextField
           id="email"
           name="email"
           v-model="formData.email"
           placeholder="ex:werstek@gmail.com"
           class="input-bordered"
           autocomplete="on"
+        /> -->
+        <VeeField
+          id="email"
+          name="email"
+          v-model="formData.email"
+          type="text"
+          class="input input-bordered w-full input-md"
+          placeholder="Email"
+          autocomplete="off"
         />
+        <VeeErrorMessage name="email" class="text-red-500" />
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -107,6 +112,7 @@
           autocomplete="on"
         />
       </div>
+
       <div class="border-2 w-full p-3 rounded-md">
         <div>
           <p class="mb-3">
@@ -117,9 +123,11 @@
           <MapsTest
             v-model:latitude="formData.latitude"
             v-model:longitude="formData.longitude"
+            :latitude="formData.latitude"
+            :longitude="formData.latitude"
           />
         </div>
-        <div class="flex flex-col w-full">
+        <div class="flex flex-col my-2 w-full">
           <div class="flex items-center">
             <label for="latitude">Latitude</label>
           </div>
@@ -234,7 +242,7 @@
           autocomplete="location"
         >
           <option disabled selected>Location</option>
-          <option :value="item.id" v-for="item in location.data">
+          <option :value="item.id" v-for="item in location?.data">
             {{ item.name }}
           </option>
         </VeeField>
@@ -275,18 +283,14 @@
           as="select"
           v-model="formData.level_type_id"
           class="select select-bordered w-full"
-          placeholder="Level Type"
-          autocomplete="off"
+          placeholder="type"
+          autocomplete="type"
         >
           <option disabled selected>Level Type</option>
-          <option :value="item.id" v-for="item in levelType.data">
+          <option :value="item.id" v-for="item in levelType?.data">
             {{ item.name }}
           </option>
         </VeeField>
-        <VeeErrorMessage
-          name="leveltype"
-          class="form-error-message text-red-600"
-        />
       </div>
 
       <div class="flex flex-col my-2 w-full">
@@ -337,7 +341,7 @@
         </div>
       </div>
 
-      <div class="flex-col my-2 w-full hidden">
+      <div class="flex flex-col my-2 w-full">
         <div class="grid gap-2">
           <div class="flex items-center">
             <span>Is Saleable</span>
@@ -348,8 +352,8 @@
             class="checkbox-label flex gap-2"
           >
             <VeeField
-              :id="`isSaleAble + ${item.id}`"
-              :name="`isSaleAble + ${item.name}`"
+              :id="`saleAble + ${item.id}`"
+              :name="`saleAble + ${item.name}`"
               type="radio"
               :value="item.value"
               v-model="formData.is_saleable"
@@ -361,9 +365,9 @@
         </div>
       </div>
 
-      <div class="flex justify-end w-full">
+      <div class="w-full flex justify-end">
         <CompAdminButtonAddForm
-          buttonName="Add Property"
+          buttonName="Edit Property"
           :isLoading="loading"
         />
       </div>
@@ -374,10 +378,36 @@
 <script setup>
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
-const snackbar = useSnackbar();
 const router = useRouter();
+const snackbar = useSnackbar();
 const route = useRoute();
+const slug = computed(() => route.params.slug);
 const { formInput } = useSchema();
+
+const { data: dataSlug } = await useFetch(`/admins/products/${slug.value}`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const { data: location } = await useFetch(`/admins/locations`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const { data: type } = await useFetch(`/admins/type-list`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const { data: levelType } = await useFetch(`/admins/level-types`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const { data: facilities, error } = await useFetch(`/admins/facilities`, {
+  method: "get",
+  ...requestOptions,
+});
 
 const dataPrivilages = ref([
   {
@@ -402,6 +432,16 @@ const dataPrivilages = ref([
   },
 ]);
 
+const AllDataSlug = ref(dataSlug?.value.data);
+
+const privilegesArray = AllDataSlug?.value.privileges.map(
+  (item) => item.privilege
+);
+
+const facilityArray = AllDataSlug?.value.facility.map(
+  (item) => item.facility.id
+);
+
 const dataIsSaleAble = ref([
   {
     id: 1,
@@ -415,65 +455,47 @@ const dataIsSaleAble = ref([
   },
 ]);
 
-const { data: facilities, error } = await useFetch(`/admins/facilities`, {
-  method: "get",
-  ...requestOptions,
-});
-const { data: location } = await useFetch(`/admins/locations`, {
-  method: "get",
-  ...requestOptions,
-});
-const { data: type } = await useFetch(`/admins/type-list`, {
-  method: "get",
-  ...requestOptions,
-});
-
-const { data: levelType } = await useFetch(`/admins/level-types`, {
-  method: "get",
-  ...requestOptions,
-});
-
-const formData = ref({
-  name: undefined,
-  description: undefined,
-  email: undefined,
-  country: undefined,
-  postcode: undefined,
-  address: undefined,
-  phone_number: undefined,
-  latitude: undefined,
-  longitude: undefined,
-  price: undefined,
-  rent_type: undefined,
-  area_size: undefined,
-  location_id: undefined,
-  type_id: undefined,
-  level_type_id: undefined,
-  is_saleable: dataIsSaleAble.value[0].value,
-  product_facilities: [],
-  product_privileges: [],
-  rating: undefined,
-});
-
-watch(
-  () => formData.value.description,
-  (newValue) => {
-    if (newValue === "<p></p>" || !newValue) {
-      formData.value.description = undefined;
-    }
-  }
-);
-
 const updateLocation = (location) => {
   formData.value.longitude = String(location.longitude);
   formData.value.latitude = String(location.latitude);
 };
 
+const formData = ref({
+  name: AllDataSlug?.value?.name,
+  postcode: AllDataSlug?.value?.postcode,
+  address: AllDataSlug?.value?.address,
+  country: AllDataSlug?.value?.country,
+  description: AllDataSlug?.value?.description,
+  email: AllDataSlug?.value?.email,
+  phone_number: AllDataSlug?.value?.phone_number,
+  latitude: AllDataSlug?.value?.latitude,
+  longitude: AllDataSlug?.value?.longitude,
+  price: AllDataSlug?.value?.price,
+  rent_type: AllDataSlug?.value?.rent_type,
+  area_size: AllDataSlug?.value?.area_size,
+  location_id: AllDataSlug?.value?.location?.id,
+  type_id: AllDataSlug?.value?.type?.id,
+  level_type_id: AllDataSlug?.value?.level_type?.id,
+  is_saleable: AllDataSlug?.value?.is_saleable,
+  product_facilities: facilityArray.map((facility) => ({
+    facility_id: facility,
+  })),
+  product_privileges: privilegesArray.map((privilege) => ({
+    privilege: privilege,
+  })),
+  rating: AllDataSlug.value.rating,
+});
+
+onMounted(() => {
+  formData.value.price = parseInt(AllDataSlug?.value?.price);
+  formData.value.rating = parseInt(AllDataSlug?.value?.rating);
+});
+
 async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const { data, error } = await useFetch("/admins/products", {
-    method: "POST",
+  const { data, error } = await useFetch(`/admins/products/${slug.value}`, {
+    method: "put",
     body: JSON.stringify(formData.value),
     ...requestOptions,
   });
@@ -487,16 +509,16 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Success Adding Data",
+      text: "Success Edit Property",
     });
-    router.push("/admin/onze-vacatures");
+    router.push("/admin/onze-locaties");
   }
 
   loading.value = false;
 }
 
 useHead({
-  title: "Add Property",
+  title: "Edit Property",
 });
 
 definePageMeta({

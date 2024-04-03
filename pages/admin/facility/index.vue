@@ -5,7 +5,7 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-3xl font-bold">Facility</div>
+          <div class="text-xl md:text-2xl font-bold">Facility</div>
         </div>
         <CompAdminButtonAddIndex name="Facility" link="facility" />
       </div>
@@ -23,7 +23,7 @@
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
                 v-for="(item, index) in facility?.data"
               >
-                <td class="text-gray-500 text-sm font-normal !py-2">
+                <td class="text-gray-500 text-sm font-normal !py-2 text-[12px]">
                   {{ item.name }}
                 </td>
                 <!-- <td class="font-medium">{{ item.icon }}</td> -->
@@ -42,8 +42,8 @@
                   </div>
                   <dialog :id="'my_modal_' + index" class="modal">
                     <div class="modal-box">
-                      <h3 class="font-bold text-xl text-red-500">Warning !</h3>
-                      <p class="py-4 text-lg">
+                      <h3 class="font-bold text-lg text-red-500">Warning !</h3>
+                      <p class="py-4 text-sm">
                         Are you sure want to delete this facility called
                         {{ item.name }}?
                       </p>
@@ -51,7 +51,7 @@
                         <form method="dialog">
                           <button
                             @click="deleteFacility(item.slug)"
-                            class="btn btn-outline btn-error mr-3"
+                            class="btn btn-outline btn-error mr-3 text-[12px]"
                           >
                             Delete
                           </button>

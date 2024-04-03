@@ -11,7 +11,7 @@
         />
       </div>
       <div
-        class="min-[440px]:col-span-6 flex-flex-col flex justify-center flex-col gap-4 lg:gap-10 mx-4 min-[420px]:w-[mx-2] md:mx-10 text-[12px] sm:text-sm lg:text-lg"
+        class="min-[440px]:col-span-6 flex-flex-col flex justify-center flex-col gap-4 lg:gap-10 mx-4 min-[420px]:w-[mx-2] md:mx-10 text-[12px] sm:text-[14px] lg:text-base"
       >
         <p class="text-justify">
           Werkstek is een bedrijf dat kantoorruimtes verhuurt in verschillende
@@ -41,7 +41,7 @@
                 />
               </svg>
             </span>
-            <span class="text-black font-bold"
+            <span class="text-black font-bold text-[12px] lg:text-sm"
               >Kantoordreef 123, Werkstad, The Netherlands.</span
             >
           </div>

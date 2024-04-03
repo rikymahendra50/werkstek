@@ -1,7 +1,7 @@
 <template>
   <section class="container-custom">
     <div
-      class="overflow-x-auto flex gap-4 lg:gap-6 text-[12px] sm:text-[14px] md:text-[18px] text-[#121416] border-b-2 mt-6 justify-between overflow-auto"
+      class="overflow-x-auto flex gap-4 lg:gap-6 text-[12px] sm:text-[14px] md:text-[16px] text-[#121416] border-b-2 mt-6 justify-between overflow-auto"
     >
       <button
         class="categorylink"
@@ -12,7 +12,7 @@
       >
         {{ category?.name }}
       </button>
-      <VMenu>
+      <VMenu v-if="categoryData.length > 5">
         <button class="btn btn-ghost hover:bg-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"

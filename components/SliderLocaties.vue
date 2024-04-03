@@ -3,12 +3,14 @@
     <div class="grid grid-cols-1 grid-rows-1">
       <div class="grid w-full container-custom">
         <div class="flex justify-between items-center mb-5">
-          <div class="flex flex-col w-[40%] min-[420px]:w-[60%] lg:w-[40%]">
+          <div
+            class="flex flex-col w-[40%] min-[420px]:w-[60%] lg:w-[40%] gap-2"
+          >
             <p class="text-[12px] md:text-lg lg:text-[18px] font-bold">
               Locaties
             </p>
             <p
-              class="text-[20px] md:text-[30px] lg:text-[48px] text-[#231E1F] font-semibold"
+              class="text-[20px] md:text-[30px] lg:text-[40px] text-[#231E1F] font-semibold"
             >
               Bekijk onze locaties.
             </p>
@@ -61,7 +63,7 @@
               :to="`/onze-locaties/${itemSlider.slug}`"
               class="absolute inset-0 flex flex-col justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50"
             >
-              <h2 class="text-md lg:text-3xl">
+              <h2 class="text-md lg:text-2xl">
                 {{ itemSlider?.location?.name }}
               </h2>
               <p class="text-[14px] lg:text-sm py-1">
@@ -151,10 +153,10 @@ export default {
     const slidesPerView = ref(3);
 
     const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        slidesPerView.value = 2;
-      } else if (window.innerWidth <= 500) {
+      if (window.innerWidth <= 500) {
         slidesPerView.value = 1;
+      } else if (window.innerWidth <= 768) {
+        slidesPerView.value = 2;
       } else if (window.innerWidth <= 1028) {
         slidesPerView.value = 3;
       } else {

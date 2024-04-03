@@ -15,9 +15,7 @@
         <h4 class="text-[#404040] text-[14px] md:text-[16px] py-2 md:py-5">
           {{ title }}
         </h4>
-        <p
-          class="text-[#777] text-[14px] md:text-[16px] md:leading-9 line-clamp-3"
-        >
+        <p class="text-[#777] text-[14px] md:leading-9 line-clamp-3">
           {{ description }}
         </p>
       </div>

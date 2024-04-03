@@ -5,7 +5,7 @@
   >
     <div class="grid sm:grid-cols-3 gap-5 md:gap-0 my-10">
       <div class="flex flex-col gap-5">
-        <div class="grid gap-2">
+        <div class="grid gap-2 text-sm">
           <span class="text-[#808080]">Soorten kantoorruimte</span>
           <ul class="grid gap-4">
             <li
@@ -19,7 +19,7 @@
             </li>
           </ul>
         </div>
-        <div class="grid gap-2">
+        <div class="grid gap-2 text-sm">
           <span class="text-[#808080]">Meer informatie</span>
           <ul class="grid gap-4">
             <li>
@@ -33,7 +33,7 @@
           </ul>
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col text-sm">
         <div class="grid gap-3">
           <span class="text-[#808080]">Populaire locaties</span>
           <ul class="grid gap-4">
@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div class="flex flex-col">
+      <div class="flex flex-col text-sm">
         <div class="grid gap-3">
           <span class="text-[#808080]">Populaire ruimtes</span>
           <ul class="grid gap-4">
@@ -67,31 +67,13 @@
       </div>
     </div>
   </section>
-  <!-- <div class="bg-tertiary flex items-center">
-    <div class="h-[61px] grid grid-cols-2 lg:text-[16px] text-[10px] relative">
-      <p class="md:pl-8 px-4 ">
-        Copyright All Rights Reserved © 2023 Werkstek
-      </p>
-      <a
-        href="algemene-voorwaarden-werkstek.pdf"
-        target="_blank"
-        class="md:pl-4 hover:text-primary"
-        >Veel gestelde vragen</a
-      >
-      <p class="px-2">|</p>
-      <NuxtLink to="privacy-verklaring" class="md:pr-4 hover:text-primary"
-        >Privacy verklaring</NuxtLink
-      >
-      <p class="text-[9px] sm:text-sm right-2 bottom-1 pr-5">
-        Design & Developed by s.p Digital
-      </p>
-    </div>
-  </div> -->
   <div
     class="bg-tertiary flex flex-col lg:flex-row items-center container-custom"
   >
     <div class="grid sm:grid-cols-12 place-items-center py-5">
-      <div class="sm:col-span-8 flex sm:flex-row flex-col gap-4">
+      <div
+        class="sm:col-span-8 flex sm:flex-row flex-col gap-4 text-[12px] sm:text-sm"
+      >
         <p class="text-[#8C8E91]">
           Copyright All Rights Reserved © 2023 Werkstek
         </p>

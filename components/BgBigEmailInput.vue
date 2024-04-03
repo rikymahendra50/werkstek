@@ -1,13 +1,13 @@
 <template>
   <VeeForm @submit="onSubmit" v-slot="{ errors }">
     <div
-      class="rounded-full flex items-center md:p-2 px-1 lg:px-2 bg-quaternary max-h-[60px]"
+      class="rounded-full flex items-center md:p-2 px-1 lg:px-2 bg-quaternary md:max-h-[60px]"
     >
       <VeeField
         type="text"
         name="email"
         v-model="dataForm.email"
-        class="pl-2 text-sm h-full outline-none box-border text-tertiary bg-quaternary"
+        class="pl-2 text-sm h-full w-full outline-none box-border text-tertiary bg-quaternary"
         placeholder="Mail@gmail.com"
         autocomplete="off"
         :style="{ WebkitAppearance: 'none', color: 'white' }"

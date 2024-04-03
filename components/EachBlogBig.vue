@@ -13,12 +13,12 @@
         </div>
         <div class="py-2 flex flex-col h-full justify-around">
           <span
-            class="text-[14px] sm:text-[18px] md:text-[20px] font-semibold line-clamp-1 sm:line-clamp-none my-1"
+            class="text-[14px] sm:text-[18px] font-semibold line-clamp-1 sm:line-clamp-none my-1"
           >
             {{ title }}
           </span>
           <p
-            class="font-normal text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] line-clamp-2 my-2 min-h-[40px] sm:min-h-[70px]"
+            class="font-normal text-[12px] sm:text-[14px] md:text-[16px] line-clamp-2 my-2 min-h-[40px] sm:min-h-[70px]"
           >
             {{ description }}
           </p>
