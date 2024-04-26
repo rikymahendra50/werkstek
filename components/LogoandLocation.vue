@@ -2,16 +2,16 @@
   <section>
     <div class="grid min-[440px]:grid-cols-12 gap-5">
       <div
-        class="bg-tertiary rounded-r-full min-[440px]:col-span-5 flex justify-center items-center min-h-[100px]"
+        class="bg-tertiary flex col-span-6 sm:col-span-5 rounded-r-full items-center w-[70%] min-[450px]:w-full justify-center p-5"
       >
         <img
           src="/images/logo-werstek-big.svg"
           alt="logo-werstek-big"
-          class="h-[50%] xl:w-[100%]"
+          class="my-3 max-w-[140px] sm:max-w-[200px] md:max-w-[250px]"
         />
       </div>
       <div
-        class="min-[440px]:col-span-6 flex-flex-col flex justify-center flex-col gap-4 lg:gap-10 mx-4 min-[420px]:w-[mx-2] md:mx-10 text-[12px] sm:text-[14px] lg:text-base"
+        class="col-span-6 flex-flex-col flex justify-center flex-col gap-4 lg:gap-10 mx-4 min-[420px]:w-[mx-2] md:mx-10 text-[12px] sm:text-[14px] lg:text-base"
       >
         <p class="text-justify">
           Werkstek is een bedrijf dat kantoorruimtes verhuurt in verschillende

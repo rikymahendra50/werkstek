@@ -1,31 +1,35 @@
 <template>
-  <section class="bg-tertiary relative flex flex-col py-10">
+  <section class="relative flex flex-col py-10">
     <div class="grid grid-cols-1 grid-rows-1">
       <div class="grid w-full container-custom">
-        <div class="flex justify-between items-center mb-5">
-          <div
-            class="flex flex-col w-[40%] min-[420px]:w-[60%] lg:w-[40%] gap-2"
-          >
-            <p class="text-[12px] md:text-lg lg:text-[18px] font-bold">
+        <div
+          class="grid sm:grid-cols-2 justify-between items-center mb-5 gap-5"
+        >
+          <div class="flex flex-col gap-2">
+            <p
+              class="text-[12px] min-[500px]:text-[16px] md:text-lg lg:text-[18px] font-bold"
+            >
               Locaties
             </p>
             <p
-              class="text-[20px] md:text-[30px] lg:text-[40px] text-[#231E1F] font-semibold"
+              class="text-[20px] min-[500px]:text-[25px] md:text-[30px] lg:text-[40px] text-[#231E1F] font-semibold"
             >
               Bekijk onze locaties.
             </p>
             <p
-              class="text-[10px] md:text-lg lg:text-[16px] text-[#777] font-normal"
+              class="text-[10px] min-[500px]:text-base md:text-lg lg:text-[16px] text-[#777] font-normal"
             >
               Een gezellige werkplek huren in een leuke omgeving?Op deze
               locaties hebben wij kantoorruimtes
             </p>
           </div>
-          <ButtonSM
-            buttonTitle="Bekijk alle locaties"
-            buttonLink="/onze-locaties"
-            class="z-10 hover:bg-secondary hover:bg-opacity-70 hover:text-tertiary"
-          />
+          <div class="flex justify-end">
+            <ButtonSM
+              buttonTitle="Bekijk alle locaties"
+              buttonLink="/onze-locaties"
+              class="z-10 hover:bg-secondary hover:bg-opacity-70 hover:text-tertiary"
+            />
+          </div>
         </div>
       </div>
       <div
@@ -39,7 +43,7 @@
           :spaceBetween="10"
           :css-mode="true"
           :watch-slides-progress="true"
-          class="mySwiper min-h-[400px]"
+          class="mySwiper"
           loop
         >
           <swiper-slide
@@ -63,19 +67,23 @@
               :to="`/onze-locaties/${itemSlider.slug}`"
               class="absolute inset-0 flex flex-col justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50"
             >
-              <h2 class="text-md lg:text-2xl">
-                {{ itemSlider?.location?.name }}
-              </h2>
-              <p class="text-[14px] lg:text-sm py-1">
-                {{ itemSlider?.location?.name }}
-              </p>
-              <h4 class="text-[16px] lg:text-lg font-semibold">
-                {{ itemSlider?.area_size }} m<sup>2</sup>
-              </h4>
-              <p class="text-[15px] lg:text-sm py-1">
-                € {{ itemSlider?.price }} p/{{ itemSlider?.rent_type }}
-              </p>
-              <p class="text-sm">Neem een kijkje ></p>
+              <div class="flex flex-col items-center gap-2">
+                <h2 class="text-md lg:text-2xl font-semibold tracking-wider">
+                  {{ itemSlider?.location?.name }}
+                </h2>
+                <p class="text-[14px] lg:text-sm py-1">
+                  {{ itemSlider?.name }}
+                </p>
+              </div>
+              <div class="flex flex-col justify-center items-center mt-4 gap-2">
+                <h4 class="text-[16px] lg:text-lg font-semibold">
+                  {{ itemSlider?.area_size }} m<sup>2</sup>
+                </h4>
+                <p class="text-[15px] lg:text-sm">
+                  € {{ itemSlider?.price }} p/{{ itemSlider?.rent_type }}
+                </p>
+                <p class="text-sm pt-2">Neem een kijkje ></p>
+              </div>
             </NuxtLink>
           </swiper-slide>
         </swiper>

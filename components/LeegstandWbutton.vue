@@ -1,5 +1,5 @@
 <template>
-  <div class="grid md:grid-cols-2 mx-2 md:mx-3 lg:mx-4 items-center">
+  <div class="grid md:grid-cols-2 items-center">
     <div class="flex sm:order-1 max-w-[600px]">
       <div class="w-[70%] md:w-full">
         <!-- <svg

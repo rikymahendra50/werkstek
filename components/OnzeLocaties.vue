@@ -26,11 +26,11 @@
             <p class="text-base opacity-50">Meer filter opties</p>
           </button>
         </div>
-        <div v-if="showFilter">
-          <label for="city" class="text-base mt-3 opacity-50"
+        <div v-if="showFilter" class="">
+          <!--<label for="city" class="text-base mt-3 opacity-50"
             >Kies een locatie</label
           >
-          <div class="flex-col form-control mt-2 relative">
+           <div class="flex-col form-control mt-2 relative">
             <select
               id="city"
               class="select select-bordered dropdown z-10"
@@ -51,7 +51,46 @@
                 {{ item.name }}
               </option>
             </select>
+          </div> -->
+
+          <!-- test -->
+          <div class="relative">
+            <label for="city" class="text-base mt-3 opacity-50"
+              >Kies een locatie</label
+            >
+            <div
+              class="w-full border py-3 rounded-lg px-2 flex justify-between items-center cursor-pointer mt-2 select-none"
+              @click="variableToggleLocatieF"
+            >
+              <div class="flex items-center gap-2">
+                <img src="/images/marker-dropdown.svg" alt="markers" />
+                <p class="text-[#ADA7A7] text-base">
+                  {{ selectedCityForShow }}
+                </p>
+              </div>
+              <Icon name="ep:arrow-up-bold" class="text-[#ADA7A7] rotate-180" />
+            </div>
+
+            <div
+              class="w-full absolute bg-white mt-2 z-10 select-none"
+              v-if="variableToggleLocatie"
+            >
+              <ul
+                class="flex flex-col rounded-lg border text-[#ADA7A7] max-h-[150px] overflow-y-auto"
+              >
+                <li
+                  class="hover:bg-primary bg-white hover:text-white cursor-pointer pl-3 py-2 rounded-lg"
+                  v-for="(item, index) in city"
+                  :key="index"
+                  @click="variableToggleLocatieT(item.id, item.name)"
+                >
+                  {{ item.name }}
+                </li>
+              </ul>
+            </div>
           </div>
+
+          <!-- end test -->
           <div class="flex flex-col">
             <span class="text-base mt-3 opacity-50 pb-3">Soort locatie</span>
             <fieldset id="soortLocatie" class="grid lg:grid-cols-2 gap-2">
@@ -110,7 +149,6 @@
                 <span class="absolute top-3 right-8">€</span>
               </div>
             </div>
-
             <div class="">
               <label for="deopervlakteMin" class="text-sm mt-3 opacity-50"
                 >De opervlakte m²</label
@@ -251,6 +289,21 @@ const showAllData = () => {
   selectedMeterMax.value = "";
   selectedFunctie.value = [];
 };
+
+const variableToggleLocatie = ref();
+const selectedCityForShow = ref("Locatie");
+
+function variableToggleLocatieF() {
+  variableToggleLocatie.value = !variableToggleLocatie.value;
+}
+
+function variableToggleLocatieT(item, itemName) {
+  if (item) {
+    selectedCity.value = item;
+    selectedCityForShow.value = itemName;
+  }
+  variableToggleLocatie.value = false;
+}
 
 const {
   data: dataProduct,

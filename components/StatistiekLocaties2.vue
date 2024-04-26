@@ -43,37 +43,49 @@
           </defs>
         </svg>
         <div
-          class="absolute bottom-[30%] min-[500px]:bottom-[14%] sm:bottom-[20%] lg:bottom-[35%] xl:bottom-36 text-white ml-4 sm:ml-5"
+          class="absolute bottom-[30%] min-[500px]:bottom-[20%] sm:bottom-[20%] lg:bottom-[35%] xl:bottom-36 text-white ml-4 sm:ml-10"
         >
           <p
-            class="text-sm min-[420px]:text-base min-[520px]:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold pb-1 md:pb-4 text-shadow"
-          >
-            {{ title2 }}
-          </p>
+            v-if="!useTitle2"
+            class="text-sm min-[420px]:text-base min-[520px]:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold pb-1 md:pb-4 text-shadow xl:leading-snug tracking-widest"
+            v-html="title2"
+          ></p>
+          <p
+            v-else-if="useTitle2"
+            class="text-sm min-[420px]:text-base min-[520px]:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold pb-1 md:pb-4 text-shadow xl:leading-snug tracking-widest"
+            v-html="title22"
+          ></p>
           <p
             class="text-[8px] min-[420px]:text-[10px] min-[520px]:text-[13px] sm:text-sm md:text-base lg:text-[16px] leading-2 w-[80%] md:w-[60%] text-shadow"
-          >
-            {{ title3 }}
-          </p>
+            v-html="title3"
+          ></p>
         </div>
         <div
-          class="bg-primary grid grid-rows-1 grid-cols-3 z-10 absolute w-[80%] sm:w-[70%] content-center justify-items-center py-2 lg:py-5 rounded-[40px] px-4 lg:px-10 bottom-[-20%] sm:bottom-[-10%] right-3 lg:right-10"
+          class="bg-primary grid grid-rows-1 grid-cols-3 z-10 absolute w-[80%] sm:w-[70%] content-center justify-items-center py-2 lg:py-5 rounded-lg lg:rounded-[40px] px-2 lg:px-10 bottom-[-20%] min-[620px]:bottom-[-10%] sm:bottom-[-10%] right-3 lg:right-10"
         >
           <div class="text-white">
             <p
-              class="text-[20px] sm:text-[24px] lg:text-[36px] xl:text-[48px] font-semibold"
+              class="text-[20px] min-[620px]:text-[24px] lg:text-[36px] xl:text-[48px] font-semibold"
             >
               {{ count1 }} <span class="text-[#00985B]">+</span>
             </p>
-            <p class="text-[12px] md:text-[16px] font-normal">{{ titleBg1 }}</p>
+            <p
+              class="text-[10px] min-[620px]:text-[14px] md:text-[16px] font-normal"
+            >
+              {{ titleBg1 }}
+            </p>
           </div>
           <div class="text-white">
             <p
-              class="text-[20px] sm:text-[24px] lg:text-[36px] xl:text-[48px] font-semibold"
+              class="text-[20px] min-[620px]:text-[24px] lg:text-[36px] xl:text-[48px] font-semibold"
             >
               {{ count2 }} <span class="text-[#00985B]">+</span>
             </p>
-            <p class="text-[12px] md:text-[16px] font-normal">{{ titleBg2 }}</p>
+            <p
+              class="text-[10px] min-[620px]:text-[14px] md:text-[16px] font-normal"
+            >
+              {{ titleBg2 }}
+            </p>
           </div>
           <div class="text-white">
             <p
@@ -81,7 +93,9 @@
             >
               {{ count3 }} <span class="text-[#00985B]">+</span>
             </p>
-            <p class="text-[12px] md:text-[16px] font-normal">{{ titleBg3 }}</p>
+            <p class="text-[10px] sm:text-[14px] md:text-[16px] font-normal">
+              {{ titleBg3 }}
+            </p>
           </div>
         </div>
       </div>
@@ -92,6 +106,13 @@
 <script>
 export default {
   props: {
+    useTitle2: {
+      type: Boolean,
+      default: true,
+    },
+    title22: {
+      type: String,
+    },
     image: {
       type: String,
       required: true,

@@ -1,5 +1,6 @@
 <template>
   <floating-whatsapp />
+  <MapInteractive class="py-10" />
   <StatistiekLocatiesVideo
     video="/images/home-video.mov"
     :image="StatistiekLocatiesData?.image"
@@ -13,7 +14,6 @@
     :count2="StatistiekLocatiesData?.titleBg2.count"
     :count3="StatistiekLocatiesData?.titleBg3.count"
   />
-  <MapInteractive class="py-10" />
   <SliderLocaties :data="sliderData?.data" />
   <SliderTestimony class="my-20" />
   <FourImages />

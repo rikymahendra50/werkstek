@@ -1,17 +1,17 @@
 <template>
   <ClientOnly>
-    <div class="group hover:shadow-xl transition p-2 cursor-pointer">
+    <div class="group hover:shadow-xl transition cursor-pointer p-1 rounded-sm">
       <NuxtLink :to="link" class="flex">
         <img
           :src="imageSrc"
           alt="image-person2"
-          class="max-w-[176px] max-h-[154px] mx-2 w-full"
+          class="max-w-[176px] max-h-[154px] mr-2 w-full"
         />
         <div class="flex-col flex w-full justify-between">
           <h1 class="text-[14px] xl:text-[16px] font-bold line-clamp-2">
             {{ title }}
           </h1>
-          <p class="text-[12px] line-clamp-1">
+          <p class="text-[12px] line-clamp-2 opacity-80">
             {{ description }}
           </p>
           <div

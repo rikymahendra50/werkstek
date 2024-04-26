@@ -3,8 +3,9 @@ export default function useOnzeLocatiesData() {
     image: "/images/onze-locaties.png",
     title1: "Bekijk onze locaties",
     title2: "De Werkstek locaties",
+    title22: "De Werkstek </br> locaties",
     title3:
-      "De perfecte werkplek voor elke organisatie. Kies voor betaalbare huur in een professionele omgeving op een gunstige locatie, en maak deel uit van een ondernemende en inspirerende community.",
+      "De perfecte werkplek voor elke organisatie. Kies voor  betaalbare huur in een professionele omgeving </br> op een  gunstige locatie, en maak deel uit van een </br> ondernemende en inspirerende community.",
     titleBg1: { title: "Locaties", count: 280 },
     titleBg2: { title: "Statistiek 2", count: 15 },
     titleBg3: { title: "Statistiek 3", count: 49 },

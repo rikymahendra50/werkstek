@@ -1,8 +1,10 @@
 <template>
   <StatistiekLocaties2
+    :useTitle2="false"
     :image="StatistiekLocaties2Data.image"
     :title1="StatistiekLocaties2Data.title1"
     :title2="StatistiekLocaties2Data.title2"
+    :title22="StatistiekLocaties2Data.title22"
     :title3="StatistiekLocaties2Data.title3"
     :titleBg1="StatistiekLocaties2Data.titleBg1.title"
     :titleBg2="StatistiekLocaties2Data.titleBg2.title"

@@ -14,7 +14,6 @@
         {{ HeaderFaq.description }}
       </p>
     </div>
-
     <div
       v-for="(eachFaq, index) in Faq"
       :key="eachFaq.id"

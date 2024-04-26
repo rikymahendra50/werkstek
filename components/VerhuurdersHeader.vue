@@ -1,5 +1,5 @@
 <template>
-  <div class="py-20 relative flex items-center">
+  <div class="py-10 md:py-20 relative flex items-center">
     <div class="grid md:grid-rows-1 md:grid-cols-2 z-10 px-5 md:px-0">
       <div
         class="pl-3 sm:pl-6 md:pl-[70px] lg:pl-[80px] xl:pr-[80px] xl:pl-[106px] mx-auto flex items-center"
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="grid relative mt-5 justify-items-end md:justify-items-center">
-        <div class="z-10 w-[70%] md:w-[100%]">
+        <div class="z-10 w-[90%] min-[500px]:w-[80%] md:w-[100%]">
           <img :src="image" alt="image" />
         </div>
       </div>

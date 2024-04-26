@@ -36,7 +36,7 @@
         </div>
       </div>
       <div
-        class="grid col-span-4 md:col-span-4 ml-3 sm:ml-4 md:ml-5 items-center md:pr-4"
+        class="grid col-span-4 md:col-span-4 ml-3 sm:ml-4 md:ml-5 items-center md:pr-4 py-1"
       >
         <span class="text-[11px] sm:text-sm lg:text-base font-semibold">{{
           name
@@ -47,7 +47,7 @@
           >Address</span
         >
         <span
-          class="text-[10px] sm:text-[12px] text-ellipsis line-clamp-1 lg:line-clamp-2 opacity-80"
+          class="text-[10px] sm:text-[12px] text-ellipsis line-clamp-1 lg:line-clamp-2 opacity-90"
           v-else
           >{{ address }}</span
         >
@@ -63,7 +63,7 @@
         </div>
         <div class="flex justify-end w-full">
           <div class="flex mt-2 sm:mt-0">
-            <div
+            <!-- <div
               class="text-primary group-hover:text-secondary transition sm:w-[90%] text-[12px] sm:text-[14px] md:text-[18px] border border-primary group-hover:border-secondary px-1 sm:px-2 lg:px-4 text-center rounded-full items-center flex justify-center"
             >
               {{ detailLinkTitle }}
@@ -72,6 +72,19 @@
               class="bg-primary group-hover:bg-secondary max-w-[21px] min-h-[21px] sm:max-w-[31px] sm:min-h-[31px] lg:max-w-[41px] lg:min-h-[41px] rounded-full"
             >
               <img src="/images/arrow-right.svg" alt="arrow" />
+            </div> -->
+            <div
+              class="flex relative bottom-0 mt-2 sm:mt-4 border border-primary group-hover:border-secondary w-fit items-center rounded-full"
+            >
+              <span
+                class="py-2 pl-3 pr-2 sm:py-3 sm:pl-4 sm:pr-3 text-primary group-hover:text-secondary text-[10px] sm:text-sm font-medium"
+                >{{ detailLinkTitle }}</span
+              >
+              <div
+                class="bg-primary group-hover:bg-secondary w-[25px] h-[25px] sm:w-[37px] sm:h-[37px] rounded-full mr-1"
+              >
+                <img src="/images/arrow-right.svg" alt="arrow" />
+              </div>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div class="custom-wrapper pt-3">
+    <div class="custom-wrapper md:pt-3">
       <span class="text-sm font-medium opacity-50">{{ title }}</span>
       <div class="price-input-container">
         <div class="slider-container my-5">

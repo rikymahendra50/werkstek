@@ -1,5 +1,5 @@
 <template>
-  <section class="container-custom my-10">
+  <section class="container-custom">
     <div class="grid sm:grid-cols-12">
       <div
         class="col-span-6 grid grid-cols-12 min-h-[170px] sm:min-h-[200px] gap-1"

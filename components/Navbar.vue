@@ -6,7 +6,7 @@
       <!-- Header logo -->
       <!-- Mobile toggle -->
       <div class="lg:hidden flex">
-        <button name="toggle" @click="drawer" label="toggle">
+        <button name="toggle" @click="drawer">
           <svg
             class="h-8 w-8 fill-current text-quaternary"
             fill="none"
@@ -23,89 +23,79 @@
       <!-- Navbar -->
       <div class="hidden lg:flex z-[99999] items-center justify-between w-full">
         <ul
-          class="flex space-x-5 items-center justify-between md:gap-1 pr-10 bg-primary p-1 rounded-full text-tertiary md:w-[78%] xl:w-[80%]"
+          class="flex items-center md:gap-1 bg-primary p-1 rounded-full text-tertiary md:w-[75%]"
         >
           <li class="bg-white rounded-full">
             <NuxtLink to="/">
               <Werkstek />
             </NuxtLink>
           </li>
-          <li class="text-sm">
-            <NuxtLink
-              to="/voor-verhuurders"
-              class="navlink"
-              :class="{ active: isRouteActive('/voor-verhuurders') }"
-              >Verhuur</NuxtLink
-            >
-          </li>
-          <li class="text-sm">
-            <NuxtLink
-              to="/onze-locaties"
-              class="navlink"
-              :class="{ active: isRouteActive('/onze-locaties') }"
-              >Onze locaties</NuxtLink
-            >
-          </li>
-          <li
-            class="relative group flex z-10 pr-1 pt-1 dropdown dropdown-hover text-sm"
-          >
-            <NuxtLink
-              to="/over-werkstek"
-              class="navlink"
-              tabindex="0"
-              :class="{ active: isRouteActive('/over-werkstek') }"
-              >Over werkstek</NuxtLink
-            >
-          </li>
-          <li class="dropdown">
-            <span
-              tabindex="0"
-              class="bg-transparent border-none text-white font-thin hover:bg-transparent cursor-pointer navlink text-sm"
-              :class="{ active: isUpdateActive() }"
-            >
-              Werkstek Update
-            </span>
-            <ul
-              tabindex="0"
-              class="ml-[-20px] dropdown-content rounded-sm z-[1] menu p-1 shadow bg-base-100 w-48 text-black text-sm"
-            >
-              <li class="text-sm">
-                <NuxtLink
-                  to="/onze-vacatures"
-                  class="rounded-none hover:bg-primary hover:text-white"
-                  :class="{ active: isRouteActive('/onze-vacatures') }"
-                >
-                  Werkstek Vacatures
-                </NuxtLink>
-              </li>
-              <li class="text-sm">
-                <NuxtLink
-                  to="/blog"
-                  class="rounded-none hover:bg-primary hover:text-white"
-                  :class="{ active: isRouteActive('/blog') }"
-                >
-                  Werkstek Blog
-                </NuxtLink>
-              </li>
-              <li>
-                <NuxtLink
-                  to="/werkstek-community"
-                  class="rounded-none hover:bg-primary hover:text-white"
-                  :class="{ active: isRouteActive('/werkstek-community') }"
-                >
-                  Werkstek Community
-                </NuxtLink>
-              </li>
-            </ul>
-          </li>
-          <li class="text-sm">
-            <NuxtLink
-              to="/faq"
-              class="pr-1 navlink"
-              :class="{ active: isRouteActive('/faq') }"
-              >FAQ</NuxtLink
-            >
-          </li>
+          <div class="flex justify-evenly items-center w-full font-medium">
+            <li class="text-sm">
+              <NuxtLink
+                to="/onze-locaties"
+                class="navlink"
+                :class="{ active: isRouteActive('/onze-locaties') }"
+                >Onze locaties</NuxtLink
+              >
+            </li>
+            <li class="text-sm">
+              <NuxtLink
+                to="/voor-verhuurders"
+                class="navlink"
+                :class="{ active: isRouteActive('/voor-verhuurders') }"
+                >Verhuur</NuxtLink
+              >
+            </li>
+            <li class="dropdown relative">
+              <span
+                tabindex="0"
+                class="bg-transparent border-none text-white font-thin hover:bg-transparent cursor-pointer navlink text-sm"
+                :class="{ active: isUpdateActive2() }"
+              >
+                Over werkstek
+              </span>
+              <ul
+                tabindex="0"
+                class="dropdown-content rounded-sm z-[1] menu p-1 shadow bg-base-100 text-black text-sm mt-5 w-[180px] absolute right-[-40px]"
+              >
+                <li class="text-sm">
+                  <NuxtLink
+                    to="/over-werkstek"
+                    class="rounded-none hover:bg-primary hover:text-white"
+                    :class="{ active: isRouteActive('/over-werkstek') }"
+                  >
+                    Over Werkstek
+                  </NuxtLink>
+                </li>
+                <li class="text-sm">
+                  <NuxtLink
+                    to="/onze-vacatures"
+                    class="rounded-none hover:bg-primary hover:text-white"
+                    :class="{ active: isRouteActive('/onze-vacatures') }"
+                  >
+                    Werkstek Vacatures
+                  </NuxtLink>
+                </li>
+              </ul>
+            </li>
+            <li class="text-sm">
+              <NuxtLink
+                to="/blog"
+                class="navlink"
+                :class="{ active: isRouteActive('/blog') }"
+                >Blog</NuxtLink
+              >
+            </li>
+            <li class="text-sm">
+              <NuxtLink
+                to="/werkstek-community"
+                class="navlink"
+                :class="{ active: isRouteActive('/werkstek-community') }"
+                >Community</NuxtLink
+              >
+            </li>
+          </div>
         </ul>
         <ButtonSM
           buttonLink="/contact"
@@ -144,7 +134,6 @@
             name="drawer-menu"
             class="absolute top-0 right-0 mt-4 mr-4"
             @click="isOpen = false"
-            label="close"
           >
             <svg
               class="w-6 h-6"
@@ -184,15 +173,53 @@
               >Onze locaties</NuxtLink
             >
           </li>
+          <li class="cursor-pointer dropdown w-full">
+            <details class="dropdown">
+              <summary
+                tabindex="1"
+                class="bg-transparent border-none my-4 font-thin cursor-pointer gap-2 flex items-center"
+              >
+                <span> Over Werkstek</span>
+                <Icon
+                  name="radix-icons:triangle-up"
+                  class="text-primary rotate-180 w-7 h-7"
+                />
+              </summary>
+              <ul
+                tabindex="1"
+                class="ml-[-20px] dropdown-content z-[1] menu p-1 shadow bg-base-100 rounded-sm text-black"
+              >
+                <li class="text-sm">
+                  <NuxtLink to="/over-werkstek" @click="isOpen = false">
+                    Over Werkstek
+                  </NuxtLink>
+                </li>
+                <hr />
+                <li class="text-sm">
+                  <NuxtLink to="/onze-vacatures" @click="isOpen = false">
+                    Werstek Vacatures
+                  </NuxtLink>
+                </li>
+              </ul>
+            </details>
+          </li>
           <li class="cursor-pointer">
             <NuxtLink
-              to="/over-werkstek"
+              to="/blog"
               @click="isOpen = false"
               class="my-4 inline-block"
-              >Over werkstek</NuxtLink
+              >Blog</NuxtLink
             >
           </li>
-          <li class="cursor-pointer dropdown w-full">
+          <li class="cursor-pointer">
+            <NuxtLink
+              to="/werkstek-community"
+              @click="isOpen = false"
+              class="my-4 inline-block"
+              >Community</NuxtLink
+            >
+          </li>
+          <!-- <li class="cursor-pointer dropdown w-full">
             <div
               tabindex="1"
               class="bg-transparent border-none my-4 inline-block font-thin cursor-pointer"
@@ -222,14 +249,14 @@
                 </NuxtLink>
               </li>
             </ul>
-          </li>
+          </li> -->
           <li class="cursor-pointer">
-            <NuxtLink
+            <!-- <NuxtLink
               to="/faq"
               @click="isOpen = false"
               class="my-4 inline-block"
               >FAQ</NuxtLink
-            >
+            > -->
           </li>
           <li class="cursor-pointer">
             <NuxtLink
@@ -262,8 +289,13 @@ export default {
     isUpdateActive() {
       return (
         this.$route.path.startsWith("/blog") ||
-        this.$route.path.startsWith("/onze-vacatures") ||
         this.$route.path.startsWith("/werkstek-community")
+      );
+    },
+    isUpdateActive2() {
+      return (
+        this.$route.path.startsWith("/onze-vacatures") ||
+        this.$route.path.startsWith("/over-werkstek")
       );
     },
   },

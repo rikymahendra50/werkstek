@@ -10,10 +10,12 @@
       id="map"
       :class="`relative w-full h-[420px] lg:h-[619px] z-[-999] rounded-2xl`"
     ></div>
-    <div class="mx-2 sm:mx-10 container-custom">
-      <div class="bg-tertiary box-shadow mt-[-100px] z-10 rounded-[40px]">
+    <div class="sm:mx-10 hidden">
+      <div
+        class="bg-tertiary box-shadow mt-[-100px] z-10 rounded-[20px] lg:rounded-[30px]"
+      >
         <div
-          class="min-h-[278px] md:grid md:grid-cols-3 items-center h-full px-10 font-semibold gap-1 md:gap-3 py-9"
+          class="min-h-[278px] md:grid md:grid-cols-3 items-center h-full px-6 sm:px-10 font-semibold gap-1 md:gap-3 py-5 sm:py-9"
         >
           <p
             class="text-[25px] font-bold lg:leading-10 lg:text-3xl text-secondary mb-4 md:mb-0"
@@ -25,16 +27,15 @@
             :key="index"
             class="flex flex-col"
           >
-            <p class="text-lg sm:text-[14px] lg:pl-3 lg:pb-2 pt-2">
+            <p class="text-[14px] pb-3 pl-2 lg:pl-3 lg:pb-2 mt-2">
               {{ category.title }}
             </p>
             <div class="relative" v-if="category.title === 'Zoek een Locatie'">
               <div
                 @click="toggleDropdown(category)"
-                class="italic w-full flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-2 pl-4 min-h-[50px] cursor-pointer text-quaternary sm:text-[14px] mb-2 md:mb-0"
+                class="italic w-full flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-2 pl-4 min-h-[40px] sm:min-h-[50px] cursor-pointer text-quaternary sm:text-[14px] mb-5 md:mb-0"
               >
                 {{ category.selectedOption }}
-
                 <div
                   class="max-w-[30px] min-h-[30px] bg-quaternary rounded-full flex items-center justify-center"
                 >
@@ -60,7 +61,7 @@
               </ul>
             </div>
             <div v-else-if="category.title === 'Zoek op een prijs'">
-              <SliderRangeMap
+              <!-- <SliderRangeMap
                 :idInputMin="'priceMin'"
                 :idInputMax="'priceMax'"
                 :minPrice="0"
@@ -70,7 +71,7 @@
                 :priceGap="highestPrice"
                 class="my-2"
                 @price-change="handlePriceChange"
-              />
+              /> -->
             </div>
           </div>
           <div class="text-tertiary grid justify-end md:col-span-3 mt-4">
@@ -78,7 +79,7 @@
               @click="performSearch"
               class="bg-primary hover:bg-secondary transition-all rounded-full min-h-[48px] flex items-center gap-4 pl-3 pr-1"
             >
-              <p class="font-semibold text-sm">Uitgebreid zoeken</p>
+              <p class="font-semibold text-sm pl-2">Uitgebreid zoeken</p>
               <div
                 class="bg-tertiary flex items-center justify-center rounded-full min-w-[40px] min-h-[40px]"
               >
@@ -103,6 +104,114 @@
         </div>
       </div>
     </div>
+    <!-- test -->
+    <div
+      class="bg-tertiary box-shadow mt-[-100px] md:mt-[-200px] z-10 rounded-[20px] lg:rounded-[30px] md:h-[188px] mx-3 px-5 grid md:grid-cols-12 items-center gap-4 pt-6 md:pt-0"
+    >
+      <!-- col1 -->
+      <div class="md:col-span-4 flex md:justify-center items-center">
+        <img
+          src="/images/building-map-interactive.png"
+          alt="building-icon"
+          class=""
+        />
+        <p
+          class="text-secondary text-2xl lg:text-3xl font-medium z-10 ml-[-40px]"
+        >
+          Waar bent u <br />
+          naar op zoek?
+        </p>
+      </div>
+      <!-- col2 -->
+      <div class="grid md:grid-cols-12 md:col-span-6 items-center">
+        <div
+          v-for="(category, index) in categories"
+          :key="index"
+          class="col-span-6"
+        >
+          <p class="text-[14px] pb-3 pl-2 lg:pl-3 lg:pb-2 mt-2">
+            {{ category.title }}
+          </p>
+          <div
+            class="relative mr-5"
+            v-if="category.title === 'Zoek een Locatie'"
+          >
+            <div
+              @click="toggleDropdown(category)"
+              class="italic w-full flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-2 pl-4 min-h-[40px] sm:min-h-[50px] cursor-pointer sm:text-[14px] mb-5 md:mb-0 text-[#676767]"
+            >
+              {{ category.selectedOption }}
+              <div
+                class="max-w-[30px] min-h-[30px] bg-quaternary rounded-full flex items-center justify-center"
+              >
+                <img
+                  src="/images/arrow-right.svg"
+                  alt="arrow"
+                  class="rotate-90"
+                />
+              </div>
+            </div>
+            <ul
+              v-if="category.showDropdown"
+              class="absolute text-[10px] dropdownMap max-h-[200px] overflow-hidden overflow-y-auto lg:text-[14px] top-[100%] left-0 bg-[#F7F7F7] rounded-[5px] mt-1 w-full text-quaternary z-20"
+            >
+              <li
+                v-for="(item, index) in city"
+                :key="index"
+                @click="selectOptionCity(category, item.name, item.id)"
+                class="cursor-pointer hover:bg-secondary transition hover:text-tertiary px-3 py-2"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
+          <div
+            class="relative mr-5"
+            v-if="category.title === 'Zoek op een prijs'"
+          >
+            <div
+              @click="toggleDropdown(category)"
+              class="italic w-full flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-2 pl-4 min-h-[40px] sm:min-h-[50px] cursor-pointer sm:text-[14px] mb-5 md:mb-0 text-[#676767]"
+            >
+              € {{ category.selectedOption }}
+              <div
+                class="max-w-[30px] min-h-[30px] bg-quaternary rounded-full flex items-center justify-center"
+              >
+                <img
+                  src="/images/arrow-right.svg"
+                  alt="arrow"
+                  class="rotate-90"
+                />
+              </div>
+            </div>
+            <ul
+              v-if="category.showDropdown"
+              class="absolute text-[10px] dropdownMap max-h-[200px] overflow-hidden overflow-y-auto lg:text-[14px] top-[100%] left-0 bg-[#F7F7F7] rounded-[5px] mt-1 w-full text-quaternary z-20"
+            >
+              <li
+                v-for="(item, index) in numericPricesT"
+                :key="index"
+                @click="selectOptionPrice(category, item, item)"
+                class="cursor-pointer hover:bg-secondary transition hover:text-tertiary px-3 py-2"
+              >
+                € {{ item }}
+              </li>
+            </ul>
+          </div>
+          <!-- col3 -->
+        </div>
+      </div>
+      <!-- col3 -->
+      <div class="flex justify-self-end mb-5">
+        <div
+          class="btn bg-primary text-white md:mt-5 hover:bg-primary w-[65px] h-[60px] lg:w-[76px] lg:h-[76px] rounded-[20px]"
+          @click="performSearch"
+        >
+          <Icon name="iconamoon:search-thin" class="text-white w-10 h-10" />
+        </div>
+      </div>
+    </div>
+    <!-- test2 -->
   </section>
 </template>
 
@@ -165,23 +274,34 @@ const { data: locationData } = await useFetch("/locations", {
 });
 
 const numericPrices = data.value.data.map((item) => parseFloat(item.price));
-
+const uniqueNumericPrices = [];
+numericPrices.forEach((price) => {
+  if (!uniqueNumericPrices.includes(price)) {
+    uniqueNumericPrices.push(price);
+  }
+});
+let numericPricesT = ref(uniqueNumericPrices);
 const highestPrice = Math.max(...numericPrices);
+let minestPrice = Math.min(...numericPrices);
 
 let infoWindowTimeout;
 
 const arrayLocation = locationData?.value?.data?.map((item) => item);
 let city = ref(arrayLocation);
+let firstLocation = ref(arrayLocation[0]?.name);
 
 const categories = ref([
   {
     title: "Zoek een Locatie",
-    selectedOption: "Utrecht",
+    selectedOption: firstLocation,
     showDropdown: false,
     options: city,
   },
   {
     title: "Zoek op een prijs",
+    selectedOption: minestPrice,
+    showDropdown: false,
+    options: numericPricesT,
   },
 ]);
 
@@ -192,20 +312,26 @@ const currentInfoWindow = ref(null);
 
 const locations = data.value.data;
 
-const selectedCity = ref();
-const selectedMinPrice = ref();
+const selectedCity = ref(1);
+const selectedMinPrice = ref(minestPrice);
 const selectedMaxPrice = ref();
 const filteredData = ref();
 
-function handlePriceChange(priceData) {
-  selectedMinPrice.value = priceData.minPrice;
-  selectedMaxPrice.value = priceData.maxPrice;
-}
+// function handlePriceChange(priceData) {
+//   selectedMinPrice.value = priceData.minPrice;
+//   selectedMaxPrice.value = priceData.maxPrice;
+// }
 
-const selectOption = (category, option, id) => {
+const selectOptionCity = (category, option, id) => {
   category.selectedOption = option;
   category.showDropdown = false;
   selectedCity.value = id;
+};
+
+const selectOptionPrice = (category, option, id) => {
+  category.selectedOption = option;
+  category.showDropdown = false;
+  selectedMinPrice.value = id;
 };
 
 const toggleDropdown = (category) => {
@@ -221,7 +347,6 @@ async function performSearch() {
     params["filter[min_price]"] = selectedMinPrice.value;
     params["filter[max_price]"] = selectedMaxPrice.value;
 
-    // await new Promise((resolve) => setTimeout(resolve, 900));
     const response = await axiosRequest.get("/products", { params: params });
     filteredData.value = response.data;
     findMap(filteredData.value);
@@ -232,13 +357,9 @@ async function performSearch() {
 }
 
 const recenterMap = (filteredData) => {
-  if (
-    filteredData.value &&
-    filteredData.value.data &&
-    filteredData.value.data.length > 0
-  ) {
+  if (filteredData && filteredData.data && filteredData.data.length > 0) {
     const bounds = new google.maps.LatLngBounds();
-    filteredData.value.data.forEach((item) => {
+    filteredData.data.forEach((item) => {
       bounds.extend(
         new google.maps.LatLng(
           parseFloat(item.latitude),
@@ -311,8 +432,8 @@ let hoverInfoWindow = null;
 
 const setupMap = () => {
   map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 52.14824629295209, lng: 5.595341995302892 },
-    zoom: 9,
+    center: { lat: 52.29214034154223, lng: 4.945034078830406 },
+    zoom: 10,
     fullscreenControl: false,
     zoomControl: false,
     keyboardShortcuts: false,
@@ -322,7 +443,12 @@ const setupMap = () => {
   const iconBase = "/images";
 
   const icon = {
-    url: iconBase + "/icon-flag.png",
+    url: iconBase + "/icon-marker-regular.png",
+    scaledSize: new google.maps.Size(40, 40),
+  };
+
+  const icon2 = {
+    url: iconBase + "/icon-marker-premium.png",
     scaledSize: new google.maps.Size(40, 40),
   };
 
@@ -330,25 +456,29 @@ const setupMap = () => {
     const lat = parseFloat(location.latitude);
     const lng = parseFloat(location.longitude);
 
+    // console.log(location.level_type.name);
+
+    let selectedIcon = location.level_type.name === "Regular" ? icon : icon2;
+
     const marker = new google.maps.Marker({
       position: { lat: lat, lng: lng },
       map: map,
       title: location.name,
-      icon: icon,
+      icon: selectedIcon,
       details: location,
     });
 
     const contentString = `
       <a href="onze-locaties/${location?.slug}" class="max-w-[190px] w-full flex flex-col text-end">
         <div class="relative">
-          <img src="${location?.location?.image}" alt="${location?.name}" class="w-full min-h-[100px]">
+          <img src="${location?.location?.image}" alt="${location?.name}" class="w-full min-h-[140px]">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
         </div>
-        <div class="px-2 py-5 pb-3 relative">
+        <div class="pr-5 py-5 pb-4 relative">
           <h2 class="text-primary mt-4">${location?.name}</h2>
           <p class="text-black text-[10px] my-2">Prijs: $${location?.price}</p>
           <p>${location?.area_size}&nbsp<span>m<sup>2</sup></span></p>
-          <img src="/images/icon-werstek.svg" alt="icon-werstek" class="absolute right-3 top-[-5px]" />
+          <img src="/images/icon-werstek.svg" alt="icon-werstek" class="absolute right-5 top-[-5px]" />
         </div>
       </a>
     `;
@@ -471,88 +601,3 @@ const setBoundsForMarkers = () => {
   display: none !important;
 }
 </style>
-
-<!-- <template>
-  <div class="overflow-hidden relative flex justify-center rounded-xl">
-    <GMapMap
-      :center="center"
-      :zoom="10"
-      map-type-id="terrain"
-      class="rounded-xl"
-      style="width: 90vw; height: 45rem; border-radius: 20px"
-      :options="{
-        zoomControl: false,
-        mapTypeControl: false,
-        scaleControl: false,
-        streetViewControl: true,
-        rotateControl: false,
-        fullscreenControl: false,
-      }"
-    >
-      <GMapCluster
-        :minimumClusterSize="2"
-        :zoomOnClick="true"
-        :styles="clusterIcon"
-      >
-        <GMapMarker
-          :key="index"
-          v-for="(m, index) in markers"
-          :position="m.position"
-          :clickable="true"
-          :icon="{
-            url: '/images/icon-flag.png',
-            scaledSize: { width: 50, height: 50 },
-          }"
-          @click="openMarker(m.id)"
-        >
-          <GMapInfoWindow
-            :closeclick="true"
-            @closeclick="openMarker(null)"
-            :opened="openedMarkerID === m.id"
-          >
-            <div>I am in info window {{ m.id }}</div>
-          </GMapInfoWindow>
-        </GMapMarker>
-      </GMapCluster>
-    </GMapMap>
-  </div>
-</template>
-
-<script setup>
-const openedMarkerID = ref(null);
-const center = ref({
-  lat: 51.093048,
-  lng: 6.84212,
-});
-
-const markers = ref([
-  {
-    id: 1,
-    position: {
-      lat: 51.093048,
-      lng: 6.84212,
-    },
-  },
-  {
-    id: 2,
-    position: {
-      lat: 51.198429,
-      lng: 6.69529,
-    },
-  },
-]);
-
-function openMarker(id) {
-  openedMarkerID.value = id;
-}
-
-const clusterIcon = [
-  {
-    textColor: "white",
-    url: "/images/cluster-icon.svg",
-    height: 30,
-    width: 30,
-    padding: "40px",
-  },
-];
-</script> -->

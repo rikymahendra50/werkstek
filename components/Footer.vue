@@ -119,17 +119,22 @@ const { data: types } = useFetch("/types", {
   ...requestOptions,
 });
 
+const { start, stop } = useTimeoutFn(() => {
+  replaceWindow();
+}, 1000);
+
 function handleLocation(locationId) {
   selectedCity.value = locationId;
+
   window.location.replace(
-    `/onze-locaties?page=1&location_id=${selectedCity.value}&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=`
+    `/onze-locaties?page=1&location_id=${selectedCity.value}&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
   );
 }
 
 function handleType(typeId) {
   selectedType.value = typeId;
   window.location.replace(
-    `/onze-locaties?page=1&location_id=${selectedCity.value}&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=`
+    `/onze-locaties?page=1&location_id=${selectedCity.value}&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
   );
 }
 </script>

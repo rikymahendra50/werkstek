@@ -61,7 +61,7 @@ const setupMap = () => {
   clearMarkers();
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 52.21314997541194, lng: 5.3982948103810795 },
-    zoom: 6,
+    zoom: 7.9,
     fullscreenControl: false,
     zoomControl: false,
     keyboardShortcuts: false,

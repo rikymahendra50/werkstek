@@ -18,7 +18,7 @@
       v-for="(m, index) in markers"
       :position="m.position"
       :icon="{
-        url: '/images/marker-red.svg',
+        url: '/images/icon-markers-red.png',
         scaledSize: { width: 50, height: 50 },
       }"
       :clickable="true"

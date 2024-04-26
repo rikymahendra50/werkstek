@@ -7,8 +7,10 @@
         class="absolute w-[50%] lg:w-[30%]"
       />
       <span class="text-primary text-[16px]">{{ title }}</span>
-      <span class="font-semibold text-[25px] sm:text-[44px]">
-        {{ secondTitle }}
+      <span
+        class="font-semibold text-[25px] sm:text-[44px]"
+        v-html="secondTitle"
+      >
       </span>
       <span class="text-sm md:w-[50%]">
         {{ description }}

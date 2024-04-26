@@ -1,11 +1,21 @@
 <template>
   <HeaderWCity
     title1="Bekijk onze locaties"
-    title2="Lees de Werkstek blogs & updates"
+    title2="Lees de Werkstek </br> blogs & updates"
     description="Lees hier onze interessante blogs"
   />
 
-  <Blog :showTitleHeader="false" class="my-10" />
+  <div class="container-custom grid gap-3 pt-8">
+    <p class="text-[40px] text-[#000000] font-medium">
+      Lees onze laatste blog’s
+    </p>
+    <p class="text-sm text-[#777777]">
+      Lorem ipsum dolor sit amet, solor ut adipiscing elit. Lorem ipsum <br />
+      dolor sit amet, solor ut adipiscing elit.
+    </p>
+  </div>
+
+  <Blog class="my-10" />
 
   <Blog2 :ShowTitleCategory="true" />
 

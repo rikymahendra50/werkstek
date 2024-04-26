@@ -39,7 +39,6 @@
 </template>
 
 <script setup>
-// const { contactSchema } = useSchema();
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
@@ -48,20 +47,8 @@ const dataForm = ref({
   email: undefined,
 });
 
-// const initialValues = {
-//   ...dataForm.value,
-// };
-
 async function onSubmit(values, ctx) {
   loading.value = true;
-
-  // for (const key in dataForm.value) {
-  //   if (key !== "email") {
-  //     if (dataForm.value[key] === "") {
-  //       dataForm.value[key] = "-";
-  //     }
-  //   }
-  // }
 
   const { data, error } = await useFetch("/newsletter-subscribers", {
     method: "POST",

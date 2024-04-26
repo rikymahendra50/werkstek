@@ -11,16 +11,16 @@
       >
         <div class="w-[90%] lg:w-[60%] grid md:gap-2">
           <p
-            class="text-[10px] sm:text-[12px] md:text-[14px] font-bold text-[#404040] tracking-widest min-[320px]:pt-2 min-[420px]:pt-0"
+            class="text-[10px] sm:text-[12px] md:text-[14px] xl:text-base font-bold text-[#404040] tracking-widest min-[320px]:pt-2 min-[420px]:pt-0"
           >
             {{ title1 }}
           </p>
           <p
-            class="text-lg md:text-2xl leading-normal lg:w-[60%] pt-2 font-bold"
+            class="text-lg md:text-2xl xl:text-3xl leading-normal md:leading-normal tracking-wider lg:w-[60%] pt-2 font-bold"
           >
             {{ title2 }}
           </p>
-          <p class="text-[12px] md:text-base font-normal lg:w-[80%] pt-2">
+          <p class="text-[12px] md:text-sm font-normal lg:w-[80%] pt-2">
             {{ title3 }}
           </p>
         </div>

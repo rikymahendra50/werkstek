@@ -158,13 +158,13 @@
         >
           <Icon name="ant-design:clear-outlined" />
         </button>
-
         <!-- <button
           @click="editor.chain().focus().setHardBreak().run()"
           class="btn btn-sm btn-square border-2 border-orange-700"
         >
           <Icon name="icon-park-outline:paragraph-break" />
         </button> -->
+        <!-- <button @click="addImage">add image from URL</button> -->
         <button
           @click="editor.chain().focus().undo().run()"
           :disabled="!editor.can().chain().focus().undo().run()"
@@ -221,6 +221,14 @@ const contentClass = computed(() => {
   }
   return " prose-sm p-2 min-h-[100px] mx-auto focus:outline-none border border-gray-300 rounded-md";
 });
+
+// function addImage() {
+//   const url = window.prompt("URL");
+
+//   if (url) {
+//     this.editor.chain().focus().setImage({ src: url }).run();
+//   }
+// }
 
 const editor = useEditor({
   content: props.modelValue,

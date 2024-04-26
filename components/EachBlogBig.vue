@@ -4,7 +4,7 @@
       class="overflow-hidden sm:mr-2 max-w-[366px] min-[420px]:w-[50%] hover:shadow-md transition flex flex-col group cursor-pointer relative"
     >
       <NuxtLink :to="link" class="card h-full mx-2">
-        <div class="min-h-[170px] sm:min-h-[200px] md:min-h-[250px]">
+        <div class="min-h-[130px] sm:min-h-[200px] md:min-h-[250px]">
           <img
             :src="imageSrc"
             alt="imageBlog"
@@ -18,23 +18,21 @@
             {{ title }}
           </span>
           <p
-            class="font-normal text-[12px] sm:text-[14px] md:text-[16px] line-clamp-2 my-2 min-h-[40px] sm:min-h-[70px]"
+            class="font-normal text-[12px] sm:text-[14px] line-clamp-2 my-2 min-h-[40px] sm:min-h-[70px] text-[#383838] opacity-80"
           >
             {{ description }}
           </p>
-          <div class="flex relative bottom-0 mt-2 sm:mt-4">
-            <div class="flex h-full w-full">
-              <div
-                class="text-primary group-hover:text-secondary group-hover:border-secondary transition rounded-full text-[12px] sm:text-[16px] md:text-[20px] border border-primary px-2 w-full min-[420px]:w-[50%] md:w-[60%] lg:w-[60%] xl:w-[55%] text-center items-center flex justify-center"
-              >
-                Lees Verder
-              </div>
-              <NuxtLink
-                :to="link"
-                class="bg-primary group-hover:bg-secondary max-w-[41px] min-h-[41px] rounded-full"
-              >
-                <img src="/images/arrow-right.svg" alt="arrow" />
-              </NuxtLink>
+          <div
+            class="flex relative bottom-0 mt-2 sm:mt-4 border border-primary group-hover:border-secondary w-fit items-center rounded-full"
+          >
+            <span
+              class="py-2 pl-3 pr-2 sm:py-3 sm:pl-6 sm:pr-3 text-primary group-hover:text-secondary text-[10px] sm:text-sm font-medium"
+              >Lees Verder</span
+            >
+            <div
+              class="bg-primary group-hover:bg-secondary w-[25px] h-[25px] sm:w-[37px] sm:h-[37px] rounded-full mr-1"
+            >
+              <img src="/images/arrow-right.svg" alt="arrow" />
             </div>
           </div>
         </div>
