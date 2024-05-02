@@ -48,6 +48,15 @@
                     />
                   </NuxtLink>
                   <NuxtLink
+                    :to="`/admin/onze-locaties/add-video/${item.slug}`"
+                    class="btn btn-sm normal-case btn-ghost btn-square"
+                  >
+                    <Icon
+                      name="fluent:video-add-24-filled"
+                      class="text-black"
+                    />
+                  </NuxtLink>
+                  <NuxtLink
                     :to="`/admin/onze-locaties/edit-locaties/${item.slug}`"
                     class="btn btn-sm normal-case btn-ghost btn-square"
                   >

@@ -1,4 +1,5 @@
 <template>
+  <div class="mt-28"></div>
   <HeaderWCity
     title1="Onze community"
     title2="De Werkstek community"

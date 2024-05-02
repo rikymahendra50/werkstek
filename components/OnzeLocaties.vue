@@ -437,6 +437,19 @@ onMounted(() => {
     }
   );
 
+  watch(
+    () => route.query,
+    (newValue, oldValue) => {
+      if (route.query.location_id) {
+        selectedCity.value = route.query.location_id;
+      }
+      if (route.query.type_id) {
+        selectedSoortLocatie.value = route.query.type_id;
+      }
+      start();
+    }
+  );
+
   if (route.query.page) {
     page.value = route.query.page;
   }

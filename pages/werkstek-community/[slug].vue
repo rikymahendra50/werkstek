@@ -1,4 +1,5 @@
 <template>
+  <div class="mt-28"></div>
   <div v-if="data && data?.data">
     <EachBlog
       typeArticle="Community"

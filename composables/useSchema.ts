@@ -56,6 +56,13 @@ export default function () {
     })
   );
 
+  const inputVideoSchema = toTypedSchema(
+    object({
+      video: z.instanceof(File),
+      thumbnail: z.instanceof(File),
+    })
+  );
+
   const blogSchema = toTypedSchema(
     object({
       image: z.instanceof(File),
@@ -226,5 +233,6 @@ export default function () {
     otpSchema,
     resetPasswordSchema,
     updatePasswordSchema,
+    inputVideoSchema,
   };
 }

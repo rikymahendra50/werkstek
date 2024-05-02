@@ -27,23 +27,40 @@
           </button>
         </div>
         <div v-if="showFilter">
-          <span class="text-base mt-3 opacity-50">Kies een locatie</span>
-          <div class="flex-col form-control mt-2">
-            <select
-              id="city"
-              class="select select-bordered dropdown"
-              v-model="selectedCity"
+          <div class="relative">
+            <label for="city" class="text-base mt-3 opacity-50"
+              >Kies een locatie</label
             >
-              <option disabled selected>Locatie</option>
-              <option
-                class="text-sm flex items-center p-5"
-                v-for="(item, index) in city"
-                :key="index"
-                :value="item.id"
+            <div
+              class="w-full border py-3 rounded-lg px-2 flex justify-between items-center cursor-pointer mt-2 select-none"
+              @click="variableToggleLocatieF"
+            >
+              <div class="flex items-center gap-2">
+                <img src="/images/marker-dropdown.svg" alt="markers" />
+                <p class="text-[#ADA7A7] text-base">
+                  {{ selectedCityForShow }}
+                </p>
+              </div>
+              <Icon name="ep:arrow-up-bold" class="text-[#ADA7A7] rotate-180" />
+            </div>
+
+            <div
+              class="w-full absolute bg-white mt-2 z-10 select-none"
+              v-if="variableToggleLocatie"
+            >
+              <ul
+                class="flex flex-col rounded-lg border text-[#ADA7A7] max-h-[150px] overflow-y-auto"
               >
-                {{ item.name }}
-              </option>
-            </select>
+                <li
+                  class="hover:bg-primary bg-white hover:text-white cursor-pointer pl-3 py-2 rounded-lg"
+                  v-for="(item, index) in city"
+                  :key="index"
+                  @click="variableToggleLocatieT(item.id, item.name)"
+                >
+                  {{ item.name }}
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="flex flex-col">
             <p class="text-base mt-3 opacity-50 pb-3">Soort locatie</p>
@@ -126,7 +143,6 @@
           </div>
         </div>
       </div>
-
       <div class="md:col-span-8 py-5 overflow-auto">
         <div
           class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
@@ -227,6 +243,21 @@ const {
     }
   )
 );
+
+const variableToggleLocatie = ref();
+const selectedCityForShow = ref("Locatie");
+
+function variableToggleLocatieF() {
+  variableToggleLocatie.value = !variableToggleLocatie.value;
+}
+
+function variableToggleLocatieT(item, itemName) {
+  if (item) {
+    selectedCity.value = item;
+    selectedCityForShow.value = itemName;
+  }
+  variableToggleLocatie.value = false;
+}
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();

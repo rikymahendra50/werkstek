@@ -17,10 +17,7 @@
       :key="index"
       v-for="(m, index) in markers"
       :position="m.position"
-      :icon="{
-        url: '/images/icon-markers-red.png',
-        scaledSize: { width: 50, height: 50 },
-      }"
+      :icon="getMarkerIcon(levelType.name)"
       :clickable="true"
       @click="center = m.position"
     >
@@ -32,6 +29,7 @@
 const props = defineProps({
   latitude: {},
   longitude: {},
+  levelType: {},
 });
 
 const center = ref({
@@ -47,4 +45,23 @@ const markers = ref([
     },
   },
 ]);
+
+function getMarkerIcon(levelTypeName) {
+  if (levelTypeName == "Regular") {
+    return {
+      url: "/images/icon-marker-regular.png",
+      scaledSize: { width: 50, height: 50 },
+    };
+  } else if (levelTypeName == "Premium") {
+    return {
+      url: "/images/icon-marker-premium.png",
+      scaledSize: { width: 50, height: 50 },
+    };
+  } else {
+    return {
+      url: "/images/icon-marker-red.png",
+      scaledSize: { width: 50, height: 50 },
+    };
+  }
+}
 </script>

@@ -1,4 +1,5 @@
 <template>
+  <div class="mt-32"></div>
   <OnzeLocatiesSingle
     :title="OnzeLocatiesData?.name"
     :postcode="OnzeLocatiesData?.postcode"
@@ -16,6 +17,7 @@
     :price="OnzeLocatiesData?.price"
     :facility="OnzeLocatiesData?.facility"
     :special="OnzeLocatiesData?.privileges"
+    :levelType="OnzeLocatiesData?.level_type"
   />
 
   <SliderLocaties class="my-10 py-10" :data="sliderData?.data" />

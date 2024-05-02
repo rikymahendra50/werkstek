@@ -1,4 +1,5 @@
 <template>
+  <div class="mt-32"></div>
   <VerhuurdersHeader
     image="/images/image-page4-1.png"
     imageAlt="image-page4-1"

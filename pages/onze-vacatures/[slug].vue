@@ -1,4 +1,5 @@
 <template>
+  <div class="mt-28"></div>
   <section>
     <HeaderWCity
       title1="Bekijk onze locaties"

@@ -158,13 +158,13 @@
         >
           <Icon name="ant-design:clear-outlined" />
         </button>
-        <!-- <button
+        <button
+          type="button"
           @click="editor.chain().focus().setHardBreak().run()"
-          class="btn btn-sm btn-square border-2 border-orange-700"
+          class="btn btn-sm btn-square"
         >
           <Icon name="icon-park-outline:paragraph-break" />
-        </button> -->
-        <!-- <button @click="addImage">add image from URL</button> -->
+        </button>
         <button
           @click="editor.chain().focus().undo().run()"
           :disabled="!editor.can().chain().focus().undo().run()"

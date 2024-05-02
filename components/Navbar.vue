@@ -1,5 +1,5 @@
 <template>
-  <nav class="w-full z-50 shadow-md top-0">
+  <nav class="w-full z-50 top-0 fixed">
     <div
       class="flex items-center justify-between w-full relative bg-white container-custom py-5"
     >
@@ -23,7 +23,7 @@
       <!-- Navbar -->
       <div class="hidden lg:flex z-[99999] items-center justify-between w-full">
         <ul
-          class="flex items-center md:gap-1 bg-primary p-1 rounded-full text-tertiary md:w-[75%]"
+          class="flex items-center md:gap-1 bg-primary p-1 rounded-full text-tertiary md:w-[77%]"
         >
           <li class="bg-white rounded-full">
             <NuxtLink to="/">
@@ -47,38 +47,67 @@
                 >Verhuur</NuxtLink
               >
             </li>
-            <li class="dropdown relative">
+            <!-- test  -->
+            <li class="relative">
               <span
-                tabindex="0"
                 class="bg-transparent border-none text-white font-thin hover:bg-transparent cursor-pointer navlink text-sm"
                 :class="{ active: isUpdateActive2() }"
+                @click="showDropdownOver"
               >
                 Over werkstek
               </span>
               <ul
-                tabindex="0"
-                class="dropdown-content rounded-sm z-[1] menu p-1 shadow bg-base-100 text-black text-sm mt-5 w-[180px] absolute right-[-40px]"
+                v-if="isDropdownOpen"
+                class="rounded-xl bg-black z-[1] shadow text-white text-sm mt-5 w-[200px] absolute right-[-55px]"
+                ref="target"
               >
-                <li class="text-sm">
+                <li class="text-sm hover:text-primary group hover:rounded-t-xl">
                   <NuxtLink
                     to="/over-werkstek"
-                    class="rounded-none hover:bg-primary hover:text-white"
+                    class="rounded-none w-full flex justify-between items-center px-4 py-3"
                     :class="{ active: isRouteActive('/over-werkstek') }"
+                    activeClass="bg-black text-primary rounded-t-xl"
                   >
                     Over Werkstek
+                    <div
+                      class="bg-white group-hover:bg-primary rounded-full w-5 h-5 flex items-center justify-center pr-[3px]"
+                      :class="{
+                        'text-black': !isRouteActive('/over-werkstek'),
+                        'bg-primary': isRouteActive('/over-werkstek'),
+                      }"
+                    >
+                      <Icon
+                        name="fluent:ios-arrow-24-filled"
+                        class="text-black rotate-180"
+                      />
+                    </div>
                   </NuxtLink>
                 </li>
-                <li class="text-sm">
+                <li class="text-sm hover:text-primary hover:rounded-b-xl group">
                   <NuxtLink
                     to="/onze-vacatures"
-                    class="rounded-none hover:bg-primary hover:text-white"
+                    class="rounded-none w-full flex justify-between items-center px-4 py-3"
                     :class="{ active: isRouteActive('/onze-vacatures') }"
+                    activeClass="bg-black text-primary rounded-b-xl"
                   >
-                    Werkstek Vacatures
+                    Onze Vacatures
+                    <div
+                      class="bg-white rounded-full group-hover:bg-primary w-5 h-5 flex items-center justify-center pr-[3px]"
+                      :class="{
+                        'text-black': !isRouteActive('/onze-vacatures'),
+                        'bg-primary': isRouteActive('/onze-vacatures'),
+                      }"
+                    >
+                      <Icon
+                        name="fluent:ios-arrow-24-filled"
+                        class="text-black rotate-180"
+                      />
+                    </div>
                   </NuxtLink>
                 </li>
               </ul>
             </li>
+            <!-- end test -->
             <li class="text-sm">
               <NuxtLink
                 to="/blog"
@@ -179,7 +208,7 @@
                 tabindex="1"
                 class="bg-transparent border-none my-4 font-thin cursor-pointer gap-2 flex items-center"
               >
-                <span> Over Werkstek</span>
+                <span>Over Werkstek</span>
                 <Icon
                   name="radix-icons:triangle-up"
                   class="text-primary rotate-180 w-7 h-7"
@@ -273,15 +302,30 @@
 </template>
 
 <script>
+import { onClickOutside } from "@vueuse/core";
+
 export default {
   data() {
     return {
       isOpen: false,
     };
   },
+  setup() {
+    const isDropdownOpen = ref(false);
+    const target = ref(null);
+    onClickOutside(target, (event) => (isDropdownOpen.value = false));
+    return {
+      isDropdownOpen,
+      target,
+      onClickOutside,
+    };
+  },
   methods: {
     isRouteActive(route) {
       return this.$route.path === route;
+    },
+    showDropdownOver() {
+      this.isDropdownOpen = !this.isDropdownOpen;
     },
     drawer() {
       this.isOpen = !this.isOpen;

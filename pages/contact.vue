@@ -1,4 +1,5 @@
 <template>
+  <div class="mt-28"></div>
   <StatistiekLocaties
     image="/images/img-home-1.png"
     title1="Neem contact op"

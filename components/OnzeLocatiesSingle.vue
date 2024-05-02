@@ -53,6 +53,14 @@
                     alt="image"
                     class="w-full h-full aspect-video md:min-h-[350px] object-cover"
                   />
+                  <!-- <video
+                    class="w-full h-full aspect-video md:min-h-[350px] object-cover"
+                    controls
+                  >
+                    <source src="/images/home-video.mov" type="video/mp4" />
+                    <source src="mov_bbb.ogg" type="video/ogg" />
+                    Your browser does not support HTML video.
+                  </video> -->
                 </div>
               </SwiperSlide>
               <div class="h-full w-full bg-gradient-to-l inset-0 z-10">
@@ -87,7 +95,7 @@
           </h1>
           <span
             v-html="description"
-            class="text-[12px] md:text-[14px] deskBody"
+            class="text-[12px] md:text-[14px] deskBody md:leading-9"
           ></span>
         </div>
         <p class="text-[#495057] text-base mt-10 mb-5 sm:mb-1 ml-1">
@@ -225,7 +233,11 @@
             </p>
           </NuxtLink>
         </div>
-        <MapMini :latitude="latitude" :longitude="longitude" />
+        <MapMini
+          :latitude="latitude"
+          :longitude="longitude"
+          :levelType="levelType"
+        />
       </div>
     </div>
   </section>
@@ -300,6 +312,7 @@ const props = defineProps({
   email: {},
   latitude: {},
   longitude: {},
+  levelType: {},
   price: {},
   facility: {
     type: Array,

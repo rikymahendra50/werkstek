@@ -9,7 +9,7 @@
           <span class="text-[#808080]">Soorten kantoorruimte</span>
           <ul class="grid gap-4">
             <li
-              v-for="item in types?.data"
+              v-for="item in types?.data.slice(0, 5)"
               @click="handleType(item.id)"
               class="cursor-pointer"
             >
@@ -36,15 +36,15 @@
       <div class="flex flex-col text-sm">
         <div class="grid gap-3">
           <span class="text-[#808080]">Populaire locaties</span>
-          <ul class="grid gap-4">
-            <li
-              v-for="item in dataLocation?.data"
-              @click="handleLocation(item.id)"
-              class="cursor-pointer"
-            >
-              <span class="hover:text-primary">
+          <ul class="grid">
+            <li class="cursor-pointer grid gap-4">
+              <div
+                v-for="item in dataLocation?.data.slice(0, 10)"
+                @click="handleLocation(item.id)"
+                class="hover:text-primary"
+              >
                 Kantoorruimte {{ item.name }}
-              </span>
+              </div>
             </li>
           </ul>
         </div>
@@ -54,7 +54,10 @@
         <div class="grid gap-3">
           <span class="text-[#808080]">Populaire ruimtes</span>
           <ul class="grid gap-4">
-            <li v-for="item in dataProduct?.data" class="cursor-pointer">
+            <li
+              v-for="item in dataProduct?.data.slice(0, 4)"
+              class="cursor-pointer"
+            >
               <NuxtLink
                 :to="`/onze-locaties/${item.slug}`"
                 class="hover:text-primary"
@@ -119,22 +122,26 @@ const { data: types } = useFetch("/types", {
   ...requestOptions,
 });
 
-const { start, stop } = useTimeoutFn(() => {
-  replaceWindow();
-}, 1000);
-
 function handleLocation(locationId) {
   selectedCity.value = locationId;
 
-  window.location.replace(
-    `/onze-locaties?page=1&location_id=${selectedCity.value}&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
+  // window.location.replace(
+  //   `/onze-locaties?page=1&location_id=${selectedCity.value}&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
+  // );
+  // window.location.href = `/onze-locaties?page=1&location_id=${selectedCity.value}&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`;
+
+  router.replace(
+    `/onze-locaties?page=1&location_id=${selectedCity.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
   );
 }
 
 function handleType(typeId) {
   selectedType.value = typeId;
-  window.location.replace(
-    `/onze-locaties?page=1&location_id=${selectedCity.value}&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
+  // window.location.replace(
+  //   `/onze-locaties?page=1&location_id=${selectedCity.value}&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
+  // );
+  router.replace(
+    `/onze-locaties?page=1&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
   );
 }
 </script>

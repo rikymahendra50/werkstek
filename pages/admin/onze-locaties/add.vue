@@ -360,7 +360,6 @@
           </label>
         </div>
       </div>
-
       <div class="flex justify-end w-full">
         <CompAdminButtonAddForm
           buttonName="Add Property"

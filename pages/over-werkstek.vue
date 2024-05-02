@@ -1,4 +1,5 @@
 <template>
+  <div class="mt-32"></div>
   <VerhuurdersHeader
     :image="VerhuurdersHeaderData.image"
     :title1="VerhuurdersHeaderData.title1"

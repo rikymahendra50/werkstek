@@ -172,7 +172,7 @@ async function StoreProduct() {
 
   selectedImages.value.push(data.value.data.id);
 
-  // console.log(selectedImages.value);
+  // console.log(data.value);
 
   loading.value = false;
 }
@@ -193,6 +193,8 @@ async function onSubmit(values, ctx) {
       ...requestOptions,
     }
   );
+
+  console.log(selectedImage.value);
 
   if (error.value) {
     ctx.setErrors(transformErrors(error?.value.data));

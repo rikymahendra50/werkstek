@@ -1,6 +1,6 @@
 <template>
   <floating-whatsapp />
-  <MapInteractive class="py-10" />
+  <MapInteractive class="py-10 mt-32" />
   <StatistiekLocatiesVideo
     video="/images/home-video.mov"
     :image="StatistiekLocatiesData?.image"
