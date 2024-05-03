@@ -53,7 +53,7 @@
           autocomplete="location"
         >
           <option disabled selected>Location</option>
-          <option :value="item.id" v-for="item in location.data">
+          <option :value="item.id" v-for="item in location?.data">
             {{ item.name }}
           </option>
         </VeeField>
@@ -180,7 +180,7 @@ const tagsArray = job?.value?.data?.tags.map((item) => item?.name);
 const formData = ref({
   title: job?.value.data?.title,
   hours: job?.value.data?.hours,
-  location_id: job?.value.data?.location_id,
+  location_id: job?.value.data?.location?.id,
   types: typesArray.map((type) => ({
     type_id: type,
   })),
@@ -208,7 +208,9 @@ async function onSubmit(values, ctx) {
 
     const formDataT = new FormData();
 
-    formDataT.append("image", selectedImage.value);
+    if (selectedImage.value) {
+      formDataT.append("image", selectedImage.value);
+    }
 
     formDataT.append("title", formData.value.title);
     formDataT.append("hours", formData.value.hours);

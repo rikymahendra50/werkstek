@@ -52,6 +52,6 @@ if (error.value) {
 }
 
 useHead({
-  title: data.value?.data?.name,
+  title: data.value?.data?.title,
 });
 </script>

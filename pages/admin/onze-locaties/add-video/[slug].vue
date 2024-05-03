@@ -142,6 +142,7 @@
           <div class="w-full flex justify-end z-10 p-2">
             <div>
               <button
+                v-if="thumbnailPreview"
                 class="btn btn-square btn-sm btn-error"
                 type="button"
                 @click="showModal"

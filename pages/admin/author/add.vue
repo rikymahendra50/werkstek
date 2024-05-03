@@ -7,7 +7,6 @@
         v-slot="{ errors }"
         :validation-schema="authorSchema"
       >
-        {{ errors }}
         <div class="grid mt-10 p-3 gap-2">
           <div>
             <div class="hidden">
