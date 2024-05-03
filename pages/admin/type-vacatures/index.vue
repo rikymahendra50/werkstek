@@ -1,62 +1,38 @@
 <template>
   <main class="flex-grow overflow-y-auto">
     <div
-      class="mx-auto px-2 sm:px-6 lg:px-8 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-7xl py-8 space-y-8"
+      class="mx-auto px-2 sm:px-4 lg:px-6 max-w-sm md:max-w-3xl lg:max-w-[720px] xl:max-w-5xl py-8 space-y-8"
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-2xl font-bold">Community</div>
+          <div class="text-lg md:text-2xl font-bold">Type Vacatures</div>
         </div>
-        <CompAdminButtonAddIndex name="Community" link="community" />
+        <CompAdminButtonAddIndex name="Type Vacatures" link="type-vacatures" />
       </div>
-      <div class="space-y-4">
-        <!-- <div class="max-w-sm">
-          <Search v-model="search" placeholder="search" />
-        </div> -->
+      <div>
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
           <table class="table table-xs md:table-md w-full rounded-t-xl">
             <thead class="h-12">
               <tr>
-                <th class="font-medium">Image</th>
                 <th class="font-medium">Name</th>
-                <th class="font-medium">Meta</th>
                 <th class="font-medium"></th>
               </tr>
             </thead>
             <tbody>
               <tr
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
-                v-for="(item, index) in community?.data"
+                v-for="(item, index) in typeVacatures?.data"
+                :key="item.id"
               >
-                <td class="max-w-[100px]">
-                  <div class="max-w-[100px] max-h-[100px] overflow-hidden">
-                    <img
-                      :src="item.image"
-                      :alt="`item` + index"
-                      class="object-cover rounded-md"
-                    />
-                  </div>
-                </td>
-                <td class="text-gray-500 text-[12px] font-normal !py-2">
-                  {{ item.title }}
-                </td>
                 <td
-                  class="font-medium max-w-[200px] line-clamp-2 leading-9 text-[12px]"
+                  class="text-gray-500 text-[12px] font-normal !py-2 md:text-sm"
                 >
-                  {{ item.meta }}
+                  {{ item.name }}
                 </td>
-                <td class="font-medium"></td>
                 <td>
-                  <div class="flex justify-center items-center gap-4 my-1">
+                  <div class="flex items-center justify-center gap-4">
                     <NuxtLink
-                      :to="`/werkstek-community/${item.slug}`"
-                      class="btn btn-sm normal-case btn-ghost btn-square"
-                      target="_blank"
-                    >
-                      <icon name="i-heroicons-eye" class="cursor-pointer" />
-                    </NuxtLink>
-                    <NuxtLink
-                      :to="`/admin/community/edit/${item.slug}`"
+                      :to="`/admin/type-vacatures/edit/${item.id}`"
                       class="btn btn-sm normal-case btn-ghost btn-square"
                     >
                       <icon
@@ -76,13 +52,13 @@
                           Warning !
                         </h3>
                         <p class="py-4 text-sm">
-                          Are you sure want to delete this called
-                          {{ item.slug }}?
+                          Are you sure want to delete this Type called
+                          {{ item.name }}?
                         </p>
                         <div class="modal-action">
                           <form method="dialog">
                             <button
-                              @click="deleteBlog(item.slug)"
+                              @click="deleteProperty(item.id)"
                               class="btn btn-outline btn-error mr-3 text-[12px]"
                             >
                               Delete
@@ -103,17 +79,31 @@
   </main>
   <Pagination
     v-model="page"
-    :total="community?.meta?.total"
-    :per-page="community?.meta?.per_page"
+    :total="typeVacatures?.total"
+    :per-page="typeVacatures?.per_page"
     class="flex justify-center"
   />
 </template>
 
+<style scoped>
+.scrollBarAdmin::-webkit-scrollbar {
+  display: none;
+}
+
+.overflow-auto {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.overflow-auto::-webkit-scrollbar {
+  display: none;
+}
+</style>
+
 <script setup>
-const { loading } = useRequestHelper();
+const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
-import { useTimeoutFn } from "@vueuse/core";
 
 const router = useRouter();
 const route = useRoute();
@@ -122,30 +112,19 @@ const page = ref(1);
 const search = ref("");
 
 const {
-  data: community,
+  data: typeVacatures,
   error,
   refresh,
-} = await useAsyncData("community", () =>
-  $fetch(
-    `/admins/community-blogs?page=${page.value}&filter[search]=${search.value}`,
-    {
-      method: "get",
-      ...requestOptions,
-    }
-  )
+} = await useAsyncData("typeVacatures", () =>
+  $fetch(`/admins/type-jobs`, {
+    method: "get",
+    ...requestOptions,
+  })
 );
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
 }, 1000);
-
-const showModal = (index) => {
-  const modalId = `my_modal_${index}`;
-  const modal = document.getElementById(modalId);
-  if (modal) {
-    modal.showModal();
-  }
-};
 
 watch(
   () => page.value,
@@ -167,32 +146,11 @@ watch(
 );
 
 function replaceWindow() {
-  router.replace(`/admin/community?page=${page.value}&search=${search.value}`);
+  router.replace(
+    `/admin/type-vacatures?page=${page.value}&search=${search.value}`
+  );
   refresh();
 }
-
-const deleteBlog = async (slug) => {
-  loading.value = true;
-  await useFetch(`/admins/community-blogs/${slug}`, {
-    method: "DELETE",
-    ...requestOptions,
-  });
-
-  if (error.value) {
-    snackbar.add({
-      type: "error",
-      text: error.value?.data?.message ?? "Something went wrong",
-    });
-  } else {
-    snackbar.add({
-      type: "success",
-      text: "Delete Community Success",
-    });
-    // window.location.reload();
-    refresh();
-  }
-  loading.value = false;
-};
 
 onMounted(() => {
   stop();
@@ -205,8 +163,38 @@ onMounted(() => {
   }
 });
 
+const showModal = (index) => {
+  const modalId = `my_modal_${index}`;
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.showModal();
+  }
+};
+
+const deleteProperty = async (slug) => {
+  loading.value = true;
+  await useFetch(`/admins/type-jobs/${slug}`, {
+    method: "DELETE",
+    ...requestOptions,
+  });
+
+  if (error.value) {
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
+    });
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Delete Type Vacatures Success",
+    });
+    refresh();
+  }
+  loading.value = false;
+};
+
 useHead({
-  title: "Community",
+  title: "Admin Type Vacatures",
 });
 
 definePageMeta({
@@ -215,14 +203,3 @@ definePageMeta({
   middleware: ["auth", "admin"],
 });
 </script>
-
-<style scoped>
-.overflow-auto {
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.overflow-auto::-webkit-scrollbar {
-  display: none;
-}
-</style>

@@ -1,12 +1,16 @@
 <template>
   <div class="mt-28"></div>
+
   <div v-if="data && data?.data">
     <EachBlog
       typeArticle="Community"
       :title="data?.data?.title"
       :imageSrc="data.data.image"
       :body="data?.data?.body"
-      :comment="data.data.comments"
+      :author="data?.data?.author?.name"
+      :authorImage="data?.data?.author?.image"
+      :authorDescription="data?.data?.author?.description"
+      :comment="data?.data?.comments"
     />
   </div>
 </template>

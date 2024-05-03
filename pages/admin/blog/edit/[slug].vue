@@ -4,6 +4,7 @@
     <updateAdmin
       :eachBlog="eachBlog?.data"
       :categoryBlog="categoryBlog?.data"
+      :authorBlog="authorBlog?.data"
     />
   </section>
 </template>
@@ -23,6 +24,14 @@ const { data: eachBlog, pending: eachBlogPending } = await useFetch(
 
 const { data: categoryBlog, pending: categoryBlogPending } = await useFetch(
   `/admins/article-categories`,
+  {
+    method: "get",
+    ...requestOptions,
+  }
+);
+
+const { data: authorBlog, pending: authorBlogPending } = await useFetch(
+  `/admins/authors`,
   {
     method: "get",
     ...requestOptions,

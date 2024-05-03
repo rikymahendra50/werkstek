@@ -4,9 +4,13 @@
       <div class="flex h-[60px] items-center border-b px-6 justify-between">
         <NuxtLink
           to="/admin"
-          class="flex items-center justify-center gap-2 font-semibold"
+          class="flex items-center justify-center gap-2 font-semibold my-10"
         >
-          <Werkstek class="w-[70%]" />
+          <img
+            src="/images/werstek-logo-secondary.png"
+            alt="image-logo-secondary"
+            class="w-[170px] ml-6"
+          />
         </NuxtLink>
         <div class="block lg:hidden">
           <button
@@ -19,7 +23,7 @@
           </button>
         </div>
       </div>
-      <div class="flex-1 py-2">
+      <div class="flex-1 py-2 bg-white">
         <nav class="grid items-start px-4 text-[12px] font-medium">
           <!-- Home -->
           <NuxtLink
@@ -101,6 +105,70 @@
             </svg>
             Property
           </NuxtLink>
+
+          <details @click="toggleDropdown">
+            <summary
+              class="group bg-black cursor-pointer flex items-center gap-3 rounded-lg px-3 py-2 text-gray-600 transition-all relative"
+              :class="{
+                'bg-transparent text-black hover:bg-gray-100':
+                  !isRouteActive('/admin/onze-vacatures') &&
+                  !isRouteActive('/admin/type-vacatures'),
+                'bg-gray-200 text-black hover:bg-opacity-30':
+                  isRouteActive('/admin/onze-vacatures') ||
+                  isRouteActive('/admin/type-vacatures'),
+              }"
+            >
+              <Icon name="solar:suitcase-broken" class="text-black w-5 h-5" />
+              <span>Vacatures</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="w-4 h-4 absolute right-3"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </summary>
+            <ul class="ml-9 grid">
+              <li class="mt-1">
+                <NuxtLink to="/admin/onze-vacatures" class="w-full">
+                  <div
+                    class="text-gray-600 hover:text-black transition-all hover:bg-gray-100 pl-2 py-2 rounded-lg"
+                    :class="{
+                      'bg-transparent text-black hover:bg-gray-100':
+                        !isRouteActive('/admin/onze-vacatures'),
+                      'bg-gray-200 text-black hover:bg-opacity-30':
+                        isRouteActive('/admin/onze-vacatures'),
+                    }"
+                  >
+                    Vacatures List
+                  </div>
+                </NuxtLink>
+              </li>
+              <li class="mt-1">
+                <NuxtLink to="/admin/type-vacatures" class="w-full">
+                  <div
+                    class="text-gray-600 hover:text-black transition-all hover:bg-gray-100 pl-2 py-2 rounded-lg"
+                    :class="{
+                      'bg-transparent text-black hover:bg-gray-100':
+                        !isRouteActive('/admin/type-vacatures'),
+                      'bg-gray-200 text-black hover:bg-opacity-30':
+                        isRouteActive('/admin/type-vacatures'),
+                    }"
+                  >
+                    Vacatures Type
+                  </div>
+                </NuxtLink>
+              </li>
+            </ul>
+          </details>
+
           <NuxtLink
             to="/admin/location"
             :class="{
@@ -161,7 +229,6 @@
             </svg>
             Level Type
           </NuxtLink>
-
           <NuxtLink
             to="/admin/type"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
@@ -188,7 +255,6 @@
             </svg>
             Type
           </NuxtLink>
-
           <NuxtLink
             to="/admin/facility"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
@@ -241,7 +307,6 @@
             </svg>
             Blog
           </NuxtLink>
-
           <NuxtLink
             to="/admin/blog-category"
             class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
@@ -271,61 +336,32 @@
             Blog Category
           </NuxtLink>
 
-          <!-- Test -->
-          <!-- <details @click="toggleDropdown">
-            <summary
-              class="group cursor-pointer flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all relative"
+          <NuxtLink
+            to="/admin/author"
+            class="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition-all"
+            :class="{
+              'bg-transparent text-black hover:bg-gray-100':
+                !isRouteActive('/admin/author'),
+              'bg-black text-black hover:bg-opacity-30':
+                isRouteActive('/admin/author'),
+            }"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-5 h-5"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819"
-                />
-              </svg>
-              <span>Property</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="w-4 h-4 absolute right-3"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </summary>
-            <ul class="ml-7 mt-2 space-y-2">
-              <li class="hover:">
-                <NuxtLink
-                  to="/admin/property-type"
-                  class="text-gray-600 hover:text-black transition-all"
-                >
-                  Property Type
-                </NuxtLink>
-              </li>
-              <li>
-                <NuxtLink
-                  to="/admin/property-category"
-                  class="text-gray-600 hover:text-black transition-all"
-                >
-                  Property Category
-                </NuxtLink>
-              </li>
-            </ul>
-          </details> -->
-          <!-- Test -->
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"
+              />
+            </svg>
+            Author
+          </NuxtLink>
 
           <NuxtLink
             to="/admin/community"

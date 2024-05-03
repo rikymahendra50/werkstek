@@ -33,6 +33,25 @@
             class="input-bordered"
             autocomplete="on"
           />
+
+          <div class="flex flex-col mt-5">
+            <label for="author">Author</label>
+            <VeeField
+              id="author"
+              name="author"
+              as="select"
+              v-model="formData.author_id"
+              class="select select-bordered w-full"
+              placeholder="category"
+              autocomplete="off"
+            >
+              <option disabled selected>Author</option>
+              <option :value="item.id" v-for="item in authorData?.data">
+                {{ item.name }}
+              </option>
+            </VeeField>
+          </div>
+
           <div class="flex flex-col mt-5">
             <span>Body</span>
             <div class="hidden">
@@ -103,6 +122,13 @@ const { data: categoryBlog, error } = await useFetch(
   }
 );
 
+const { data: authorData } = await useFetch(`/admins/authors`, {
+  method: "get",
+  ...requestOptions,
+});
+
+console.log(authorData?.value);
+
 const fileInput = ref(null);
 
 const formData = ref({
@@ -110,16 +136,8 @@ const formData = ref({
   body: undefined,
   category_id: undefined,
   meta: undefined,
+  author_id: undefined,
 });
-
-// watch(
-//   () => formData.value.body,
-//   (newValue) => {
-//     if (newValue === "<p></p>" || !newValue) {
-//       formData.value.body = undefined;
-//     }
-//   }
-// );
 
 const imagePreview = ref();
 const selectedImage = ref();

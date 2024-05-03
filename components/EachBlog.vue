@@ -26,23 +26,22 @@
       <div class="block lg:hidden my-3 min-[400px]:my-5 sm:my-7 p-3">
         <div class="flex items-center max-h-[150px] overflow-hidden shadow-sm">
           <img
-            src="/images/author.png"
+            :src="authorImage"
             alt="author"
             class="max-w-[15%] sm:max-w-[4rem]"
           />
-          <div class="flex flex-col pl-4 max-w-[70%]">
+          <div class="flex flex-col pl-4 max-w-[70%] border-2 border-red-500">
             <p
               class="text-[0.9rem] overflow-ellipsis overflow-hidden sm:text-lg font-bold"
             >
-              Luci Avetisyan
+              {{ author }}
             </p>
             <p
               class="text-[0.5rem] min-[400px]:text-[12px] sm:text-[14px] overflow-ellipsis overflow-hidden"
             >
-              Luci vitae dapibus rhoncus. Eget etiam aenean nisi montes felis
-              pretium donec veni. Pede…
+              {{ authorDescription }}
             </p>
-            <div class="flex gap-2 mt-2">
+            <!-- <div class="flex gap-2 mt-2">
               <NuxtLink to="/"
                 ><img
                   src="/images/behance.svg"
@@ -71,7 +70,7 @@
                   class="max-w-[20px] sm:max-w-[30px]"
                 />
               </NuxtLink>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="w-full mt-4 md:mt-4 flex justify-end">
@@ -88,7 +87,7 @@
           <div v-html="body" class="leading-9 text-[14px]"></div>
           <div
             class="flex mt-10 gap-5 items-center sm:items-start p-2 shadow-md rounded-lg"
-            v-for="(DataComment, index) in comment.slice(
+            v-for="(DataComment, index) in comment?.slice(
               0,
               visibleCommentCount
             )"
@@ -127,7 +126,7 @@
           </div>
           <div
             class="flex justify-center"
-            v-if="comment.length > visibleCommentCount"
+            v-if="comment?.length > visibleCommentCount"
           >
             <button
               @click="showMoreFunc"
@@ -140,14 +139,29 @@
         <!-- author -->
         <div class="hidden lg:grid col-span-3">
           <div class="lg:flex flex-col items-center">
-            <h1 class="text-[#121416] text-[18px]">AUTHOR</h1>
-            <h3 class="text-[20px]">Luci Avetisyan</h3>
-            <img src="/images/author.png" alt="author" class="my-4" />
-            <p class="text-center text-sm leading-9 text-[#ADADAD]">
-              Luci vitae dapibus rhoncus. Eget etiam aenean nisi montes felis
-              pretium donec veni. Pede…
+            <h1 class="text-[#121416] text-[18px] pb-3">AUTHOR</h1>
+            <h3 class="text-[18px]">{{ author }}</h3>
+            <img
+              v-if="authorImage"
+              :src="authorImage"
+              alt="author"
+              class="my-4 rounded-full max-w-[100px] aspect-square object-cover"
+            />
+            <div
+              class="my-4 rounded-full max-w-[100px] aspect-square"
+              v-else-if="!authorImage"
+            >
+              <Icon
+                name="iconamoon:profile-circle-fill"
+                class="text-gray-400 w-12 h-12"
+              />
+            </div>
+            <p
+              class="text-center text-sm leading-9 text-[#ADADAD] line-clamp-2"
+            >
+              {{ authorDescription }}
             </p>
-            <div class="flex gap-2 mt-2">
+            <!-- <div class="flex gap-2 mt-2">
               <NuxtLink to="/"
                 ><img src="/images/behance.svg" alt="behance" />
               </NuxtLink>
@@ -160,7 +174,7 @@
               <NuxtLink to="/">
                 <img src="/images/github.svg" alt="github" />
               </NuxtLink>
-            </div>
+            </div> -->
           </div>
           <div class="flex justify-center">
             <div @click="sharePage" class="cursor-pointer">
@@ -227,6 +241,15 @@ export default {
       type: String,
     },
     comment: {},
+    author: {
+      type: String,
+    },
+    authorImage: {
+      type: String,
+    },
+    authorDescription: {
+      type: String,
+    },
   },
 };
 </script>

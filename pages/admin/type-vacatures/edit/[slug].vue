@@ -1,5 +1,5 @@
 <template>
-  <CompAdminBackButton link="type" linkTitle="Edit Type" />
+  <CompAdminBackButton link="type-vacatures" linkTitle="Edit Type Vacatures" />
   <div class="grid grid-cols-2 px-4">
     <VeeForm
       @submit="onSubmit"
@@ -13,17 +13,14 @@
             id="name"
             name="name"
             v-model="name"
-            placeholder="Type Name"
+            placeholder="Type Vacatures"
             class="input-bordered"
             autocomplete="on"
           />
         </div>
       </div>
       <div class="flex justify-end mt-5">
-        <CompAdminButtonAddForm
-          buttonName="Edit Type Vacatures"
-          :isLoading="loading"
-        />
+        <CompAdminButtonAddForm buttonName="Edit Type" :isLoading="loading" />
       </div>
     </VeeForm>
   </div>
@@ -68,7 +65,7 @@ async function onSubmit(values, ctx) {
       type: "success",
       text: "Success Edit Type Vacatures",
     });
-    router.push("/admin/type");
+    router.push("/admin/type-Vacatures");
   }
 
   loading.value = false;

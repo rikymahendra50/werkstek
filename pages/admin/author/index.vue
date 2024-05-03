@@ -5,59 +5,45 @@
     >
       <div class="flex justify-between items-center">
         <div>
-          <div class="text-xl md:text-2xl font-bold">Community</div>
+          <div class="text-xl md:text-2xl font-bold">Author</div>
         </div>
-        <CompAdminButtonAddIndex name="Community" link="community" />
+        <CompAdminButtonAddIndex name="Author" link="author" />
       </div>
       <div class="space-y-4">
         <!-- <div class="max-w-sm">
-          <Search v-model="search" placeholder="search" />
-        </div> -->
+            <Search v-model="search" placeholder="search" />
+          </div> -->
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
           <table class="table table-xs md:table-md w-full rounded-t-xl">
             <thead class="h-12">
               <tr>
                 <th class="font-medium">Image</th>
                 <th class="font-medium">Name</th>
-                <th class="font-medium">Meta</th>
                 <th class="font-medium"></th>
               </tr>
             </thead>
             <tbody>
               <tr
                 class="odd:bg-gray-100 even:hover:bg-gray-100 transition-colors duration-300"
-                v-for="(item, index) in community?.data"
+                v-for="(item, index) in author?.data"
               >
-                <td class="max-w-[100px]">
-                  <div class="max-w-[100px] max-h-[100px] overflow-hidden">
+                <td class="flex items-center">
+                  <div class="aspect-square">
                     <img
                       :src="item.image"
                       :alt="`item` + index"
-                      class="object-cover rounded-md"
+                      class="object-cover rounded-md w-20 h-20"
                     />
                   </div>
                 </td>
                 <td class="text-gray-500 text-[12px] font-normal !py-2">
-                  {{ item.title }}
+                  {{ item.name }}
                 </td>
-                <td
-                  class="font-medium max-w-[200px] line-clamp-2 leading-9 text-[12px]"
-                >
-                  {{ item.meta }}
-                </td>
-                <td class="font-medium"></td>
                 <td>
                   <div class="flex justify-center items-center gap-4 my-1">
                     <NuxtLink
-                      :to="`/werkstek-community/${item.slug}`"
-                      class="btn btn-sm normal-case btn-ghost btn-square"
-                      target="_blank"
-                    >
-                      <icon name="i-heroicons-eye" class="cursor-pointer" />
-                    </NuxtLink>
-                    <NuxtLink
-                      :to="`/admin/community/edit/${item.slug}`"
-                      class="btn btn-sm normal-case btn-ghost btn-square"
+                      :to="`/admin/author/edit/${item.id}`"
+                      class="btn mr-2 btn-sm normal-case btn-ghost btn-square"
                     >
                       <icon
                         name="i-heroicons-pencil-square"
@@ -76,14 +62,14 @@
                           Warning !
                         </h3>
                         <p class="py-4 text-sm">
-                          Are you sure want to delete this called
-                          {{ item.slug }}?
+                          Are you sure want to delete this author called
+                          {{ item.name }}?
                         </p>
                         <div class="modal-action">
                           <form method="dialog">
                             <button
-                              @click="deleteBlog(item.slug)"
-                              class="btn btn-outline btn-error mr-3 text-[12px]"
+                              @click="deleteBlog(item.id)"
+                              class="btn btn-outline btn-error mr-3"
                             >
                               Delete
                             </button>
@@ -103,8 +89,8 @@
   </main>
   <Pagination
     v-model="page"
-    :total="community?.meta?.total"
-    :per-page="community?.meta?.per_page"
+    :total="author?.meta?.total"
+    :per-page="author?.meta?.per_page"
     class="flex justify-center"
   />
 </template>
@@ -122,17 +108,14 @@ const page = ref(1);
 const search = ref("");
 
 const {
-  data: community,
+  data: author,
   error,
   refresh,
-} = await useAsyncData("community", () =>
-  $fetch(
-    `/admins/community-blogs?page=${page.value}&filter[search]=${search.value}`,
-    {
-      method: "get",
-      ...requestOptions,
-    }
-  )
+} = await useAsyncData("author", () =>
+  $fetch(`/admins/authors?page=${page.value}&filter[search]=${search.value}`, {
+    method: "get",
+    ...requestOptions,
+  })
 );
 
 const { start, stop } = useTimeoutFn(() => {
@@ -167,13 +150,13 @@ watch(
 );
 
 function replaceWindow() {
-  router.replace(`/admin/community?page=${page.value}&search=${search.value}`);
+  router.replace(`/admin/author?page=${page.value}&search=${search.value}`);
   refresh();
 }
 
 const deleteBlog = async (slug) => {
   loading.value = true;
-  await useFetch(`/admins/community-blogs/${slug}`, {
+  await useFetch(`/admins/authors/${slug}`, {
     method: "DELETE",
     ...requestOptions,
   });
@@ -186,9 +169,8 @@ const deleteBlog = async (slug) => {
   } else {
     snackbar.add({
       type: "success",
-      text: "Delete Community Success",
+      text: "Delete Author Success",
     });
-    // window.location.reload();
     refresh();
   }
   loading.value = false;
@@ -206,7 +188,7 @@ onMounted(() => {
 });
 
 useHead({
-  title: "Community",
+  title: "Author",
 });
 
 definePageMeta({

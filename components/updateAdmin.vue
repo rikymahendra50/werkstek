@@ -48,6 +48,23 @@
           </VeeField>
         </div>
         <div class="flex flex-col mt-5">
+          <label for="author">Author</label>
+          <VeeField
+            id="author"
+            name="author"
+            as="select"
+            v-model="formData.author_id"
+            class="select select-bordered w-full"
+            placeholder="author"
+            autocomplete="off"
+          >
+            <option disabled selected>Author</option>
+            <option :value="item.id" v-for="item in authorBlog">
+              {{ item.name }}
+            </option>
+          </VeeField>
+        </div>
+        <div class="flex flex-col mt-5">
           <label for="meta">Meta</label>
           <FormTextField
             id="meta"
@@ -82,13 +99,18 @@ const props = defineProps({
   categoryBlog: {
     type: Array,
   },
+  authorBlog: {
+    type: Array,
+  },
 });
 
 const formData = ref({
   title: props.eachBlog?.title,
+  author: props.eachBlog?.author,
   body: props.eachBlog?.body,
   category_id: props.eachBlog?.category?.id,
   meta: props.eachBlog?.meta,
+  author_id: props.eachBlog?.author?.id,
 });
 
 const selectedImage = ref();

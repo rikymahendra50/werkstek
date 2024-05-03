@@ -47,6 +47,23 @@
             <VeeErrorMessage name="body" class="text-red-500" />
           </div>
           <div class="flex flex-col mt-5">
+            <label for="author">Author</label>
+            <VeeField
+              id="author"
+              name="author"
+              as="select"
+              v-model="formData.author_id"
+              class="select select-bordered w-full"
+              placeholder="author"
+              autocomplete="off"
+            >
+              <option disabled selected>Author</option>
+              <option :value="item.id" v-for="item in authorBlog?.data">
+                {{ item.name }}
+              </option>
+            </VeeField>
+          </div>
+          <div class="flex flex-col mt-5">
             <label for="meta">Meta</label>
             <FormTextField
               id="meta"
@@ -80,7 +97,16 @@ const formData = ref({
   title: undefined,
   body: undefined,
   meta: undefined,
+  author_id: undefined,
 });
+
+const { data: authorBlog, pending: authorBlogPending } = await useFetch(
+  `/admins/authors`,
+  {
+    method: "get",
+    ...requestOptions,
+  }
+);
 
 watch(
   () => formData.value.body,

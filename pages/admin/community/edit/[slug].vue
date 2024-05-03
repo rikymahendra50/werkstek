@@ -23,6 +23,25 @@
           class="input-bordered"
           autocomplete="off"
         />
+
+        <div class="flex flex-col mt-5">
+          <label for="author">Author</label>
+          <VeeField
+            id="author"
+            name="author"
+            as="select"
+            v-model="formData.author_id"
+            class="select select-bordered w-full"
+            placeholder="author"
+            autocomplete="off"
+          >
+            <option disabled selected>Author</option>
+            <option :value="item.id" v-for="item in authorBlog?.data">
+              {{ item.name }}
+            </option>
+          </VeeField>
+        </div>
+
         <div class="flex flex-col mt-5">
           <span>Body</span>
           <div class="hidden">
@@ -36,6 +55,7 @@
           <FormTextEditor v-model="formData.body" :is-error="!!errors.body" />
           <VeeErrorMessage name="body" class="text-red-500" />
         </div>
+
         <div class="flex flex-col mt-5">
           <label for="meta">Meta</label>
           <FormTextField
@@ -83,13 +103,20 @@ const { data: eachCommunity, pending: eachCommunityPending } = await useFetch(
 
 const dataSlug = eachCommunity?.value.data;
 
-// const category = categoryBlog.value.data.map((item) => item.name);
-
 const formData = ref({
-  title: dataSlug.title,
-  body: dataSlug.body,
-  meta: dataSlug.meta,
+  title: dataSlug?.title,
+  body: dataSlug?.body,
+  meta: dataSlug?.meta,
+  author_id: dataSlug?.author?.id,
 });
+
+const { data: authorBlog, pending: authorBlogPending } = await useFetch(
+  `/admins/authors`,
+  {
+    method: "get",
+    ...requestOptions,
+  }
+);
 
 const imagePreview = ref();
 const selectedImage = ref();

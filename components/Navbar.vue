@@ -63,6 +63,7 @@
               >
                 <li class="text-sm hover:text-primary group hover:rounded-t-xl">
                   <NuxtLink
+                    @click="isDropdownOpen = false"
                     to="/over-werkstek"
                     class="rounded-none w-full flex justify-between items-center px-4 py-3"
                     :class="{ active: isRouteActive('/over-werkstek') }"
@@ -70,21 +71,29 @@
                   >
                     Over Werkstek
                     <div
-                      class="bg-white group-hover:bg-primary rounded-full w-5 h-5 flex items-center justify-center pr-[3px]"
+                      class="group-hover:bg-primary rounded-full w-5 h-5 flex items-center justify-center pr-[3px]"
                       :class="{
-                        'text-black': !isRouteActive('/over-werkstek'),
-                        'bg-primary': isRouteActive('/over-werkstek'),
+                        'text-black bg-white rounded-full':
+                          !isRouteActive('/over-werkstek'),
+                        'bg-primary rounded-full':
+                          isRouteActive('/over-werkstek'),
                       }"
                     >
                       <Icon
                         name="fluent:ios-arrow-24-filled"
-                        class="text-black rotate-180"
+                        class="rotate-180"
+                        :class="{
+                          'text-black': !isRouteActive('/over-werkstek'),
+                          'bg-primary rounded-full text-black':
+                            isRouteActive('/over-werkstek'),
+                        }"
                       />
                     </div>
                   </NuxtLink>
                 </li>
                 <li class="text-sm hover:text-primary hover:rounded-b-xl group">
                   <NuxtLink
+                    @click="isDropdownOpen = false"
                     to="/onze-vacatures"
                     class="rounded-none w-full flex justify-between items-center px-4 py-3"
                     :class="{ active: isRouteActive('/onze-vacatures') }"
@@ -92,15 +101,22 @@
                   >
                     Onze Vacatures
                     <div
-                      class="bg-white rounded-full group-hover:bg-primary w-5 h-5 flex items-center justify-center pr-[3px]"
+                      class="group-hover:bg-primary rounded-full w-5 h-5 flex items-center justify-center pr-[3px]"
                       :class="{
-                        'text-black': !isRouteActive('/onze-vacatures'),
-                        'bg-primary': isRouteActive('/onze-vacatures'),
+                        'text-black bg-white rounded-full':
+                          !isRouteActive('/onze-vacatures'),
+                        'bg-primary rounded-full':
+                          isRouteActive('/onze-vacatures'),
                       }"
                     >
                       <Icon
                         name="fluent:ios-arrow-24-filled"
-                        class="text-black rotate-180"
+                        class="rotate-180"
+                        :class="{
+                          'text-black': !isRouteActive('/onze-vacatures'),
+                          'bg-primary rounded-full text-black':
+                            isRouteActive('/onze-vacatures'),
+                        }"
                       />
                     </div>
                   </NuxtLink>

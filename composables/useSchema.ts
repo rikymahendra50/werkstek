@@ -15,6 +15,40 @@ export default function () {
     })
   );
 
+  const vacaturesSchema = toTypedSchema(
+    object({
+      image: z.instanceof(File),
+      title: string().min(1, "Title is required"),
+      location: number().min(1, "Location is required"),
+      hours: string().min(1, "Hours is required"),
+      category: string().min(1, "Category is required"),
+    })
+  );
+
+  const editVacaturesSchema = toTypedSchema(
+    object({
+      title: string().min(1, "Title is required"),
+      location: number().min(1, "Location is required"),
+      hours: string().min(1, "Hours is required"),
+      category: string().min(1, "Category is required"),
+    })
+  );
+
+  const authorSchema = toTypedSchema(
+    object({
+      image: z.instanceof(File),
+      name: string().min(1, "Name is required"),
+      description: string().min(1, "Description is required"),
+    })
+  );
+
+  const editAuthorSchema = toTypedSchema(
+    object({
+      name: string().min(1, "Name is required"),
+      description: string().min(1, "Description is required"),
+    })
+  );
+
   const contactSchema = toTypedSchema(
     object({
       // first_name: string({
@@ -234,5 +268,8 @@ export default function () {
     resetPasswordSchema,
     updatePasswordSchema,
     inputVideoSchema,
+    vacaturesSchema,
+    authorSchema,
+    editVacaturesSchema,
   };
 }

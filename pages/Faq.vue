@@ -1,4 +1,5 @@
 <template>
+  <div class="mt-28"></div>
   <HeaderWCity
     title1="FAQ"
     title2="Onze meest gestelde vragen"

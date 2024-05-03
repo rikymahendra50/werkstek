@@ -331,7 +331,7 @@ const selectedFacilities = computed(() => {
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
-}, 1000);
+}, 4000);
 
 watch(
   () => page.value,
@@ -446,7 +446,7 @@ onMounted(() => {
       if (route.query.type_id) {
         selectedSoortLocatie.value = route.query.type_id;
       }
-      start();
+      replaceWindow2();
     }
   );
 
@@ -560,6 +560,39 @@ function replaceWindow() {
   if (selectedCity.value) {
     filters.push(`location_id=${selectedCity.value}`);
   }
+
+  if (selectedSoortLocatie.value) {
+    filters.push(`type_id=${selectedSoortLocatie.value}`);
+  }
+
+  if (selectedMaxPrice.value) {
+    filters.push(`min_price=${selectedMinPrice.value}`);
+    filters.push(`max_price=${selectedMaxPrice.value}`);
+  }
+
+  if (selectedMeterMin && selectedMeterMax) {
+    filters.push(`filter[min_area]=${selectedMeterMin.value}`);
+    filters.push(`filter[max_area]=${selectedMeterMax.value}`);
+  }
+
+  if (selectedFunctie?.value) {
+    const facilitiesQuery = selectedFunctie.value.join("|");
+    filters.push(`facilities=${facilitiesQuery}`);
+  }
+  const queryString = filters.join("&");
+  const url = `/onze-locaties?page=${page.value}${
+    queryString ? `&${queryString}` : ""
+  }`;
+
+  router.replace(url);
+  refresh();
+}
+
+function replaceWindow2() {
+  let filters = [];
+  if (selectedCity.value) {
+    filters.push(`location_id=${selectedCity.value}`);
+  }
   if (selectedSoortLocatie.value) {
     filters.push(`type_id=${selectedSoortLocatie.value}`);
   }
@@ -579,7 +612,7 @@ function replaceWindow() {
   }
   const queryString = filters.join("&");
   const url = `/onze-locaties?page=${page.value}${
-    queryString ? `&${queryString}` : ""
+    queryString ? `&${queryString}#section-2` : ""
   }`;
 
   router.replace(url);

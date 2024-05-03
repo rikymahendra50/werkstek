@@ -7,21 +7,12 @@
           <!-- Swiper -->
           <div ref="el">
             <Swiper
-              :modules="[
-                SwiperAutoplay,
-                SwiperEffectCreative,
-                SwiperNavigation,
-                SwiperThumbs,
-              ]"
+              :modules="[SwiperEffectCreative, SwiperNavigation, SwiperThumbs]"
               :slides-per-view="1"
               :effect="'creative'"
               centered-slides
               :thumbs="{ swiper: thumbsSwiper }"
               class="overflow-hidden relative"
-              :autoplay="{
-                delay: 8000,
-                disableOnInteraction: true,
-              }"
               :creative-effect="{
                 prev: {
                   shadow: false,
@@ -32,11 +23,11 @@
                 },
               }"
             >
-              <SwiperSlide v-for="slide in imageSrc" :key="slide.id">
+              <SwiperSlide v-for="slide in allMedia" :key="slide.id">
                 <div class="relative">
-                  <div class="absolute mt-10">
+                  <div class="absolute mt-5 md:mt-10">
                     <div
-                      class="bg-primary min-w-[140px] lg:min-w-[232px] text-[14px] md:text-[16px] text-white py-1 px-2 md:py-2 md:px-4 grid"
+                      class="bg-primary min-w-[140px] lg:min-w-[232px] text-[12px] sm:text-[14px] md:text-[16px] text-white py-1 px-2 md:py-2 md:px-4 grid"
                     >
                       <span>Prijs :</span>
                       <span
@@ -48,19 +39,32 @@
                       </span>
                     </div>
                   </div>
-                  <img
+                  <!-- <img
                     :src="slide.image"
                     alt="image"
                     class="w-full h-full aspect-video md:min-h-[350px] object-cover"
-                  />
-                  <!-- <video
+                  /> -->
+                  <img
+                    v-if="slide.image"
+                    :src="slide.image"
+                    :alt="slide.image"
                     class="w-full h-full aspect-video md:min-h-[350px] object-cover"
-                    controls
-                  >
-                    <source src="/images/home-video.mov" type="video/mp4" />
-                    <source src="mov_bbb.ogg" type="video/ogg" />
-                    Your browser does not support HTML video.
-                  </video> -->
+                  />
+                  <!-- <img
+                    v-else-if="slide.thumbnail"
+                    :src="slide.video"
+                    :alt="slide.video"
+                    class="w-full h-full aspect-video md:min-h-[350px] object-cover"
+                  /> -->
+                  <div v-else-if="slide.thumbnail">
+                    <video
+                      class="w-full h-full aspect-video md:min-h-[350px] object-cover"
+                      controls
+                    >
+                      <source :src="slide.video" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
                 </div>
               </SwiperSlide>
               <div class="h-full w-full bg-gradient-to-l inset-0 z-10">
@@ -72,24 +76,39 @@
                   :css-mode="true"
                   :watch-slides-progress="true"
                 >
-                  <SwiperSlide
-                    v-for="slide in imageSrc"
-                    :key="slide.id"
-                    class="group overflow-hidden mt-3"
-                  >
-                    <img
-                      :src="slide.image"
-                      alt="image"
-                      class="group-hover:scale-125 transition-all max-h-[150px] md:max-h-[200px] w-full duration-300 object-cover aspect-square"
-                    />
-                  </SwiperSlide>
+                  <template v-for="(slide, index) in allMedia" :key="index">
+                    <SwiperSlide
+                      class="group overflow-hidden mt-3 cursor-pointer"
+                    >
+                      <img
+                        v-if="slide.image"
+                        :src="slide.image"
+                        :alt="slide.image"
+                        class="group-hover:scale-125 transition-all max-h-[150px] md:max-h-[200px] w-full duration-300 object-cover aspect-square"
+                      />
+                      <div
+                        class="flex items-center justify-center relative"
+                        v-else-if="slide.thumbnail"
+                      >
+                        <Icon
+                          name="solar:play-bold"
+                          class="text-white absolute w-10 h-10 md:w-16 md:h-16 opacity-75 transition"
+                        />
+                        <img
+                          :src="slide.thumbnail"
+                          :alt="slide.thumbnail"
+                          class="group-hover:scale-125 transition-all max-h-[150px] md:max-h-[200px] w-full duration-300 object-cover aspect-square"
+                        />
+                      </div>
+                    </SwiperSlide>
+                  </template>
                 </Swiper>
               </div>
             </Swiper>
           </div>
           <!-- end swiper -->
         </div>
-        <div class="mt-2 sm:mt-10 md:mt-16 w-[100%] text-justify">
+        <div class="mt-2 sm:mt-10 md:mt-9 w-[100%] text-justify">
           <h1 class="text-[#363636] text-[20px] font-semibold my-3">
             {{ title }}
           </h1>
@@ -290,6 +309,7 @@ const props = defineProps({
   type: {
     type: String,
   },
+  video: {},
   rentType: {
     type: String,
   },
@@ -322,6 +342,17 @@ const props = defineProps({
     type: Array,
   },
 });
+
+const allMedia = ref([]);
+
+if (Array.isArray(props.imageSrc)) {
+  for (let i = 0; i < props.imageSrc.length; i++) {
+    allMedia.value.push(props.imageSrc[i]);
+  }
+  if (props.video) {
+    allMedia.value.push(props.video);
+  }
+}
 </script>
 
 <style>

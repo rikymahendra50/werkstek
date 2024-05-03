@@ -122,11 +122,17 @@ const { data } = await useFetch(`/admins/products/${slug.value}/images`, {
   ...requestOptions,
 });
 
+const { data: video } = await useFetch(
+  `/admins/products/${slug.value}/videos`,
+  {
+    method: "get",
+    ...requestOptions,
+  }
+);
+
 const selectedImage = ref();
 const selectedImages = ref([]);
 const imagePreview = ref([]);
-
-// console.log(data.value.data);
 
 data.value.data.forEach((item) => {
   selectedImages.value.push(item.id);
@@ -194,8 +200,6 @@ async function onSubmit(values, ctx) {
     }
   );
 
-  console.log(selectedImage.value);
-
   if (error.value) {
     ctx.setErrors(transformErrors(error?.value.data));
     snackbar.add({
@@ -213,8 +217,13 @@ async function onSubmit(values, ctx) {
   loading.value = false;
 }
 
-const canUpload = computed(() => imagePreview?.value?.length < 3);
+let canUpload;
 
+if (video?.value?.data) {
+  canUpload = computed(() => imagePreview?.value?.length < 2);
+} else {
+  canUpload = computed(() => imagePreview?.value?.length < 3);
+}
 useHead({
   title: "Add or Edit Image",
 });

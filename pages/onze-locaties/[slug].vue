@@ -10,6 +10,7 @@
     :category="OnzeLocatiesData?.category_id"
     :description="OnzeLocatiesData?.description"
     :imageSrc="OnzeLocatiesData?.images"
+    :video="OnzeLocatiesData?.video"
     :email="OnzeLocatiesData?.email"
     :phoneNumber="OnzeLocatiesData?.phone_number"
     :latitude="OnzeLocatiesData?.latitude"

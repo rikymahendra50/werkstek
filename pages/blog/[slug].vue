@@ -7,7 +7,10 @@
       :title="data?.data?.title"
       :imageSrc="data.data.image"
       :body="data?.data?.body"
-      :comment="data.data.comments"
+      :author="data?.data?.author?.name"
+      :authorImage="data?.data?.author?.image"
+      :authorDescription="data?.data?.author?.description"
+      :comment="data?.data?.comments"
     />
   </div>
 </template>

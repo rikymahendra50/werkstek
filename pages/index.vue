@@ -17,6 +17,14 @@
   <SliderLocaties :data="sliderData?.data" />
   <SliderTestimony class="my-20" />
   <FourImages />
+  <div class="my-10">
+    <TitleHeader3
+      title="Updates & blogs"
+      secondTitle="Lees de Werkstek blog"
+      description="Op de hoogte blijven van de nieuwste kantoortrends? <br /> Op zoek naar tips en tricks voor ondernemers? Lees dan ook onze inspirerende blogs!"
+    />
+    <Blog />
+  </div>
   <BgBigGreen
     :title1="BgBigGreenData.title1"
     :title2="BgBigGreenData.title2"

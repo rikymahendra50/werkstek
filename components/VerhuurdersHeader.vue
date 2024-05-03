@@ -1,9 +1,9 @@
 <template>
   <div class="py-10 md:py-20 relative flex items-center">
-    <div class="grid md:grid-rows-1 md:grid-cols-2 z-10 px-5 md:px-0">
-      <div
-        class="pl-3 sm:pl-6 md:pl-[70px] lg:pl-[80px] xl:pr-[80px] xl:pl-[106px] mx-auto flex items-center"
-      >
+    <div
+      class="grid md:grid-rows-1 md:grid-cols-2 z-10 px-3 sm:px-6 md:px-[70px] lg:px-[80px]"
+    >
+      <div class="mx-auto flex items-center">
         <div class="grid gap-2">
           <p class="text-[16px] lg:text-[20px] text-[#1c1c1c]">{{ title1 }}</p>
           <p class="text-[30px] lg:text-[40px] text-[#231E1F] font-bold">

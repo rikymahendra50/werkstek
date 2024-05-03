@@ -8,12 +8,12 @@
     <div class="md:grid md:grid-cols-12 container-custom">
       <div class="md:col-span-4 sm:w-[90%]">
         <div class="mt-5">
-          <button
+          <!-- <button
             @click="showAllData"
             class="btn w-full bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded normal-case text-md"
           >
             Al Vacatures
-          </button>
+          </button> -->
           <button
             class="flex items-center gap-3 hover:text-primary"
             @click="toggleDetail"
@@ -63,38 +63,7 @@
             </div>
           </div>
           <div class="flex flex-col">
-            <p class="text-base mt-3 opacity-50 pb-3">Soort locatie</p>
-            <fieldset id="soortLocatie" class="grid grid-cols-2 gap-2">
-              <div
-                class="flex items-center gap-2 cursor-pointer"
-                v-for="item in soortLocatiesRadio"
-              >
-                <input
-                  :id="item.id"
-                  :name="'Soort' + item.id"
-                  :value="item.id"
-                  v-model="selectedSoortLocatie"
-                  type="radio"
-                  name="soort"
-                />
-                <label :for="item.id" class="cursor-pointer">
-                  {{ item.name }}
-                </label>
-              </div>
-            </fieldset>
-            <!-- <SliderRange
-              v-if="dataForFilter.length"
-              :title="'De prijs per maand'"
-              :idInputMin="'priceMin'"
-              :idInputMax="'priceMax'"
-              v-model:minPrice="selectedMinPrice"
-              v-model:maxPrice="selectedMaxPrice"
-              :minRange="0"
-              :maxRange="highestPrice"
-              :priceGap="highestPrice"
-              class="my-2"
-            /> -->
-            <p class="text-sm mt-3 opacity-50">Price</p>
+            <p class="text-sm mt-3 opacity-50">Vuur</p>
             <div class="grid grid-cols-2 my-2">
               <div class="relative">
                 <input
@@ -105,7 +74,7 @@
                   class="input input-bordered w-[95%] p-[10px]input-md"
                   v-model="selectedMinPrice"
                 /><br />
-                <span class="absolute top-3 right-8">€</span>
+                <span class="absolute top-3 right-8">vuur</span>
               </div>
               <div class="relative">
                 <input
@@ -116,15 +85,15 @@
                   class="input input-bordered w-[95%] p-[10px] input-md"
                   v-model="selectedMaxPrice"
                 /><br />
-                <span class="absolute top-3 right-8">€</span>
+                <span class="absolute top-3 right-8">vuur</span>
               </div>
             </div>
             <div class="">
-              <p class="text-base mt-3 opacity-50 pb-3">Faciliteit</p>
+              <p class="text-base mt-3 opacity-50 pb-3">Opleidings niveau</p>
               <fieldset id="facility" class="grid grid-cols-1 gap-2">
                 <div
                   class="flex items-center gap-2 cursor-pointer"
-                  v-for="item in functieCheckbox"
+                  v-for="item in soortLocatiesRadio"
                 >
                   <input
                     :id="`facility-${item.id}`"
@@ -147,24 +116,24 @@
         <div
           class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
         >
-          <eachLocaties
-            v-if="dataProduct?.data"
-            v-for="(item, index) in dataProduct?.data"
-            :key="item?.id"
-            :name="item?.name"
-            :addres="item?.location?.name"
-            :areaSize="item?.area_size"
-            :type="item?.level_type?.name"
-            :latitude="item?.latitude"
-            :longitude="item?.longitude"
-            :address="item?.address"
-            :link="`/onze-vacatures/${item.slug}`"
-            :price="item?.price"
-            :email="item?.email"
-            :image="item?.images[0]?.image"
-            :rating="item?.rating"
-            :phone="item?.phone_number"
-          />
+          <Suspense>
+            <template #default>
+              <eachVacatures
+                v-if="dataProduct?.data"
+                v-for="(item, index) in dataProduct?.data"
+                :key="item?.id"
+                :image="item?.image"
+                :link="`/onze-vacatures/${item?.slug}`"
+                :name="item?.title"
+                :hours="item?.hours"
+                :category="item?.category"
+                :time="item?.updated_at"
+              />
+            </template>
+            <template #fallback>
+              <p>...Loading</p>
+            </template>
+          </Suspense>
         </div>
         <Pagination
           v-if="dataProduct?.meta"
@@ -190,59 +159,21 @@ const router = useRouter();
 const route = useRoute();
 
 const page = ref(1);
-// const search = ref("");
 const selectedCity = ref("");
-const selectedSoortLocatie = ref("");
 const selectedMinPrice = ref("");
 const selectedMaxPrice = ref("");
-const selectedMeterMin = ref("");
-const selectedMeterMax = ref("");
 const selectedFunctie = ref([]);
 
-const dataForFilter = ref([]);
 const locations = ref([]);
 const soortLocatiesRadio = ref([]);
 const functieCheckbox = ref([]);
 
-const selectedFacilities = computed(() => {
-  if (selectedFunctie.value.length > 0) {
-    return `filter[facilities]=${selectedFunctie.value.join("|")}`;
-  } else {
-    return "";
-  }
-});
-
-const showAllData = () => {
-  selectedCity.value = "";
-  selectedSoortLocatie.value = "";
-  selectedMinPrice.value = "";
-  selectedMaxPrice.value = "";
-  selectedMeterMin.value = "";
-  selectedMeterMax.value = "";
-  selectedFunctie.value = [];
-};
-
-// const { data: dataProduct, refresh } = await useFetch(
-//   `/products?page=${page.value}&filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
-//   {
-//     method: "get",
-//     ...requestOptions,
-//   }
-// );
-
-const {
-  data: dataProduct,
-  error,
-  refresh,
-} = await useAsyncData("dataProduct2", () =>
-  $fetch(
-    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
-    {
-      method: "get",
-      ...requestOptions,
-    }
-  )
-);
+// const showAllData = () => {
+//   selectedCity.value = "";
+//   selectedMinPrice.value = "";
+//   selectedMaxPrice.value = "";
+//   selectedFunctie.value = [];
+// };
 
 const variableToggleLocatie = ref();
 const selectedCityForShow = ref("Locatie");
@@ -259,9 +190,31 @@ function variableToggleLocatieT(item, itemName) {
   variableToggleLocatie.value = false;
 }
 
+const {
+  data: dataProduct,
+  error,
+  refresh,
+} = await useAsyncData("dataProduct", () =>
+  $fetch(
+    `/jobs?filter[location_id]=${selectedCity.value}&filter[min_hours]=${selectedMinPrice.value}&filter[max_hours]=${selectedMaxPrice.value}&${selectedFacilities.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
+);
+
+const selectedFacilities = computed(() => {
+  if (selectedFunctie.value.length > 0) {
+    return `filter[types]=${selectedFunctie.value.join("|")}`;
+  } else {
+    return "";
+  }
+});
+
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
-}, 1500);
+}, 4000);
 
 watch(
   () => page.value,
@@ -301,36 +254,6 @@ watch(
     }
   }
 );
-
-watch(
-  () => selectedSoortLocatie.value,
-  (newValue, oldValue) => {
-    if (newValue !== oldValue) {
-      page.value = 1;
-      start();
-    }
-  }
-);
-
-// watch(
-//   () => selectedMeterMin.value,
-//   (newValue, oldValue) => {
-//     if (newValue !== oldValue) {
-//       page.value = 1;
-//       start();
-//     }
-//   }
-// );
-
-// watch(
-//   () => selectedMeterMax.value,
-//   (newValue, oldValue) => {
-//     if (newValue !== oldValue) {
-//       page.value = 1;
-//       start();
-//     }
-//   }
-// );
 
 watch(
   () => selectedFunctie.value,
@@ -373,52 +296,36 @@ onMounted(() => {
   if (route.query.location_id) {
     selectedCity.value = route.query.location_id;
   }
-  if (route.query.type_id) {
-    // const typeIds = route.query.type_id?.split(",")?.map(Number);
-    // selectedSoortLocatie.value = typeIds;
-    selectedSoortLocatie.value = route.query.type_id;
+  if (route.query.min_hours) {
+    selectedMinPrice.value = parseInt(route.query.min_hours);
   }
-
-  if (route.query.min_price) {
-    selectedMinPrice.value = parseInt(route.query.min_price);
-  }
-  if (route.query.max_price) {
-    selectedMaxPrice.value = parseInt(route.query.max_price);
-  }
-  if (route.query.min_area) {
-    selectedMeterMin.value = route.query.min_area;
-  }
-  if (route.query.max_area) {
-    selectedMeterMax.value = route.query.max_area;
+  if (route.query.max_hours) {
+    selectedMaxPrice.value = parseInt(route.query.max_hours);
   }
   if (route.query.facilities) {
     const facilitiesIds = route.query.facilities?.split(",")?.map(Number);
     selectedFunctie.value = facilitiesIds;
   }
+
+  start();
 });
 
 async function loadProperties() {
-  const [dataForFilterT, locationsT, soortLocatiesRadioT, facilitiesT] =
-    await Promise.all([
-      $fetch("/products", {
-        method: "get",
-        ...requestOptions,
-      }),
-      $fetch("/locations", {
-        method: "get",
-        ...requestOptions,
-      }),
-      $fetch("/types", {
-        method: "get",
-        ...requestOptions,
-      }),
-      $fetch("/facilities", {
-        method: "get",
-        ...requestOptions,
-      }),
-    ]);
+  const [locationsT, soortLocatiesRadioT, facilitiesT] = await Promise.all([
+    $fetch("/locations", {
+      method: "get",
+      ...requestOptions,
+    }),
+    $fetch("/type-jobs", {
+      method: "get",
+      ...requestOptions,
+    }),
+    $fetch("/facilities", {
+      method: "get",
+      ...requestOptions,
+    }),
+  ]);
 
-  dataForFilter.value = dataForFilterT?.data;
   locations.value = locationsT?.data;
   soortLocatiesRadio.value = soortLocatiesRadioT?.data;
   functieCheckbox.value = facilitiesT?.data;
@@ -427,35 +334,6 @@ async function loadProperties() {
 const city = computed(() => {
   return locations.value.map((item) => item);
 });
-
-const highestPrice = computed(() => {
-  const numericPrices = dataForFilter.value.map((item) =>
-    parseFloat(item.price)
-  );
-
-  if (numericPrices.length === 0) {
-    return 0;
-  }
-
-  const highestPrice2 = Math.max(...numericPrices);
-
-  return highestPrice2;
-  // return Math.max(...numericPrices);
-});
-
-// function isSelectedSoort(id) {
-//   return selectedSoortLocatie.value.includes(id);
-// }
-
-// function handleSoortLocatieChange(id) {
-//   if (selectedSoortLocatie.value.includes(id)) {
-//     selectedSoortLocatie.value = selectedSoortLocatie.value?.filter(
-//       (item) => item !== id
-//     );
-//   } else {
-//     selectedSoortLocatie.value = [...selectedSoortLocatie.value, id];
-//   }
-// }
 
 // end soort locatie
 
@@ -470,7 +348,6 @@ function handlefunctieCheckbox(id) {
     selectedFunctie.value = [...selectedFunctie.value, id];
   }
 }
-
 // end untuk mengelola facility
 
 function replaceWindow() {
@@ -478,16 +355,17 @@ function replaceWindow() {
   if (selectedCity.value) {
     filters.push(`location_id=${selectedCity.value}`);
   }
-  if (selectedSoortLocatie.value) {
-    filters.push(`type_id=${selectedSoortLocatie.value}`);
-  }
+  // if (selectedSoortLocatie.value) {
+  //   filters.push(`type_id=${selectedSoortLocatie.value}`);
+  // }
   if (selectedMaxPrice.value) {
-    filters.push(`min_price=${selectedMinPrice.value}`);
-    filters.push(`max_price=${selectedMaxPrice.value}`);
+    filters.push(`min_hours=${selectedMinPrice.value}`);
+    filters.push(`max_hours=${selectedMaxPrice.value}`);
   }
 
   if (selectedFunctie?.value) {
-    filters.push(`facilities=${selectedFunctie.value}`);
+    const facilitiesQuery = selectedFunctie.value.join("|");
+    filters.push(`facilities=${facilitiesQuery}`);
   }
 
   const queryString = filters.join("&");
