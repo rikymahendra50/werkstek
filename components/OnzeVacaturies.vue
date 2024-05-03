@@ -28,9 +28,7 @@
         </div>
         <div v-if="showFilter">
           <div class="relative">
-            <label for="city" class="text-base mt-3 opacity-50"
-              >Kies een locatie</label
-            >
+            <div class="text-base mt-3 opacity-50">Kies een locatie</div>
             <div
               class="w-full border py-3 rounded-lg px-2 flex justify-between items-center cursor-pointer mt-2 select-none"
               @click="variableToggleLocatieF"
@@ -72,7 +70,7 @@
                   placeholder="Min"
                   min="0"
                   class="input input-bordered w-[95%] p-[10px]input-md"
-                  v-model="selectedMinPrice"
+                  v-model="selectedMinHours"
                 /><br />
                 <span class="absolute top-3 right-8">vuur</span>
               </div>
@@ -83,7 +81,7 @@
                   min="0"
                   placeholder="Max"
                   class="input input-bordered w-[95%] p-[10px] input-md"
-                  v-model="selectedMaxPrice"
+                  v-model="selectedMaxHours"
                 /><br />
                 <span class="absolute top-3 right-8">vuur</span>
               </div>
@@ -116,35 +114,29 @@
         <div
           class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
         >
-          <Suspense>
-            <template #default>
-              <eachVacatures
-                v-if="dataProduct?.data"
-                v-for="(item, index) in dataProduct?.data"
-                :key="item?.id"
-                :image="item?.image"
-                :link="`/onze-vacatures/${item?.slug}`"
-                :name="item?.title"
-                :hours="item?.hours"
-                :category="item?.category"
-                :time="item?.updated_at"
-              />
-            </template>
-            <template #fallback>
-              <p>...Loading</p>
-            </template>
-          </Suspense>
+          <template v-if="dataProduct2?.data">
+            <eachVacatures
+              v-for="(item, index) in dataProduct2?.data"
+              :key="item?.id"
+              :image="item?.image"
+              :link="`/onze-vacatures/${item?.slug}`"
+              :name="item?.title"
+              :hours="item?.hours"
+              :category="item?.category"
+              :time="item?.updated_at"
+            />
+          </template>
         </div>
         <Pagination
-          v-if="dataProduct?.meta"
+          v-if="dataProduct2?.meta"
           :includeFirstLast="false"
           v-model="page"
           first="Eerst"
           last="Laatst"
           prev="Vorig"
           next="Volgende"
-          :total="dataProduct?.meta?.total"
-          :per-page="dataProduct?.meta?.per_page"
+          :total="dataProduct2?.meta?.total"
+          :per-page="dataProduct2?.meta?.per_page"
           class="flex justify-center mt-10"
         />
       </div>
@@ -160,8 +152,8 @@ const route = useRoute();
 
 const page = ref(1);
 const selectedCity = ref("");
-const selectedMinPrice = ref("");
-const selectedMaxPrice = ref("");
+const selectedMinHours = ref("");
+const selectedMaxHours = ref("");
 const selectedFunctie = ref([]);
 
 const locations = ref([]);
@@ -190,20 +182,6 @@ function variableToggleLocatieT(item, itemName) {
   variableToggleLocatie.value = false;
 }
 
-const {
-  data: dataProduct,
-  error,
-  refresh,
-} = await useAsyncData("dataProduct", () =>
-  $fetch(
-    `/jobs?filter[location_id]=${selectedCity.value}&filter[min_hours]=${selectedMinPrice.value}&filter[max_hours]=${selectedMaxPrice.value}&${selectedFacilities.value}`,
-    {
-      method: "get",
-      ...requestOptions,
-    }
-  )
-);
-
 const selectedFacilities = computed(() => {
   if (selectedFunctie.value.length > 0) {
     return `filter[types]=${selectedFunctie.value.join("|")}`;
@@ -212,9 +190,23 @@ const selectedFacilities = computed(() => {
   }
 });
 
+const {
+  data: dataProduct2,
+  error,
+  refresh,
+} = await useAsyncData("dataProduct2", () =>
+  $fetch(
+    `/jobs?filter[location_id]=${selectedCity.value}&filter[min_hours]=${selectedMinHours.value}&filter[max_hours]=${selectedMaxHours.value}&${selectedFacilities.value}`,
+    {
+      method: "get",
+      ...requestOptions,
+    }
+  )
+);
+
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
-}, 4000);
+}, 1500);
 
 watch(
   () => page.value,
@@ -226,22 +218,28 @@ watch(
 );
 
 watch(
-  () => selectedMinPrice.value,
+  () => selectedMinHours.value,
   (newValue, oldValue) => {
-    if (newValue !== oldValue) {
-      page.value = 1;
-      start();
-    }
+    // if (newValue !== oldValue) {
+    //   page.value = 1;
+    //   start();
+    // }
+    page.value = 1;
+    start();
+    refresh();
   }
 );
 
 watch(
-  () => selectedMaxPrice.value,
+  () => selectedMaxHours.value,
   (newValue, oldValue) => {
-    if (newValue !== oldValue) {
-      page.value = 1;
-      start();
-    }
+    // if (newValue !== oldValue) {
+    //   page.value = 1;
+    //   start();
+    // }
+    page.value = 1;
+    start();
+    refresh();
   }
 );
 
@@ -297,21 +295,20 @@ onMounted(() => {
     selectedCity.value = route.query.location_id;
   }
   if (route.query.min_hours) {
-    selectedMinPrice.value = parseInt(route.query.min_hours);
+    selectedMinHours.value = parseInt(route.query.min_hours);
   }
   if (route.query.max_hours) {
-    selectedMaxPrice.value = parseInt(route.query.max_hours);
+    selectedMaxHours.value = parseInt(route.query.max_hours);
   }
   if (route.query.facilities) {
-    const facilitiesIds = route.query.facilities?.split(",")?.map(Number);
+    const facilitiesIds = route.query.facilities?.split("|")?.map(Number);
     selectedFunctie.value = facilitiesIds;
   }
-
   start();
 });
 
 async function loadProperties() {
-  const [locationsT, soortLocatiesRadioT, facilitiesT] = await Promise.all([
+  const [locationsT, soortLocatiesRadioT] = await Promise.all([
     $fetch("/locations", {
       method: "get",
       ...requestOptions,
@@ -328,13 +325,12 @@ async function loadProperties() {
 
   locations.value = locationsT?.data;
   soortLocatiesRadio.value = soortLocatiesRadioT?.data;
-  functieCheckbox.value = facilitiesT?.data;
+  // functieCheckbox.value = facilitiesT?.data;
 }
 
 const city = computed(() => {
   return locations.value.map((item) => item);
 });
-
 // end soort locatie
 
 function isSelectedFuncti(id) {
@@ -355,19 +351,16 @@ function replaceWindow() {
   if (selectedCity.value) {
     filters.push(`location_id=${selectedCity.value}`);
   }
-  // if (selectedSoortLocatie.value) {
-  //   filters.push(`type_id=${selectedSoortLocatie.value}`);
-  // }
-  if (selectedMaxPrice.value) {
-    filters.push(`min_hours=${selectedMinPrice.value}`);
-    filters.push(`max_hours=${selectedMaxPrice.value}`);
+  if (selectedMaxHours.value) {
+    filters.push(`max_hours=${selectedMaxHours.value}`);
   }
-
+  if (selectedMinHours.value) {
+    filters.push(`min_hours=${selectedMinHours.value}`);
+  }
   if (selectedFunctie?.value) {
     const facilitiesQuery = selectedFunctie.value.join("|");
     filters.push(`facilities=${facilitiesQuery}`);
   }
-
   const queryString = filters.join("&");
   const url = `/onze-vacatures?page=${page.value}${
     queryString ? `&${queryString}` : ""

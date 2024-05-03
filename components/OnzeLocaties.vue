@@ -331,7 +331,7 @@ const selectedFacilities = computed(() => {
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
-}, 4000);
+}, 3000);
 
 watch(
   () => page.value,
