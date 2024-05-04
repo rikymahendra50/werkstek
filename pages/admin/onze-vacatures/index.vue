@@ -42,6 +42,13 @@
                 <td>
                   <div class="flex items-center justify-center gap-4">
                     <NuxtLink
+                      :to="`/onze-vacatures/${item.slug}`"
+                      class="btn btn-sm normal-case btn-ghost btn-square"
+                      target="_blank"
+                    >
+                      <icon name="i-heroicons-eye" class="cursor-pointer" />
+                    </NuxtLink>
+                    <NuxtLink
                       :to="`/admin/onze-vacatures/edit/${item.slug}`"
                       class="btn btn-sm normal-case btn-ghost btn-square"
                     >

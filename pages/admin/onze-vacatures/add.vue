@@ -7,7 +7,6 @@
       :validation-schema="vacaturesSchema"
       class="text-[12px] md:text-[16px] flex-col flex items-center px-3 lg:px-8"
     >
-      {{ error }}
       <div class="w-full my-4">
         <div class="mb-2">Image</div>
         <div class="hidden">
@@ -79,7 +78,7 @@
 
       <div class="flex flex-col gap-3 my-2 w-full">
         <div>Tags</div>
-        <div class="flex items-center gap-3" v-for="item in name">
+        <div class="flex items-center gap-3" v-for="item in privilages?.data">
           <input
             :id="`test + ${item.id}`"
             name="tags"
@@ -150,6 +149,11 @@ const { data: location } = await useFetch(`/admins/locations`, {
   ...requestOptions,
 });
 const { data: type } = await useFetch(`/admins/type-jobs`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const { data: privilages } = await useFetch(`/admins/categories`, {
   method: "get",
   ...requestOptions,
 });

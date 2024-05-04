@@ -234,7 +234,7 @@
           autocomplete="location"
         >
           <option disabled selected>Location</option>
-          <option :value="item.id" v-for="item in location.data">
+          <option :value="item.id" v-for="item in location?.data">
             {{ item.name }}
           </option>
         </VeeField>
@@ -319,7 +319,7 @@
             <span>Privileges</span>
           </div>
           <label
-            v-for="item in dataPrivilages"
+            v-for="item in dataPrivilages?.data"
             :key="item.id"
             class="checkbox-label flex gap-2"
           >
@@ -378,28 +378,33 @@ const router = useRouter();
 const route = useRoute();
 const { formInput } = useSchema();
 
-const dataPrivilages = ref([
-  {
-    id: 1,
-    name: "Kleinschalig",
-  },
-  {
-    id: 2,
-    name: "Informeel",
-  },
-  {
-    id: 3,
-    name: "Flexwerken mogelijk",
-  },
-  {
-    id: 4,
-    name: "Prachtige locatie aan de gracht",
-  },
-  {
-    id: 5,
-    name: "Internationale groep mensen",
-  },
-]);
+// const dataPrivilages = ref([
+//   {
+//     id: 1,
+//     name: "Kleinschalig",
+//   },
+//   {
+//     id: 2,
+//     name: "Informeel",
+//   },
+//   {
+//     id: 3,
+//     name: "Flexwerken mogelijk",
+//   },
+//   {
+//     id: 4,
+//     name: "Prachtige locatie aan de gracht",
+//   },
+//   {
+//     id: 5,
+//     name: "Internationale groep mensen",
+//   },
+// ]);
+
+const { data: dataPrivilages } = await useFetch(`/admins/categories`, {
+  method: "get",
+  ...requestOptions,
+});
 
 const dataIsSaleAble = ref([
   {

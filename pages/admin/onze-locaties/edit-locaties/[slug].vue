@@ -323,7 +323,7 @@
             <span>Privileges</span>
           </div>
           <label
-            v-for="item in dataPrivilages"
+            v-for="item in dataPrivilages?.data"
             :key="item.id"
             class="checkbox-label flex gap-2"
           >
@@ -409,28 +409,33 @@ const { data: facilities, error } = await useFetch(`/admins/facilities`, {
   ...requestOptions,
 });
 
-const dataPrivilages = ref([
-  {
-    id: 1,
-    name: "Kleinschalig",
-  },
-  {
-    id: 2,
-    name: "Informeel",
-  },
-  {
-    id: 3,
-    name: "Flexwerken mogelijk",
-  },
-  {
-    id: 4,
-    name: "Prachtige locatie aan de gracht",
-  },
-  {
-    id: 5,
-    name: "Internationale groep mensen",
-  },
-]);
+// const dataPrivilages = ref([
+//   {
+//     id: 1,
+//     name: "Kleinschalig",
+//   },
+//   {
+//     id: 2,
+//     name: "Informeel",
+//   },
+//   {
+//     id: 3,
+//     name: "Flexwerken mogelijk",
+//   },
+//   {
+//     id: 4,
+//     name: "Prachtige locatie aan de gracht",
+//   },
+//   {
+//     id: 5,
+//     name: "Internationale groep mensen",
+//   },
+// ]);
+
+const { data: dataPrivilages } = await useFetch(`/admins/categories`, {
+  method: "get",
+  ...requestOptions,
+});
 
 const AllDataSlug = ref(dataSlug?.value.data);
 

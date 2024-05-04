@@ -8,12 +8,12 @@
     <div class="md:grid md:grid-cols-12 container-custom">
       <div class="md:col-span-4 sm:w-[90%]">
         <div class="mt-5">
-          <!-- <button
+          <button
             @click="showAllData"
             class="btn w-full bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded normal-case text-md"
           >
             Al Vacatures
-          </button> -->
+          </button>
           <button
             class="flex items-center gap-3 hover:text-primary"
             @click="toggleDetail"
@@ -158,14 +158,13 @@ const selectedFunctie = ref([]);
 
 const locations = ref([]);
 const soortLocatiesRadio = ref([]);
-const functieCheckbox = ref([]);
 
-// const showAllData = () => {
-//   selectedCity.value = "";
-//   selectedMinPrice.value = "";
-//   selectedMaxPrice.value = "";
-//   selectedFunctie.value = [];
-// };
+const showAllData = () => {
+  selectedCity.value = "";
+  selectedMinHours.value = "";
+  selectedMaxHours.value = "";
+  selectedFunctie.value = [];
+};
 
 const variableToggleLocatie = ref();
 const selectedCityForShow = ref("Locatie");
@@ -206,7 +205,7 @@ const {
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
-}, 1500);
+}, 100);
 
 watch(
   () => page.value,
@@ -220,26 +219,20 @@ watch(
 watch(
   () => selectedMinHours.value,
   (newValue, oldValue) => {
-    // if (newValue !== oldValue) {
-    //   page.value = 1;
-    //   start();
-    // }
-    page.value = 1;
-    start();
-    refresh();
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
   }
 );
 
 watch(
   () => selectedMaxHours.value,
   (newValue, oldValue) => {
-    // if (newValue !== oldValue) {
-    //   page.value = 1;
-    //   start();
-    // }
-    page.value = 1;
-    start();
-    refresh();
+    if (newValue !== oldValue) {
+      page.value = 1;
+      start();
+    }
   }
 );
 

@@ -4,13 +4,14 @@
     image="/images/image-page4-1.png"
     imageAlt="image-page4-1"
     title1="Verhuurders"
-    title2="Alles over Werkstek"
-    description1="Als verhuurder leegstand van kantoorpanden voorkomen? Geen zorgen over de risico’s van leegstand van kantoorgebouwen? Werkstek heeft de kennis en ervaring om leegstaande kantoorpanden in te richten en te verhuren aan ondernemers uit verschillende branches."
+    title2="Voor de verhuurders"
+    description1="Als verhuurder leegstand van kantoorpanden voorkomen? Geen zorgen over de risico’s van leegstand van kantoorgebouwen?"
     description2="Werkstek heeft de kennis en ervaring om leegstaande kantoorpanden in te richten en te verhuren aan ondernemers uit verschillende branches."
     buttonTitle1="Over Werkstek"
     buttonTitle2="Voor verhuurders"
-    buttonLink1="/"
-    buttonLink2="/"
+    buttonLink1="/over-werkstek"
+    buttonLink2="/over-werkstek"
+    :useButton2="false"
   />
 
   <VertrouwdDoor />

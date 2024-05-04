@@ -79,7 +79,7 @@
 
       <div class="flex flex-col gap-3 my-2 w-full">
         <div>Tags</div>
-        <div class="flex items-center gap-3" v-for="item in name">
+        <div class="flex items-center gap-3" v-for="item in privilages?.data">
           <input
             :id="`test + ${item.id}`"
             name="tags"
@@ -156,6 +156,13 @@ const { data: type } = await useFetch(`/admins/type-jobs`, {
   ...requestOptions,
 });
 
+const { data: privilages } = await useFetch(`/admins/categories`, {
+  method: "get",
+  ...requestOptions,
+});
+
+// console.log(privilages?.value?.data?.name);
+
 const {
   data: job,
   error,
@@ -190,16 +197,16 @@ const formData = ref({
   })),
 });
 
-const name = ref([
-  {
-    id: 1,
-    name: "Admin",
-  },
-  {
-    id: 2,
-    name: "CS",
-  },
-]);
+// const name = ref([
+//   {
+//     id: 1,
+//     name: "Admin",
+//   },
+//   {
+//     id: 2,
+//     name: "CS",
+//   },
+// ]);
 
 const selectedImage = ref();
 async function onSubmit(values, ctx) {
