@@ -103,6 +103,7 @@ export default function () {
       title: string().min(1, "Title is required"),
       body: string().min(0, "Description is required"),
       category: number().min(1, "Category is required"),
+      author: number().min(1, "Author is required"),
       meta: string().min(1, "Meta is required"),
     }).superRefine((data, ctx) => {
       if (data.body == "<p></p>") {

@@ -26,11 +26,18 @@
       <div class="block lg:hidden my-3 min-[400px]:my-5 sm:my-7 p-3">
         <div class="flex items-center max-h-[150px] overflow-hidden shadow-sm">
           <img
+            v-if="authorImage"
             :src="authorImage"
             alt="author"
             class="max-w-[15%] sm:max-w-[4rem]"
           />
-          <div class="flex flex-col pl-4 max-w-[70%] border-2 border-red-500">
+          <div class="max-w-[15%] sm:max-w-[4rem]" v-else-if="!authorImage">
+            <Icon
+              name="iconamoon:profile-circle-fill"
+              class="text-gray-400 w-12 h-12"
+            />
+          </div>
+          <div class="flex flex-col pl-4 max-w-[70%]">
             <p
               class="text-[0.9rem] overflow-ellipsis overflow-hidden sm:text-lg font-bold"
             >

@@ -206,7 +206,7 @@
             <NuxtLink
               to="/voor-verhuurders"
               @click="isOpen = false"
-              class="my-4 inline-block"
+              class="my-4 inline-block w-full"
               >Verhuur</NuxtLink
             >
           </li>
@@ -214,12 +214,12 @@
             <NuxtLink
               to="/onze-locaties"
               @click="isOpen = false"
-              class="my-4 inline-block"
+              class="my-4 inline-block w-full"
               >Onze locaties</NuxtLink
             >
           </li>
           <li class="cursor-pointer dropdown w-full">
-            <details class="dropdown">
+            <details class="dropdown w-full">
               <summary
                 tabindex="1"
                 class="bg-transparent border-none my-4 font-thin cursor-pointer gap-2 flex items-center"
@@ -232,7 +232,7 @@
               </summary>
               <ul
                 tabindex="1"
-                class="ml-[-20px] dropdown-content z-[1] menu p-1 shadow bg-base-100 rounded-sm text-black"
+                class="ml-[-20px] dropdown-content z-[1] menu p-1 shadow bg-base-100 rounded-sm text-black w-full"
               >
                 <li class="text-sm">
                   <NuxtLink to="/over-werkstek" @click="isOpen = false">
@@ -252,7 +252,7 @@
             <NuxtLink
               to="/blog"
               @click="isOpen = false"
-              class="my-4 inline-block"
+              class="my-4 inline-block w-full"
               >Blog</NuxtLink
             >
           </li>
@@ -260,7 +260,7 @@
             <NuxtLink
               to="/werkstek-community"
               @click="isOpen = false"
-              class="my-4 inline-block"
+              class="my-4 inline-block w-full"
               >Community</NuxtLink
             >
           </li>

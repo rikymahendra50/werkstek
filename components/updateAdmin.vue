@@ -63,6 +63,7 @@
               {{ item.name }}
             </option>
           </VeeField>
+          <VeeErrorMessage name="author" class="text-red-500" />
         </div>
         <div class="flex flex-col mt-5">
           <label for="meta">Meta</label>
