@@ -92,7 +92,7 @@
         >
       </div>
       <div class="sm:col-span-4 text-right mt-9 sm:mt-0">
-        <p class="text-[12px] opacity-60">Design & Developed by s.p Digital</p>
+        <p class="text-[12px] opacity-60">Design & Developed by s.p. Digital</p>
       </div>
     </div>
   </div>
