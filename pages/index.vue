@@ -1,6 +1,5 @@
 <template>
   <floating-whatsapp />
-  <MapInteractive class="py-10 mt-32" />
   <StatistiekLocatiesVideo
     video="/images/home-video.mov"
     :image="StatistiekLocatiesData?.image"
@@ -13,8 +12,51 @@
     :count1="StatistiekLocatiesData?.titleBg1.count"
     :count2="StatistiekLocatiesData?.titleBg2.count"
     :count3="StatistiekLocatiesData?.titleBg3.count"
+    @isPerformSearch="performSearch"
+    @isSelectedCity="selectedCity"
+    @isSelectedMinPrice="selectedMinPrice"
   />
-  <SliderLocaties :data="sliderData?.data" />
+
+  <div class="grid w-full container-custom">
+    <div class="grid sm:grid-cols-2 justify-between items-center mb-5 gap-5">
+      <div class="flex flex-col gap-2">
+        <p
+          class="text-[12px] min-[500px]:text-[16px] md:text-lg lg:text-[18px] font-bold"
+        >
+          Locaties
+        </p>
+        <p
+          class="text-[20px] min-[500px]:text-[25px] md:text-[30px] lg:text-[40px] text-[#231E1F] font-semibold"
+        >
+          Bekijk onze locaties.
+        </p>
+        <p
+          class="text-[10px] min-[500px]:text-base md:text-lg lg:text-[16px] text-[#777] font-normal"
+        >
+          Een gezellige werkplek huren in een leuke omgeving?Op deze locaties
+          hebben wij kantoorruimtes
+        </p>
+      </div>
+      <div class="flex justify-end">
+        <ButtonSM
+          buttonTitle="Bekijk alle locaties"
+          buttonLink="/onze-locaties"
+          class="z-10 hover:bg-secondary hover:bg-opacity-70 hover:text-tertiary"
+        />
+      </div>
+    </div>
+  </div>
+
+  <MapInteractive
+    :selectedCityT="isSelectedCity"
+    :selectedMinPriceT="isSelectedMinPrice"
+    :SubmitPerform="isPerformSearch"
+  />
+
+  <div id="map"></div>
+
+  <SliderLocaties :data="sliderData?.data"></SliderLocaties>
+
   <SliderTestimony class="my-20" />
   <FourImages />
   <div class="my-10">
@@ -50,4 +92,20 @@ const { data: sliderData } = useFetch(`/products`, {
 useHead({
   title: "Home",
 });
+
+const isPerformSearch = ref();
+const isSelectedCity = ref();
+const isSelectedMinPrice = ref();
+
+function performSearch(data) {
+  isPerformSearch.value = data;
+}
+
+function selectedCity(data) {
+  isSelectedCity.value = data;
+}
+
+function selectedMinPrice(data) {
+  isSelectedMinPrice.value = data;
+}
 </script>

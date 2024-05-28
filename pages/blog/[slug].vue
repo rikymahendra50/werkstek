@@ -11,6 +11,7 @@
       :authorImage="data?.data?.author?.image"
       :authorDescription="data?.data?.author?.description"
       :comment="data?.data?.comments"
+      :slugT="data?.data?.slug"
     />
   </div>
 </template>

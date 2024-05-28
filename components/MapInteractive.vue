@@ -104,11 +104,10 @@
         </div>
       </div>
     </div>
-    <!-- test -->
-    <div
-      class="bg-tertiary box-shadow mt-[-100px] md:mt-[-200px] z-10 rounded-[20px] lg:rounded-[30px] md:h-[188px] mx-3 px-5 grid md:grid-cols-12 items-center gap-4 pt-6 md:pt-0"
+    <!-- search bar -->
+    <!-- <div
+      class="bg-tertiary border-2 border-red-500 box-shadow mt-[-100px] md:mt-[-200px] z-10 rounded-[20px] lg:rounded-[30px] md:h-[188px] mx-3 px-5 grid md:grid-cols-12 items-center gap-4 pt-6 md:pt-0"
     >
-      <!-- col1 -->
       <div class="md:col-span-4 flex md:justify-center items-center">
         <img
           src="/images/building-map-interactive.png"
@@ -122,7 +121,6 @@
           naar op zoek?
         </p>
       </div>
-      <!-- col2 -->
       <div class="grid md:grid-cols-12 md:col-span-6 items-center">
         <div
           v-for="(category, index) in categories"
@@ -198,10 +196,8 @@
               </li>
             </ul>
           </div>
-          <!-- col3 -->
         </div>
       </div>
-      <!-- col3 -->
       <div class="flex justify-self-end mb-5">
         <div
           class="btn bg-primary text-white md:mt-5 hover:bg-primary w-[65px] h-[60px] lg:w-[76px] lg:h-[76px] rounded-[20px]"
@@ -210,8 +206,8 @@
           <Icon name="iconamoon:search-thin" class="text-white w-10 h-10" />
         </div>
       </div>
-    </div>
-    <!-- test2 -->
+    </div> -->
+    <!-- search bar -->
   </section>
 </template>
 
@@ -255,9 +251,21 @@ const props = defineProps({
     default: true,
     required: false,
   },
-  searchCustom: {
-    type: Boolean,
+  selectedCityT: {
+    type: [String, Number],
     required: false,
+    default: 1,
+  },
+  selectedMinPriceT: {
+    type: [String, Number],
+    required: false,
+  },
+  selectedMaxPriceT: {
+    type: [String, Number],
+    required: false,
+  },
+  SubmitPerform: {
+    type: Boolean,
     default: false,
   },
 });
@@ -312,10 +320,38 @@ const currentInfoWindow = ref(null);
 
 const locations = data.value.data;
 
-const selectedCity = ref(1);
+const selectedCity = ref(props.selectedCityT);
 const selectedMinPrice = ref(minestPrice);
-const selectedMaxPrice = ref();
+const selectedMaxPrice = ref(props.selectedMaxPriceT);
 const filteredData = ref();
+
+watch(
+  () => props.selectedCityT,
+  (newValue, oldValue) => {
+    selectedCity.value = newValue;
+  }
+);
+
+watch(
+  () => props.selectedMinPriceT,
+  (newValue, oldValue) => {
+    selectedMinPrice.value = newValue;
+  }
+);
+
+watch(
+  () => props.selectedMaxPriceT,
+  (newValue, oldValue) => {
+    selectedMaxPrice.value = newValue;
+  }
+);
+
+watch(
+  () => props.SubmitPerform,
+  (newValue, oldValue) => {
+    performSearch();
+  }
+);
 
 // function handlePriceChange(priceData) {
 //   selectedMinPrice.value = priceData.minPrice;
@@ -341,6 +377,7 @@ const toggleDropdown = (category) => {
 
 // request
 async function performSearch() {
+  // setupMap();
   try {
     let params = {};
     params["filter[location_id]"] = selectedCity.value;
@@ -455,8 +492,6 @@ const setupMap = () => {
   locations.forEach((location) => {
     const lat = parseFloat(location.latitude);
     const lng = parseFloat(location.longitude);
-
-    // console.log(location.level_type.name);
 
     let selectedIcon = location.level_type.name === "Regular" ? icon : icon2;
 

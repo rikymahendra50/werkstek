@@ -1,37 +1,6 @@
 <template>
   <section class="relative flex flex-col py-10">
     <div class="grid grid-cols-1 grid-rows-1">
-      <div class="grid w-full container-custom">
-        <div
-          class="grid sm:grid-cols-2 justify-between items-center mb-5 gap-5"
-        >
-          <div class="flex flex-col gap-2">
-            <p
-              class="text-[12px] min-[500px]:text-[16px] md:text-lg lg:text-[18px] font-bold"
-            >
-              Locaties
-            </p>
-            <p
-              class="text-[20px] min-[500px]:text-[25px] md:text-[30px] lg:text-[40px] text-[#231E1F] font-semibold"
-            >
-              Bekijk onze locaties.
-            </p>
-            <p
-              class="text-[10px] min-[500px]:text-base md:text-lg lg:text-[16px] text-[#777] font-normal"
-            >
-              Een gezellige werkplek huren in een leuke omgeving?Op deze
-              locaties hebben wij kantoorruimtes
-            </p>
-          </div>
-          <div class="flex justify-end">
-            <ButtonSM
-              buttonTitle="Bekijk alle locaties"
-              buttonLink="/onze-locaties"
-              class="z-10 hover:bg-secondary hover:bg-opacity-70 hover:text-tertiary"
-            />
-          </div>
-        </div>
-      </div>
       <div
         class="flex pl-3 sm:pl-6 md:pl-[70px] lg:pl-[80px] xl:pl-[106px] overflow-hidden"
       >

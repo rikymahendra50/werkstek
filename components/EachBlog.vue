@@ -8,7 +8,7 @@
         {{ typeArticle }}
       </h1>
       <p
-        class="text-[#404040] text-lg sm:text-[26px] md:text-[30px] mb-3 lg:mb-10 mt-3"
+        class="text-[#404040] text-lg sm:text-[26px] md:text-[30px] mb-3 lg:mb-10 mt-3 md:leading-normal"
       >
         {{ title }}
       </p>
@@ -21,7 +21,6 @@
           backgroundSize: 'cover',
         }"
       ></div>
-
       <!-- author small screen -->
       <div class="block lg:hidden my-3 min-[400px]:my-5 sm:my-7 p-3">
         <div class="flex items-center max-h-[150px] overflow-hidden shadow-sm">
@@ -48,36 +47,6 @@
             >
               {{ authorDescription }}
             </p>
-            <!-- <div class="flex gap-2 mt-2">
-              <NuxtLink to="/"
-                ><img
-                  src="/images/behance.svg"
-                  alt="behance"
-                  class="max-w-[20px] sm:max-w-[30px]"
-                />
-              </NuxtLink>
-              <NuxtLink to="/"
-                ><img
-                  src="/images/myspace.svg"
-                  alt="myspace"
-                  class="max-w-[20px] sm:max-w-[30px]"
-                />
-              </NuxtLink>
-              <NuxtLink to="/">
-                <img
-                  src="/images/medium.svg"
-                  alt="medium"
-                  class="max-w-[20px] sm:max-w-[30px]"
-                />
-              </NuxtLink>
-              <NuxtLink to="/">
-                <img
-                  src="/images/github.svg"
-                  alt="github"
-                  class="max-w-[20px] sm:max-w-[30px]"
-                />
-              </NuxtLink>
-            </div> -->
           </div>
         </div>
         <div class="w-full mt-4 md:mt-4 flex justify-end">
@@ -89,7 +58,7 @@
           </NuxtLink>
         </div>
       </div>
-      <div class="grid grid-cols-12 lg:mt-20 lg:gap-10">
+      <div class="grid grid-cols-12 lg:mt-20 lg:gap-5">
         <div class="grid lg:col-span-9 col-span-12">
           <div v-html="body" class="leading-9 text-[14px]"></div>
           <div
@@ -131,6 +100,59 @@
               }}</span>
             </div>
           </div>
+          <!-- input comment -->
+          <!-- <div
+            class="form-control w-full flex flex-col gap-4 justify-end h-fit"
+          >
+            <div class="flex gap-3 px-5 justify-center">
+              <button
+                type="button"
+                class="bg-primary max-w-[300px] mt-10 focus:outline-none rounded-md text-white p-3 hover:bg-secondary transition"
+                @click="inputEmailFirst"
+              >
+                Add Comment
+              </button>
+            </div>
+            <div class="flex justify-end gap-3 px-5" v-if="canComment">
+              <button
+                class="w-fit btn btn-outline bg-secondary text-white hover:text-white hover:bg-secondary hover:border-secondary"
+              >
+                Cancel
+              </button>
+              <button
+                class="w-fit btn btn-outline border-primary text-primary hover:text-white hover:bg-secondary hover:border-secondary"
+              >
+                SEND
+              </button>
+            </div>
+
+            <modal v-model="showModal" :clickOutsite="true">
+              <div class="grid gap-3">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  class="input input-bordered rounded-md w-full max-w-full border-primary"
+                  v-model="name"
+                />
+                <input
+                  type="text"
+                  placeholder="Email"
+                  class="input input-bordered rounded-md w-full max-w-full border-primary"
+                  v-model="email"
+                />
+                <input
+                  type="text"
+                  placeholder="Comment"
+                  class="input input-bordered rounded-md w-full max-w-full border-primary"
+                  v-model="commentT"
+                />
+                <div class="flex justify-end" @click="sendMessage">
+                  <button type="submit" class="btn-md btn w-fit">Send</button>
+                </div>
+              </div>
+            </modal>
+          </div> -->
+          <!-- end input comment -->
           <div
             class="flex justify-center"
             v-if="comment?.length > visibleCommentCount"
@@ -144,7 +166,7 @@
           </div>
         </div>
         <!-- author -->
-        <div class="hidden lg:grid col-span-3">
+        <div class="hidden lg:grid lg:col-span-3 lg:item-center">
           <div class="lg:flex flex-col items-center">
             <h1 class="text-[#121416] text-[18px] pb-3">AUTHOR</h1>
             <h3 class="text-[18px]">{{ author }}</h3>
@@ -164,7 +186,9 @@
               />
             </div>
             <p
-              class="text-center text-sm leading-9 text-[#ADADAD] line-clamp-2"
+              class="text-center text-sm leading-9 text-[#ADADAD] cursor-pointer"
+              :class="{ 'line-clamp-2': isClamped }"
+              @click="toggleClamp"
             >
               {{ authorDescription }}
             </p>
@@ -199,64 +223,107 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      showMore: false,
-      visibleCommentCount: 3,
-    };
+<script setup>
+const { loading, transformErrors } = useRequestHelper();
+const { requestOptions } = useRequestOptions();
+const snackbar = useSnackbar();
+
+const props = defineProps({
+  title: {
+    type: String,
   },
-  methods: {
-    showMoreFunc() {
-      this.showMore = !this.showMore;
-      if (this.showMore) {
-        this.visibleCommentCount = this.comment.length;
-      } else {
-        this.visibleCommentCount = 3;
-      }
-    },
-    sharePage() {
-      if (navigator.share) {
-        navigator
-          .share({
-            title: document.title,
-            text: "Check out this page!",
-            url: window.location.href,
-          })
-          .then(() => console.log("Page shared successfully"))
-          .catch((error) => console.error("Error sharing page:", error));
-      } else {
-        console.log("Web Share API is not supported");
-      }
-    },
+  typeArticle: {
+    type: String,
   },
-  props: {
-    title: {
-      type: String,
-    },
-    typeArticle: {
-      type: String,
-    },
-    imageSrc: {
-      type: String,
-    },
-    imageAlt: {
-      type: String,
-    },
-    body: {
-      type: String,
-    },
-    comment: {},
-    author: {
-      type: String,
-    },
-    authorImage: {
-      type: String,
-    },
-    authorDescription: {
-      type: String,
-    },
+  imageSrc: {
+    type: String,
   },
-};
+  imageAlt: {
+    type: String,
+  },
+  body: {
+    type: String,
+  },
+  comment: {},
+  author: {
+    type: String,
+  },
+  authorImage: {
+    type: String,
+  },
+  authorDescription: {
+    type: String,
+  },
+  slugT: {
+    type: String,
+  },
+});
+
+const showMore = ref(false);
+const visibleCommentCount = ref(3);
+const isClamped = ref(true);
+const canComment = ref(false);
+const showModal = ref(false);
+
+const name = ref();
+const email = ref();
+const comment = ref();
+const commentT = ref();
+
+async function sendMessage() {
+  loading.value = true;
+
+  const { error } = await useFetch(`/articles/${props.slugT}/comments`, {
+    method: "POST",
+    body: { name: name.value, email: email.value, comment: commentT.value },
+    ...requestOptions,
+  });
+
+  if (error.value) {
+    snackbar.add({
+      type: "error",
+      text: error.value?.data?.message ?? "Something went wrong",
+    });
+  } else {
+    snackbar.add({
+      type: "success",
+      text: "Success Add Comment",
+    });
+  }
+  loading.value = false;
+  showModal.value = false;
+}
+
+function showMoreFunc() {
+  showMore.value = !showMore.value;
+  if (showMore.value) {
+    visibleCommentCount.value = comment.value.length;
+  } else {
+    visibleCommentCount = 3;
+  }
+}
+
+function toggleClamp() {
+  isClamped.value = !isClamped.value;
+}
+
+function inputEmailFirst() {
+  // (name.value = ""), (email.value = ""), (comment.value = "");
+  showModal.value = true;
+}
+
+function sharePage() {
+  if (navigator.share) {
+    navigator
+      .share({
+        title: document.title,
+        text: "Check out this page!",
+        url: window.location.href,
+      })
+      .then(() => console.log("Page shared successfully"))
+      .catch((error) => console.error("Error sharing page:", error));
+  } else {
+    console.log("Web Share API is not supported");
+  }
+}
 </script>
