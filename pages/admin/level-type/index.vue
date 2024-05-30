@@ -77,7 +77,11 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 
-const { data: levelType, error } = await useFetch(`/admins/level-types`, {
+const {
+  data: levelType,
+  error,
+  refresh,
+} = await useFetch(`/admins/level-types`, {
   method: "get",
   ...requestOptions,
 });
@@ -115,7 +119,7 @@ const deleteLevelType = async (slug) => {
       type: "success",
       text: "Delete Level Type Success",
     });
-    window.location.reload();
+    refresh();
   }
   loading.value = false;
 };

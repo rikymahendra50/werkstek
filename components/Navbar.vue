@@ -4,6 +4,7 @@
       class="flex items-center justify-between w-full relative bg-white container-custom py-5"
     >
       <!-- Header logo -->
+      <Werkstek class="lg:hidden" />
       <!-- Mobile toggle -->
       <div class="lg:hidden flex">
         <button name="toggle" @click="drawer">
@@ -142,11 +143,56 @@
             </li>
           </div>
         </ul>
-        <ButtonSM
-          buttonLink="/contact"
-          buttonTitle="Contact opnemen"
-          class="hover:bg-slate-50 xl:p-2"
-        />
+        <!-- contact -->
+        <div class="relative group py-2">
+          <NuxtLink
+            to="/contact"
+            @click="showDropdownContact"
+            class="border hover:bg-slate-50 xl:p-2 border-quaternary hover:bg-opacity-60 transition rounded-full flex items-center gap-2 p-1 lg:px-2 w-fit"
+          >
+            <p class="pl-[2px] py-[1px] sm:p-3 text-[12px] lg:text-sm">
+              Contact opnemen
+            </p>
+            <div
+              class="rounded-full bg-quaternary text-white flex items-center justify-center aspect-square"
+            >
+              <img
+                src="/images/arrow-small-right.svg"
+                alt="arrow"
+                class="sm:m-1"
+              />
+            </div>
+          </NuxtLink>
+          <div
+            class="hover:rounded-b-xl hidden group-hover:block rounded-xl bg-black z-[1] shadow text-white text-sm mt-[5px] w-[200px] absolute"
+          >
+            <NuxtLink
+              @click="isDropdownOpen = false"
+              to="mailto:/info@werkstek.nl"
+              class="rounded-none w-full flex justify-between items-center px-4 py-3 hover:text-primary"
+            >
+              info@werkstek.nl
+              <!-- <div
+                class="bg-white rounded-full w-5 h-5 flex items-center justify-center pr-[3px] text-black"
+              >
+                <Icon name="fluent:ios-arrow-24-filled" class="rotate-180" />
+              </div> -->
+            </NuxtLink>
+            <NuxtLink
+              @click="isDropdownOpen = false"
+              to="tel:0850290598"
+              class="rounded-none w-full flex justify-between items-center px-4 py-3 hover:text-primary"
+            >
+              085 – 0290598
+              <!-- <div
+                class="bg-white rounded-full w-5 h-5 flex items-center justify-center pr-[3px] text-black"
+              >
+                <Icon name="fluent:ios-arrow-24-filled" class="rotate-180" />
+              </div> -->
+            </NuxtLink>
+          </div>
+        </div>
+        <!-- contact -->
       </div>
       <!-- Dark Background Transition -->
       <transition
@@ -264,51 +310,26 @@
               >Community</NuxtLink
             >
           </li>
-          <!-- <li class="cursor-pointer dropdown w-full">
-            <div
-              tabindex="1"
-              class="bg-transparent border-none my-4 inline-block font-thin cursor-pointer"
-            >
-              Werkstek Update
-            </div>
-            <ul
-              tabindex="1"
-              class="ml-[-20px] dropdown-content z-[1] menu p-1 w-full shadow bg-base-100 rounded-sm text-black"
-            >
-              <li class="text-sm">
-                <NuxtLink to="/blog" @click="isOpen = false">
-                  Werkstek Blog
-                </NuxtLink>
-              </li>
-              <li>
-                <NuxtLink to="/onze-vacatures" @click="isOpen = false">
-                  Werstek Vacatures
-                </NuxtLink>
-              </li>
-              <li>
-                <NuxtLink
-                  to="/werkstek-community"
-                  :class="{ active: isRouteActive('/werkstek-community') }"
-                >
-                  Werkstek Community
-                </NuxtLink>
-              </li>
-            </ul>
-          </li> -->
-          <li class="cursor-pointer">
-            <!-- <NuxtLink
-              to="/faq"
-              @click="isOpen = false"
-              class="my-4 inline-block"
-              >FAQ</NuxtLink
-            > -->
-          </li>
+          <li class="cursor-pointer"></li>
           <li class="cursor-pointer">
             <NuxtLink
               to="/contact"
               @click="isOpen = false"
-              class="my-8 w-full text-center font-semibold cta inline-block bg-primary hover:bg-white border border-primary px-3 py-2 rounded text-white hover:text-primary"
+              class="mt-8 w-full text-center font-semibold cta inline-block bg-primary hover:bg-white border border-primary px-3 py-2 rounded text-white hover:text-primary"
               >Contact opnemen</NuxtLink
+            >
+            <NuxtLink
+              to="mailto:/info@werkstek.nl"
+              @click="isOpen = false"
+              class="w-full mt-5 mb-3 text-center font-semibold cta inline-block bg-transparent border border-primary px-3 py-2 rounded text-gray-700 hover:text-primary"
+              >Info@werkstek.nl</NuxtLink
+            >
+            <NuxtLink
+              to="tel:0850290598"
+              @click="isOpen = false"
+              class="w-full text-center font-semibold cta inline-block bg-transparent border border-primary px-3 py-2 rounded text-gray-700 hover:text-primary"
+            >
+              085 – 0290598</NuxtLink
             >
           </li>
         </ul>
@@ -324,6 +345,7 @@ export default {
   data() {
     return {
       isOpen: false,
+      isDropdownOpenContact: false,
     };
   },
   setup() {
@@ -342,6 +364,9 @@ export default {
     },
     showDropdownOver() {
       this.isDropdownOpen = !this.isDropdownOpen;
+    },
+    showDropdownContact() {
+      this.isDropdownOpenContact = !this.isDropdownOpenContact;
     },
     drawer() {
       this.isOpen = !this.isOpen;

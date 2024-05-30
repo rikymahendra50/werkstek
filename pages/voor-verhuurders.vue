@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-32"></div>
+  <div class="mt-20"></div>
   <VerhuurdersHeader
     image="/images/image-page4-1.png"
     imageAlt="image-page4-1"
@@ -12,6 +12,7 @@
     buttonLink1="/over-werkstek"
     buttonLink2="/over-werkstek"
     :useButton2="false"
+    class=""
   />
 
   <VertrouwdDoor />

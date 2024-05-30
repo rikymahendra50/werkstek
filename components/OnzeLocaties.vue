@@ -1,5 +1,5 @@
 <template>
-  <section class="py-20">
+  <section class="py-10 sm:py-20">
     <TitleHeader
       title="Onze locaties"
       secondTitle="Bekijk al onze locaties"

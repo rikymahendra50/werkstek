@@ -1,9 +1,10 @@
 <template>
-  <div class="mt-28"></div>
+  <div class="mt-20"></div>
+  <!-- <img src="/images/img-home-11.png" alt="" /> -->
   <StatistiekLocaties
-    image="/images/img-home-1.png"
+    image="/images/img-home-11.png"
     title1="Neem contact op"
-    title2="Neem contact op met Werkstek"
+    title2="Neem contact </br> op met Werkstek"
     title3="Werkstek slaat een brug tussen de leegstand van kantoorruimtes en de vraag naar betaalbare werkplekken. Werkstek huurt en verhuurt een toenemend aantal werkplekken en kantoorunits."
     titleBg1="Locaties"
     titleBg2="Statistiek 2"

@@ -1,5 +1,5 @@
 <template>
-  <div class="py-10 md:py-20 relative flex items-center">
+  <div class="py-10 relative flex items-center">
     <div
       class="grid md:grid-rows-1 md:grid-cols-2 z-10 px-3 sm:px-6 md:px-[70px] lg:px-[80px]"
     >

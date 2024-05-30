@@ -1,8 +1,8 @@
 <template>
-  <div class="lg:py-20 py-10 mt-32">
+  <div class="lg:py-20 py-10 mt-20">
     <section class="relative flex items-center" :class="classcustom">
       <div class="grid md:grid-rows-1 md:grid-cols-12 container-custom -z-10">
-        <div class="flex items-start mt-10 lg:mt-20 pt-20 col-span-5">
+        <div class="flex items-start mt-10 lg:mt-20 col-span-5">
           <div class="grid gap-2">
             <span class="text-[19px] font-semibold">{{ title1 }}</span>
             <span class="text-[30px] md:text-[35px] lg:text-[40px] font-bold">{{
@@ -40,7 +40,7 @@
                 ></div>
               </div>
               <video
-                class="w-full h-full object-cover min-h-[300px] md:min-h-[400px] lg:min-h-[744px] rounded-3xl"
+                class="w-full h-full object-cover min-h-[300px] md:min-h-[400px] lg:min-h-[644px] rounded-3xl"
                 autoplay
                 loop
                 muted
@@ -93,7 +93,7 @@
             <div class="relative" v-if="category.title === 'Zoek een Locatie'">
               <div
                 @click="toggleDropdown(category)"
-                class="italic w-full text-[12px] sm:text-[14px] flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-2 pl-4 min-h-[40px] sm:min-h-[50px] cursor-pointer mb-2 sm:mb-5 md:mb-0 text-[#676767]"
+                class="italic w-full text-[12px] sm:text-[14px] flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-2 pl-4 min-h-[40px] cursor-pointer sm:min-h-[50px] mb-2 sm:mb-5 md:mb-0 text-[#676767]"
               >
                 {{ category.selectedOption }}
                 <div
@@ -123,7 +123,7 @@
             <div class="relative" v-if="category.title === 'Zoek op een prijs'">
               <div
                 @click="toggleDropdown(category)"
-                class="italic w-full text-[12px] sm:text-[14px] flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-2 pl-4 min-h-[40px] sm:min-h-[50px] cursor-pointe mb-2 sm:mb-5 md:mb-0 text-[#676767]"
+                class="italic w-full text-[12px] sm:text-[14px] flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-2 pl-4 min-h-[40px] sm:min-h-[50px] cursor-pointer mb-2 sm:mb-5 md:mb-0 text-[#676767]"
               >
                 € {{ category.selectedOption }}
                 <div

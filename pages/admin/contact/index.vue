@@ -168,7 +168,7 @@ const deleteContact = async (contactslug) => {
       method: "DELETE",
       ...requestOptions,
     });
-    window.location.reload();
+    start();
   } catch (error) {
     console.error("Error:", error);
   }

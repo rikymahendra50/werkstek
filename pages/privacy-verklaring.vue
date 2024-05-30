@@ -1,5 +1,5 @@
 <template>
-  <section class="container-custom my-10">
+  <section class="container-custom mt-32 mb-20">
     <div class="grid gap-4">
       <h1 class="text-[40px] font-bold text-[#404040]">Privacyverklaring</h1>
       <p class="text-lg">

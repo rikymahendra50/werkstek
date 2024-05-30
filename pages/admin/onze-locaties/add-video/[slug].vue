@@ -177,7 +177,7 @@
         <div class="modal-box">
           <h3 class="font-bold text-lg text-red-500">Dangers!</h3>
           <p class="py-4 text-sm">
-            Are you sure want to delete this video and thumbnail
+            Are you sure want to delete this video and thumbnail?
           </p>
           <div class="modal-action">
             <form method="dialog">

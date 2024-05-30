@@ -60,8 +60,8 @@
                 </li>
               </ul>
             </div>
-            <div v-else-if="category.title === 'Zoek op een prijs'">
-              <!-- <SliderRangeMap
+            <!-- <div v-else-if="category.title === 'Zoek op een prijs'">
+              <SliderRangeMap
                 :idInputMin="'priceMin'"
                 :idInputMax="'priceMax'"
                 :minPrice="0"
@@ -71,8 +71,8 @@
                 :priceGap="highestPrice"
                 class="my-2"
                 @price-change="handlePriceChange"
-              /> -->
-            </div>
+              />
+            </div> -->
           </div>
           <div class="text-tertiary grid justify-end md:col-span-3 mt-4">
             <button
@@ -105,8 +105,9 @@
       </div>
     </div>
     <!-- search bar -->
-    <!-- <div
-      class="bg-tertiary border-2 border-red-500 box-shadow mt-[-100px] md:mt-[-200px] z-10 rounded-[20px] lg:rounded-[30px] md:h-[188px] mx-3 px-5 grid md:grid-cols-12 items-center gap-4 pt-6 md:pt-0"
+    <div
+      v-if="showSearch"
+      class="bg-tertiary box-shadow mt-[-100px] md:mt-[-200px] z-10 rounded-[20px] lg:rounded-[30px] md:h-[188px] mx-3 px-5 grid md:grid-cols-12 items-center gap-4 pt-6 md:pt-0"
     >
       <div class="md:col-span-4 flex md:justify-center items-center">
         <img
@@ -206,7 +207,7 @@
           <Icon name="iconamoon:search-thin" class="text-white w-10 h-10" />
         </div>
       </div>
-    </div> -->
+    </div>
     <!-- search bar -->
   </section>
 </template>
@@ -268,6 +269,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  showSearch: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 // data
@@ -318,7 +323,7 @@ let map = ref(null);
 const markers = ref([]);
 const currentInfoWindow = ref(null);
 
-const locations = data.value.data;
+const locations = data?.value?.data;
 
 const selectedCity = ref(props.selectedCityT);
 const selectedMinPrice = ref(minestPrice);
@@ -352,11 +357,6 @@ watch(
     performSearch();
   }
 );
-
-// function handlePriceChange(priceData) {
-//   selectedMinPrice.value = priceData.minPrice;
-//   selectedMaxPrice.value = priceData.maxPrice;
-// }
 
 const selectOptionCity = (category, option, id) => {
   category.selectedOption = option;
@@ -477,34 +477,71 @@ const setupMap = () => {
     mapId: null,
   });
 
-  const iconBase = "/images";
+  // const iconBase = "/images";
 
-  const icon = {
-    url: iconBase + "/icon-marker-regular.png",
-    scaledSize: new google.maps.Size(40, 40),
-  };
+  // const icon = {
+  //   url: iconBase + "/regular-marker.png",
+  //   scaledSize: new google.maps.Size(40, 40),
+  // };
 
-  const icon2 = {
-    url: iconBase + "/icon-marker-premium.png",
-    scaledSize: new google.maps.Size(40, 40),
-  };
+  // const icon2 = {
+  //   url: iconBase + "/premium-marker.png",
+  //   scaledSize: new google.maps.Size(40, 40),
+  // };
+
+  const typeName = ref([
+    // {
+    //   id: 1,
+    //   name: "Regular",
+    //   image: "/images/regular-marker.png",
+    // },
+    // {
+    //   id: 2,
+    //   name: "Premium",
+    //   image: "/images/premium-marker.png",
+    // },
+  ]);
+
+  typeName.value = locations?.map((item) => {
+    return {
+      id: item?.level_type?.id,
+      name: item?.level_type.name,
+      image: item?.level_type?.image,
+    };
+  });
+
+  function getIconUrl(levelType) {
+    const type = typeName?.value?.find((t) => t.name === levelType);
+    console.log(type);
+    return type ? type?.image : null;
+  }
 
   locations.forEach((location) => {
-    const lat = parseFloat(location.latitude);
-    const lng = parseFloat(location.longitude);
+    // console.log(location.level_type.name);
+    const lat = parseFloat(location?.latitude);
+    const lng = parseFloat(location?.longitude);
+    const iconUrl = getIconUrl(location?.level_type?.name);
 
-    let selectedIcon = location.level_type.name === "Regular" ? icon : icon2;
+    // console.log(iconUrl);
+
+    // console.log(iconUrl);
+
+    // let selectedIcon = location.level_type.name === "Regular" ? icon : icon2;
 
     const marker = new google.maps.Marker({
       position: { lat: lat, lng: lng },
       map: map,
       title: location.name,
-      icon: selectedIcon,
+      icon: {
+        url: iconUrl,
+        scaledSize: new google.maps.Size(40, 40),
+      },
       details: location,
     });
 
     const contentString = `
-      <a href="onze-locaties/${location?.slug}" class="max-w-[190px] w-full flex flex-col text-end">
+    <div class="relative">
+      <a href="onze-locaties/${location?.slug}" class="max-w-[190px] w-full flex flex-col text-end h-full">
         <div class="relative">
           <img src="${location?.location?.image}" alt="${location?.name}" class="w-full min-h-[140px]">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
@@ -516,6 +553,7 @@ const setupMap = () => {
           <img src="/images/icon-werstek.svg" alt="icon-werstek" class="absolute right-5 top-[-5px]" />
         </div>
       </a>
+    </div> 
     `;
 
     marker.addListener("click", () => {
@@ -531,7 +569,7 @@ const setupMap = () => {
 
       hoverInfoWindow = new google.maps.InfoWindow({
         content: contentString,
-        closeBoxMargin: "10px 10px 0 0",
+        // closeBoxMargin: "10px 10px 0 0",
       });
 
       hoverInfoWindow.open(map, marker);
@@ -557,6 +595,10 @@ const setBoundsForMarkers = () => {
 .dropdownMap::-webkit-scrollbar {
   width: 6px;
   background-color: #f5f5f5;
+}
+
+.gm-style-iw-ch {
+  position: absolute;
 }
 
 .custom-marker {

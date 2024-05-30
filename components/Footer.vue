@@ -91,8 +91,12 @@
           >Privacy verklaring</NuxtLink
         >
       </div>
-      <div class="sm:col-span-4 text-right mt-9 sm:mt-0">
-        <p class="text-[12px] opacity-60">Design & Developed by s.p. Digital</p>
+      <div class="sm:col-span-4 mt-9 sm:mt-0">
+        <NuxtLink
+          to="https://spdigitalagency.com/id"
+          class="text-[12px] opacity-60"
+          >Design & Developed by s.p. Digital</NuxtLink
+        >
       </div>
     </div>
   </div>
@@ -123,12 +127,6 @@ const { data: types } = useFetch("/types", {
 
 function handleLocation(locationId) {
   selectedCity.value = locationId;
-
-  // window.location.replace(
-  //   `/onze-locaties?page=1&location_id=${selectedCity.value}&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
-  // );
-  // window.location.href = `/onze-locaties?page=1&location_id=${selectedCity.value}&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`;
-
   router.replace(
     `/onze-locaties?page=1&location_id=${selectedCity.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
   );
@@ -136,9 +134,6 @@ function handleLocation(locationId) {
 
 function handleType(typeId) {
   selectedType.value = typeId;
-  // window.location.replace(
-  //   `/onze-locaties?page=1&location_id=${selectedCity.value}&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
-  // );
   router.replace(
     `/onze-locaties?page=1&type_id=${selectedType.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
   );

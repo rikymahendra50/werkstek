@@ -22,9 +22,12 @@
         >
           info@werkstek.nl
         </NuxtLink>
-        <p class="text-[#777] text-[12px] sm:text-[14px] leading-9">
+        <NuxtLink
+          to="tel:0850290598"
+          class="text-[#777] text-[12px] sm:text-[14px] leading-9"
+        >
           085 – 0290598
-        </p>
+        </NuxtLink>
         <h1
           class="text-[12px] sm:text-[14px] text-[#230000] leading-9 my-1 md:my-4"
         >
@@ -89,7 +92,7 @@
                 v-model="dataForm.first_name"
                 type="text"
                 class="input w-full input-sm"
-                placeholder="Name"
+                placeholder="Naam"
                 autocomplete="on"
               />
               <hr />
@@ -100,7 +103,7 @@
             </div>
             <div class="flex flex-col my-2">
               <div class="flex items-center">
-                <label for="last_name">Last Name</label>
+                <label for="last_name">Achternaam</label>
               </div>
               <VeeField
                 id="last_name"
@@ -108,7 +111,7 @@
                 v-model="dataForm.last_name"
                 type="text"
                 class="input w-full input-sm"
-                placeholder="Last Name"
+                placeholder="Achternaam"
                 autocomplete="on"
               />
               <hr />

@@ -16,7 +16,12 @@
           loop
         >
           <swiper-slide
-            class="mr-2 group group-hover:scale-125 transition-all duration-300 group overflow-hidden min-h-[200px] max-h-[600px]"
+            class="mr-2 group group-hover:scale-125 rounded-xl transition-all duration-300 group overflow-hidden min-h-[200px] max-h-[600px]"
+            :style="{
+              borderColor: itemSlider?.level_type?.color,
+              borderWidth: '2px',
+              borderStyle: 'solid',
+            }"
             v-for="(itemSlider, index) in data"
             :key="itemSlider.id"
           >
@@ -137,7 +142,7 @@ export default {
       } else if (window.innerWidth <= 1028) {
         slidesPerView.value = 3;
       } else {
-        slidesPerView.value = 3;
+        slidesPerView.value = 3.2;
       }
     };
 

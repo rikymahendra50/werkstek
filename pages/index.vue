@@ -48,6 +48,7 @@
   </div>
 
   <MapInteractive
+    :showSearch="false"
     :selectedCityT="isSelectedCity"
     :selectedMinPriceT="isSelectedMinPrice"
     :SubmitPerform="isPerformSearch"

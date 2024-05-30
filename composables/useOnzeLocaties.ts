@@ -2,7 +2,7 @@ export default function useOnzeLocatiesData() {
   const StatistiekLocaties2Data = ref({
     image: "/images/onze-locaties.png",
     title1: "Bekijk onze locaties",
-    title2: "De Werkstek locaties",
+    title2: "De Werkstek </br> locaties",
     title22: "De Werkstek </br> locaties",
     title3:
       "De perfecte werkplek voor elke organisatie. Kies voor  betaalbare huur in een professionele omgeving </br> op een  gunstige locatie, en maak deel uit van een </br> ondernemende en inspirerende community.",
