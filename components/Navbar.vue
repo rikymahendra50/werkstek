@@ -1,7 +1,7 @@
 <template>
   <nav class="w-full z-50 top-0 fixed">
     <div
-      class="flex items-center justify-between w-full relative bg-white container-custom py-5"
+      class="flex items-center justify-between w-full relative bg-white container-custom py-2"
     >
       <!-- Header logo -->
       <Werkstek class="lg:hidden" />

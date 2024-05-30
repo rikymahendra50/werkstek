@@ -128,7 +128,7 @@ const { data: authorData } = await useFetch(`/admins/authors`, {
   ...requestOptions,
 });
 
-console.log(authorData?.value);
+// console.log(authorData?.value);
 
 const fileInput = ref(null);
 

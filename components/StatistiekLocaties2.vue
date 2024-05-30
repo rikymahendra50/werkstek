@@ -1,5 +1,5 @@
 <template>
-  <section class="container-custom my-5 lg:my-10">
+  <section class="container-custom my-5">
     <div class="relative hidden md:block">
       <div class="relative">
         <h1

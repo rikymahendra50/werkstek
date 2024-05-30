@@ -12,11 +12,11 @@
           :spaceBetween="10"
           :css-mode="true"
           :watch-slides-progress="true"
-          class="mySwiper"
+          class="mySwiper min-h-[300px] max-h-[300px] sm:min-h-[200px] sm:max-h-[450px]"
           loop
         >
           <swiper-slide
-            class="mr-2 group group-hover:scale-125 rounded-xl transition-all duration-300 group overflow-hidden min-h-[200px] max-h-[600px]"
+            class="mr-2 group group-hover:scale-125 rounded-xl transition-all duration-300 group overflow-hidden"
             :style="{
               borderColor: itemSlider?.level_type?.color,
               borderWidth: '2px',
@@ -135,7 +135,7 @@ export default {
     const slidesPerView = ref(3);
 
     const handleResize = () => {
-      if (window.innerWidth <= 500) {
+      if (window.innerWidth <= 480) {
         slidesPerView.value = 1;
       } else if (window.innerWidth <= 768) {
         slidesPerView.value = 2;

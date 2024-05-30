@@ -1,5 +1,5 @@
 <template>
-  <section class="mx-5 lg:container-custom">
+  <section class="lg:container-custom">
     <div v-if="dontShowTitle">
       <div v-if="!showTitleHeader">
         <div class="pl-3 pb-5 md:pb-10 sm:w-[70%]">

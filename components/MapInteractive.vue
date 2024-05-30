@@ -107,7 +107,7 @@
     <!-- search bar -->
     <div
       v-if="showSearch"
-      class="bg-tertiary box-shadow mt-[-100px] md:mt-[-200px] z-10 rounded-[20px] lg:rounded-[30px] md:h-[188px] mx-3 px-5 grid md:grid-cols-12 items-center gap-4 pt-6 md:pt-0"
+      class="bg-tertiary box-shadow mt-[-100px] md:mt-[-100px] z-10 rounded-[20px] lg:rounded-[30px] md:h-[188px] mx-3 px-5 grid md:grid-cols-12 items-center gap-4 pt-6 md:pt-0"
     >
       <div class="md:col-span-4 flex md:justify-center items-center">
         <img
@@ -512,7 +512,6 @@ const setupMap = () => {
 
   function getIconUrl(levelType) {
     const type = typeName?.value?.find((t) => t.name === levelType);
-    console.log(type);
     return type ? type?.image : null;
   }
 

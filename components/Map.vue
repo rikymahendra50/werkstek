@@ -94,7 +94,7 @@ const setupMap = () => {
     bounds.extend(new google.maps.LatLng(location.lat, location.longitude));
 
     const contentString = `
-      <div class="max-w-[120px] w-full h-full flex flex-col text-end border-2">
+      <div class="max-w-[120px] w-full h-full flex flex-col text-end">
         <div class="relative">
           <img src="${location?.location?.image}" alt="${location?.location?.name}" class="w-full min-h-[80px] rounded-md">
           <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>

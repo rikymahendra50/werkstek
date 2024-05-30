@@ -5,7 +5,7 @@
       <div class="price-input-container">
         <div class="slider-container my-5">
           <div
-            class="price-slider border-2 border-red-500"
+            class="price-slider"
             :style="{
               left: `${localMaxPriceT * 100}%`,
               right: `${100 - localMaxPriceT * 100}%`,

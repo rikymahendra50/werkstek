@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-20"></div>
+  <div class="mt-16"></div>
   <VerhuurdersHeader
     image="/images/image-page4-1.png"
     imageAlt="image-page4-1"
@@ -12,22 +12,19 @@
     buttonLink1="/over-werkstek"
     buttonLink2="/over-werkstek"
     :useButton2="false"
-    class=""
   />
 
   <VertrouwdDoor />
 
-  <div class="container-custom my-10">
-    <LeegstandWbutton
-      image="/images/over-page2-1.png"
-      title="Leegstand vullen"
-      description="Werkstek heeft als doel oplossingen te vinden voor leegstaand vastgoed. Dat doen we door servicekosten of onkosten te betalen om placemakers of kwartiermakers voor een lage huur te laten werken waardoor de locatie aantrekkelijker wordt. Door een goede verdeling van de ruimtes en een efficiënte inrichting maakt Werkstek deze kantoorruimtes geschikt voor zzp’ers en kleine ondernemingen."
-      buttonTitle1="Schrijf je in"
-      buttonTitle2="Bekijk onze locaties"
-      buttonLink1="/"
-      buttonLink2="/onze-locaties"
-    />
-  </div>
+  <LeegstandWbutton
+    image="/images/over-page2-1.png"
+    title="Leegstand vullen"
+    description="Werkstek heeft als doel oplossingen te vinden voor leegstaand vastgoed. Dat doen we door servicekosten of onkosten te betalen om placemakers of kwartiermakers voor een lage huur te laten werken waardoor de locatie aantrekkelijker wordt. Door een goede verdeling van de ruimtes en een efficiënte inrichting maakt Werkstek deze kantoorruimtes geschikt voor zzp’ers en kleine ondernemingen."
+    buttonTitle1="Schrijf je in"
+    buttonTitle2="Bekijk onze locaties"
+    buttonLink1="/"
+    buttonLink2="/onze-locaties"
+  />
 
   <LeegstandNoButton
     background="bg-tertiary"
@@ -39,7 +36,7 @@
     :leftToRight="false"
   />
 
-  <MapInteractive :ShowContainerCustom="false" />
+  <MapInteractive :ShowContainerCustom="false" class="container-custom my-10" />
 
   <LeegstandNoButton
     :uniqueIdProp="5"

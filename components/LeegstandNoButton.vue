@@ -1,6 +1,6 @@
 <template>
   <div class="py-10 px-3 md:container-custom" :class="background">
-    <div class="grid sm:grid-cols-2 md:mx-3 lg:mx-4 items-center gap-10">
+    <div class="grid sm:grid-cols-2 md:mx-3 lg:mx-4 items-center lg:gap-10">
       <div class="order-2 flex justify-end max-w-[600px]">
         <div class="w-[78%] min-[420px]:w-[90%] md:w-[100%]">
           <img :src="image" alt="image" />
@@ -8,21 +8,20 @@
       </div>
       <div class="flex-col lg:mx-5" :class="textClasses">
         <h1
-          class="text-[18px] md:text-[26px] lg:text-[30px] text-[#404040] mb-3 md:my-6 font-bold"
+          class="text-[18px] md:text-[26px] lg:text-[36px] text-[#404040] mb-3 md:my-6 font-bold"
         >
           {{ title }}
         </h1>
-        <span
+        <p
           class="text-[12px] md:text-[14px] lg:text-[16px] leading-6 lg:leading-9 text-justify py-4"
         >
           {{ description }}
+        </p>
+        <div class="mt-7 text-justify">
+          <span class="text-[14px] text-[#777]">{{ titledescription2 }}</span>
           <br />
-          <div class="mt-7">
-            <span class="text-[14px] text-[#777]">{{ titledescription2 }}</span>
-            <br />
-            {{ description2 }}
-          </div>
-        </span>
+          {{ description2 }}
+        </div>
       </div>
     </div>
   </div>

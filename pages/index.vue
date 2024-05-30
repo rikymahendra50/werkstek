@@ -58,7 +58,7 @@
 
   <SliderLocaties :data="sliderData?.data"></SliderLocaties>
 
-  <SliderTestimony class="my-20" />
+  <SliderTestimony class="my-10" />
   <FourImages />
   <div class="my-10">
     <TitleHeader3

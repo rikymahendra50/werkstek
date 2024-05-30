@@ -5,7 +5,7 @@
       secondTitle="Wat vinden onze klanten"
       class="my-8"
     />
-    <div class="my-8 overflow-hidden relative mx-10">
+    <div class="my-8 overflow-hidden relative mx-4 sm:mx-10">
       <swiper
         :slidesPerView="slidesPerViewTestimony"
         :spaceBetween="30"
@@ -127,7 +127,7 @@ export default {
     const slidesPerViewTestimony = ref(1);
 
     const handleResizeTestimony = () => {
-      slidesPerViewTestimony.value = window.innerWidth > 768 ? 2 : 1;
+      slidesPerViewTestimony.value = window.innerWidth > 697 ? 2 : 1;
     };
 
     onMounted(() => {

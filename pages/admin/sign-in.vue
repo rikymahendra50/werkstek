@@ -46,7 +46,6 @@
               Registasion
             </NuxtLink>
           </div> -->
-
           <div class="mt-5">
             <NuxtLink
               to="/admin/forgot-password"

@@ -107,7 +107,7 @@
           autocomplete="on"
         />
       </div>
-      <div class="border-2 w-full p-3 rounded-md">
+      <div class="w-full p-3 rounded-md">
         <div>
           <p class="mb-3">
             Please find and click the desired location to get the coordinate
