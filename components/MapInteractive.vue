@@ -8,7 +8,7 @@
   >
     <div
       id="map"
-      :class="`relative w-full h-[420px] lg:h-[619px] z-[-999] rounded-2xl`"
+      :class="`relative w-full h-[320px] sm:h-[420px] lg:h-[619px] z-[-999] rounded-2xl`"
     ></div>
     <div class="sm:mx-10 hidden">
       <div

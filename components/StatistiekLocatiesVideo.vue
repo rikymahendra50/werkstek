@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-16 sm:mt-20 relative">
+  <div class="mt-16 sm:mt-20 mb-16 sm:mb-20 relative">
     <div class="formobile md:hidden">
       <section class="flex items-center" :class="classcustom">
         <div class="grid md:grid-rows-1 md:grid-cols-12 container-custom -z-10">
@@ -82,7 +82,7 @@
           <!-- end col1 -->
           <!-- col2 -->
           <div
-            class="grid min-[370px]:grid-cols-12 sm:grid-cols-1 md:grid-cols-12 col-span-6 lg:col-span-6 items-center sm:px-0 lg:px-5 sm:gap-2"
+            class="grid min-[370px]:grid-cols-12 sm:grid-cols-1 md:grid-cols-12 col-span-6 lg:col-span-6 items-center sm:px-0 lg:px-5 sm:gap-2 px-2"
           >
             <div
               v-for="(category, index) in categories"
@@ -182,7 +182,7 @@
     </div>
     <div class="forpc hidden md:block">
       <div
-        class="container-custom md:absolute w-[100%] lg:w-[95%] sm:-bottom-4 lg:bottom-20"
+        class="container-custom md:absolute w-[100%] lg:w-[95%] sm:-bottom-4 lg:bottom-0"
       >
         <div
           class="bg-white w-full rounded-[20px] py-4 sm:grid sm:grid-cols-12 shadow-md"
@@ -304,9 +304,11 @@
         </div>
       </div>
       <section class="flex items-center" :class="classcustom">
-        <div class="grid md:grid-rows-1 md:grid-cols-12 container-custom -z-10">
+        <div
+          class="grid md:grid-rows-1 md:grid-cols-12 container-custom -z-10 min-[1500px]:gap-10 mt-2"
+        >
           <div
-            class="flex items-start mt-6 lg:mt-[35px] xl:mt-[45px] col-span-5"
+            class="flex items-start mt-3 lg:mt-[35px] xl:mt-[38px] col-span-5"
           >
             <div class="grid gap-2">
               <span class="text-[19px] font-semibold">{{ title1 }}</span>
@@ -341,15 +343,15 @@
               <div class="shape relative">
                 <div class="z-[999] absolute right-0 w-full">
                   <div
-                    class="test w-[50px] lg:w-[100px] lg:h-[100px] h-[50px]"
+                    class="test w-[50px] lg:w-[100px] lg:h-[100px] h-[50px] mt-[-1px]"
                   ></div>
                   <div class="triangle"></div>
                   <div
-                    class="triangle2 absolute top-0 ml-[50px] lg:ml-[100px]"
+                    class="triangle2 absolute top-[-1px] ml-[50px] lg:ml-[100px]"
                   ></div>
                 </div>
                 <video
-                  class="w-full h-full object-cover min-h-[300px] md:min-h-[400px] lg:min-h-[582px] rounded-3xl"
+                  class="w-full h-full object-cover min-h-[300px] md:min-h-[400px] lg:min-h-[482px] min-[1440px]:min-h-[582px] rounded-3xl"
                   autoplay
                   loop
                   muted
@@ -551,5 +553,6 @@ function performSearch() {
   height: 100%;
   border-radius: 0 0 0 50%;
   box-shadow: 0 0 0 50vw white;
+  border: none;
 }
 </style>

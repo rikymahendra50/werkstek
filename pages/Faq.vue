@@ -5,7 +5,9 @@
     title2="Onze meest gestelde vragen"
     description="Lorem ipsum dolor sit amet, solor ut adipiscing elit. Lorem ipsum dolor sit amet, solor ut adipiscing elit."
   />
-  <FaqElement />
+  <div class="flex justify-center">
+    <FaqElement />
+  </div>
 </template>
 
 <script setup>
