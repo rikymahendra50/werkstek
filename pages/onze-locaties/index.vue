@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-28 lg:mt-40">
+  <div class="mt-28">
     <StatistiekLocaties2
       :useTitle2="false"
       :image="StatistiekLocaties2Data.image"

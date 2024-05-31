@@ -1,4 +1,10 @@
 <template>
+  <head>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
+  </head>
   <floating-whatsapp />
   <StatistiekLocatiesVideo
     video="/images/home-video.mov"
