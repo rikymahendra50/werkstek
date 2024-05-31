@@ -95,7 +95,7 @@
             <span class="text-base mt-3 opacity-50 pb-3">Soort locatie</span>
             <fieldset id="soortLocatie" class="grid lg:grid-cols-2 gap-2">
               <div
-                class="flex items-center cursor-pointer gap-2 md:gap-4"
+                class="flex items-center cursor-pointer gap-2"
                 v-for="item in soortLocatiesRadio"
               >
                 <input

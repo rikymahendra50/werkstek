@@ -19,7 +19,7 @@
     buttonLink2="/voor-verhuurders"
   />
   <ContactUs class="mb-10" />
-  <MapInteractive :ShowContainerCustom="false" />
+  <MapInteractive :ShowContainerCustom="false" class="container-custom my-10" />
   <BgBigGreen
     title1="Blijf op de hoogte"
     title2="Schrijf je in voor de nieuwsbrief"
