@@ -19,20 +19,20 @@
       :position="m.position"
       :icon="getMarkerIcon(levelType)"
       :clickable="true"
-      @click="center = m.position"
+      @click="handleMarkerClick(m.position)"
     >
     </GMapMarker>
   </GMapMap>
 </template>
 
 <script setup>
+import { ref } from "vue";
+
 const props = defineProps({
   latitude: {},
   longitude: {},
   levelType: {},
 });
-
-console.log(props.levelType?.image);
 
 const center = ref({
   lat: parseFloat(props.latitude),
@@ -53,5 +53,10 @@ function getMarkerIcon(levelTypeName) {
     url: levelTypeName?.image,
     scaledSize: { width: 50, height: 50 },
   };
+}
+
+function handleMarkerClick(position) {
+  const url = `https://www.google.com/maps?q=${position.lat},${position.lng}`;
+  window.open(url, "_blank");
 }
 </script>

@@ -52,7 +52,6 @@
               </option>
             </select>
           </div> -->
-
           <!-- test -->
           <div class="relative">
             <label for="city" class="text-base mt-3 opacity-50"
@@ -457,8 +456,6 @@ onMounted(() => {
     selectedCity.value = route.query.location_id;
   }
   if (route.query.type_id) {
-    // const typeIds = route.query.type_id?.split(",")?.map(Number);
-    // selectedSoortLocatie.value = typeIds;
     selectedSoortLocatie.value = route.query.type_id;
   }
 
@@ -526,19 +523,6 @@ const highestPrice = computed(() => {
 
   return highestPrice2;
 });
-
-// function isSelectedSoort(id) {
-//   selectedSoortLocatie.value = id;
-// }
-// function handleSoortLocatieChange(id) {
-// if (selectedSoortLocatie.value.includes(id)) {
-//   selectedSoortLocatie.value = selectedSoortLocatie.value.filter(
-//     (item) => item !== id
-//   );
-// } else {
-//   selectedSoortLocatie.value = [...selectedSoortLocatie.value, id];
-// }
-// }
 
 // end soort locatie
 

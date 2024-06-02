@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-32"></div>
+  <div class="mt-20"></div>
   <OnzeLocatiesSingle
     :title="OnzeLocatiesData?.name"
     :postcode="OnzeLocatiesData?.postcode"

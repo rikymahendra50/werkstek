@@ -90,7 +90,9 @@
         </template>
       </VMenu>
     </div>
-    <div class="grid min-[320px]:grid-cols-2 lg:grid-cols-3 gap-3 mt-10">
+    <div
+      class="grid min-[320px]:grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-3 gap-3 mt-10"
+    >
       <BlogItem
         :link="`/blog/${item.slug}`"
         :image="item?.image"

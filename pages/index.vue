@@ -1,10 +1,4 @@
 <template>
-  <head>
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="upgrade-insecure-requests"
-    />
-  </head>
   <floating-whatsapp />
   <StatistiekLocatiesVideo
     video="/images/home-video.mov"
@@ -39,7 +33,7 @@
         <p
           class="text-[10px] min-[500px]:text-base md:text-lg lg:text-[16px] text-[#777] font-normal"
         >
-          Een gezellige werkplek huren in een leuke omgeving?Op deze locaties
+          Een gezellige werkplek huren in een leuke omgeving? Op deze locaties
           hebben wij kantoorruimtes
         </p>
       </div>

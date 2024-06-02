@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-28"></div>
+  <div class="mt-20"></div>
   <HeaderWCity
     title1="Bekijk onze locaties"
     title2="De Werkstek Vacatures"

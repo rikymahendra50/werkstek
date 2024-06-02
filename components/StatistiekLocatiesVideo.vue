@@ -182,7 +182,7 @@
     </div>
     <div class="forpc hidden md:block">
       <div
-        class="container-custom md:absolute w-[100%] lg:w-[95%] sm:-bottom-4 lg:bottom-0"
+        class="container-custom md:absolute w-[100%] lg:w-[95%] sm:-bottom-4 lg:bottom-8 min-[1440px]:bottom-20"
       >
         <div
           class="bg-white w-full rounded-[20px] py-4 sm:grid sm:grid-cols-12 shadow-md"
@@ -454,7 +454,7 @@ const { data: locationData } = await useFetch("/locations", {
   ...requestOptions,
 });
 
-const numericPrices = data.value.data.map((item) => parseFloat(item.price));
+const numericPrices = data?.value?.data?.map((item) => parseFloat(item.price));
 const uniqueNumericPrices = [];
 numericPrices.forEach((price) => {
   if (!uniqueNumericPrices.includes(price)) {

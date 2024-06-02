@@ -3,7 +3,7 @@
     <div v-if="dontShowTitle">
       <div v-if="!showTitleHeader">
         <div class="pl-3 pb-5 md:pb-10 sm:w-[70%]">
-          <h1 class="text-[26px] md:text-[32px] font-bold">
+          <h1 class="text-[20px] sm:text-[26px] md:text-[32px] font-bold">
             Lees onze laatste blog’s
           </h1>
           <p class="text-[14px] sm:text-[18px] md:text-[20px] text-[#777]">

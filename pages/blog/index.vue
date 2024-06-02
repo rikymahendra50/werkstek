@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-28"></div>
+  <div class="mt-20"></div>
   <HeaderWCity
     title1="Bekijk onze locaties"
     title2="Lees de Werkstek </br> blogs & updates"
@@ -7,7 +7,9 @@
   />
 
   <div class="container-custom grid gap-3 pt-8">
-    <p class="text-[40px] text-[#000000] font-medium">
+    <p
+      class="text-[25px] sm:text-[30px] md:text-[40px] text-[#000000] font-medium"
+    >
       Lees onze laatste blog’s
     </p>
     <p class="text-sm text-[#777777]">
@@ -21,7 +23,7 @@
   <Blog2 :ShowTitleCategory="true" />
 
   <BgBigGreen
-    title1="Blijf op de hoogte "
+    title1="Blijf op de hoogte"
     title2="Schrijf je in voor de nieuwsbrief"
     title3="Op de hoogte blijven van beschikbare werkplekken? Schrijf je dan nu vrijblijvend in!"
     :showButtonSection="true"
