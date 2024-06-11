@@ -65,14 +65,6 @@
               autocomplete="on"
             />
           </FormGroup>
-          <div v-if="showPinEmailExpired">
-            <p class="text-gray-400">
-              If you did not receive the an email
-              <span class="link" @click="resentEmail" role="button"
-                >click here</span
-              >
-            </p>
-          </div>
           <div class="flex justify-end">
             <button
               class="btn bg-primary text-white"
@@ -120,7 +112,7 @@ async function onSubmit(values, ctx) {
   });
 
   if (error.value) {
-    ctx.setErrors(transformErrors(error?.data));
+    ctx.setErrors(transformErrors(error?.value?.data));
     snackbar.add({
       type: "error",
       text: error.value?.data?.message ?? "Something went wrong",
@@ -144,50 +136,3 @@ definePageMeta({
   middleware: ["auth", "admin"],
 });
 </script>
-
-<!-- <template>
-  <div class="grid place-items-center items-center">
-    <div class="w-full p-4 justify-center">
-      <CompAdminBackButton link="admin-list" linkTitle="Register Admin" />
-
-      <Registration
-        v-model:email="registerForm.email"
-        v-if="stepper.isCurrent('register')"
-        @next="() => stepper.goTo('verify')"
-      />
-
-      <RegistrationVerify
-        v-if="stepper.isCurrent('verify')"
-        :email="registerForm.email"
-      />
-    </div>
-  </div>
-</template>
-
-<script lang="ts" setup>
-import { useStepper } from "@vueuse/core";
-const { registerForm } = useRegister();
-
-const router = useRouter();
-
-const stepper = useStepper({
-  register: {
-    title: "Register Admin",
-    isValid: () => true,
-  },
-  verify: {
-    title: "Verify",
-    isValid: () => true,
-  },
-});
-
-function goToHome() {
-  router.push("/admin/admin-list");
-}
-
-definePageMeta({
-  layout: "admin",
-  // @ts-ignore
-  middleware: ["auth", "admin"],
-});
-</script> -->

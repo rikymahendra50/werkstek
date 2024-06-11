@@ -33,7 +33,6 @@
           Your OTP has expired. Please request a new one
         </div>
       </div>
-
       <div>
         <button type="submit" :disabled="loading" class="btn btn-success">
           Submit
@@ -69,7 +68,6 @@ function resentEmail() {
   showPinEmailExpired.value = false;
   secondTime.value = 60;
   countdown();
-  // console.log(stateForm.value.email);
 
   useFetch("/admins/resend-email-verification", {
     method: "POST",

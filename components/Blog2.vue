@@ -142,8 +142,6 @@ const categoryData = computed(() => {
   return [{ id: null, name: "Alle" }, ...uniqueCategories];
 });
 
-// console.log(categoryData);
-
 const selectedCategory = ref(null);
 const categoryVisible = ref(true);
 

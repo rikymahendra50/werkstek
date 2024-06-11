@@ -94,7 +94,7 @@ async function onSubmit(values, ctx) {
   });
 
   if (error.value) {
-    ctx.setErrors(transformErrors(error?.data));
+    ctx.setErrors(transformErrors(error?.value?.data));
     snackbar.add({
       type: "error",
       text: error.value?.data?.message ?? "Something went wrong",

@@ -161,8 +161,6 @@ const { data: privilages } = await useFetch(`/admins/categories`, {
   ...requestOptions,
 });
 
-// console.log(privilages?.value?.data?.name);
-
 const {
   data: job,
   error,

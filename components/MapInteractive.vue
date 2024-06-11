@@ -477,18 +477,6 @@ const setupMap = () => {
     mapId: null,
   });
 
-  // const iconBase = "/images";
-
-  // const icon = {
-  //   url: iconBase + "/regular-marker.png",
-  //   scaledSize: new google.maps.Size(40, 40),
-  // };
-
-  // const icon2 = {
-  //   url: iconBase + "/premium-marker.png",
-  //   scaledSize: new google.maps.Size(40, 40),
-  // };
-
   const typeName = ref([
     // {
     //   id: 1,
@@ -516,16 +504,9 @@ const setupMap = () => {
   }
 
   locations.forEach((location) => {
-    // console.log(location.level_type.name);
     const lat = parseFloat(location?.latitude);
     const lng = parseFloat(location?.longitude);
     const iconUrl = getIconUrl(location?.level_type?.name);
-
-    // console.log(iconUrl);
-
-    // console.log(iconUrl);
-
-    // let selectedIcon = location.level_type.name === "Regular" ? icon : icon2;
 
     const marker = new google.maps.Marker({
       position: { lat: lat, lng: lng },

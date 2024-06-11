@@ -299,10 +299,6 @@ const formData = {
   rating: props.eachData?.data.rating,
 };
 
-// console.log(formData.description);
-
-// console.log(props.eachData?.data.privileges.map((item) => item.privilege));
-
 const imagePreview = ref();
 const selectedImage = ref();
 
@@ -328,7 +324,7 @@ async function onSubmit(values, ctx) {
   );
 
   if (error.value) {
-    ctx.setErrors(transformErrors(error?.data));
+    ctx.setErrors(transformErrors(error?.value?.data));
     snackbar.add({
       type: "error",
       text: error.value?.data?.message ?? "Something went wrong",

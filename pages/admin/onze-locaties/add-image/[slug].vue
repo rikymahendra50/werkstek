@@ -164,8 +164,6 @@ async function StoreProduct() {
 
   const formData = new FormData();
 
-  // console.log(selectedImage.value);
-
   if (selectedImage.value) {
     formData.append("image", selectedImage.value);
   }
@@ -177,8 +175,6 @@ async function StoreProduct() {
   });
 
   selectedImages.value.push(data.value.data.id);
-
-  // console.log(data.value);
 
   loading.value = false;
 }

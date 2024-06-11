@@ -45,8 +45,6 @@ const { data, error } = await useFetch(`/jobs/${slug}`, {
 
 const dataAll = data?.value?.data;
 
-console.log(dataAll);
-
 if (error.value) {
   console.error("Error fetching data:", error);
 }
