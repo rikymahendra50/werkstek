@@ -10,7 +10,7 @@
       />
     </div>
     <p class="text-center text-2xl leading-normal">
-      Sorry, Official Werkstek website now is under construction, <br />
+      Sorry, Official Werkstek website right now is under construction, <br />
       Please comeback later.
     </p>
   </section>
