@@ -10,10 +10,6 @@
         <CompAdminButtonAddIndex name="Author" link="author" />
       </div>
       <div class="space-y-4">
-        <!-- <div class="max-w-sm">
-            <Search v-model="search" placeholder="search" />
-          </div> -->
-        <!-- {{ author }} -->
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
           <table class="table table-xs md:table-md w-full rounded-t-xl">
             <thead class="h-12">

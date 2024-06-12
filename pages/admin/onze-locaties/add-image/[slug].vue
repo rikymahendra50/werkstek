@@ -2,12 +2,6 @@
   <section>
     <CompAdminBackButton link="onze-locaties" linkTitle="Add Or Edit Image" />
     <VeeForm @submit="onSubmit">
-      <!-- <img :src="imagePreview[0]" alt="image preview" />
-
-      {{ imagePreview[0] }} -->
-
-      <!-- {{ imagePreview[0] }} -->
-
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div
           class="overflow-hidden rounded-lg relative h-full w-full draggable"

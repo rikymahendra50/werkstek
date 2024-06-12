@@ -1,6 +1,7 @@
 <template>
   <section>
     <CompAdminBackButton link="blog" linkTitle="Edit Blog" />
+
     <updateAdmin
       :eachBlog="eachBlog?.data"
       :categoryBlog="categoryBlog?.data"

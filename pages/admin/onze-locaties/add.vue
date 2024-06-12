@@ -20,6 +20,7 @@
           autocomplete="on"
         />
       </div>
+
       <div class="flex flex-col my-5 w-full">
         <span>Description</span>
         <div class="hidden">
@@ -29,14 +30,9 @@
           v-model="formData.description"
           :is-error="!!errors.body"
         />
-        <!-- <pre>
-          {{ formData.description }}
-        </pre>
-        <pre>
-          {{ errors.body }}
-        </pre> -->
         <VeeErrorMessage name="body" class="text-red-500" />
       </div>
+
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="email">Email</label>
@@ -107,13 +103,13 @@
           autocomplete="on"
         />
       </div>
+
       <div class="w-full p-3 rounded-md">
         <div>
           <p class="mb-3">
             Please find and click the desired location to get the coordinate
             value.
           </p>
-          <!-- <CompAdminMapForm @location-updated="updateLocation" /> -->
           <MapsTest
             v-model:latitude="formData.latitude"
             v-model:longitude="formData.longitude"
@@ -231,7 +227,6 @@
           v-model="formData.location_id"
           class="select select-bordered w-full"
           placeholder="location"
-          autocomplete="location"
         >
           <option disabled selected>Location</option>
           <option :value="item.id" v-for="item in location?.data">
@@ -255,7 +250,6 @@
           v-model="formData.type_id"
           class="select select-bordered w-full"
           placeholder="type"
-          autocomplete="off"
         >
           <option disabled selected>Type</option>
           <option :value="item.id" v-for="item in type">
@@ -279,7 +273,7 @@
           autocomplete="off"
         >
           <option disabled selected>Level Type</option>
-          <option :value="item.id" v-for="item in levelType.data">
+          <option :value="item.id" v-for="item in levelType?.data">
             {{ item.name }}
           </option>
         </VeeField>
@@ -295,7 +289,7 @@
             <span>Facilities</span>
           </div>
           <label
-            v-for="item in facilities.data"
+            v-for="item in facilities?.data"
             :key="item.id"
             class="checkbox-label flex gap-2"
           >
@@ -431,6 +425,10 @@ const { data: type } = await useFetch(`/admins/type-list`, {
   method: "get",
   ...requestOptions,
 });
+
+// console.log(location);
+
+// console.log(type);
 
 const { data: levelType } = await useFetch(`/admins/level-types`, {
   method: "get",

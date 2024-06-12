@@ -41,7 +41,7 @@ const slug = computed(() => {
   return route.params.slug;
 });
 
-const { data, pending } = await useFetch(`/admins/type-jobs/${slug.value}`, {
+const { data, pending } = await useFetch(`/admins/types/${slug.value}`, {
   method: "get",
   ...requestOptions,
 });
@@ -51,7 +51,7 @@ const name = ref(data?.value?.data?.name);
 async function onSubmit(values, ctx) {
   loading.value = true;
 
-  const { error } = await useFetch(`/admins/type-jobs/${slug.value}`, {
+  const { error } = await useFetch(`/admins/types/${slug.value}`, {
     method: "PUT",
     body: { name: name.value },
     ...requestOptions,

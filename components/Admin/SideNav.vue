@@ -119,7 +119,7 @@
               }"
             >
               <Icon name="solar:suitcase-broken" class="text-black w-5 h-5" />
-              <span>Vacatures</span>
+              <span>Vacancies</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -147,7 +147,7 @@
                         isRouteActive('/admin/onze-vacatures'),
                     }"
                   >
-                    Vacatures List
+                    Vacancies List
                   </div>
                 </NuxtLink>
               </li>
@@ -162,7 +162,7 @@
                         isRouteActive('/admin/type-vacatures'),
                     }"
                   >
-                    Vacatures Type
+                    Vacancies Type
                   </div>
                 </NuxtLink>
               </li>

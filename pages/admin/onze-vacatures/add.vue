@@ -52,7 +52,7 @@
           autocomplete="location"
         >
           <option disabled selected>Location</option>
-          <option :value="item.id" v-for="item in location.data">
+          <option :value="item.id" v-for="item in location?.data">
             {{ item.name }}
           </option>
         </VeeField>

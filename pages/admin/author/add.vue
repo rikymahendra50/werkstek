@@ -8,7 +8,7 @@
         :validation-schema="authorSchema"
       >
         <div class="grid mt-10 p-3 gap-2">
-          <div>
+          <!-- <div>
             <div class="hidden">
               <VeeField
                 type="file"
@@ -23,7 +23,15 @@
               v-model="selectedImage"
             />
             <VeeErrorMessage name="image" class="text-red-500" />
-          </div>
+          </div> -->
+          <p class="pb-2">Image</p>
+          <VeeField
+            type="file"
+            name="image"
+            class="file-input file-input-bordered w-full max-w-xs"
+            v-model="selectedImage"
+            accept=".png, .jpg, .jpeg"
+          />
           <label for="name">Name</label>
           <FormTextField
             id="name"
@@ -77,6 +85,8 @@ async function onSubmit(values, ctx) {
   const object = { ...formData.value };
 
   const formDataT = new FormData();
+
+  console.log(selectedImage.value);
 
   for (const item in object) {
     // @ts-ignore

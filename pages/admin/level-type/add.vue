@@ -5,7 +5,7 @@
       <VeeForm @submit="onSubmit" v-slot="{ errors }">
         <div class="grid mt-10 p-3 gap-2">
           <div>
-            <div class="hidden">
+            <!-- <div class="hidden">
               <VeeField
                 type="file"
                 name="image"
@@ -16,6 +16,13 @@
             <BlogImageCrop
               :loading="loading"
               name="image"
+              v-model="selectedImage"
+            /> -->
+            <p class="pb-2">Image</p>
+            <VeeField
+              type="file"
+              name="image"
+              class="file-input file-input-bordered w-full max-w-xs"
               v-model="selectedImage"
             />
           </div>

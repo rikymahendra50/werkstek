@@ -77,7 +77,11 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
-const { data: type, error } = await useFetch(`/admins/type-list`, {
+const {
+  data: type,
+  error,
+  refresh,
+} = await useFetch(`/admins/type-list`, {
   method: "get",
   ...requestOptions,
 });
@@ -107,7 +111,7 @@ const deleteType = async (slug) => {
       type: "success",
       text: "Delete Type Success",
     });
-    window.location.reload();
+    refresh();
   }
   loading.value = false;
 };
