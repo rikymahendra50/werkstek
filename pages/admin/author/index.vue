@@ -13,6 +13,7 @@
         <!-- <div class="max-w-sm">
             <Search v-model="search" placeholder="search" />
           </div> -->
+        <!-- {{ author }} -->
         <div class="overflow-x-auto !py-2 border rounded-t-lg">
           <table class="table table-xs md:table-md w-full rounded-t-xl">
             <thead class="h-12">
@@ -112,7 +113,7 @@ const {
   error,
   refresh,
 } = await useAsyncData("author", () =>
-  $fetch(`/admins/authors?page=${page.value}&filter[search]=${search.value}`, {
+  $fetch(`/admins/authors`, {
     method: "get",
     ...requestOptions,
   })

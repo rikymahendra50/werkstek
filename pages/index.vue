@@ -1,5 +1,5 @@
 <template>
-  <floating-whatsapp />
+  <!-- <floating-whatsapp />
   <StatistiekLocatiesVideo
     video="/images/home-video.mov"
     :image="StatistiekLocatiesData?.image"
@@ -78,7 +78,9 @@
     :showEmailSection="true"
     :show-button-section="false"
     :backgroundColor="'secondary'"
-  />
+  /> -->
+
+  <UnderConstraction />
 </template>
 
 <script setup>
@@ -92,6 +94,10 @@ const { data: sliderData } = useFetch(`/products`, {
 
 useHead({
   title: "Home",
+});
+
+definePageMeta({
+  layout: false,
 });
 
 const isPerformSearch = ref();
