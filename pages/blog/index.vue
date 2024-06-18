@@ -12,10 +12,10 @@
     >
       Lees onze laatste blog’s
     </p>
-    <p class="text-sm text-[#777777]">
+    <!-- <p class="text-sm text-[#777777]">
       Lorem ipsum dolor sit amet, solor ut adipiscing elit. Lorem ipsum <br />
       dolor sit amet, solor ut adipiscing elit.
-    </p>
+    </p> -->
   </div>
 
   <Blog class="my-10" />

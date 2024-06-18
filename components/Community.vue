@@ -6,10 +6,10 @@
           <h1 class="text-[20px] sm:text-[26px] md:text-[32px] font-bold">
             Lees onze laatste blog’s
           </h1>
-          <p class="text-[14px] sm:text-[18px] md:text-[20px] text-[#777]">
+          <!-- <p class="text-[14px] sm:text-[18px] md:text-[20px] text-[#777]">
             Lorem ipsum dolor sit amet, solor ut adipiscing elit.Lorem ipsum
             dolor sit amet, solor ut adipiscing elit.
-          </p>
+          </p> -->
         </div>
       </div>
       <TitleHeader

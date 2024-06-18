@@ -1,11 +1,7 @@
 <template>
   <div class="mt-28"></div>
   <section>
-    <HeaderWCity
-      title1="Bekijk onze locaties"
-      title2="De Werkstek Vacatures"
-      description="Lorem ipsum dolor sit amet, solor ut adipiscing elit.Lorem ipsum dolor sit amet, solor ut adipiscing elit."
-    />
+    <HeaderWCity title1="Bekijk onze locaties" title2="De Werkstek Vacatures" />
     <div class="container-custom">
       <div class="grid grid-cols-1 lg:grid-cols-2 my-20 gap-10">
         <div class="col-span-1 max-h-[200px] md:max-h-[400px]">
