@@ -27,31 +27,6 @@
           </button>
         </div>
         <div v-if="showFilter" class="">
-          <!--<label for="city" class="text-base mt-3 opacity-50"
-            >Kies een locatie</label
-          >
-           <div class="flex-col form-control mt-2 relative">
-            <select
-              id="city"
-              class="select select-bordered dropdown z-10"
-              v-model="selectedCity"
-            >
-              <option disabled selected>Locatie</option>
-              <option
-                class="text-sm flex items-center p-5"
-                v-for="(item, index) in city"
-                :key="index"
-                :value="item.id"
-              >
-                <img
-                  src="/images/location-logo-locaties.svg"
-                  alt="img-logo"
-                  class="w-8 h-8"
-                />
-                {{ item.name }}
-              </option>
-            </select>
-          </div> -->
           <!-- test -->
           <div class="relative">
             <label for="city" class="text-base mt-3 opacity-50"
@@ -109,17 +84,6 @@
                 </label>
               </div>
             </fieldset>
-            <!-- <SliderRange
-              :title="'De prijs per maand'"
-              :idInputMin="'priceMin'"
-              :idInputMax="'priceMax'"
-              v-model:minPrice="selectedMinPrice"
-              v-model:maxPrice="selectedMaxPrice"
-              :minRange="0"
-              :maxRange="highestPrice"
-              :priceGap="highestPrice"
-              class="my-2"
-            /> -->
             <label for="MinPrice" class="text-sm mt-3 opacity-50">Price</label>
             <label for="MaxPrice" class="text-sm mt-3 opacity-50 hidden"
               >Price</label

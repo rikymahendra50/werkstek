@@ -39,23 +39,12 @@
                       </span>
                     </div>
                   </div>
-                  <!-- <img
-                    :src="slide.image"
-                    alt="image"
-                    class="w-full h-full aspect-video md:min-h-[350px] object-cover"
-                  /> -->
                   <img
                     v-if="slide.image"
                     :src="slide.image"
                     :alt="slide.image"
                     class="w-full h-full aspect-video md:min-h-[350px] object-cover"
                   />
-                  <!-- <img
-                    v-else-if="slide.thumbnail"
-                    :src="slide.video"
-                    :alt="slide.video"
-                    class="w-full h-full aspect-video md:min-h-[350px] object-cover"
-                  /> -->
                   <div v-else-if="slide.thumbnail">
                     <video
                       class="w-full h-full aspect-video md:min-h-[350px] object-cover"
@@ -69,10 +58,11 @@
               </SwiperSlide>
               <div class="h-full w-full bg-gradient-to-l inset-0 z-10">
                 <Swiper
-                  :modules="[SwiperThumbs]"
+                  :modules="[SwiperThumbs, SwiperNavigation]"
                   @swiper="setThumbsSwiper"
                   :slides-per-view="3"
                   :spaceBetween="10"
+                  :navigation="true"
                   :css-mode="true"
                   :watch-slides-progress="true"
                 >
@@ -80,15 +70,9 @@
                     <SwiperSlide
                       class="group overflow-hidden mt-3 cursor-pointer"
                     >
-                      <img
-                        v-if="slide.image"
-                        :src="slide.image"
-                        :alt="slide.image"
-                        class="group-hover:scale-125 transition-all max-h-[150px] md:max-h-[200px] w-full duration-300 object-cover aspect-square"
-                      />
                       <div
                         class="flex items-center justify-center relative"
-                        v-else-if="slide.thumbnail"
+                        v-if="slide.thumbnail"
                       >
                         <Icon
                           name="solar:play-bold"
@@ -100,6 +84,12 @@
                           class="group-hover:scale-125 transition-all max-h-[150px] md:max-h-[200px] w-full duration-300 object-cover aspect-square"
                         />
                       </div>
+                      <img
+                        v-else-if="slide.image"
+                        :src="slide.image"
+                        :alt="slide.image"
+                        class="group-hover:scale-125 transition-all max-h-[150px] md:max-h-[200px] w-full duration-300 object-cover aspect-square"
+                      />
                     </SwiperSlide>
                   </template>
                 </Swiper>
@@ -262,6 +252,51 @@
   </section>
 </template>
 
+<style scoped>
+:deep(.swiper-button-next),
+:deep(.swiper-button-prev) {
+  background-position: center;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-color: theme("colors.primary");
+  width: 30px;
+  border-radius: 10px;
+}
+
+:deep(.swiper-button-next:hover),
+:deep(.swiper-button-prev:hover) {
+  background-color: theme("colors.primary");
+}
+
+:deep(.swiper-button-prev) {
+  background-image: url("/images/arrow-left.svg");
+  left: 5px;
+}
+
+:deep(.swiper-button-next) {
+  background-image: url("/images/arrow-right.svg");
+}
+
+:deep(.swiper-button-next::after),
+:deep(.swiper-button-prev::after) {
+  content: "";
+}
+
+@media (max-width: 1028px) {
+  :deep(.swiper-button-next),
+  :deep(.swiper-button-prev) {
+    opacity: 0.6;
+    width: 10px;
+  }
+  :deep(.swiper-button-next) {
+    right: 0;
+  }
+  :deep(.swiper-button-prev) {
+    right: 0;
+  }
+}
+</style>
+
 <script setup>
 const { requestOptions } = useRequestOptions();
 
@@ -345,12 +380,14 @@ const props = defineProps({
 
 const allMedia = ref([]);
 
+console.log(props.imageSrc);
+
 if (Array.isArray(props.imageSrc)) {
-  for (let i = 0; i < props.imageSrc.length; i++) {
-    allMedia.value.push(props.imageSrc[i]);
-  }
   if (props.video) {
     allMedia.value.push(props.video);
+  }
+  for (let i = 0; i < props.imageSrc.length; i++) {
+    allMedia.value.push(props.imageSrc[i]);
   }
 }
 </script>

@@ -9,7 +9,9 @@
     </template>
     <template #main-content>
       <AdminHeader />
-      <main class="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 h-full flex-grow">
+      <main
+        class="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 h-full flex-grow"
+      >
         <slot />
       </main>
       <NuxtSnackbar />

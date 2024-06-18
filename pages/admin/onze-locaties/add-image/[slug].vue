@@ -216,9 +216,9 @@ async function onSubmit(values, ctx) {
 let canUpload;
 
 if (video?.value?.data) {
-  canUpload = computed(() => imagePreview?.value?.length < 2);
+  canUpload = computed(() => imagePreview?.value?.length < 20);
 } else {
-  canUpload = computed(() => imagePreview?.value?.length < 3);
+  canUpload = computed(() => imagePreview?.value?.length < 20);
 }
 useHead({
   title: "Add or Edit Image",
