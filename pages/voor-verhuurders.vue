@@ -22,7 +22,7 @@
     description="Werkstek heeft als doel oplossingen te vinden voor leegstaand vastgoed. Dat doen we door servicekosten of onkosten te betalen om placemakers of kwartiermakers voor een lage huur te laten werken waardoor de locatie aantrekkelijker wordt. Door een goede verdeling van de ruimtes en een efficiënte inrichting maakt Werkstek deze kantoorruimtes geschikt voor zzp’ers en kleine ondernemingen."
     buttonTitle1="Schrijf je in"
     buttonTitle2="Bekijk onze locaties"
-    buttonLink1="/"
+    buttonLink1="https://api.whatsapp.com/send?phone=0850290598"
     buttonLink2="/onze-locaties"
   />
 
@@ -59,11 +59,12 @@
     title2="Geïnteresseerd?"
     title3="Neem dan contact met ons op. Samen zoeken we jouw perfecte werkplek."
     :showButtonSection="true"
-    :showSmallerButton="true"
-    linkTitleSmaller="Lees de FAQ"
     linkButtonSmaller="/Faq"
     backgroundColor="secondary"
   />
+
+  <!-- use this if     :showSmallerButton="true"
+    linkTitleSmaller="Lees de FAQ" -->
 
   <SliderTestimony />
 </template>

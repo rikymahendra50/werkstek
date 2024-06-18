@@ -182,14 +182,14 @@
     </div>
     <div class="forpc hidden md:block">
       <div
-        class="container-custom md:absolute w-[100%] lg:w-[95%] sm:-bottom-4 lg:bottom-8 min-[1440px]:bottom-20"
+        class="container-custom md:absolute w-[100%] lg:w-[95%] sm:-bottom-4 xl:bottom-0 min-[1440px]:bottom-20"
       >
         <div
           class="bg-white w-full rounded-[20px] py-4 sm:grid sm:grid-cols-12 shadow-md"
         >
           <!-- col1 -->
           <div
-            class="sm:col-span-4 flex justify-center items-center mb-2 sm:mb-0"
+            class="sm:col-span-4 flex justify-center items-center mb-2 sm:mb-0 border-green-500"
           >
             <img
               src="/images/building-map-interactive.png"

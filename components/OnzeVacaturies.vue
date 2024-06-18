@@ -1,5 +1,5 @@
 <template>
-  <section class="py-20 overflow-hidden">
+  <section class="pb-20 overflow-hidden">
     <TitleHeader
       title="Onze locaties"
       secondTitle="Bekijk al onze vacatures"
@@ -112,7 +112,7 @@
       </div>
       <div class="md:col-span-8 py-5 overflow-auto">
         <div
-          class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
+          class="max-h-[400px] md:max-h-[870px] flex flex-col scrollbar-onze"
         >
           <template v-if="dataProduct2?.data">
             <eachVacatures

@@ -22,11 +22,11 @@
           <div
             class="flex md:grid lg:flex mt-5 lg:mt-10 gap-4 w-full min-[420px]:w-[70%] sm:w-[60%] md:w-[98%] lg:w-[90%]"
           >
-            <ButtonPrimary
+            <!-- <ButtonPrimary
               :buttonLink="buttonLink1"
               :buttonTitle="buttonTitle1"
               class="w-fit"
-            />
+            /> -->
             <template v-if="useButton2">
               <ButtonSM :buttonTitle="buttonTitle2" :buttonLink="buttonLink2" />
             </template>

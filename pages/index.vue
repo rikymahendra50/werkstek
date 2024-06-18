@@ -1,5 +1,4 @@
 <template>
-  <!-- <floating-whatsapp />
   <StatistiekLocatiesVideo
     video="/images/home-video.mov"
     :image="StatistiekLocatiesData?.image"
@@ -78,9 +77,9 @@
     :showEmailSection="true"
     :show-button-section="false"
     :backgroundColor="'secondary'"
-  /> -->
+  />
 
-  <UnderConstraction />
+  <!-- <UnderConstraction /> -->
 </template>
 
 <script setup>
@@ -96,9 +95,9 @@ useHead({
   title: "Home",
 });
 
-definePageMeta({
-  layout: false,
-});
+// definePageMeta({
+//   layout: false,
+// });
 
 const isPerformSearch = ref();
 const isSelectedCity = ref();

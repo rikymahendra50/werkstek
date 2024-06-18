@@ -1,5 +1,6 @@
 <template>
   <div>
+    <floating-whatsapp />
     <Navbar />
     <main>
       <slot />

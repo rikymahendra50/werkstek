@@ -72,16 +72,21 @@ const setupMap = () => {
 
   const iconBase = "/images";
 
-  const icon = {
-    url: iconBase + "/dot-map.svg",
-    scaledSize: new google.maps.Size(30, 30),
-  };
+  // const icon = {
+  //   url: iconBase + "/dot-map.svg",
+  //   scaledSize: new google.maps.Size(30, 30),
+  // };
 
   const bounds = new google.maps.LatLngBounds();
 
   AllData?.value?.forEach((location) => {
     const lat = parseFloat(location.latitude);
     const lng = parseFloat(location.longitude);
+
+    const icon = {
+      url: location?.level_type?.image,
+      scaledSize: new google.maps.Size(30, 30),
+    };
 
     const marker = new google.maps.Marker({
       position: { lat: lat, lng: lng },
@@ -120,7 +125,7 @@ const setupMap = () => {
         currentInfoWindow.value.close();
       }
 
-      infowindow.open(map, marker);
+      // infowindow.open(map, marker);
       currentInfoWindow.value = infowindow;
     });
 

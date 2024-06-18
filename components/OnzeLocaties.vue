@@ -1,5 +1,5 @@
 <template>
-  <section class="py-10 sm:py-20">
+  <section class="py-10 sm:py-10">
     <TitleHeader
       title="Onze locaties"
       secondTitle="Bekijk al onze locaties"
@@ -174,7 +174,7 @@
       </div>
       <div class="md:col-span-8 py-5 overflow-auto">
         <div
-          class="max-h-[400px] md:max-h-[870px] md:min-h-[870px] flex flex-col scrollbar-onze"
+          class="max-h-[400px] md:max-h-[870px] flex flex-col scrollbar-onze"
         >
           <eachLocaties
             v-if="dataProduct?.data"

@@ -23,10 +23,10 @@
           info@werkstek.nl
         </NuxtLink>
         <NuxtLink
-          to="tel:0850290598"
+          to="https://api.whatsapp.com/send?phone=31655400370"
           class="text-[#777] text-[12px] sm:text-[14px] leading-9"
         >
-          085 – 0290598
+          31655400370
         </NuxtLink>
         <h1
           class="text-[12px] sm:text-[14px] text-[#230000] leading-9 my-1 md:my-4"

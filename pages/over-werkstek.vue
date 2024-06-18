@@ -41,13 +41,14 @@
     title3="Wil je een werkplek of kantoorunit huren? Dan kun je je natuurlijk meteen inschrijven. Je kunt ook gebruik maken van ons stappenplan, zodat er een juiste match is tussen jou en je toekomstige werkplek in het kantoorgebouw van jouw keuze."
     :showEmailSection="false"
     :showButtonSection="true"
-    :showSmallerButton="true"
-    linkTitleSmaller="Lees de FAQ"
     linkButtonSmaller="/faq"
     :ShowSmallerButton="true"
     :showPhoneEmail="false"
     :backgroundColor="'secondary'"
   />
+
+  <!--    :showSmallerButton="true"
+    linkTitleSmaller="Lees de FAQ" -->
 </template>
 
 <script setup>

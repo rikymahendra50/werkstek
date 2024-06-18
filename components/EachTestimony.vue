@@ -1,37 +1,35 @@
 <template>
   <div
-    class="relative text-left px-5 py-5 rounded-[16px] flex flex-col box-shadow2 my-10"
+    class="relative text-left px-5 py-5 rounded-[16px] flex flex-col box-shadow2 my-10 h-[320px] lg:h-[300px] mx-1"
   >
-    <img
-      :src="imageSrc"
-      alt="testimonial1"
-      class="aspect-square max-w-[100px] object-cover absolute rounded-full mt-[-50px] box-shadow-testimony-img"
-    />
-    <p
-      class="text-[14px] md:text-[16px] leading-6 md:leading-8 text-[#3D3D3D] pt-16 md:pt-20"
-    >
-      {{ description }}
-    </p>
-    <hr
-      class="border-t-[0.25pxs] border-quaternary my-[16px] md:my-[36px] w-[90%]"
-    />
-    <div class="flex items-center">
-      <div>
-        <p class="text-[14px] md:text-[16px]">
-          {{ testimonyName }}
-        </p>
-        <p
-          class="font-medium text-[12px] md:text-[14px] md:leading-7 text-[#999999]"
-        >
-          {{ position }}
-        </p>
-      </div>
-      <div class="ml-auto">
-        <img
-          src="/images/star-rating-1.svg"
-          alt="star-rating"
-          class="w-[60%] md:w-full"
-        />
+    <div class="flex flex-col justify-between gap-2 h-full">
+      <!-- <img
+        :src="imageSrc"
+        alt="person-testimonial"
+        class="rounded-full max-w-[80px] mt-[-30px]"
+      /> -->
+      <img
+        src="/images/icon-werstek.svg"
+        alt="icon-werkstek"
+        class="max-w-[80px] mt-[-30px]"
+      />
+      <p
+        class="text-[12px] sm:text-[14px] 2xl:text-[18px] text-[#3D3D3D] leading-normal"
+      >
+        {{ description }}
+      </p>
+      <div class="grid grid-cols-2 pt-2 border-t">
+        <div class="flex flex-col text-sm gap-1 text-[10px]">
+          <p class="font-bold text-[12px]">{{ testimonyName }}</p>
+          <p class="text-sm">{{ position }}</p>
+        </div>
+        <div class="flex items-center justify-end">
+          <Icon
+            name="ic:round-star"
+            class="text-[#da9a3b] w-4"
+            v-for="index in 4"
+          />
+        </div>
       </div>
     </div>
   </div>

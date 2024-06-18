@@ -42,7 +42,7 @@
               </svg>
             </span>
             <span class="text-black font-bold text-[12px] lg:text-sm"
-              >Kantoordreef 123, Werkstad, The Netherlands.</span
+              >Breitnerstraat 19, Arnhem, 6813HN, Nederland</span
             >
           </div>
         </NuxtLink>

@@ -3,9 +3,9 @@
     <TitleHeader
       title="Meningen"
       secondTitle="Wat vinden onze klanten"
-      class="my-8"
+      class="mt-8"
     />
-    <div class="my-8 overflow-hidden relative mx-4 sm:mx-10">
+    <div class="my-8 overflow-hidden relative">
       <swiper
         :slidesPerView="slidesPerViewTestimony"
         :spaceBetween="30"
@@ -83,38 +83,28 @@ export default {
         {
           id: 1,
           imageSrc: "/images/person-testimonial-1.png",
-          imageAlt: "Dianne Russell",
+          imageAlt: "MARC ZANDBERGEN",
           description:
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-          name: "Dianne Russell",
-          position: "CEO, Let’s Connect",
+            "Werkstek is een erg doeltreffend werkplek- en verhuurconcept. Met zowel tijdelijke als langere termijn oplossingen wordt er actief meegedacht met en waarde toegevoegd voor de gebouweigenaar alsook de hurende ondernemers En uiteraard een hele prettige samenwerking!",
+          name: "MARC ZANDBERGEN",
+          position: "Uniform",
         },
         {
           id: 2,
-          imageSrc: "/images/person-testimonial-2.png",
-          imageAlt: "Pushpa kumar arora",
+          imageSrc: "/images/person-testimonial-1.png",
+          imageAlt: "ERIK WERNERS",
           description:
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-          name: "Pushpa kumar arora",
-          position: "CEO, Let’s Connect",
+            "Vanuit people@places hebben we zeer goede ervaringen met Werkstek. Er wordt altijd snel geschakeld en het contact met Ernst verloopt prettig. Hij kijkt altijd naar een oplossing voor alle partijen. We werken met Werkstek op verschillende locaties naar alle tevredenheid. Ernst is correct, commercieel gedreven en betrokken en altijd op zoek naar het beste resultaat.",
+          name: "ERIK WERNERS",
+          position: "people@places",
         },
         {
           id: 3,
           imageSrc: "/images/person-testimonial-1.png",
-          imageAlt: "Pushpa kumar arora",
-          description:
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-          name: "Pushpa kumar arora",
-          position: "CEO, Let’s Connect",
-        },
-        {
-          id: 4,
-          imageSrc: "/images/person-testimonial-2.png",
-          imageAlt: "Pushpa kumar arora",
-          description:
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-          name: "Pushpa kumar arora",
-          position: "CEO, Let’s Connect",
+          imageAlt: "TON VAN NAMEN",
+          description: "Simon werkt uitstekend met Werkstek van Ernst Wilton",
+          name: "TON VAN NAMEN",
+          position: "simon",
         },
       ],
     };

@@ -59,7 +59,8 @@
             v-html="title3"
           ></p>
         </div>
-        <div
+        <!-- maybe update nanti -->
+        <!-- <div
           class="bg-primary grid grid-rows-1 grid-cols-3 z-10 absolute w-[80%] sm:w-[60%] content-center justify-items-center py-2 lg:py-5 rounded-lg lg:rounded-[40px] px-2 lg:px-10 bottom-[-20%] min-[620px]:bottom-[-10%] sm:bottom-[-10%] right-3 lg:right-10"
         >
           <div class="text-white">
@@ -96,7 +97,7 @@
               {{ titleBg3 }}
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 

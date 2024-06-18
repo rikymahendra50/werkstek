@@ -18,7 +18,7 @@
     >
       <div class="text-center text-lg flex flex-col gap-2">
         <p class="text-xl font-bold">Contact Details</p>
-        <a href="tel:085-0290598">085-0290598</a>
+        <a href="tel:0850290598">085-0290598</a>
         <p>or</p>
         <a href="mailto:info@werkstek.nl">info@werkstek.nl</a>
       </div>
