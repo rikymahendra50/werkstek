@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 
 const props = defineProps({
   latitude: {

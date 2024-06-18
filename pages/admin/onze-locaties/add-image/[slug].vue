@@ -134,7 +134,7 @@ const selectedImage = ref();
 const selectedImages = ref([]);
 const imagePreview = ref([]);
 
-data.value.data.forEach((item) => {
+data?.value?.data?.forEach((item) => {
   selectedImages.value.push(item.id);
   imagePreview.value.push(item.image);
 });
@@ -145,6 +145,13 @@ const saveToPreviewImage = (event) => {
 
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
+
+    if (file.type === "image/svg+xml" || file.type === "image/webp") {
+      alert(
+        `File ${file.name} is not allowed. SVG and WebP files are not supported.`
+      );
+      return;
+    }
 
     if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
       alert(
@@ -174,7 +181,7 @@ async function StoreProduct() {
     ...requestOptions,
   });
 
-  selectedImages.value.push(data.value.data.id);
+  selectedImages.value.push(data?.value?.data?.id);
 
   loading.value = false;
 }
@@ -202,7 +209,7 @@ async function onSubmit(values, ctx) {
       type: "error",
       text: error?.value.data?.message ?? "Something went wrong",
     });
-  } else if (data.value) {
+  } else if (data?.value) {
     snackbar.add({
       type: "success",
       text: "Add or Edit Image Success",

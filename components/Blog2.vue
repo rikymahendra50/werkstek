@@ -102,15 +102,6 @@
         :key="item.id"
       />
     </div>
-    <!-- <Pagination
-      v-model="page"
-      :total="data?.meta?.total"
-      :per-page="data?.meta?.per_page"
-      class="flex justify-center mt-8"
-    /> -->
-    <!-- <pre>
-      {{ data }}
-    </pre> -->
   </section>
 </template>
 
