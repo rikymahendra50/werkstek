@@ -91,16 +91,12 @@ const { data: sliderData } = useFetch(`/products`, {
   ...requestOptions,
 });
 
-useHead({
-  title: "Home",
-});
-
 // definePageMeta({
 //   layout: false,
 // });
 
 useHead({
-  title: "Werkstek",
+  title: "Home",
   meta: [
     {
       name: "description",
