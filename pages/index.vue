@@ -99,6 +99,17 @@ useHead({
 //   layout: false,
 // });
 
+useHead({
+  title: "Werkstek",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Als verhuurder leegstand van kantoorpanden voorkomen? Geen zorgen over de risico’s van leegstand van kantoorgebouwen?",
+    },
+  ],
+});
+
 const isPerformSearch = ref();
 const isSelectedCity = ref();
 const isSelectedMinPrice = ref();
