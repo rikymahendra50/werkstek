@@ -65,7 +65,7 @@
             </defs>
           </svg>
         </div>
-        <div
+        <!-- <div
           class="bg-primary grid grid-rows-1 grid-cols-3 z-10 absolute bottom-5 sm:right-10 lg:right-20 w-[100%] sm:w-[90%] md:w-[98%] content-center justify-items-center py-2 lg:py-5 rounded-[20px] lg:rounded-[40px] px-4 lg:px-10"
         >
           <div class="text-white">
@@ -86,11 +86,11 @@
             </p>
             <p class="text-[12px] md:text-[16px] font-normal">{{ titleBg3 }}</p>
           </div>
-        </div>
+        </div> -->
         <div class="w-[80%] lg:w-[100%] hidden xl:block">
           <img :src="image" :alt="image" />
         </div>
-        <div
+        <!-- <div
           class="bg-primary grid grid-rows-1 grid-cols-3 z-10 absolute bottom-5 sm:right-10 lg:right-20 w-[100%] sm:w-[90%] md:w-[98%] content-center justify-items-center py-2 lg:py-5 rounded-[20px] lg:rounded-[40px] px-4 lg:px-10"
         >
           <div class="text-white">
@@ -111,7 +111,7 @@
             </p>
             <p class="text-[12px] md:text-[16px] font-normal">{{ titleBg3 }}</p>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>

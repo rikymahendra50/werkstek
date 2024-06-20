@@ -1,6 +1,5 @@
 <template>
   <div class="mt-20"></div>
-  <!-- <img src="/images/img-home-11.png" alt="" /> -->
   <StatistiekLocaties
     image="/images/img-home-11.png"
     title1="Neem contact op"
