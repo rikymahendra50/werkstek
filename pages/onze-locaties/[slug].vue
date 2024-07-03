@@ -21,6 +21,8 @@
     :levelType="OnzeLocatiesData?.level_type"
   />
 
+  {{ OnzeLocatiesData?.rent_type }}
+
   <SliderLocaties class="my-10 py-10" :data="sliderData?.data" />
 
   <SliderTestimony />

@@ -30,13 +30,7 @@
                       class="bg-primary min-w-[140px] lg:min-w-[232px] text-[12px] sm:text-[14px] md:text-[16px] text-white py-1 px-2 md:py-2 md:px-4 grid"
                     >
                       <span>Prijs :</span>
-                      <span
-                        >{{ price }} € per/{{
-                          rentType === "monthly"
-                            ? (rentType = "maand")
-                            : (rentType = "jaar")
-                        }}
-                      </span>
+                      <span>{{ price }} € per/{{ montOrYear }}</span>
                     </div>
                   </div>
                   <img
@@ -378,9 +372,21 @@ const props = defineProps({
   },
 });
 
-const allMedia = ref([]);
+const montOrYear = ref();
 
-console.log(props.imageSrc);
+onMounted(() => {
+  formattedRentType();
+});
+
+function formattedRentType() {
+  if (props.rentType === "monthly") {
+    montOrYear.value = "maand";
+  } else if (props.rentType === "yearly") {
+    montOrYear.value = "jaar";
+  }
+}
+
+const allMedia = ref([]);
 
 if (Array.isArray(props.imageSrc)) {
   if (props.video) {
