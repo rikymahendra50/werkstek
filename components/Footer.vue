@@ -40,7 +40,7 @@
             <li class="cursor-pointer grid gap-4">
               <div
                 v-for="item in dataLocation?.data.slice(0, 10)"
-                @click="handleLocation(item.id)"
+                @click="handleLocation(item.name)"
                 class="hover:text-primary"
               >
                 Kantoorruimte {{ item.name }}
@@ -128,7 +128,7 @@ const { data: types } = useFetch("/types", {
 function handleLocation(locationId) {
   selectedCity.value = locationId;
   router.replace(
-    `/onze-locaties?page=1&location_id=${selectedCity.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
+    `/onze-locaties?page=1&location=${selectedCity.value}&filter[min_area]=&filter[max_area]=&facilities=#section-2`
   );
 }
 

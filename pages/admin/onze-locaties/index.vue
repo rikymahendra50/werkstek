@@ -7,6 +7,11 @@
         <div>
           <div class="text-lg md:text-2xl font-bold">Property</div>
         </div>
+        <NuxtLink
+          :to="`/admin/onze-locaties/featured-property/add`"
+          class="btn btn-sm normal-case btn-ghost btn-square"
+          ><Icon name="cil:sort-numeric-up" class="text-black"
+        /></NuxtLink>
         <CompAdminButtonAddIndex name="Property" link="onze-locaties" />
       </div>
       <div>
@@ -134,6 +139,8 @@ const {
     ...requestOptions,
   })
 );
+
+console.log(property.value);
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();

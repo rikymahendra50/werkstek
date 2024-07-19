@@ -21,9 +21,9 @@
     :levelType="OnzeLocatiesData?.level_type"
   />
 
-  {{ OnzeLocatiesData?.rent_type }}
+  <!-- <SliderLocaties class="my-10 py-10" :data="sliderData?.data" /> -->
 
-  <SliderLocaties class="my-10 py-10" :data="sliderData?.data" />
+  <SliderLocatiesSort :data="sortedData"></SliderLocatiesSort>
 
   <SliderTestimony />
 </template>
@@ -46,6 +46,17 @@ const OnzeLocatiesData = data?.value?.data;
 const { data: sliderData } = await useFetch(`/products`, {
   method: "get",
   ...requestOptions,
+});
+
+const { data: sliderDataTest } = useFetch(`/featured-products`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const sortedData = computed(() => {
+  return sliderDataTest?.value?.data
+    ?.slice()
+    .sort((a, b) => a.position - b.position);
 });
 
 if (error.value) {

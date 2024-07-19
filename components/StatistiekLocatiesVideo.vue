@@ -84,6 +84,24 @@
           <div
             class="grid min-[370px]:grid-cols-12 sm:grid-cols-1 md:grid-cols-12 col-span-6 lg:col-span-6 items-center sm:px-0 lg:px-5 sm:gap-2 px-2"
           >
+            <div class="w-full col-span-12 flex justify-center items-center">
+              <div
+                class="w-full min-[500px]:w-[80%] flex flex-col gap-2 md:gap-3"
+              >
+                <p class="md:text-lg font-semibold text-sm">Locaties</p>
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  placeholder="Locaties"
+                  class="w-full italic text-[12px] sm:text-[14px] flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-2 pl-4 min-h-[40px] sm:min-h-[40px] mb-2 sm:mb-5 md:mb-0 text-[#676767] border-black border"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- <div
+            class="grid min-[370px]:grid-cols-12 sm:grid-cols-1 md:grid-cols-12 col-span-6 lg:col-span-6 items-center sm:px-0 lg:px-5 sm:gap-2 px-2"
+          >
             <div
               v-for="(category, index) in categories"
               :key="index"
@@ -160,13 +178,12 @@
                   </li>
                 </ul>
               </div>
-              <!-- col3 -->
             </div>
-          </div>
+          </div> -->
           <!-- end col2 -->
           <!-- col3 -->
           <div
-            class="flex justify-end sm:justify-center sm:items-center md:justify-start lg:justify-center md:mb-5 min-[320px]:px-5 sm:px-0 col-span-2"
+            class="flex justify-end sm:justify-center sm:items-center md:justify-start lg:justify-center md:mb-5 min-[320px]:px-5 sm:px-0 col-span-2 mt-3"
           >
             <a
               href="#map"
@@ -189,7 +206,7 @@
         >
           <!-- col1 -->
           <div
-            class="sm:col-span-4 flex justify-center items-center mb-2 sm:mb-0 border-green-500"
+            class="sm:col-span-4 flex justify-center items-center mb-2 sm:mb-0"
           >
             <img
               src="/images/building-map-interactive.png"
@@ -206,6 +223,24 @@
           <!-- end col1 -->
           <!-- col2 -->
           <div
+            class="grid min-[370px]:grid-cols-12 sm:grid-cols-1 md:grid-cols-12 col-span-6 lg:col-span-6 sm:px-0 lg:px-5 sm:gap-2 justify-center items-center"
+          >
+            <div class="w-full col-span-12 flex justify-center items-center">
+              <div class="w-[90%] flex flex-col gap-3">
+                <p class="text-lg font-semibold">Locaties</p>
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  placeholder="Locaties"
+                  v-model="searchCity"
+                  class="w-full italic text-[12px] sm:text-[14px] flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-2 pl-4 min-h-[40px] sm:min-h-[50px] mb-2 sm:mb-5 md:mb-0 text-[#676767] border-black border"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- <div
             class="grid min-[370px]:grid-cols-12 sm:grid-cols-1 md:grid-cols-12 col-span-6 lg:col-span-6 items-center sm:px-0 lg:px-5 sm:gap-2"
           >
             <div
@@ -284,9 +319,8 @@
                   </li>
                 </ul>
               </div>
-              <!-- col3 -->
             </div>
-          </div>
+          </div> -->
           <!-- end col2 -->
           <!-- col3 -->
           <div
@@ -441,77 +475,76 @@ const props = defineProps({
 });
 
 // data
-const selectedCity = ref();
-const selectedMinPrice = ref();
+// const selectedCity = ref();
+// const selectedMinPrice = ref();
+
+const searchCity = ref();
 
 const { requestOptions } = useRequestOptions();
 const { data, error } = await useFetch(`/products`, {
   method: "get",
   ...requestOptions,
 });
-const { data: locationData } = await useFetch("/locations", {
-  method: "get",
-  ...requestOptions,
-});
+// const { data: locationData } = await useFetch("/locations", {
+//   method: "get",
+//   ...requestOptions,
+// });
 
-const numericPrices = data?.value?.data?.map((item) => parseFloat(item.price));
-const uniqueNumericPrices = [];
-numericPrices.forEach((price) => {
-  if (!uniqueNumericPrices.includes(price)) {
-    uniqueNumericPrices.push(price);
-  }
-});
-let numericPricesT = ref(uniqueNumericPrices);
-const highestPrice = Math.max(...numericPrices);
-let minestPrice = Math.min(...numericPrices);
+// const numericPrices = data?.value?.data?.map((item) => parseFloat(item.price));
+// const uniqueNumericPrices = [];
+// numericPrices.forEach((price) => {
+//   if (!uniqueNumericPrices.includes(price)) {
+//     uniqueNumericPrices.push(price);
+//   }
+// });
+// let numericPricesT = ref(uniqueNumericPrices);
+// const highestPrice = Math.max(...numericPrices);
+// let minestPrice = Math.min(...numericPrices);
 
-const arrayLocation = locationData?.value?.data?.map((item) => item);
-let city = ref(arrayLocation);
-let firstLocation = ref(arrayLocation[0]?.name);
+// const arrayLocation = locationData?.value?.data?.map((item) => item);
+// let city = ref(arrayLocation);
+// let firstLocation = ref(arrayLocation[0]?.name);
 
-const categories = ref([
-  {
-    title: "Zoek een Locatie",
-    selectedOption: firstLocation,
-    showDropdown: false,
-    options: city,
-  },
-  {
-    title: "Zoek op een prijs",
-    selectedOption: minestPrice,
-    showDropdown: false,
-    options: numericPricesT,
-  },
-]);
+// const categories = ref([
+//   {
+//     title: "Zoek een Locatie",
+//     selectedOption: firstLocation,
+//     showDropdown: false,
+//     options: city,
+//   },
+//   {
+//     title: "Zoek op een prijs",
+//     selectedOption: minestPrice,
+//     showDropdown: false,
+//     options: numericPricesT,
+//   },
+// ]);
 
-const emit = defineEmits([
-  "isPerformSearch",
-  "isSelectedCity",
-  "isSelectedMinPrice",
-]);
+const emit = defineEmits(["isPerformSearch", "isSearchCity"]);
 
-const selectOptionCity = (category, option, id) => {
-  category.selectedOption = option;
-  category.showDropdown = false;
-  selectedCity.value = id;
-  emit("isSelectedCity", selectedCity.value);
-};
+// const selectOptionCity = (category, option, id) => {
+//   category.selectedOption = option;
+//   category.showDropdown = false;
+//   selectedCity.value = id;
+//   emit("isSelectedCity", selectedCity.value);
+// };
 
-const selectOptionPrice = (category, option, id) => {
-  category.selectedOption = option;
-  category.showDropdown = false;
-  selectedMinPrice.value = id;
-  emit("isSelectedMinPrice", selectedMinPrice.value);
-};
+// const selectOptionPrice = (category, option, id) => {
+//   category.selectedOption = option;
+//   category.showDropdown = false;
+//   selectedMinPrice.value = id;
+//   emit("isSelectedMinPrice", selectedMinPrice.value);
+// };
 
-const toggleDropdown = (category) => {
-  category.showDropdown = !category.showDropdown;
-};
+// const toggleDropdown = (category) => {
+//   category.showDropdown = !category.showDropdown;
+// };
 
 const isPerformSearchT = ref();
 
 function performSearch() {
   isPerformSearchT.value = !isPerformSearchT.value;
+  emit("isSearchCity", searchCity.value);
   emit("isPerformSearch", isPerformSearchT.value);
 }
 </script>

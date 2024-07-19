@@ -8,9 +8,8 @@
       <div
         class="grid col-span-4 md:col-span-4 md:min-h-[210px] h-full bg-no-repeat bg-cover rounded-lg relative text-white"
         :style="{
-          backgroundImage: `url('${image}')`,
           background: `linear-gradient(90deg, rgba(251,249,249,0) 39%, rgba(255,255,255,1) 100%), url('${image}')`,
-          backgroundPosition: 'center center',
+          backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
         }"

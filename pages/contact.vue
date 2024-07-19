@@ -17,6 +17,7 @@
     buttonLink1="/over-werkstek"
     buttonLink2="/voor-verhuurders"
   />
+
   <ContactUs class="mb-10" />
   <MapInteractive :ShowContainerCustom="false" class="container-custom my-10" />
   <BgBigGreen

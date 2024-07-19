@@ -60,19 +60,6 @@
                 </li>
               </ul>
             </div>
-            <!-- <div v-else-if="category.title === 'Zoek op een prijs'">
-              <SliderRangeMap
-                :idInputMin="'priceMin'"
-                :idInputMax="'priceMax'"
-                :minPrice="0"
-                :maxPrice="highestPrice"
-                :minRange="0"
-                :maxRange="highestPrice"
-                :priceGap="highestPrice"
-                class="my-2"
-                @price-change="handlePriceChange"
-              />
-            </div> -->
           </div>
           <div class="text-tertiary grid justify-end md:col-span-3 mt-4">
             <button
@@ -122,7 +109,7 @@
           naar op zoek?
         </p>
       </div>
-      <div class="grid md:grid-cols-12 md:col-span-6 items-center">
+      <!-- <div class="grid md:grid-cols-12 md:col-span-6 items-center">
         <div
           v-for="(category, index) in categories"
           :key="index"
@@ -198,7 +185,26 @@
             </ul>
           </div>
         </div>
+      </div> -->
+      <!-- ini text input -->
+      <div
+        class="grid min-[370px]:grid-cols-12 sm:grid-cols-1 md:grid-cols-12 col-span-6 lg:col-span-6 sm:px-0 lg:px-5 sm:gap-2 justify-center items-center"
+      >
+        <div class="w-full col-span-12 flex justify-center items-center">
+          <div class="w-[90%] flex flex-col gap-3">
+            <p class="text-lg font-semibold">Locaties</p>
+            <input
+              type="text"
+              name=""
+              id=""
+              placeholder="Locaties"
+              v-model="searchCity"
+              class="w-full italic text-[12px] sm:text-[14px] flex items-center justify-between bg-[rgb(247,247,247)] rounded-full px-2 pl-4 min-h-[40px] sm:min-h-[50px] mb-2 sm:mb-5 md:mb-0 text-[#676767] border-black border"
+            />
+          </div>
+        </div>
       </div>
+      <!-- end text input -->
       <div class="flex justify-self-end mb-5">
         <div
           class="btn bg-primary text-white md:mt-5 hover:bg-primary w-[65px] h-[60px] lg:w-[76px] lg:h-[76px] rounded-[20px]"
@@ -299,6 +305,8 @@ let minestPrice = Math.min(...numericPrices);
 
 let infoWindowTimeout;
 
+const searchCity = ref();
+
 const arrayLocation = locationData?.value?.data?.map((item) => item);
 let city = ref(arrayLocation);
 let firstLocation = ref(arrayLocation[0]?.name);
@@ -380,9 +388,11 @@ async function performSearch() {
   // setupMap();
   try {
     let params = {};
-    params["filter[location_id]"] = selectedCity.value;
-    params["filter[min_price]"] = selectedMinPrice.value;
-    params["filter[max_price]"] = selectedMaxPrice.value;
+    // params["filter[location_id]"] = selectedCity.value;
+    // params["filter[min_price]"] = selectedMinPrice.value;
+    // params["filter[max_price]"] = selectedMaxPrice.value;
+
+    params["filter[location]"] = searchCity.value;
 
     const response = await axiosRequest.get("/products", { params: params });
     filteredData.value = response.data;
@@ -524,7 +534,7 @@ const setupMap = () => {
       <a href="onze-locaties/${location?.slug}" class="max-w-[190px] w-full flex flex-col text-end h-full">
         <div class="relative">
           <img src="${location?.location?.image}" alt="${location?.name}" class="w-full min-h-[140px]">
-          <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white"></div>
+          <div class="absolute bottom-0 left-0 right-0 h-16 "></div>
         </div>
         <div class="pr-5 py-5 pb-4 relative">
           <h2 class="text-primary mt-4">${location?.name}</h2>

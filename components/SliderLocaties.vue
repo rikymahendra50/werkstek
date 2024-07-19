@@ -54,7 +54,9 @@
                   {{ itemSlider?.area_size }} m<sup>2</sup>
                 </h4>
                 <p class="text-[15px] lg:text-sm">
-                  € {{ itemSlider?.price }} p/{{ itemSlider?.rent_type }}
+                  € {{ itemSlider?.price }} p/{{
+                    formattedRentType(itemSlider?.rent_type)
+                  }}
                 </p>
                 <p class="text-sm pt-2">Neem een kijkje ></p>
               </div>
@@ -134,6 +136,14 @@ export default {
   setup() {
     const slidesPerView = ref(3);
 
+    function formattedRentType(rentType) {
+      if (rentType === "monthly") {
+        return "maand";
+      } else if (rentType === "yearly") {
+        return "jaar";
+      }
+    }
+
     const handleResize = () => {
       if (window.innerWidth <= 480) {
         slidesPerView.value = 1;
@@ -157,6 +167,7 @@ export default {
 
     return {
       slidesPerView,
+      formattedRentType,
       modules: [Autoplay, Pagination, Navigation],
     };
   },

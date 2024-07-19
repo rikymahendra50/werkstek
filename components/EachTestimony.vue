@@ -3,15 +3,10 @@
     class="relative text-left px-5 py-5 rounded-[16px] flex flex-col box-shadow2 my-10 h-[320px] lg:h-[300px] mx-1"
   >
     <div class="flex flex-col justify-between gap-2 h-full">
-      <!-- <img
-        :src="imageSrc"
-        alt="person-testimonial"
-        class="rounded-full max-w-[80px] mt-[-30px]"
-      /> -->
       <img
         src="/images/icon-werstek.svg"
         alt="icon-werkstek"
-        class="max-w-[80px] mt-[-30px]"
+        class="max-w-[80px] min-[1300px]:max-w-[90px] mt-[-30px]"
       />
       <p
         class="text-[12px] sm:text-[14px] 2xl:text-[18px] text-[#3D3D3D] leading-normal"

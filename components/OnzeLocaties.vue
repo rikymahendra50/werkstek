@@ -262,7 +262,7 @@ function variableToggleLocatieF() {
 
 function variableToggleLocatieT(item, itemName) {
   if (item) {
-    selectedCity.value = item;
+    selectedCity.value = itemName;
     selectedCityForShow.value = itemName;
   }
   variableToggleLocatie.value = false;
@@ -274,7 +274,7 @@ const {
   refresh,
 } = await useAsyncData("dataProduct", () =>
   $fetch(
-    `/products?filter[location_id]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
+    `/products?filter[location]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
     {
       method: "get",
       ...requestOptions,
@@ -403,8 +403,8 @@ onMounted(() => {
   watch(
     () => route.query,
     (newValue, oldValue) => {
-      if (route.query.location_id) {
-        selectedCity.value = route.query.location_id;
+      if (route.query.location) {
+        selectedCity.value = route.query.location;
       }
       if (route.query.type_id) {
         selectedSoortLocatie.value = route.query.type_id;
@@ -416,8 +416,8 @@ onMounted(() => {
   if (route.query.page) {
     page.value = route.query.page;
   }
-  if (route.query.location_id) {
-    selectedCity.value = route.query.location_id;
+  if (route.query.location) {
+    selectedCity.value = route.query.location;
   }
   if (route.query.type_id) {
     selectedSoortLocatie.value = route.query.type_id;
@@ -506,7 +506,7 @@ function handlefunctieCheckbox(id) {
 function replaceWindow() {
   let filters = [];
   if (selectedCity.value) {
-    filters.push(`location_id=${selectedCity.value}`);
+    filters.push(`location=${selectedCity.value}`);
   }
 
   if (selectedSoortLocatie.value) {
@@ -539,7 +539,7 @@ function replaceWindow() {
 function replaceWindow2() {
   let filters = [];
   if (selectedCity.value) {
-    filters.push(`location_id=${selectedCity.value}`);
+    filters.push(`location=${selectedCity.value}`);
   }
   if (selectedSoortLocatie.value) {
     filters.push(`type_id=${selectedSoortLocatie.value}`);

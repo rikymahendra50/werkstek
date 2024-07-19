@@ -342,7 +342,7 @@ function handlefunctieCheckbox(id) {
 function replaceWindow() {
   let filters = [];
   if (selectedCity.value) {
-    filters.push(`location_id=${selectedCity.value}`);
+    filters.push(`location=${selectedCity.value}`);
   }
   if (selectedMaxHours.value) {
     filters.push(`max_hours=${selectedMaxHours.value}`);

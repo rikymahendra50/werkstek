@@ -1,5 +1,5 @@
 <template>
-  <StatistiekLocatiesVideo
+  <!-- <StatistiekLocatiesVideo
     video="/images/home-video.mov"
     :image="StatistiekLocatiesData?.image"
     :title1="StatistiekLocatiesData?.title1"
@@ -14,6 +14,22 @@
     @isPerformSearch="performSearch"
     @isSelectedCity="selectedCity"
     @isSelectedMinPrice="selectedMinPrice"
+  /> -->
+
+  <StatistiekLocatiesVideo
+    video="/images/home-video.mov"
+    :image="StatistiekLocatiesData?.image"
+    :title1="StatistiekLocatiesData?.title1"
+    :title2="StatistiekLocatiesData?.title2"
+    :title3="StatistiekLocatiesData?.title3"
+    :titleBg1="StatistiekLocatiesData?.titleBg1.title"
+    :titleBg2="StatistiekLocatiesData?.titleBg2.title"
+    :titleBg3="StatistiekLocatiesData?.titleBg3.title"
+    :count1="StatistiekLocatiesData?.titleBg1.count"
+    :count2="StatistiekLocatiesData?.titleBg2.count"
+    :count3="StatistiekLocatiesData?.titleBg3.count"
+    @isPerformSearch="performSearch"
+    @isSearchCity="searchCity"
   />
 
   <div class="grid w-full container-custom">
@@ -46,18 +62,26 @@
     </div>
   </div>
 
-  <MapInteractive
+  <!-- <MapInteractive
     :showSearch="false"
     :selectedCityT="isSelectedCity"
     :selectedMinPriceT="isSelectedMinPrice"
     :SubmitPerform="isPerformSearch"
+  /> -->
+
+  <MapInteractive2
+    :showSearch="false"
+    :searchCityT="isSearchCityComp"
+    :SubmitPerform="isPerformSearchComp"
   />
 
   <div id="map"></div>
 
-  <SliderLocaties :data="sliderData?.data"></SliderLocaties>
+  <!-- <SliderLocaties :data="sliderData?.data"></SliderLocaties> -->
+  <SliderLocatiesSort :data="sortedData"></SliderLocatiesSort>
 
   <SliderTestimony class="my-10" />
+
   <FourImages />
   <div class="my-10">
     <TitleHeader3
@@ -79,6 +103,12 @@
     :backgroundColor="'secondary'"
   />
 
+  <!-- <SliderLocaties :data="sliderData?.data"></SliderLocaties> -->
+
+  <!-- <div class="" v-for="item in sortedData">
+    {{ item.position }}
+  </div> -->
+
   <!-- <UnderConstraction /> -->
 </template>
 
@@ -90,6 +120,19 @@ const { data: sliderData } = useFetch(`/products`, {
   method: "get",
   ...requestOptions,
 });
+
+const { data: sliderDataTest } = useFetch(`/featured-products`, {
+  method: "get",
+  ...requestOptions,
+});
+
+const sortedData = computed(() => {
+  return sliderDataTest?.value?.data
+    ?.slice()
+    .sort((a, b) => a.position - b.position);
+});
+
+console.log(sortedData.value);
 
 // definePageMeta({
 //   layout: false,
@@ -107,18 +150,27 @@ useHead({
 });
 
 const isPerformSearch = ref();
-const isSelectedCity = ref();
-const isSelectedMinPrice = ref();
+const isSearchCity = ref();
+
+const isPerformSearchComp = computed(() => isPerformSearch.value);
+const isSearchCityComp = computed(() => isSearchCity.value);
+// const isSelectedCity = ref();
+// const isSelectedMinPrice = ref();
 
 function performSearch(data) {
   isPerformSearch.value = data;
 }
 
-function selectedCity(data) {
-  isSelectedCity.value = data;
-}
+// function selectedCity(data) {
+//   isSelectedCity.value = data;
+// }
 
-function selectedMinPrice(data) {
-  isSelectedMinPrice.value = data;
+// function selectedMinPrice(data) {
+//   isSelectedMinPrice.value = data;
+// }
+
+function searchCity(data) {
+  isSearchCity.value = data;
+  console.log("Ini di functi searchCity", isSearchCity.value);
 }
 </script>

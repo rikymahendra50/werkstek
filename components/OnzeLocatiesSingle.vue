@@ -216,7 +216,7 @@
           class="flex flex-col sm:flex-row text-white my-5 items-start gap-3"
         >
           <NuxtLink
-            to="/voor-verhuurders"
+            to="/contact/#contact-form"
             class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px] mb-3 hover:bg-secondary transition"
           >
             <p
@@ -225,8 +225,8 @@
               Aanvragen
             </p>
           </NuxtLink>
-          <NuxtLink
-            to="/contact"
+          <!-- <NuxtLink
+            to="/contact/#contact-form"
             class="bg-primary w-[50%] md:w-[90%] py-2 rounded-full text-center max-h-[50px] hover:bg-secondary transition"
           >
             <p
@@ -234,7 +234,42 @@
             >
               Contact Opnemen
             </p>
-          </NuxtLink>
+          </NuxtLink> -->
+          <div class="relative w-[50%] md:w-[90%]">
+            <div
+              @click="showDropdownContact"
+              class="bg-primary cursor-pointer py-2 rounded-full text-center max-h-[50px] hover:bg-secondary transition"
+            >
+              <p
+                class="text-[12px] sm:text-[14px] text-center text-white font-thin"
+              >
+                Contact Opnemen
+              </p>
+            </div>
+            <div
+              class="text-primary flex flex-col my-2 border-primary border rounded-[20px] overflow-hidden"
+              v-if="showDropdownContactT"
+            >
+              <NuxtLink
+                :to="`tel:${phoneNumber}`"
+                class="flex items-center hover:bg-black hover:text-white transition py-2 px-4"
+              >
+                <!-- <img src="/images/telp-bg-primary.svg" alt="phone-icon" /> -->
+                <p class="text-[14px]">
+                  <span>{{ phoneNumber }}</span>
+                </p>
+              </NuxtLink>
+              <NuxtLink
+                :to="`mailto:' + ${email}`"
+                class="flex items-center hover:bg-black hover:text-white transition py-2 px-4"
+              >
+                <!-- <img src="/images/email-bg-primary.svg" alt="phone-icon" /> -->
+                <p class="text-[14px]">
+                  <span>{{ email }}</span>
+                </p>
+              </NuxtLink>
+            </div>
+          </div>
         </div>
         <MapMini
           :latitude="latitude"
@@ -294,6 +329,8 @@
 <script setup>
 const { requestOptions } = useRequestOptions();
 
+const showDropdownContactT = ref(false);
+
 const thumbsSwiper = ref(null);
 const setThumbsSwiper = (swiper) => {
   thumbsSwiper.value = swiper;
@@ -320,6 +357,10 @@ function getAvailabilityStatus(itemName) {
   )
     ? " Beschikbaar"
     : " Niet beschikbaar";
+}
+
+function showDropdownContact() {
+  showDropdownContactT.value = !showDropdownContactT.value;
 }
 
 const props = defineProps({
