@@ -87,7 +87,7 @@ export default {
           description:
             "Werkstek is een erg doeltreffend werkplek- en verhuurconcept. Met zowel tijdelijke als langere termijn oplossingen wordt er actief meegedacht met en waarde toegevoegd voor de gebouweigenaar alsook de hurende ondernemers En uiteraard een hele prettige samenwerking!",
           name: "MARC ZANDBERGEN",
-          position: "Uniform",
+          position: "Unifore",
         },
         {
           id: 2,
