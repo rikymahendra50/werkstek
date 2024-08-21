@@ -27,6 +27,7 @@
         >
           <EachTestimony
             :imageSrc="itemTestimony.imageSrc"
+            :imageAlt="itemTestimony.imageAlt"
             :description="itemTestimony.description"
             :testimonyName="itemTestimony.name"
             :position="itemTestimony.position"
@@ -83,7 +84,7 @@ export default {
       Testimony: [
         {
           id: 1,
-          imageSrc: "/images/person-testimonial-1.png",
+          imageSrc: "/images/icon-werstek.svg",
           imageAlt: "MARC ZANDBERGEN",
           description:
             "Werkstek is een erg doeltreffend werkplek- en verhuurconcept. Met zowel tijdelijke als langere termijn oplossingen wordt er actief meegedacht met en waarde toegevoegd voor de gebouweigenaar alsook de hurende ondernemers En uiteraard een hele prettige samenwerking!",
@@ -92,7 +93,7 @@ export default {
         },
         {
           id: 2,
-          imageSrc: "/images/person-testimonial-1.png",
+          imageSrc: "/images/icon-werstek.svg",
           imageAlt: "ERIK WERNERS",
           description:
             "Vanuit people@places hebben we zeer goede ervaringen met Werkstek. Er wordt altijd snel geschakeld en het contact met Ernst verloopt prettig. Hij kijkt altijd naar een oplossing voor alle partijen. We werken met Werkstek op verschillende locaties naar alle tevredenheid. Ernst is correct, commercieel gedreven en betrokken en altijd op zoek naar het beste resultaat.",
@@ -101,11 +102,47 @@ export default {
         },
         {
           id: 3,
-          imageSrc: "/images/person-testimonial-1.png",
+          imageSrc: "/images/icon-werstek.svg",
           imageAlt: "TON VAN NAMEN",
           description: "Simon werkt uitstekend met Werkstek van Ernst Wilton",
           name: "TON VAN NAMEN",
           position: "simon",
+        },
+        {
+          id: 4,
+          imageSrc: "/images/opportunity-vastgoed-b.v.png",
+          imageAlt: "opportunity-vastgoed",
+          description:
+            "Werkstek is voor ons een goede partner. Inmiddels druk met elkaar voor drie kantoor panden en we zijn beide tevreden. <br/> Professioneel, correct en slagvaardig.",
+          name: "Maurits Kuppens",
+          position: "Opportunity Vastgoed B.V.",
+        },
+        {
+          id: 5,
+          imageSrc: "/images/crmd.jpg",
+          imageAlt: "crmd",
+          description:
+            "Werkstek biedt onze kantoorlocaties een mooi concept wat laagdrempelig is voor lokale ondernemers om te huren en professioneel is voor ons als vastgoedbeheerder om mee samen te werken. <br/> <br/> Wij werken al jaren prettig samen met Ernst. De betrokkenheid voelt alsof wij zijn enige klant zijn.",
+          name: "Yor Berkhout",
+          position: "Vastgoed Manager",
+        },
+        {
+          id: 6,
+          imageSrc: "/images/icon-werstek.svg",
+          imageAlt: "icon-werstek",
+          description:
+            "”Per direct beschikbaar!”, ….. klinkt als een mooie Marketing uitspraak, maar blijkt bij Werkstek ook daadwerkelijk realiteit! Voor diverse cliënten hebben wij via Werkstek inmiddels meerdere kantoren gehuurd, welke ook daadwerkelijk diezelfde dag nog beschikbaar waren! Korte lijnen, meedenken met het probleem van de klant, flexibiliteit en snel schakelen! Dat is waar de huidige kantoorgebruiker op zit te wachten.",
+          name: "Daan van der Meulen",
+          position: "LaGuardia Amsterdam Real Estate B.V.",
+        },
+        {
+          id: 7,
+          imageSrc: "/images/icon-werstek.svg",
+          imageAlt: "icon-werstek",
+          description:
+            "Werkstek / Ernst Wilton is een daadkrachtige vastgoedpartner waar wij langjarig prettig mee samenwerken.",
+          name: "Stefan Gales",
+          position: "Grimonte Investment Management BV",
         },
       ],
     };

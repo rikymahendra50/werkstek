@@ -5,7 +5,8 @@ const projectName = "WERKSTEK";
 /**
  * replace with actual description for seo
  */
-const projectDescription = "Werkstek is..";
+const projectDescription =
+  "Als verhuurder leegstand van kantoorpanden voorkomen? Geen zorgen over de risico’s van leegstand van kantoorgebouwen?";
 /**
  * replace with actual image for thumbnail
  *
