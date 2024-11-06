@@ -28,20 +28,21 @@
         >
           31655400370
         </NuxtLink>
-        <h1
-          class="text-[12px] sm:text-[14px] text-[#230000] leading-9 my-1 md:my-4"
-        >
-          Ons Werkstek hoofdkantoor:
-        </h1>
-        <p class="text-[#777] text-[12px] sm:text-[14px] leading-9">
-          Werkstek B.V.
-        </p>
-        <p class="text-[#777] text-[12px] sm:text-[14px] leading-9">
+        <div class="mt-4 mb-14">
+          <h1 class="text-[12px] sm:text-[14px] text-[#230000]">
+            Ons Werkstek hoofdkantoor:
+          </h1>
+          <p class="text-[#777] text-[12px] sm:text-[14px] leading-9">
+            Breitnerstraat 19 Arnhem, 6813HN
+          </p>
+        </div>
+
+        <!-- <p class="text-[#777] text-[12px] sm:text-[14px] leading-9">
           Tussen de Bogen 81
         </p>
         <p class="text-[#777] text-[12px] sm:text-[14px] leading-9">
           1013 JB AMSTERDAM
-        </p>
+        </p> -->
         <div class="flex gap-3 mt-2">
           <NuxtLink to="https://www.facebook.com/werkstek/" target="_blank">
             <img

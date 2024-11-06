@@ -132,7 +132,7 @@ const sortedData = computed(() => {
     .sort((a, b) => a.position - b.position);
 });
 
-console.log(sortedData.value);
+// console.log(sliderData.value);
 
 // definePageMeta({
 //   layout: false,

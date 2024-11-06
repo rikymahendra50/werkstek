@@ -37,8 +37,8 @@ const props = defineProps({
     default: () => false,
   },
 });
-const emit = defineEmits(["update:modelValue"]);
 
+const emit = defineEmits(["update:modelValue"]);
 const modal = ref();
 
 const showModal = computed({

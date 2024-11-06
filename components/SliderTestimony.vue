@@ -83,6 +83,24 @@ export default {
     return {
       Testimony: [
         {
+          id: 4,
+          imageSrc: "/images/opportunity-vastgoed-b.v.png",
+          imageAlt: "opportunity-vastgoed",
+          description:
+            "Werkstek is voor ons een goede partner. Inmiddels druk met elkaar voor drie kantoor panden en we zijn beide tevreden. <br/> Professioneel, correct en slagvaardig.",
+          name: "Maurits Kuppens",
+          position: "Opportunity Vastgoed B.V.",
+        },
+        {
+          id: 5,
+          imageSrc: "/images/crmd.jpg",
+          imageAlt: "crmd",
+          description:
+            "Werkstek biedt onze kantoorlocaties een mooi concept wat laagdrempelig is voor lokale ondernemers om te huren en professioneel is voor ons als vastgoedbeheerder om mee samen te werken. <br/> <br/> Wij werken al jaren prettig samen met Ernst. De betrokkenheid voelt alsof wij zijn enige klant zijn.",
+          name: "Yor Berkhout",
+          position: "Vastgoed Manager",
+        },
+        {
           id: 1,
           imageSrc: "/images/icon-werstek.svg",
           imageAlt: "MARC ZANDBERGEN",
@@ -107,24 +125,6 @@ export default {
           description: "Simon werkt uitstekend met Werkstek van Ernst Wilton",
           name: "TON VAN NAMEN",
           position: "simon",
-        },
-        {
-          id: 4,
-          imageSrc: "/images/opportunity-vastgoed-b.v.png",
-          imageAlt: "opportunity-vastgoed",
-          description:
-            "Werkstek is voor ons een goede partner. Inmiddels druk met elkaar voor drie kantoor panden en we zijn beide tevreden. <br/> Professioneel, correct en slagvaardig.",
-          name: "Maurits Kuppens",
-          position: "Opportunity Vastgoed B.V.",
-        },
-        {
-          id: 5,
-          imageSrc: "/images/crmd.jpg",
-          imageAlt: "crmd",
-          description:
-            "Werkstek biedt onze kantoorlocaties een mooi concept wat laagdrempelig is voor lokale ondernemers om te huren en professioneel is voor ons als vastgoedbeheerder om mee samen te werken. <br/> <br/> Wij werken al jaren prettig samen met Ernst. De betrokkenheid voelt alsof wij zijn enige klant zijn.",
-          name: "Yor Berkhout",
-          position: "Vastgoed Manager",
         },
         {
           id: 6,

@@ -53,6 +53,10 @@
       </div>
     </div>
   </section>
+
+  <!-- <pre>
+    {{ data }}
+  </pre> -->
 </template>
 
 <script setup>
