@@ -138,13 +138,13 @@ const {
 } = await useAsyncData("property", () =>
   $fetch(`/admins/products?page=${page.value}&filter[search]=${search.value}`, {
     method: "get",
-    Authorization: "Bearer " + credential,
+    Authorization: "Bearer " + credential.value.token,
     Accept: "application/json",
     ...requestOptions,
   })
 );
 
-console.log(credential);
+console.log("ini dari credential token", credential.value.token);
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
