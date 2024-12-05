@@ -10,8 +10,9 @@
         <NuxtLink
           :to="`/admin/onze-locaties/featured-property/add`"
           class="btn btn-sm normal-case btn-ghost btn-square"
-          ><Icon name="cil:sort-numeric-up" class="text-black"
-        /></NuxtLink>
+        >
+          <Icon name="cil:sort-numeric-up" class="text-black" />
+        </NuxtLink>
         <CompAdminButtonAddIndex name="Property" link="onze-locaties" />
       </div>
       <div>
@@ -122,12 +123,8 @@
 const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
-
-const { $setCredential, credential } = useNuxtApp();
-
 const router = useRouter();
 const route = useRoute();
-
 const page = ref(1);
 const search = ref("");
 
@@ -144,10 +141,6 @@ const {
     ...requestOptions,
   })
 );
-
-console.log("ini credential", credential);
-
-console.log("ini dari credential token", credential.value.token);
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();

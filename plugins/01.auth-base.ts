@@ -24,6 +24,7 @@ export default defineNuxtPlugin({
 
     const setCredential = (credentialProperty: Required<AuthCredential>) => {
       credential.value = credentialProperty;
+      console.log(credential);
     };
 
     const clearCredential = async () => {
@@ -37,6 +38,7 @@ export default defineNuxtPlugin({
       provide: {
         clearCredential,
         setCredential,
+        credential,
       },
     };
   },

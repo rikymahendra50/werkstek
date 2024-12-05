@@ -16,6 +16,9 @@ export default function () {
   async function fetchAuth(url: string) {
     const { data } = await useCustomFetch(url, {
       method: "GET",
+      headers: {
+        accept: "application/json",
+      },
     });
     // @ts-ignore
     const user = data.value?.data as AuthUser;
