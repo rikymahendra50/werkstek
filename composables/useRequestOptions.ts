@@ -1,9 +1,6 @@
 import type { AuthCredential } from "@/types";
 export default function () {
   const config = useRuntimeConfig();
-
-  const defaultRedirect = "/sign-in";
-
   const credential = useCookie<AuthCredential | null>("auth-token", {
     expires: new Date(Date.now() + 12096e5), // 2 weeks from now
     sameSite: "lax",
@@ -14,7 +11,7 @@ export default function () {
   async function clearCredential() {
     if (process.client) {
       useCookie("auth-token").value = null;
-      window.location.replace(defaultRedirect);
+      window.location.replace("/admin/sign-in");
     }
   }
   function onRequest(context: any) {
@@ -31,7 +28,7 @@ export default function () {
 
   const requestOptions = {
     baseURL: config.public.API_ENDPOINT,
-    onRequest: (Context: any) => onRequest(Context),
+    onRequest: (contex: any) => onRequest(contex),
     onResponseError: (context: any) => onResponseError(context),
   };
   return {

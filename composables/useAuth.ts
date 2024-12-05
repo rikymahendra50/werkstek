@@ -16,9 +16,6 @@ export default function () {
   async function fetchAuth(url: string) {
     const { data } = await useCustomFetch(url, {
       method: "GET",
-      headers: {
-        accept: "application/json",
-      },
     });
     // @ts-ignore
     const user = data.value?.data as AuthUser;
@@ -37,9 +34,9 @@ export default function () {
    */
   async function $useFetchAuthProfile() {
     $loading.value = true;
-    let url = "/users/profile";
+    let url = "/users";
     if ($credetial?.role === Role.ADMIN) {
-      url = "/admins/profile";
+      url = "/admins";
     } else if ($credetial?.role === Role.AGEN) {
       url = "/agents/profile";
     }
@@ -57,6 +54,7 @@ export default function () {
     let url = "/users/logout";
     if ($credetial?.role === Role.ADMIN) {
       url = "/admins/logout";
+      // url = "/api/v1/admin/logout";
     } else if ($credetial?.role === Role.AGEN) {
       url = "/agents/logout";
     }
