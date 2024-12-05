@@ -138,6 +138,7 @@ const {
 } = await useAsyncData("property", () =>
   $fetch(`/admins/products?page=${page.value}&filter[search]=${search.value}`, {
     method: "get",
+    Authorization: "Bearer " + credential,
     Accept: "application/json",
     ...requestOptions,
   })

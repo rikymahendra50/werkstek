@@ -64,7 +64,7 @@
 
 <script lang="ts" setup>
 import { Role, Provider } from "@/types";
-const { $setCredential } = useNuxtApp();
+const { $setCredential, credential } = useNuxtApp();
 const { loading, message, alertType, setErrorMessage, transformErrors } =
   useRequestHelper();
 
@@ -95,6 +95,11 @@ async function onSubmit(values: any, ctx: any) {
       role: Role.ADMIN,
       provider: Provider.LOCAL,
     });
+
+    console.log(data?.value?.token);
+
+    // console.log(credential);
+
     /**
      * remove all local person data if someone login
      *
