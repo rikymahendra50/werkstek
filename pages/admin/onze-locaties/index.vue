@@ -144,6 +144,8 @@ const {
   })
 );
 
+console.log("ini credential", credential);
+
 console.log("ini dari credential token", credential.value.token);
 
 const { start, stop } = useTimeoutFn(() => {

@@ -96,7 +96,7 @@ async function onSubmit(values: any, ctx: any) {
       provider: Provider.LOCAL,
     });
 
-    // console.log(data?.value?.token);
+    console.log("ini halaman sign ini" + data?.value?.token);
     // console.log(credential);
 
     /**
@@ -104,7 +104,7 @@ async function onSubmit(values: any, ctx: any) {
      *
      */
     // localPerson.value = [];
-    // window.location.replace("/admin");
+    window.location.replace("/admin");
   }
   loading.value = false;
 }
