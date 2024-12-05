@@ -123,6 +123,8 @@ const { loading, transformErrors } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const snackbar = useSnackbar();
 
+const { $setCredential, credential } = useNuxtApp();
+
 const router = useRouter();
 const route = useRoute();
 
@@ -141,7 +143,7 @@ const {
   })
 );
 
-console.log(property.value);
+console.log(credential);
 
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
