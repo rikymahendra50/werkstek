@@ -111,6 +111,7 @@ const {
 } = await useAsyncData("author", () =>
   $fetch(`/admins/authors`, {
     method: "get",
+    Accept: "application/json",
     ...requestOptions,
   })
 );

@@ -277,6 +277,7 @@ const {
     `/products?filter[location]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
     {
       method: "get",
+      Accept: "application/json",
       ...requestOptions,
     }
   )
@@ -448,18 +449,22 @@ async function loadProperties() {
     await Promise.all([
       $fetch("/products", {
         method: "get",
+        Accept: "application/json",
         ...requestOptions,
       }),
       $fetch("/locations", {
         method: "get",
+        Accept: "application/json",
         ...requestOptions,
       }),
       $fetch("/types", {
         method: "get",
+        Accept: "application/json",
         ...requestOptions,
       }),
       $fetch("/facilities", {
         method: "get",
+        Accept: "application/json",
         ...requestOptions,
       }),
     ]);

@@ -81,6 +81,7 @@ async function onSubmit(values: any, ctx: any) {
 
   const { data, error } = await useFetch<{ token: string }>("/admins/login", {
     method: "post",
+    Accept: "application/json",
     body: { ...form.value },
     ...requestOptions,
   });

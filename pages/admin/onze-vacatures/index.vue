@@ -135,6 +135,7 @@ const {
 } = await useAsyncData("job", () =>
   $fetch(`/admins/jobs`, {
     method: "get",
+    Accept: "application/json",
     ...requestOptions,
   })
 );

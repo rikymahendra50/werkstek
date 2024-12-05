@@ -127,6 +127,7 @@ const {
   $fetch(
     `/admins/community-blogs?page=${page.value}&filter[search]=${search.value}`,
     {
+      Accept: "application/json",
       method: "get",
       ...requestOptions,
     }

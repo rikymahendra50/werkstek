@@ -198,6 +198,7 @@ const {
     `/jobs?filter[location_id]=${selectedCity.value}&filter[min_hours]=${selectedMinHours.value}&filter[max_hours]=${selectedMaxHours.value}&${selectedFacilities.value}`,
     {
       method: "get",
+      Accept: "application/json",
       ...requestOptions,
     }
   )
@@ -304,14 +305,17 @@ async function loadProperties() {
   const [locationsT, soortLocatiesRadioT] = await Promise.all([
     $fetch("/locations", {
       method: "get",
+      Accept: "application/json",
       ...requestOptions,
     }),
     $fetch("/type-jobs", {
       method: "get",
+      Accept: "application/json",
       ...requestOptions,
     }),
     $fetch("/facilities", {
       method: "get",
+      Accept: "application/json",
       ...requestOptions,
     }),
   ]);

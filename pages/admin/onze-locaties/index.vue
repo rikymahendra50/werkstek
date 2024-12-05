@@ -136,6 +136,7 @@ const {
 } = await useAsyncData("property", () =>
   $fetch(`/admins/products?page=${page.value}&filter[search]=${search.value}`, {
     method: "get",
+    Accept: "application/json",
     ...requestOptions,
   })
 );

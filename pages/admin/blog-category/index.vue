@@ -99,6 +99,7 @@ const {
   $fetch(
     `/admins/article-categories?page=${page.value}&filter[search]=${search.value}`,
     {
+      Accept: "application/json",
       method: "get",
       ...requestOptions,
     }
