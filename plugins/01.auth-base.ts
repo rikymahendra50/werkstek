@@ -24,9 +24,6 @@ export default defineNuxtPlugin({
 
     const setCredential = (credentialProperty: Required<AuthCredential>) => {
       credential.value = credentialProperty;
-
-      console.log("ini credential" + credential.value.token);
-      console.log("ini dari credentialProperty" + credentialProperty.token);
     };
 
     const clearCredential = async () => {

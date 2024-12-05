@@ -139,7 +139,9 @@ const {
   $fetch(`/admins/products?page=${page.value}&filter[search]=${search.value}`, {
     method: "get",
     Authorization: "Bearer " + credential.value.token,
-    Accept: "application/json",
+    headers: {
+      Accept: "application/json",
+    },
     ...requestOptions,
   })
 );

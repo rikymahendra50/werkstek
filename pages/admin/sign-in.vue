@@ -64,7 +64,7 @@
 
 <script lang="ts" setup>
 import { Role, Provider } from "@/types";
-const { $setCredential, credential } = useNuxtApp();
+const { $setCredential, credential, testGlobalCookie } = useNuxtApp();
 const { loading, message, alertType, setErrorMessage, transformErrors } =
   useRequestHelper();
 
@@ -81,7 +81,9 @@ async function onSubmit(values: any, ctx: any) {
 
   const { data, error } = await useFetch<{ token: string }>("/admins/login", {
     method: "post",
-    Accept: "application/json",
+    headers: {
+      Accept: "application/json",
+    },
     body: { ...form.value },
     ...requestOptions,
   });
@@ -95,9 +97,6 @@ async function onSubmit(values: any, ctx: any) {
       role: Role.ADMIN,
       provider: Provider.LOCAL,
     });
-
-    console.log("ini halaman sign ini" + data?.value?.token);
-    // console.log(credential);
 
     /**
      * remove all local person data if someone login

@@ -118,7 +118,9 @@ const {
 } = await useAsyncData("typeVacatures", () =>
   $fetch(`/admins/type-jobs`, {
     method: "get",
-    Accept: "application/json",
+    headers: {
+      Accept: "application/json",
+    },
     ...requestOptions,
   })
 );

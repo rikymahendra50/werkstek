@@ -110,7 +110,9 @@ const {
 } = await useAsyncData("contact", () =>
   $fetch(`/admins/contacts?page=${page.value}&filter[search]=${search.value}`, {
     method: "get",
-    Accept: "application/json",
+    headers: {
+      Accept: "application/json",
+    },
     ...requestOptions,
   })
 );

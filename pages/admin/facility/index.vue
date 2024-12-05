@@ -94,7 +94,9 @@ const {
 } = await useAsyncData("locations", () =>
   $fetch(`/admins/facilities?page=${page.value}`, {
     method: "get",
-    Accept: "application/json",
+    headers: {
+      Accept: "application/json",
+    },
     ...requestOptions,
   })
 );
