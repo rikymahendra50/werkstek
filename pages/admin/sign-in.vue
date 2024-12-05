@@ -64,7 +64,7 @@
 
 <script lang="ts" setup>
 import { Role, Provider } from "@/types";
-const { $setCredential, credential, testGlobalCookie } = useNuxtApp();
+const { $setCredential } = useNuxtApp();
 const { loading, message, alertType, setErrorMessage, transformErrors } =
   useRequestHelper();
 
