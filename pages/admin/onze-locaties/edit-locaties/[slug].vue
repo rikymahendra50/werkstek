@@ -408,7 +408,7 @@ const { data: type } = await useFetch(`/admins/type-list`, {
   ...requestOptions,
 });
 
-const { data: levelType } = await useFetch(`/admins/level-types`, {
+const { data: levelType } = await useFetch(`/admins/level-type-list`, {
   headers: {
     accept: "application/json",
   },
@@ -416,7 +416,7 @@ const { data: levelType } = await useFetch(`/admins/level-types`, {
   ...requestOptions,
 });
 
-const { data: facilities, error } = await useFetch(`/admins/facilities`, {
+const { data: facilities, error } = await useFetch(`/admins/facility-list`, {
   headers: {
     accept: "application/json",
   },
@@ -424,7 +424,7 @@ const { data: facilities, error } = await useFetch(`/admins/facilities`, {
   ...requestOptions,
 });
 
-const { data: dataPrivilages } = await useFetch(`/admins/categories`, {
+const { data: dataPrivilages } = await useFetch(`/admins/category-list`, {
   headers: {
     accept: "application/json",
   },

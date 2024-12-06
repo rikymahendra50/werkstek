@@ -395,7 +395,10 @@ const { formInput } = useSchema();
 //   },
 // ]);
 
-const { data: dataPrivilages } = await useFetch(`/admins/categories`, {
+const { data: dataPrivilages } = await useFetch(`/admins/category-list`, {
+  headers: {
+    accept: "application/json",
+  },
   method: "get",
   ...requestOptions,
 });
@@ -413,15 +416,24 @@ const dataIsSaleAble = ref([
   },
 ]);
 
-const { data: facilities, error } = await useFetch(`/admins/facilities`, {
+const { data: facilities, error } = await useFetch(`/admins/facility-list`, {
+  headers: {
+    accept: "application/json",
+  },
   method: "get",
   ...requestOptions,
 });
-const { data: location } = await useFetch(`/admins/locations`, {
+const { data: location } = await useFetch(`/admins/locations-list`, {
+  headers: {
+    accept: "application/json",
+  },
   method: "get",
   ...requestOptions,
 });
 const { data: type } = await useFetch(`/admins/type-list`, {
+  headers: {
+    accept: "application/json",
+  },
   method: "get",
   ...requestOptions,
 });
@@ -430,7 +442,10 @@ const { data: type } = await useFetch(`/admins/type-list`, {
 
 // console.log(type);
 
-const { data: levelType } = await useFetch(`/admins/level-types`, {
+const { data: levelType } = await useFetch(`/admins/level-type-list`, {
+  headers: {
+    accept: "application/json",
+  },
   method: "get",
   ...requestOptions,
 });
