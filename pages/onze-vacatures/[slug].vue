@@ -42,7 +42,7 @@ const { data, error } = await useFetch(`/jobs/${slug}`, {
 const dataAll = data?.value?.data;
 
 if (error.value) {
-  console.error("Error fetching data:", error);
+  // console.error("Error fetching data:", error);
 }
 
 useHead({

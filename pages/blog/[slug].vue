@@ -31,7 +31,7 @@ const { data, error, pending } = await useFetch(`/articles/${slug.value}`, {
 });
 
 if (error.value) {
-  console.error("Error fetching data:", error);
+  // console.error("Error fetching data:", error);
 }
 
 useHead({

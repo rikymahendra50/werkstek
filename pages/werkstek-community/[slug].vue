@@ -33,7 +33,7 @@ const { data, error, pending } = await useFetch(
 );
 
 if (error.value) {
-  console.error("Error fetching data:", error);
+  // console.error("Error fetching data:", error);
 }
 
 useHead({

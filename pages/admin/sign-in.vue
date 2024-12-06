@@ -116,7 +116,7 @@ async function onSubmit(values: any, ctx: any) {
       },
     });
 
-    console.log(response);
+    // console.log(response);
 
     $credential.value = {
       token: response?.token as string,
@@ -155,7 +155,7 @@ async function onSubmit(values: any, ctx: any) {
   //    *
   //    */
   //   // localPerson.value = [];
-  // window.location.replace("/admin");
+  window.location.replace("/admin");
   // }
 
   loading.value = false;

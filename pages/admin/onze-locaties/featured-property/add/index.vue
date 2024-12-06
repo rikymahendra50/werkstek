@@ -141,7 +141,6 @@ const closeModal = (index) => {
 const featured_products = ref([]);
 
 function addPosition(id, name, position, index) {
-  console.log(`ID: ${id}, Name: ${name}, New Position: ${position}`);
   featured_products.value.push({ position: position, product_id: id });
   closeModal(index);
 }

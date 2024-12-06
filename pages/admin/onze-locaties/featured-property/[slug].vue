@@ -104,8 +104,6 @@ const { data: dataSlug } = await useFetch(
   }
 );
 
-console.log(dataSlug.value);
-
 const { start, stop } = useTimeoutFn(() => {
   replaceWindow();
 }, 1000);

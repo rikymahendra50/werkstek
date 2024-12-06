@@ -16,7 +16,6 @@ export default function () {
   }
 
   function onRequest(context: any) {
-    console.log(credential.value);
     context.options.headers = context.options.headers || {};
     context.options.headers.authorization = credential.value?.token
       ? "Bearer " + credential.value?.token

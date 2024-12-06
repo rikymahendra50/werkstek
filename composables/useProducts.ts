@@ -25,7 +25,7 @@ export default function useArticle(): { facilities: Ref<Article[]> } {
       const data = await response.json();
       facilities.value = data.data; // Assuming 'data' field holds articles array
     } catch (error) {
-      console.error("Error fetching data:", error);
+      // console.error("Error fetching data:", error);
     }
   };
 

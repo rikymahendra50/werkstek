@@ -172,6 +172,5 @@ function performSearch(data) {
 
 function searchCity(data) {
   isSearchCity.value = data;
-  console.log("Ini di functi searchCity", isSearchCity.value);
 }
 </script>

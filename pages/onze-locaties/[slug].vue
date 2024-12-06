@@ -60,7 +60,7 @@ const sortedData = computed(() => {
 });
 
 if (error.value) {
-  console.error("Error fetching data:", error);
+  // console.error("Error fetching data:", error);
 }
 
 useHead({
