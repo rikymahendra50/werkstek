@@ -1,11 +1,11 @@
 <template>
-  <div class="grid place-items-center items-center h-screen">
+  <div class="grid place-items-center items-center h-screen test">
     <div class="w-[500px] p-10 justify-center shadow-lg">
       <Werkstek class="mb-10" />
       <VeeForm :validation-schema="loginSchema" @submit="$login">
         <div class="flex flex-col space-y-4">
           <div class="flex flex-col">
-            <label for="email" class="pb-1 text-lg">Email</label>
+            <label for="email" class="pb-1 text-lg">Emaill</label>
             <FormTextField
               id="email"
               name="email"
