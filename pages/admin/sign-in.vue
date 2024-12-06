@@ -51,7 +51,8 @@
 </template>
 
 <script lang="ts" setup>
-import { Role, Provider } from "@/types";
+import { Role, Provider, AuthCredential, AuthUser } from "@/types";
+
 const { $credential } = useAuth();
 const { loading, message, alertType, setErrorMessage, transformErrors } =
   useRequestHelper();
@@ -85,33 +86,77 @@ async function onSubmit(values: any, ctx: any) {
   //   ...requestOptions,
   // });
 
-  const { data, error, refresh } = await useAsyncData("sign-in", () =>
-    $fetch(`/admins/login`, {
-      method: "post",
+  // const { data, error } = await $fetch<{ token: string }>("/admins/login", {
+  //   method: "post",
+  //   headers: {
+  //     Accept: "application/json",
+  //   },
+  //   body: { ...form.value },
+  //   ...requestOptions,
+  // });
+
+  // const { response } = await $fetch("/admins/login", {
+  //   method: "post",
+  //   body: { ...form.value },
+  //   ...requestOptions,
+  //   headers: {
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //   },
+  // });
+
+  try {
+    const response = await $fetch(`/admins/login`, {
+      method: "POST",
       body: { ...form.value },
+      ...requestOptions,
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      ...requestOptions,
-    })
-  );
+    });
 
-  if (error.value) {
-    setErrorMessage(error.value?.data?.message);
-    ctx.setErrors(transformErrors(error.value?.data));
-  } else if (data.value?.token) {
+    console.log(response);
+
     $credential.value = {
-      token: data?.value?.token as string,
+      token: response?.token as string,
       role: Role.ADMIN,
       provider: Provider.LOCAL,
     };
-    /**
-     * remove all local person data if someone login
-     *
-     */
-    // localPerson.value = [];
-    window.location.replace("/admin");
+  } catch (error: any) {
+    setErrorMessage(error.value?.data?.message);
+    ctx.setErrors(transformErrors(error.value?.data));
+  } finally {
+    loading.value = false;
   }
+
+  // const { data, error, refresh } = await useAsyncData("sign-in", () =>
+  //   $fetch(`/admins/login`, {
+  //     method: "post",
+  //     body: { ...form.value },
+  //     headers: {
+  //       Accept: "application/json",
+  //     },
+  //     ...requestOptions,
+  //   })
+  // );
+
+  // if (error.value) {
+  //   setErrorMessage(error.value?.data?.message);
+  //   ctx.setErrors(transformErrors(error.value?.data));
+  // } else if (data.value?.token) {
+  //   $credential.value = {
+  //     token: data?.value?.token as string,
+  //     role: Role.ADMIN,
+  //     provider: Provider.LOCAL,
+  //   };
+  //   /**
+  //    * remove all local person data if someone login
+  //    *
+  //    */
+  //   // localPerson.value = [];
+  // window.location.replace("/admin");
+  // }
 
   loading.value = false;
 }

@@ -57,7 +57,7 @@ export default function () {
     $loading.value = true;
     let url = "/users/profile";
     if ($credential.value?.role === Role.ADMIN) {
-      url = "/admins/profile";
+      url = "/admins/admin-list";
     } else if ($credential.value?.role === Role.AGEN) {
       url = "/agents/profile";
     }

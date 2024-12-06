@@ -38,7 +38,7 @@
           aria-expanded="false"
           data-state="closed"
         >
-          <NuxtLink to="/admin">
+          <!-- <NuxtLink to="/admin">
             <img
               v-if="$user?.profile_picture"
               :src="$user?.profile_picture"
@@ -58,7 +58,7 @@
               style="aspect-ratio: 32 / 32; object-fit: cover"
             />
             <span class="sr-only">Toggle user menu</span>
-          </NuxtLink>
+          </NuxtLink> -->
         </button>
       </div>
     </div>
@@ -68,7 +68,7 @@
 <script setup>
 const showDrawer = inject("showTableOrMobileSidebar");
 
-const { $user } = useAuth();
+// const { $user } = useAuth();
 </script>
 
 <style></style>
