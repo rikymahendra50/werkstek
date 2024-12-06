@@ -84,6 +84,17 @@ async function onSubmit(values: any, ctx: any) {
     ...requestOptions,
   });
 
+  // const { data, error, refresh } = await useAsyncData("sign-in", () =>
+  //   $fetch(`/admins/login`, {
+  //     method: "get",
+  //     body: { ...form.value },
+  //     headers: {
+  //       Accept: "application/json",
+  //     },
+  //     ...requestOptions,
+  //   })
+  // );
+
   if (error.value) {
     setErrorMessage(error.value?.data?.message);
     ctx.setErrors(transformErrors(error.value?.data));
