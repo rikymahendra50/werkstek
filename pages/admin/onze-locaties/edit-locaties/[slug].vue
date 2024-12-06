@@ -385,54 +385,49 @@ const slug = computed(() => route.params.slug);
 const { formInput } = useSchema();
 
 const { data: dataSlug } = await useFetch(`/admins/products/${slug.value}`, {
+  headers: {
+    accept: "application/json",
+  },
   method: "get",
   ...requestOptions,
 });
 
-const { data: location } = await useFetch(`/admins/locations`, {
+const { data: location } = await useFetch(`/admins/location-list`, {
+  headers: {
+    accept: "application/json",
+  },
   method: "get",
   ...requestOptions,
 });
 
 const { data: type } = await useFetch(`/admins/type-list`, {
+  headers: {
+    accept: "application/json",
+  },
   method: "get",
   ...requestOptions,
 });
 
 const { data: levelType } = await useFetch(`/admins/level-types`, {
+  headers: {
+    accept: "application/json",
+  },
   method: "get",
   ...requestOptions,
 });
 
 const { data: facilities, error } = await useFetch(`/admins/facilities`, {
+  headers: {
+    accept: "application/json",
+  },
   method: "get",
   ...requestOptions,
 });
 
-// const dataPrivilages = ref([
-//   {
-//     id: 1,
-//     name: "Kleinschalig",
-//   },
-//   {
-//     id: 2,
-//     name: "Informeel",
-//   },
-//   {
-//     id: 3,
-//     name: "Flexwerken mogelijk",
-//   },
-//   {
-//     id: 4,
-//     name: "Prachtige locatie aan de gracht",
-//   },
-//   {
-//     id: 5,
-//     name: "Internationale groep mensen",
-//   },
-// ]);
-
 const { data: dataPrivilages } = await useFetch(`/admins/categories`, {
+  headers: {
+    accept: "application/json",
+  },
   method: "get",
   ...requestOptions,
 });
