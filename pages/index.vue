@@ -16,6 +16,7 @@
     @isSelectedMinPrice="selectedMinPrice"
   /> -->
 
+  <!-- test -->
   <StatistiekLocatiesVideo
     video="/images/home-video.mov"
     :image="StatistiekLocatiesData?.image"
