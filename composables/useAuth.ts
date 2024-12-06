@@ -31,9 +31,19 @@ export default function () {
   }
 
   async function logoutAuth(url: string) {
-    await useCustomFetch(url, {
-      method: "POST",
+    // await useCustomFetch(url, {
+    //   method: "POST",
+    // });
+
+    await $fetch(url, {
+      method: "post",
+      headers: {
+        accept: "application/json",
+        "Content-type": "application/json",
+      },
+      ...requestOptions,
     });
+
     $clearCredential();
   }
 

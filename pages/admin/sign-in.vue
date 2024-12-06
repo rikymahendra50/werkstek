@@ -75,25 +75,25 @@ const form = ref({
 async function onSubmit(values: any, ctx: any) {
   loading.value = true;
 
-  const { data, error } = await useFetch<{ token: string }>("/admins/login", {
-    method: "post",
-    headers: {
-      Accept: "application/json",
-    },
-    body: { ...form.value },
-    ...requestOptions,
-  });
+  // const { data, error } = await useFetch<{ token: string }>("/admins/login", {
+  //   method: "post",
+  //   headers: {
+  //     Accept: "application/json",
+  //   },
+  //   body: { ...form.value },
+  //   ...requestOptions,
+  // });
 
-  // const { data, error, refresh } = await useAsyncData("sign-in", () =>
-  //   $fetch(`/admins/login`, {
-  //     method: "get",
-  //     body: { ...form.value },
-  //     headers: {
-  //       Accept: "application/json",
-  //     },
-  //     ...requestOptions,
-  //   })
-  // );
+  const { data, error, refresh } = await useAsyncData("sign-in", () =>
+    $fetch(`/admins/login`, {
+      method: "post",
+      body: { ...form.value },
+      headers: {
+        Accept: "application/json",
+      },
+      ...requestOptions,
+    })
+  );
 
   if (error.value) {
     setErrorMessage(error.value?.data?.message);
@@ -105,6 +105,8 @@ async function onSubmit(values: any, ctx: any) {
       provider: Provider.LOCAL,
     });
 
+    // console.log(data.value);
+
     /**
      * remove all local person data if someone login
      *
@@ -112,6 +114,7 @@ async function onSubmit(values: any, ctx: any) {
     // localPerson.value = [];
     window.location.replace("/admin");
   }
+
   loading.value = false;
 }
 
