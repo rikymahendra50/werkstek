@@ -2,14 +2,14 @@
   <div class="grid place-items-center items-center h-screen test">
     <div class="w-[500px] p-10 justify-center shadow-lg">
       <Werkstek class="mb-10" />
-      <VeeForm :validation-schema="loginSchema" @submit="$login">
+      <VeeForm :validation-schema="loginSchema" @submit="onSubmit">
         <div class="flex flex-col space-y-4">
           <div class="flex flex-col">
             <label for="email" class="pb-1 text-lg">Email</label>
             <FormTextField
               id="email"
               name="email"
-              v-model="$credentialForm.email"
+              v-model="form.email"
               placeholder="Email"
               class="input input-bordered"
             />
@@ -19,7 +19,7 @@
             <FormTextField
               id="password"
               name="password"
-              v-model="$credentialForm.password"
+              v-model="form.password"
               placeholder="*******"
               type="password"
               class="input input-bordered"
@@ -51,58 +51,58 @@
 </template>
 
 <script lang="ts" setup>
+import { Role, Provider } from "@/types";
+
 const { $setCredential } = useNuxtApp();
-const { setErrorMessage, transformErrors } = useRequestHelper();
+const { setErrorMessage, transformErrors, loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const { loginSchema } = useSchema();
 
-function redirectUserProfile() {
-  location.replace("/admin");
-}
+// function redirectUserProfile() {
+//   location.replace("/admin");
+// }
 
-const { loading, message, alertType, $credentialForm, $login } = useAuth({
-  usedBy: "admin",
-  callback: redirectUserProfile,
-});
-
-// const form = ref({
-//   email: "",
-//   password: "",
+// const { loading, message, alertType, $credentialForm, $login } = useAuth({
+//   usedBy: "admin",
+//   callback: redirectUserProfile,
 // });
 
-// async function onSubmit(values: any, ctx: any) {
-//   loading.value = true;
+const form = ref({
+  email: "",
+  password: "",
+});
 
-//   const { data, error } = await useFetch<{ token: string }>("/admins/login", {
-//     method: "post",
-//     headers: {
-//       Accept: "application/json",
-//     },
-//     body: { ...form.value },
-//     ...requestOptions,
-//   });
+async function onSubmit(values: any, ctx: any) {
+  loading.value = true;
 
-//   if (error.value) {
-//     setErrorMessage(error.value?.data?.message);
-//     ctx.setErrors(transformErrors(error.value?.data));
-//   } else if (data.value?.token) {
-//     $setCredential({
-//       token: data?.value?.token as string,
-//       role: Role.ADMIN,
-//       provider: Provider.LOCAL,
-//     });
+  const { data, error } = await useFetch<{ token: string }>("/admins/login", {
+    method: "post",
+    headers: {
+      Accept: "application/json",
+    },
+    body: { ...form.value },
+    ...requestOptions,
+  });
 
-//     console.log(credential);
+  if (error.value) {
+    setErrorMessage(error.value?.data?.message);
+    ctx.setErrors(transformErrors(error.value?.data));
+  } else if (data.value?.token) {
+    $setCredential({
+      token: data?.value?.token as string,
+      role: Role.ADMIN,
+      provider: Provider.LOCAL,
+    });
 
-//     /**
-//      * remove all local person data if someone login
-//      *
-//      */
-//     // localPerson.value = [];
-//     window.location.replace("/admin");
-//   }
-//   loading.value = false;
-// }
+    /**
+     * remove all local person data if someone login
+     *
+     */
+    // localPerson.value = [];
+    window.location.replace("/admin");
+  }
+  loading.value = false;
+}
 
 useHead({
   title: "Login",
