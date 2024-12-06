@@ -6,31 +6,16 @@
         <div class="flex flex-col space-y-4">
           <div class="flex flex-col">
             <label for="email" class="pb-1 text-lg">Email</label>
-            <FormTextField
-              id="email"
-              name="email"
-              v-model="form.email"
-              placeholder="Email"
-              class="input input-bordered"
-            />
+            <FormTextField id="email" name="email" v-model="form.email" placeholder="Email"
+              class="input input-bordered" />
           </div>
           <div class="flex flex-col">
             <label for="password" class="pb-1 text-lg">Password</label>
-            <FormTextField
-              id="password"
-              name="password"
-              v-model="form.password"
-              placeholder="*******"
-              type="password"
-              class="input input-bordered"
-            />
+            <FormTextField id="password" name="password" v-model="form.password" placeholder="*******" type="password"
+              class="input input-bordered" />
           </div>
           <div class="mt-5">
-            <button
-              :disabled="loading"
-              type="submit"
-              class="btn bg-[#F0912D] text-white w-full hover:bg-secondary"
-            >
+            <button :disabled="loading" type="submit" class="btn bg-[#F0912D] text-white w-full hover:bg-secondary">
               Sign In
             </button>
           </div>
@@ -48,12 +33,8 @@
           </div> -->
 
           <div class="mt-5">
-            <NuxtLink
-              to="/admin/forgot-password"
-              :disabled="loading"
-              type="submit"
-              class="p-2 text-center text-primary hover:text-secondary w-full rounded-lg hover:border-secondary"
-            >
+            <NuxtLink to="/admin/forgot-password" :disabled="loading" type="submit"
+              class="p-2 text-center text-primary hover:text-secondary w-full rounded-lg hover:border-secondary">
               Forgot Password?
             </NuxtLink>
           </div>
@@ -65,7 +46,7 @@
 
 <script lang="ts" setup>
 import { Role, Provider } from "@/types";
-const { $setCredential } = useNuxtApp();
+const { $credential } = useAuth()
 const { loading, message, alertType, setErrorMessage, transformErrors } =
   useRequestHelper();
 
@@ -90,11 +71,11 @@ async function onSubmit(values: any, ctx: any) {
     setErrorMessage(error.value?.data?.message);
     ctx.setErrors(transformErrors(error.value?.data));
   } else if (data.value?.token) {
-    $setCredential({
+    $credential.value = {
       token: data?.value?.token as string,
       role: Role.ADMIN,
       provider: Provider.LOCAL,
-    });
+    };
     /**
      * remove all local person data if someone login
      *

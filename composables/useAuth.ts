@@ -1,10 +1,21 @@
 import { Role, AuthCredential, AuthUser } from "@/types";
 
 export default function () {
-  const $credetial = useCookie<AuthCredential | null>("auth-token").value;
+  /**
+  * use cookie for auth
+  */
+  const $credential = useCookie<AuthCredential | null>("auth-token", {
+    expires: new Date(Date.now() + 31536e5), // 1 year from now
+    sameSite: "lax",
+    path: "/",
+    watch: true,
+  });
+
+
   const $user = useState<AuthUser | undefined>("auth-user");
   const $loading = ref<boolean>(false);
-  const { $clearCredential } = useNuxtApp();
+
+  const { requestOptions } = useRequestOptions()
 
   /**
    * set auth user property s
@@ -14,19 +25,30 @@ export default function () {
   }
 
   async function fetchAuth(url: string) {
-    const { data } = await useCustomFetch(url, {
+    const { data } = await $fetch<{ data: AuthUser }>(url, {
       method: "GET",
+      ...requestOptions,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
     });
-    // @ts-ignore
-    const user = data.value?.data as AuthUser;
-    $setAuthUser(user);
+    $setAuthUser(data);
   }
 
   async function logoutAuth(url: string) {
-    await useCustomFetch(url, {
+    await $fetch(url, {
       method: "POST",
+      ...requestOptions,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
     });
-    $clearCredential();
+    $credential.value = null;
+    if (process.client) {
+      window.location.replace("/admin/sign-in");
+    }
   }
 
   /**
@@ -35,9 +57,9 @@ export default function () {
   async function $useFetchAuthProfile() {
     $loading.value = true;
     let url = "/users/profile";
-    if ($credetial?.role === Role.ADMIN) {
+    if ($credential.value?.role === Role.ADMIN) {
       url = "/admins/profile";
-    } else if ($credetial?.role === Role.AGEN) {
+    } else if ($credential.value?.role === Role.AGEN) {
       url = "/agents/profile";
     }
 
@@ -52,9 +74,9 @@ export default function () {
     $loading.value = true;
 
     let url = "/users/logout";
-    if ($credetial?.role === Role.ADMIN) {
+    if ($credential.value?.role === Role.ADMIN) {
       url = "/admins/logout";
-    } else if ($credetial?.role === Role.AGEN) {
+    } else if ($credential.value?.role === Role.AGEN) {
       url = "/agents/logout";
     }
     await logoutAuth(url);
@@ -62,20 +84,20 @@ export default function () {
   }
 
   const $isAdmin = computed(() => {
-    return $credetial?.role === Role.ADMIN;
+    return $credential.value?.role === Role.ADMIN;
   });
 
   const $isAgen = computed(() => {
-    return $credetial?.role === Role.AGEN;
+    return $credential.value?.role === Role.AGEN;
   });
 
   const $isUser = computed(() => {
-    return $credetial?.role === Role.USER;
+    return $credential.value?.role === Role.USER;
   });
 
   return {
-    $credetial,
-    $isLogin: !!$credetial,
+    $credential,
+    $isLogin: !!$credential.value,
     $logout,
     $loading,
     $setAuthUser,
