@@ -73,6 +73,9 @@ async function onSubmit() {
   // message.value = "hallo";
 
   await useFetch("/admins/forget-password/reset-password", {
+    headers: {
+      accept: "application/json",
+    },
     method: "POST",
     body: JSON.stringify(resetPassword.value),
     ...requestOptions,

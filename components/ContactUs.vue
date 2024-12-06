@@ -217,7 +217,7 @@ async function onSubmit(values, ctx) {
   } else {
     snackbar.add({
       type: "success",
-      text: "Thank you for your message. We will get back to you as soon as possible.",
+      text: "Bedankt voor uw bericht. Wij nemen zo snel mogelijk contact met u op.",
     });
     ctx.resetForm();
   }

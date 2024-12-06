@@ -433,3 +433,8 @@ export interface ImageResponse {
   image: string;
   position: number;
 }
+
+export interface CommonResponse<T> {
+  message: string;
+  data: T;
+}

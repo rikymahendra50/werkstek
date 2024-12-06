@@ -70,6 +70,9 @@ function resentEmail() {
   countdown();
 
   useFetch("/admins/resend-email-verification", {
+    headers: {
+      Accept: "application/json",
+    },
     method: "POST",
     body: { email: stateForm.value.email },
     ...requestOptions,
