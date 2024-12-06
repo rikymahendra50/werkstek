@@ -5,7 +5,7 @@
       <VeeForm :validation-schema="loginSchema" @submit="$login">
         <div class="flex flex-col space-y-4">
           <div class="flex flex-col">
-            <label for="email" class="pb-1 text-lg">Emaill</label>
+            <label for="email" class="pb-1 text-lg">Email</label>
             <FormTextField
               id="email"
               name="email"

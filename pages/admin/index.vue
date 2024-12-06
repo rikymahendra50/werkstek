@@ -11,7 +11,7 @@
         <th scope="col">Active</th>
       </tr>
     </thead>
-    <tbody>
+    <!-- <tbody>
       <tr class="text-sm">
         <td scope="row" data-label="Name">
           {{ $user?.first_name }}
@@ -22,7 +22,7 @@
           {{ $user?.is_active === 1 ? "Active" : "Nonaktif" }}
         </td>
       </tr>
-    </tbody>
+    </tbody> -->
   </table>
 </template>
 
@@ -120,12 +120,15 @@ useHead({
 });
 
 const { requestOptions } = useRequestOptions();
-const { data, error } = await useFetch(`/admins/profile`, {
-  method: "get",
-  ...requestOptions,
-});
+// const { data, error } = await useFetch(`/admins/profile`, {
+//   headers: {
+//     accept: "application/json",
+//   },
+//   method: "get",
+//   ...requestOptions,
+// });
 
-const { $user, $logout } = useAuth();
+// const { $user, $logout } = useAuth();
 definePageMeta({
   layout: "admin",
   // @ts-ignore
