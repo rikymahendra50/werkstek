@@ -52,9 +52,10 @@
 
 <script lang="ts" setup>
 import { Role, Provider } from "@/types";
+const { $credential } = useAuth();
+const { loading, message, alertType, setErrorMessage, transformErrors } =
+  useRequestHelper();
 
-const { $setCredential } = useNuxtApp();
-const { setErrorMessage, transformErrors, loading } = useRequestHelper();
 const { requestOptions } = useRequestOptions();
 const { loginSchema } = useSchema();
 
@@ -99,14 +100,11 @@ async function onSubmit(values: any, ctx: any) {
     setErrorMessage(error.value?.data?.message);
     ctx.setErrors(transformErrors(error.value?.data));
   } else if (data.value?.token) {
-    $setCredential({
+    $credential.value = {
       token: data?.value?.token as string,
       role: Role.ADMIN,
       provider: Provider.LOCAL,
-    });
-
-    // console.log(data.value);
-
+    };
     /**
      * remove all local person data if someone login
      *
