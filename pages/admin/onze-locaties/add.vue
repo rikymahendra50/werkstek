@@ -239,8 +239,6 @@
         />
       </div>
 
-      {{ location?.data }}
-
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="type">Type</label>
