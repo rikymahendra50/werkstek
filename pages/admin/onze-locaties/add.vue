@@ -239,6 +239,8 @@
         />
       </div>
 
+      {{ location?.data }}
+
       <div class="flex flex-col my-2 w-full">
         <div class="flex items-center">
           <label for="type">Type</label>
@@ -423,13 +425,15 @@ const { data: facilities, error } = await useFetch(`/admins/facility-list`, {
   method: "get",
   ...requestOptions,
 });
-const { data: location } = await useFetch(`/admins/locations-list`, {
+
+const { data: location } = await useFetch(`/admins/location-list`, {
   headers: {
     accept: "application/json",
   },
   method: "get",
   ...requestOptions,
 });
+
 const { data: type } = await useFetch(`/admins/type-list`, {
   headers: {
     accept: "application/json",
@@ -437,10 +441,6 @@ const { data: type } = await useFetch(`/admins/type-list`, {
   method: "get",
   ...requestOptions,
 });
-
-// console.log(location);
-
-// console.log(type);
 
 const { data: levelType } = await useFetch(`/admins/level-type-list`, {
   headers: {
