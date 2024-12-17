@@ -210,6 +210,10 @@
       </div>
     </div>
   </section>
+
+  <!-- <pre>
+    {{ dataProduct?.data }}
+  </pre> -->
 </template>
 
 <style scoped>
@@ -274,7 +278,7 @@ const {
   refresh,
 } = await useAsyncData("dataProduct", () =>
   $fetch(
-    `/products?filter[location]=${selectedCity.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
+    `/products?filter[location]=${selectedCity.value}&page=${page.value}&filter[type_id]=${selectedSoortLocatie.value}&filter[min_price]=${selectedMinPrice.value}&filter[max_price]=${selectedMaxPrice.value}&filter[min_area]=${selectedMeterMin.value}&filter[max_area]=${selectedMeterMax.value}&${selectedFacilities.value}`,
     {
       method: "get",
       headers: {

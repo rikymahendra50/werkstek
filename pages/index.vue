@@ -84,6 +84,7 @@
   <SliderTestimony class="my-10" />
 
   <FourImages />
+
   <div class="my-10">
     <TitleHeader3
       title="Updates & blogs"
@@ -92,6 +93,7 @@
     />
     <Blog />
   </div>
+
   <BgBigGreen
     :title1="BgBigGreenData.title1"
     :title2="BgBigGreenData.title2"
@@ -103,12 +105,6 @@
     :show-button-section="false"
     :backgroundColor="'secondary'"
   />
-
-  <!-- <SliderLocaties :data="sliderData?.data"></SliderLocaties> -->
-
-  <!-- <div class="" v-for="item in sortedData">
-    {{ item.position }}
-  </div> -->
 
   <!-- <UnderConstraction /> -->
 </template>
