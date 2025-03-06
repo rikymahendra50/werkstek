@@ -66,6 +66,7 @@
   margin-right: 5px;
 }
 </style>
+
 <script>
 import { onMounted, onBeforeUnmount, ref } from "vue";
 
