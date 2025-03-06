@@ -226,12 +226,14 @@ const center = ref({ lat: 52.21314997541194, lng: 5.3982948103810795 });
 
 let googleMapsScriptLoaded = false;
 
+const config = useRuntimeConfig();
+
 const loadGoogleMapsScript = () => {
   if (!window.googleMapsScriptLoaded) {
     window.googleMapsScriptLoaded = true;
     window.initMap = setupMap;
     const googleMapsScript = document.createElement("script");
-    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDlXDm2XgaaHSltV5byiQHe9P4HFWtZgOo&callback=initMap&`;
+    googleMapsScript.src = config.public.GOOGLE_API;
     googleMapsScript.defer = true;
     googleMapsScript.async = true;
     googleMapsScript.onload = () => {
